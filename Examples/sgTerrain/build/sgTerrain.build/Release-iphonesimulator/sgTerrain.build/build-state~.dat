@@ -1,0 +1,1313 @@
+TsgTerrain
+v7
+r1
+
+N/Beta Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.1.sdk
+c000000004C6C30170000000000000110
+t1282158615
+s272
+
+N/Beta Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.1.sdk/System/Library/Frameworks/CoreFoundation.framework/Headers/CoreFoundation.h
+c000000004C5A4C8C0000000000000AB3
+t1280986252
+s2739
+
+N/Beta Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.1.sdk/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics
+c000000004C5A4DB60000000000295900
+t1280986550
+s2709760
+
+N/Beta Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.1.sdk/System/Library/Frameworks/CoreGraphics.framework/Headers/CoreGraphics.h
+c000000004C5A4CD800000000000004FE
+t1280986328
+s1278
+
+N/Beta Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.1.sdk/System/Library/Frameworks/Foundation.framework/Foundation
+c000000004C5A4DB0000000000029D580
+t1280986544
+s2741632
+
+N/Beta Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.1.sdk/System/Library/Frameworks/OpenGLES.framework/Headers/ES1/gl.h
+c000000004C5A4E4D0000000000009369
+t1280986701
+s37737
+
+N/Beta Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.1.sdk/System/Library/Frameworks/OpenGLES.framework/Headers/ES1/glext.h
+c000000004C5A4E4D0000000000003C4A
+t1280986701
+s15434
+
+N/Beta Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.1.sdk/System/Library/Frameworks/OpenGLES.framework/Headers/ES2/gl.h
+c000000004C5A4E4D00000000000092AA
+t1280986701
+s37546
+
+N/Beta Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.1.sdk/System/Library/Frameworks/OpenGLES.framework/Headers/ES2/glext.h
+c000000004C5A4E4D00000000000026AA
+t1280986701
+s9898
+
+N/Beta Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.1.sdk/System/Library/Frameworks/OpenGLES.framework/OpenGLES
+c000000004C5A4E570000000000019D60
+t1280986711
+s105824
+
+N/Beta Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.1.sdk/System/Library/Frameworks/QuartzCore.framework/Headers/QuartzCore.h
+c000000004C5A505200000000000000C4
+t1280987218
+s196
+
+N/Beta Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.1.sdk/System/Library/Frameworks/QuartzCore.framework/QuartzCore
+c000000004C5A50EF0000000000154E50
+t1280987375
+s1396304
+
+N/Beta Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.1.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIKit.h
+c000000004C6241ED00000000000009CD
+t1281507821
+s2509
+
+N/Beta Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.1.sdk/System/Library/Frameworks/UIKit.framework/UIKit
+c000000004C6242840000000001E228C0
+t1281507972
+s31598784
+
+N/Beta Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.1.sdk/usr/include/TargetConditionals.h
+c000000004C57A03900000000000031E9
+t1280811065
+s12777
+
+N/Beta Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.1.sdk/usr/include/mach/mach.h
+c000000004A73D4540000000000001057
+t1249104980
+s4183
+
+N/Beta Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.1.sdk/usr/include/mach/mach_time.h
+c000000004C5799000000000000000746
+t1280809216
+s1862
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Combiner/sgAction.h
+c000000004C10D2D4000000000000087B
+t1276170964
+s2171
+i"sgEntity.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Combiner/sgEntity.h
+c000000004CCDB9D40000000000001381
+t1288550868
+s4993
+i"sgMaterial.h"
+i"sgObject.h"
+i"sgCamera.h"
+i"sgPanel.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Combiner/sgEvents.h
+c000000004C95D5480000000000000818
+t1284887880
+s2072
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Combiner/sgMain.h
+c000000004C2CE08F0000000000000A64
+t1278009487
+s2660
+i"sgRenderer.h"
+i"sgTouches.h"
+i"sgAccelerometer.h"
+i"sgEvents.h"
+i"sgAction.h"
+i"sgEntity.h"
+i"sgTimer.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Common/sgBase.h
+c000000004C10BF2A00000000000005DF
+t1276165930
+s1503
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Common/sgColor.h
+c000000004C10BF2A0000000000000F3F
+t1276165930
+s3903
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Common/sgDebug.h
+c000000004C61A5AA0000000000000529
+t1281467818
+s1321
+i<cstdio>
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Common/sgMatrix4x4.h
+c000000004C10C01A0000000000001E52
+t1276166170
+s7762
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Common/sgQuaternion.h
+c000000004C10BF2B0000000000002805
+t1276165931
+s10245
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Common/sgResourceManager.h
+c000000004C10BD570000000000000BBE
+t1276165463
+s3006
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Common/sgTimer.h
+c000000004C3DF504000000000000067A
+t1279128836
+s1658
+i<mach/mach.h>
+i<mach/mach_time.h>
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Common/sgTools.h
+c000000004C10BF8300000000000009F3
+t1276166019
+s2547
+i<cstdio>
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Common/sgVector2.h
+c000000004C5DF28E0000000000001392
+t1281225358
+s5010
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Common/sgVector3.h
+c000000004C5DF28E0000000000001787
+t1281225358
+s6023
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Common/sgVector4.h
+c000000004C5DF28E00000000000017FC
+t1281225358
+s6140
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Common/sgXML.h
+c000000004C3CC35000000000000010B9
+t1279050576
+s4281
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Graphics/sgCamera.h
+c000000004C95CF340000000000001014
+t1284886324
+s4116
+i"sgMatrix4x4.h"
+i"sgVector3.h"
+i"sgVector2.h"
+i"sgQuaternion.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Graphics/sgLight.h
+c000000004C5FE24D0000000000000BE7
+t1281352269
+s3047
+i"sgColor.h"
+i"sgVector4.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Graphics/sgMaterial.h
+c000000004C65BFBC0000000000002E25
+t1281736636
+s11813
+i<vector>
+i<string>
+i"sgBase.h"
+i"sgColor.h"
+i"sgMatrix4x4.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Graphics/sgMesh.h
+c000000004C6301F70000000000001080
+t1281556983
+s4224
+i"sgBase.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Graphics/sgObject.h
+c000000004CCDBD2A0000000000001517
+t1288551722
+s5399
+i<vector>
+i<string>
+i"sgBase.h"
+i"sgVector3.h"
+i"sgMatrix4x4.h"
+i"sgQuaternion.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Graphics/sgObjectFiles.h
+c000000004C10CE5B00000000000008BC
+t1276169819
+s2236
+i<vector>
+i<string>
+i"sgVertex.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Graphics/sgPanel.h
+c000000004C657B1C0000000000001C21
+t1281719068
+s7201
+i<vector>
+i<string>
+i"sgVector2.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Graphics/sgRenderer.h
+c000000004C742B32000000000000153A
+t1282681650
+s5434
+i<vector>
+i<OpenGLES/ES1/gl.h>
+i<OpenGLES/ES1/glext.h>
+i<OpenGLES/ES2/gl.h>
+i<OpenGLES/ES2/glext.h>
+i"sgObject.h"
+i"sgPanel.h"
+i"sgLight.h"
+i"sgCamera.h"
+i"sgTexture.h"
+i"sgShader.h"
+i"sgMaterial.h"
+i"sgVertex.h"
+i"sgMesh.h"
+i"sgMatrix4x4.h"
+i"sgColor.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Graphics/sgRendererES1.h
+c000000004C3DD69500000000000006E2
+t1279121045
+s1762
+i"sgRenderer.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Graphics/sgRendererES2.h
+c000000004C5DE0B1000000000000076E
+t1281220785
+s1902
+i"sgRenderer.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Graphics/sgShader.h
+c000000004C10C7160000000000001106
+t1276167958
+s4358
+i"sgBase.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Graphics/sgShadowVolume.h
+c000000004C640CAF0000000000000BFB
+t1281625263
+s3067
+i"sgVector3.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Graphics/sgTexture.h
+c000000004C2DC8B200000000000013F1
+t1278068914
+s5105
+i"sgBase.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Graphics/sgVertex.h
+c000000004C6012E60000000000000628
+t1281364710
+s1576
+i"sgVector3.h"
+i"sgVector2.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Input/sgAccelerometer.h
+c000000004C65810F0000000000000672
+t1281720591
+s1650
+i"sgVector3.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Input/sgTouches.h
+c000000004C65810F0000000000000A25
+t1281720591
+s2597
+i<vector>
+i"sgVector2.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/OSBindings/iOS SDK/sgInit.h
+c000000004C2DFAC400000000000004DC
+t1278081732
+s1244
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/OSBindings/iOS SDK/sgView.h
+c000000004C2CE4F40000000000000924
+t1278010612
+s2340
+i<UIKit/UIKit.h>
+i<QuartzCore/QuartzCore.h>
+i"sgMain.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Templates/CameraFree.h
+c000000004C2DFAC40000000000000617
+t1278081732
+s1559
+i<cmath>
+i"sgAction.h"
+i"sgTouches.h"
+i"sgAccelerometer.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Engine/Templates/FPSDisplay.h
+c000000004C175A580000000000000557
+t1276598872
+s1367
+i"sgAction.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Combiner/sgAction.cpp
+c000000004C10D2D4000000000000053C
+t1276170964
+s1340
+i"sgAction.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Combiner/sgEntity.cpp
+c000000004CCDBD8A0000000000001388
+t1288551818
+s5000
+i"sgEntity.h"
+i"sgMain.h"
+i"sgAction.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Combiner/sgEvents.cpp
+c000000004C95D548000000000000054A
+t1284887880
+s1354
+i"sgEvents.h"
+i"sgMain.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Combiner/sgMain.cpp
+c000000004C95D548000000000000086E
+t1284887880
+s2158
+i"sgMain.h"
+i"sgRendererES1.h"
+i"sgRendererES2.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgBase.cpp
+c000000004C10C0400000000000000535
+t1276166208
+s1333
+i"sgBase.h"
+i"sgResourceManager.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgBase.h
+c000000004C10BF2A00000000000005DF
+t1276165930
+s1503
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgColor.cpp
+c000000004C10C04000000000000007F6
+t1276166208
+s2038
+i"sgColor.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgColor.h
+c000000004C10BF2A0000000000000F3F
+t1276165930
+s3903
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgDebug.cpp
+c000000004C10BF2A00000000000004C4
+t1276165930
+s1220
+i"sgDebug.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgDebug.h
+c000000004C61A5AA0000000000000529
+t1281467818
+s1321
+i<cstdio>
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgMatrix4x4.cpp
+c000000004C10C0400000000000001FC3
+t1276166208
+s8131
+i"sgMatrix4x4.h"
+i<cmath>
+i<cstring>
+i"sgVector4.h"
+i"sgVector3.h"
+i"sgQuaternion.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgMatrix4x4.h
+c000000004C10C01A0000000000001E52
+t1276166170
+s7762
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgQuaternion.cpp
+c000000004C10C040000000000000279D
+t1276166208
+s10141
+i<cmath>
+i"sgVector3.h"
+i"sgVector4.h"
+i"sgMatrix4x4.h"
+i"sgQuaternion.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgQuaternion.h
+c000000004C10BF2B0000000000002805
+t1276165931
+s10245
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgResourceManager.cpp
+c000000004C2CF0C60000000000000FE6
+t1278013638
+s4070
+i"sgResourceManager.h"
+i<map>
+i<string>
+i<fstream>
+i<iostream>
+i<CoreFoundation/CoreFoundation.h>
+i"sgBase.h"
+i"sgDebug.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgResourceManager.h
+c000000004C10BD570000000000000BBE
+t1276165463
+s3006
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgTimer.cpp
+c000000004C3E0D7800000000000007AB
+t1279135096
+s1963
+i"sgTimer.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgTimer.h
+c000000004C3DF504000000000000067A
+t1279128836
+s1658
+i<mach/mach.h>
+i<mach/mach_time.h>
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgTools.cpp
+c000000004C10C65200000000000011A8
+t1276167762
+s4520
+i"sgTools.h"
+i<cmath>
+i<vector>
+i"sgVector3.h"
+i"sgVertex.h"
+i"sgMesh.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgVector2.cpp
+c000000004C5DF1550000000000000FD0
+t1281225045
+s4048
+i"sgVector2.h"
+i<cmath>
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgVector2.h
+c000000004C5DF28E0000000000001392
+t1281225358
+s5010
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgVector3.cpp
+c000000004C5DF1550000000000001580
+t1281225045
+s5504
+i"sgVector3.h"
+i<cmath>
+i"sgMatrix4x4.h"
+i"sgQuaternion.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgVector3.h
+c000000004C5DF28E0000000000001787
+t1281225358
+s6023
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgVector4.cpp
+c000000004C5DF15500000000000017AC
+t1281225045
+s6060
+i"sgVector4.h"
+i<cmath>
+i"sgMatrix4x4.h"
+i"sgQuaternion.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgVector4.h
+c000000004C5DF28E00000000000017FC
+t1281225358
+s6140
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgXML.cpp
+c000000004C10BC290000000000003B70
+t1276165161
+s15216
+i<cstring>
+i<cstdlib>
+i<cctype>
+i"sgXML.h"
+i"sgResourceManager.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgXML.h
+c000000004C3CC35000000000000010B9
+t1279050576
+s4281
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/Shaders/default.fsh
+c000000004C2E3DF40000000000000574
+t1278098932
+s1396
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/Shaders/default.vsh
+c000000004C0F780D00000000000005C1
+t1276082189
+s1473
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/Shaders/defaultlight.fsh
+c000000004C5DF35500000000000005C5
+t1281225557
+s1477
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/Shaders/defaultlight.vsh
+c000000004C5DF3550000000000000A2C
+t1281225557
+s2604
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/Shaders/pp.vsh
+c000000004C65D40700000000000005C3
+t1281741831
+s1475
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/Shaders/shadowquad.fsh
+c000000004C5DF35600000000000004E8
+t1281225558
+s1256
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/Shaders/shadowquad.vsh
+c000000004C3076810000000000000500
+t1278244481
+s1280
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/Shaders/shadowvolume.fsh
+c000000004C6021410000000000000501
+t1281368385
+s1281
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/Shaders/shadowvolume.vsh
+c000000004C952E5400000000000005BB
+t1284845140
+s1467
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/sgCamera.cpp
+c000000004C95CF34000000000000080F
+t1284886324
+s2063
+i<cstring>
+i"sgCamera.h"
+i"sgTexture.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/sgLight.cpp
+c000000004C61BCAA000000000000079A
+t1281473706
+s1946
+i"sgLight.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/sgMaterial.cpp
+c000000004C65C34A0000000000002086
+t1281737546
+s8326
+i"sgMaterial.h"
+i<OpenGLES/ES1/gl.h>
+i<OpenGLES/ES1/glext.h>
+i<OpenGLES/ES2/gl.h>
+i<OpenGLES/ES2/glext.h>
+i"sgResourceManager.h"
+i"sgTexture.h"
+i"sgShader.h"
+i"sgRenderer.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/sgMesh.cpp
+c000000004C6302640000000000002634
+t1281557092
+s9780
+i"sgMesh.h"
+i<cmath>
+i<cstring>
+i<OpenGLES/ES1/gl.h>
+i<OpenGLES/ES1/glext.h>
+i<OpenGLES/ES2/gl.h>
+i<OpenGLES/ES2/glext.h>
+i"sgVertex.h"
+i"sgVector3.h"
+i"sgDebug.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/sgObject.cpp
+c000000004CCDBD1A000000000000587B
+t1288551706
+s22651
+i"sgObject.h"
+i"sgResourceManager.h"
+i"sgObjectFiles.h"
+i"sgMaterial.h"
+i"sgMesh.h"
+i"sgLight.h"
+i"sgShadowVolume.h"
+i"sgRenderer.h"
+i"sgDebug.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/sgObjectFiles.cpp
+c000000004C2BADE40000000000002A2B
+t1277930980
+s10795
+i"sgObjectFiles.h"
+i"sgXML.h"
+i"sgResourceManager.h"
+i"sgMaterial.h"
+i"sgMesh.h"
+i"sgObject.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/sgPanel.cpp
+c000000004C657B370000000000001C16
+t1281719095
+s7190
+i"sgPanel.h"
+i"sgMaterial.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/sgRenderer.cpp
+c000000004CBDA3DC00000000000017E0
+t1287496668
+s6112
+i"sgRenderer.h"
+i<string>
+i"sgResourceManager.h"
+i"TargetConditionals.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/sgRendererES1.cpp
+c000000004C95CFA70000000000003B56
+t1284886439
+s15190
+i"sgRendererES1.h"
+i"sgDebug.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/sgRendererES2.cpp
+c000000004CBDA2610000000000006D5E
+t1287496289
+s27998
+i"sgRendererES2.h"
+i"sgShadowVolume.h"
+i"sgDebug.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/sgShader.cpp
+c000000004C601E790000000000001DAE
+t1281367673
+s7598
+i"sgShader.h"
+i<string>
+i<OpenGLES/ES2/gl.h>
+i<OpenGLES/ES2/glext.h>
+i"sgResourceManager.h"
+i"sgDebug.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/sgShadowVolume.cpp
+c000000004C9527F200000000000026AD
+t1284843506
+s9901
+i<cmath>
+i"sgShadowVolume.h"
+i"sgVertex.h"
+i"sgMesh.h"
+i"sgObject.h"
+i"sgLight.h"
+i"sgDebug.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/sgTexture.cpp
+c000000004C667E6200000000000020CE
+t1281785442
+s8398
+i"sgTexture.h"
+i<string>
+i<OpenGLES/ES1/gl.h>
+i<OpenGLES/ES1/glext.h>
+i<OpenGLES/ES2/gl.h>
+i<OpenGLES/ES2/glext.h>
+i<CoreGraphics/CoreGraphics.h>
+i"sgResourceManager.h"
+i"sgRenderer.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Input/sgAccelerometer.cpp
+c000000004C6581360000000000000506
+t1281720630
+s1286
+i"sgAccelerometer.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Input/sgTouches.cpp
+c000000004C65810F00000000000006FF
+t1281720591
+s1791
+i"sgTouches.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/OSBindings/iOS SDK/sgInit.mm
+c000000004CBDA3DC00000000000005FE
+t1287496668
+s1534
+i"sgInit.h"
+i"sgMain.h"
+i"sgEvents.h"
+i<UIKit/UIKit.h>
+i"sgView.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/OSBindings/iOS SDK/sgView.mm
+c000000004C7434700000000000002EFD
+t1282684016
+s12029
+i"sgView.h"
+i<OpenGLES/ES1/gl.h>
+i<OpenGLES/ES1/glext.h>
+i<OpenGLES/ES2/gl.h>
+i<OpenGLES/ES2/glext.h>
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Templates/CameraFree.cpp
+c000000004C95F45F0000000000001157
+t1284895839
+s4439
+i"CameraFree.h"
+i"sgMain.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Templates/FPSDisplay.cpp
+c000000004C175A58000000000000067A
+t1276598872
+s1658
+i"FPSDisplay.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Templates/Shaders/RedCyanStereo.fsh
+c000000004C2E3DF300000000000005D6
+t1278098931
+s1494
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Media/Textures/font1.png
+c000000004C0FEC120000000000003869
+t1276111890
+s14441
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Media/Textures/sand.png
+c000000004C65DBB20000000000025CC3
+t1281743794
+s154819
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Media/Textures/sky_back.png
+c000000004C4B07F40000000000012BCE
+t1279985652
+s76750
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Media/Textures/sky_down.png
+c000000004C4B07FF000000000000EEBD
+t1279985663
+s61117
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Media/Textures/sky_front.png
+c000000004C4B080B0000000000012E6B
+t1279985675
+s77419
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Media/Textures/sky_left.png
+c000000004C4B081700000000000135F2
+t1279985687
+s79346
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Media/Textures/sky_right.png
+c000000004C4B08240000000000010A7D
+t1279985700
+s68221
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Media/Textures/sky_up.png
+c000000004C4B08310000000000012133
+t1279985713
+s74035
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/Code/Main/Events.h
+c000000004CCDB71500000000000005D4
+t1288550165
+s1492
+i"sgEvents.h"
+i"sgMain.h"
+i"sgDebug.h"
+i"CameraFree.h"
+i"FPSDisplay.h"
+i"Rotate.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/Code/Main/Events.mm
+c000000004CCDBEE100000000000008B0
+t1288552161
+s2224
+i"Events.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/Code/Main/main.cpp
+c000000004CCDB715000000000000052E
+t1288550165
+s1326
+i"sgInit.h"
+i"Events.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/Code/Objects/Rotate.cpp
+c000000004CCDB715000000000000059C
+t1288550165
+s1436
+i"Rotate.h"
+i"sgVector3.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/Code/Objects/Rotate.h
+c000000004CCDB7150000000000000528
+t1288550165
+s1320
+i"sgAction.h"
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/Entitlements.plist
+c000000004CCDB71500000000000000E1
+t1288550165
+s225
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app.dSYM
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app/Entitlements.plist
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app/Info.plist
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app/PkgInfo
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app/RedCyanStereo.fsh
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app/default.fsh
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app/default.vsh
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app/defaultlight.fsh
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app/defaultlight.vsh
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app/font1.png
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app/icon.png
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app/pp.vsh
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app/sand.png
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app/sgTerrain
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app/sgTerrain-Info.plist
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app/shadowquad.fsh
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app/shadowquad.vsh
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app/shadowvolume.fsh
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app/shadowvolume.vsh
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app/sky_back.png
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app/sky_down.png
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app/sky_front.png
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app/sky_left.png
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app/sky_right.png
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app/sky_up.png
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/CameraFree.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/Events.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/FPSDisplay.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/Rotate.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/main.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgAccelerometer.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgAction.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgBase.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgCamera.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgColor.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgDebug.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgEntity.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgEvents.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgInit.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgLight.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgMain.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgMaterial.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgMatrix4x4.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgMesh.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgObject.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgObjectFiles.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgPanel.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgQuaternion.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgRenderer.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgRendererES1.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgRendererES2.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgResourceManager.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgShader.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgShadowVolume.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgTerrain.LinkFileList
+c00000000000000000000000000000000
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgTexture.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgTimer.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgTools.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgTouches.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgVector2.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgVector3.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgVector4.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgView.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgXML.o
+t2
+s0
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/icon.png
+c000000004CCDB715000000000000185B
+t1288550165
+s6235
+
+N/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/sgTerrain-Info.plist
+c000000004CCDB71500000000000003B2
+t1288550165
+s946
+
+NsgTerrain-Info.plist
+c000000004CCDB71500000000000003B2
+t1288550165
+s946
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/CameraFree.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Templates/CameraFree.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/Events.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/Code/Main/Events.mm" normal i386 objective-c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/FPSDisplay.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Templates/FPSDisplay.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/Rotate.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/Code/Objects/Rotate.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/main.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/Code/Main/main.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgAccelerometer.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Input/sgAccelerometer.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgAction.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Combiner/sgAction.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgBase.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgBase.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgCamera.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/sgCamera.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgColor.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgColor.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgDebug.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgDebug.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgEntity.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Combiner/sgEntity.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgEvents.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Combiner/sgEvents.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgInit.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/OSBindings/iOS SDK/sgInit.mm" normal i386 objective-c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgLight.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/sgLight.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgMain.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Combiner/sgMain.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgMaterial.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/sgMaterial.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgMatrix4x4.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgMatrix4x4.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgMesh.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/sgMesh.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgObject.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/sgObject.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgObjectFiles.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/sgObjectFiles.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgPanel.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/sgPanel.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgQuaternion.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgQuaternion.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgRenderer.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/sgRenderer.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgRendererES1.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/sgRendererES1.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgRendererES2.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/sgRendererES2.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgResourceManager.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgResourceManager.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgShader.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/sgShader.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgShadowVolume.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/sgShadowVolume.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgTexture.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/sgTexture.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgTimer.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgTimer.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgTools.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgTools.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgTouches.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Input/sgTouches.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgVector2.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgVector2.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgVector3.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgVector3.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgVector4.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgVector4.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgView.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/OSBindings/iOS SDK/sgView.mm" normal i386 objective-c++ com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/sgTerrain.build/Release-iphonesimulator/sgTerrain.build/Objects-normal/i386/sgXML.o "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Common/sgXML.cpp" normal i386 c++ com.apple.compilers.gcc.4_2
+r0
+
+CCopyPlistFile "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app/Entitlements.plist" Entitlements.plist
+r0
+
+CCopyPlistFile "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app/sgTerrain-Info.plist" sgTerrain-Info.plist
+r0
+
+CCpResource build/Release-iphonesimulator/sgTerrain.app/RedCyanStereo.fsh ../../Engine/Templates/Shaders/RedCyanStereo.fsh
+r0
+
+CCpResource build/Release-iphonesimulator/sgTerrain.app/default.fsh ../../Engine/Graphics/Shaders/default.fsh
+r0
+
+CCpResource build/Release-iphonesimulator/sgTerrain.app/default.vsh ../../Engine/Graphics/Shaders/default.vsh
+r0
+
+CCpResource build/Release-iphonesimulator/sgTerrain.app/defaultlight.fsh ../../Engine/Graphics/Shaders/defaultlight.fsh
+r0
+
+CCpResource build/Release-iphonesimulator/sgTerrain.app/defaultlight.vsh ../../Engine/Graphics/Shaders/defaultlight.vsh
+r0
+
+CCpResource build/Release-iphonesimulator/sgTerrain.app/font1.png ../../Media/Textures/font1.png
+r0
+
+CCpResource build/Release-iphonesimulator/sgTerrain.app/icon.png icon.png
+r0
+
+CCpResource build/Release-iphonesimulator/sgTerrain.app/pp.vsh ../../Engine/Graphics/Shaders/pp.vsh
+r0
+
+CCpResource build/Release-iphonesimulator/sgTerrain.app/sand.png ../../Media/Textures/sand.png
+r0
+
+CCpResource build/Release-iphonesimulator/sgTerrain.app/shadowquad.fsh ../../Engine/Graphics/Shaders/shadowquad.fsh
+r0
+
+CCpResource build/Release-iphonesimulator/sgTerrain.app/shadowquad.vsh ../../Engine/Graphics/Shaders/shadowquad.vsh
+r0
+
+CCpResource build/Release-iphonesimulator/sgTerrain.app/shadowvolume.fsh ../../Engine/Graphics/Shaders/shadowvolume.fsh
+r0
+
+CCpResource build/Release-iphonesimulator/sgTerrain.app/shadowvolume.vsh ../../Engine/Graphics/Shaders/shadowvolume.vsh
+r0
+
+CCpResource build/Release-iphonesimulator/sgTerrain.app/sky_back.png ../../Media/Textures/sky_back.png
+r0
+
+CCpResource build/Release-iphonesimulator/sgTerrain.app/sky_down.png ../../Media/Textures/sky_down.png
+r0
+
+CCpResource build/Release-iphonesimulator/sgTerrain.app/sky_front.png ../../Media/Textures/sky_front.png
+r0
+
+CCpResource build/Release-iphonesimulator/sgTerrain.app/sky_left.png ../../Media/Textures/sky_left.png
+r0
+
+CCpResource build/Release-iphonesimulator/sgTerrain.app/sky_right.png ../../Media/Textures/sky_right.png
+r0
+
+CCpResource build/Release-iphonesimulator/sgTerrain.app/sky_up.png ../../Media/Textures/sky_up.png
+r0
+
+CGenerateDSYMFile "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app.dSYM" "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app/sgTerrain"
+r0
+
+CLd "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app/sgTerrain" normal i386
+r0
+
+CProcessInfoPlistFile "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app/Info.plist" sgTerrain-Info.plist
+r0
+
+CTouch "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/build/Release-iphonesimulator/sgTerrain.app"
+r0
+

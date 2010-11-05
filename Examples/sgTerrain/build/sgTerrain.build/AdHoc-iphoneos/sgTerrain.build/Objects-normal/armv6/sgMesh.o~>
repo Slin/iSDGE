@@ -1,0 +1,2 @@
+/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/sgMesh.cpp: In member function 'void sgMesh::generateVBO(bool)':
+/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgTerrain/../../Engine/Graphics/sgMesh.cpp:114: error: expected `;' before '}' token
