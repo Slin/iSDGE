@@ -28,6 +28,8 @@
 
 #include "sgBase.h"
 
+class sgColorA;
+
 /**
  * Texture class. Stores and handles a texture.
  */
@@ -51,8 +53,9 @@ class sgTexture : public sgBase
 		 *	If there isn´t already a texture, this function loads it from the given file.
 		 * @param filename the name of the file to load
 		 * @param mipmaps has to be set to FALSE if you don´t want mipmaps to be created for this texture
+		 * @param lock keeps the texture locked after creation if true.
 		 */
-		void createTexture2D(const char *filename, bool mipmaps = true);
+		void createTexture2D(const char *filename, bool mipmaps = true, bool lock = false);
 	
 		/**
 		 *	Create 2D Texture.
@@ -85,13 +88,14 @@ class sgTexture : public sgBase
 		 *	Creates and returns a pointer to a texture loaded from the given file.
 		 * @param filename the name of the file to load
 		 * @param mipmaps has to be set to FALSE if you don´t want mipmaps to be created for this texture
+		 * @param lock keeps the texture locked after creation if true.
 		 * @return pointer to the texture classes instance
 		 */
-		static sgTexture *getTexture2D(const char *filename, bool mipmaps = true);
+		static sgTexture *getTexture2D(const char *filename, bool mipmaps = true, bool lock = false);
 	
 		/**
-		 *	Get Texture.
-		 *	Creates and returns a pointer to a texture loaded from the given file.
+		 * Get Texture.
+		 * Creates and returns a pointer to a texture loaded from the given file.
 		 * @param width the width of the texture to create
 		 * @param height the height of the texture to create
 		 * @return pointer to the texture classes instance
@@ -99,8 +103,8 @@ class sgTexture : public sgBase
 		static sgTexture *getTexture2D(float width_, float height_);
 	
 		/**
-		 *	Get Texture from PVRTC file.
-		 *	Creates and returns a pointer to a texture loaded from a PVRTS compressed file.
+		 * Get Texture from PVRTC file.
+		 * Creates and returns a pointer to a texture loaded from a PVRTS compressed file.
 		 * @param name the name of the file to load, without the type
 		 * @param w the width of the image can´t be set automatically
 		 * @param h the height of the image can´t be set automatically
@@ -108,14 +112,56 @@ class sgTexture : public sgBase
 		 * @return pointer to the texture classes instance
 		 */
 //		static sgTexture *getPVRTCTexture2D(const char *name, unsigned int w, unsigned int h, unsigned int type = GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG, BOOL mipmaps = TRUE);
+	
+		/**
+		 * Lock pixels.
+		 * Creates an array of the texture pixels which is manipulatable using setPixels() and getPixels().
+		 */
+		void lockPixels();
+	
+		/**
+		 * Update pixels.
+		 * Updates the texture from locked pixels without unlocking. Only use this if you constantly change the texture during the game. Use unlockPixels() otherwize.
+		 */
+		void updatePixels();
+	
+		/**
+		 * Unlock pixels.
+		 * Updates the texture from the array created in lockPixels() and delete that array.
+		 */
+		void unlockPixels();
+	
+		/**
+		 * Set pixel.
+		 * Changes a texture pixel between a lock and unlock call.
+		 * @param x horizontal pixel position.
+		 * @param y vertical pixel position.
+		 * @param color new pixel color.
+		 */
+		void setPixel(unsigned int x, unsigned int y, sgColorA color);
+	
+		/**
+		 * Get pixel.
+		 * Returns a textures pixel color between a lock and unlock call.
+		 * @param x horizontal pixel position.
+		 * @param y vertical pixel position.
+		 * @return color of the pixel.
+		 */
+		sgColorA getPixel(unsigned int x, unsigned int y);
 
 		/**
-		 *	Set texture parameter int.
-		 *	Sets the specified OpenGL parameter for the texture.
+		 * Set texture parameter int.
+		 * Sets the specified OpenGL parameter for the texture.
 		 * @param pname the parameter to set a new value for
 		 * @param param the new value
 		 */
 		void setParameteri(unsigned int pname, unsigned int param);
+	
+		/**
+		 *	Destroy.
+		 *	Destroys the instance.
+		 */
+		void destroy();
 		
 		/**
 		 *	Texture ID.
@@ -149,6 +195,7 @@ class sgTexture : public sgBase
 	
 	private:
 		unsigned int fbo_depth;
+		unsigned char *texdata;
 };
 
 #endif

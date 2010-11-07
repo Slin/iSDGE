@@ -79,7 +79,6 @@
 		29D7EB5B117CFABF0091D933 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29D7EB5A117CFABF0091D933 /* Entitlements.plist */; };
 		29D7EB61117CFC750091D933 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 29D7EB60117CFC750091D933 /* icon.png */; };
 		29ECE04A1213086D00385A1E /* sgShadowVolume.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29ECE0491213086D00385A1E /* sgShadowVolume.cpp */; };
-		29F0806812146A5C0004587B /* Shadows-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29F0806712146A5C0004587B /* Shadows-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -601,7 +600,6 @@
 				29A42EDB118346DA0080394F /* default.vsh in Resources */,
 				29D7EB5B117CFABF0091D933 /* Entitlements.plist in Resources */,
 				29D7EB61117CFC750091D933 /* icon.png in Resources */,
-				29F0806812146A5C0004587B /* Shadows-Info.plist in Resources */,
 				292FFC2912159C61003564EE /* haus.sgm in Resources */,
 				292FFC2F12159C61003564EE /* f360.sgm in Resources */,
 				292FFC3012159C61003564EE /* fsking.png in Resources */,

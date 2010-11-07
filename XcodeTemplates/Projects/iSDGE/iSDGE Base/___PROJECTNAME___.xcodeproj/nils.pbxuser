@@ -1,0 +1,141 @@
+// !$*UTF8*$!
+{
+	1D6058900D05DD3D006BFB54 /* ___PROJECTNAMEASIDENTIFIER___ */ = {
+		activeExec = 0;
+		executables = (
+			2935600B1286BD3D007BE9B7 /* ___PROJECTNAMEASIDENTIFIER___ */,
+		);
+	};
+	2935600B1286BD3D007BE9B7 /* ___PROJECTNAMEASIDENTIFIER___ */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = "___PROJECTNAMEASIDENTIFIER___";
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+	};
+	293560221286BD58007BE9B7 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+	};
+	293560231286BD58007BE9B7 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	293560261286BE54007BE9B7 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 295CBF8C12158A9600F1F941 /* ___PROJECTNAMEASIDENTIFIER___-Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = "/Users/nils/Documents/X-Code Projects/iSDGE_Complete/iSDGE_GIT/XcodeTemplates/Projects/iSDGE/iSDGE Base/___PROJECTNAMEASIDENTIFIER___-Info.plist";
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
+	293560271286BE54007BE9B7 /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 29D7EB5A117CFABF0091D933 /* Entitlements.plist */;
+	};
+	293560281286BE54007BE9B7 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 29D7EB5A117CFABF0091D933 /* Entitlements.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = "/Users/nils/Documents/X-Code Projects/iSDGE_Complete/iSDGE_GIT/XcodeTemplates/Projects/iSDGE/iSDGE Base/Entitlements.plist";
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeExecutable = 2935600B1286BD3D007BE9B7 /* ___PROJECTNAMEASIDENTIFIER___ */;
+		activeTarget = 1D6058900D05DD3D006BFB54 /* ___PROJECTNAMEASIDENTIFIER___ */;
+		codeSenseManager = 293560231286BD58007BE9B7 /* Code sense */;
+		executables = (
+			2935600B1286BD3D007BE9B7 /* ___PROJECTNAMEASIDENTIFIER___ */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					341,
+					20,
+					48.16259765625,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					301,
+					60,
+					20,
+					48.16259765625,
+					43,
+					43,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXTargetDataSource_PrimaryAttribute,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 310820157;
+			PBXWorkspaceStateSaveDate = 310820157;
+		};
+		perUserProjectItems = {
+			293560261286BE54007BE9B7 /* PlistBookmark */ = 293560261286BE54007BE9B7 /* PlistBookmark */;
+			293560271286BE54007BE9B7 /* PBXBookmark */ = 293560271286BE54007BE9B7 /* PBXBookmark */;
+			293560281286BE54007BE9B7 /* PlistBookmark */ = 293560281286BE54007BE9B7 /* PlistBookmark */;
+		};
+		sourceControlManager = 293560221286BD58007BE9B7 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+}

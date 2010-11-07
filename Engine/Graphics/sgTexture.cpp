@@ -33,12 +33,14 @@
 #include <CoreGraphics/CoreGraphics.h>
 #include "sgResourceManager.h"
 #include "sgRenderer.h"
+#include "sgColor.h"
 
 sgTexture::sgTexture()
 {
 	loaded = false;
 	fbo = -1;
 	texid = -1;
+	texdata = NULL;
 }
 
 sgTexture::~sgTexture()
@@ -58,9 +60,12 @@ sgTexture::~sgTexture()
 	
 	if(texid != -1)
 		glDeleteTextures(1, &texid);
+	
+	if(texdata != NULL)
+		delete[] texdata;
 }
 
-void sgTexture::createTexture2D(const char *filename, bool mipmaps)
+void sgTexture::createTexture2D(const char *filename, bool mipmaps, bool lock)
 {
 	if(loaded)
 		return;
@@ -108,18 +113,22 @@ void sgTexture::createTexture2D(const char *filename, bool mipmaps)
 	}
 
 	
-	GLubyte *textureData = (GLubyte *)calloc(width*height*4, 1);
-	CGContextRef textureContext = CGBitmapContextCreate(textureData, width, height, 8, width*4, CGImageGetColorSpace(textureImage), kCGImageAlphaPremultipliedLast);
+	texdata = (unsigned char *)calloc(width*height*4, 1);
+	CGContextRef textureContext = CGBitmapContextCreate(texdata, width, height, 8, width*4, CGImageGetColorSpace(textureImage), kCGImageAlphaPremultipliedLast);
 	CGContextDrawImage(textureContext, CGRectMake(0.0, 0.0, (float)width, (float)height), textureImage);
 	
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, textureData);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, texdata);
 
 	if(mipmaps && sgRenderer::oglversion > 1)
 	{
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	
-	free(textureData);
+	if(!lock)
+	{
+		free(texdata);
+		texdata = NULL;
+	}
 	CFRelease(textureContext);
 	CGImageRelease(textureImage);
 	
@@ -243,14 +252,14 @@ void sgTexture::setParameteri(unsigned int pname, unsigned int param)
 	glTexParameteri(GL_TEXTURE_2D, pname, param);
 }
 
-sgTexture *sgTexture::getTexture2D(const char *filename, bool mipmaps)
+sgTexture *sgTexture::getTexture2D(const char *filename, bool mipmaps, bool lock)
 {
 	sgTexture *tex = (sgTexture*)sgResourceManager::getResource(filename);
 	if(tex != NULL)
 		return tex;
 	
 	tex = new sgTexture();
-	tex->createTexture2D(filename, mipmaps);
+	tex->createTexture2D(filename, mipmaps, lock);
 	return tex;
 }
 
@@ -273,3 +282,89 @@ sgTexture *sgTexture::getTexture2D(float width_, float height_)
 	tex->createPVRTCTexture2D(name, w, h, type, mipmaps);
 	return tex;
 }*/
+
+void sgTexture::lockPixels()
+{
+	if(texdata != NULL)
+		return;
+	
+	glBindTexture(GL_TEXTURE_2D, texid);
+	texdata = new unsigned char[width*height*4];
+	for(int i = 0; i < width*height*4; i++)
+		texdata[i] = 0;
+	
+	bool newfbo = false;
+	if(fbo == -1)
+	{
+		newfbo = true;
+		if(sgRenderer::oglversion > 1)
+		{
+			glGenFramebuffers(1, &fbo);
+			glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texid, 0);
+		}else
+		{
+			glGenFramebuffersOES(1, &fbo);
+			glBindFramebufferOES(GL_FRAMEBUFFER_OES, fbo);
+			glFramebufferTexture2DOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_TEXTURE_2D, texid, 0);
+		}
+	}else
+	{
+		if(sgRenderer::oglversion > 1)
+		{
+			glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+		}else
+		{
+			glBindFramebufferOES(GL_FRAMEBUFFER_OES, fbo);
+		}
+	}
+	
+	glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, texdata);
+	
+	if(newfbo)
+	{
+		if(sgRenderer::oglversion > 1)
+		{
+			glDeleteFramebuffers(1, &fbo);
+		}else
+		{
+			glDeleteFramebuffersOES(1, &fbo);
+		}
+		fbo = -1;
+	}
+}
+
+void sgTexture::updatePixels()
+{
+	glBindTexture(GL_TEXTURE_2D, texid);
+	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, texdata);
+}
+
+
+void sgTexture::unlockPixels()
+{
+	updatePixels();
+	delete[] texdata;
+	texdata = NULL;
+}
+
+void sgTexture::setPixel(unsigned int x, unsigned int y, sgColorA color)
+{
+	y = height-y-1;
+	texdata[y*width*4+x*4+0] = color.r;
+	texdata[y*width*4+x*4+1] = color.g;
+	texdata[y*width*4+x*4+2] = color.b;
+	texdata[y*width*4+x*4+3] = color.a;
+}
+
+sgColorA sgTexture::getPixel(unsigned int x, unsigned int y)
+{
+	y = height-y-1;
+	return sgColorA(texdata[y*width*4+x*4+0], texdata[y*width*4+x*4+1], texdata[y*width*4+x*4+2], texdata[y*width*4+x*4+3]);
+}
+
+void sgTexture::destroy()
+{
+	sgResourceManager::removeResource(this);
+	delete this;
+}

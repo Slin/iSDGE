@@ -29,12 +29,11 @@ uniform sampler2D mTexture0;
 uniform lowp float mAlphaTest;
 
 varying vec2 texcoord;
-varying lowp vec4 light;
-varying vec3 normal;
+varying lowp float light;
 
 void main()
 {
-    gl_FragColor = vec4(normal.y, normal.y, normal.y, 1.0)*texture2D(mTexture0, texcoord)*light;
+    gl_FragColor = texture2D(mTexture0, texcoord)*light;
 	if(gl_FragColor.a-mAlphaTest <= 0.0)
 		discard;
 }

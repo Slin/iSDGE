@@ -62,7 +62,7 @@ class sgShader : public sgBase
 		 * @return pointer to the shaders instance
 		 */
 		static sgShader *getShader(const char *vsfilename, const char *fsfilename);
-	
+		
 		/**
 		 *	Get shader.
 		 *	Returns the pointer to an instance of a default shader identified by the given number.
@@ -70,36 +70,33 @@ class sgShader : public sgBase
 		 * @return pointer to the shaders instance
 		 */
 		static sgShader *getShader(unsigned int shad);
-	
+		
 		/**
-		 *	Create shader.
-		 *	Creates a new shader for the current instance from the given files.
-		 * @param vsfilename name of the textfile containing the vertex shader of the type .vsh, without the type specifier
-		 * @param fsfilename name of the textfile containing the fragment shader of the type .fsh, without the type specifier
-		 * @return pointer to the shaders instance
+		 *	Destroy.
+		 *	Destroys the instance.
 		 */
 		void destroy();
-	
+		
 		/**
 		 *	Validate shader program.
 		 *	Checks if the shader is setup correctly.
 		 * @return TRUE if everything is fine, FALSE otherwize
 		 */
 		bool validateProgram();
-	
+		
 		/**
 		 *	Number of dynamic lights.
 		 *	The number of dynamic lights handled by this shader. Default 2.
 		 */
 		unsigned int maxlights;
-	
+		
 		/**
 		 *	Shader program.
 		 *	The id of the OpenGL shader program.
 		 */
 		unsigned int program;
-
-	
+		
+		
 		unsigned int matproj;
 		unsigned int matview;
 		unsigned int matmodel;

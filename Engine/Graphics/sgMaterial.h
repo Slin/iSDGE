@@ -265,6 +265,12 @@ class sgMaterial : public sgBase
 		static sgMaterial *getMaterial(const char *vsname, const char *fsname, sgTexture *tex);
 	
 		/**
+		 *	Destroy.
+		 *	Destroys the instance.
+		 */
+		void destroy();
+	
+		/**
 		 *	Shader.
 		 *	The shader used for this material.
 		 */

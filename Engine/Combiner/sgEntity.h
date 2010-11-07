@@ -30,6 +30,7 @@
 #include "sgObject.h"
 #include "sgCamera.h"
 #include "sgPanel.h"
+#include "sgVector4.h"
 
 class sgAction;
 class sgMain;
@@ -59,13 +60,15 @@ class sgEntity
 	
 		/**
 		 *	Create terrain entity.
-		 *	Creates a new terrain entity with the given number of vertices in x and y direction. The distance of vertices belong one axis is 1 unit by default.
+		 *	Creates a new terrain entity from a heightmap image with the given number of vertices in x and y direction. The distance of vertices belong one axis is 1 unit by default.
+		 * @param hmp name of the heightmap image, or NULL for a flat terrain.
 		 * @param xverts number of vertices along the x axis.
 		 * @param zverts number of vertices along the y axis.
+		 * @param hmpscale vector defining how much each heightmap color channel effects the terrains height.
 		 * @param a pointer to the action which will be assigned to the new entity.
 		 * @return pointer to the new entity
 		 */
-		sgEntity *createTerrainEntity(unsigned int xverts = 10, unsigned int zverts = 10, float xtexscale = 10.0, float ytexscale = 10.0, sgAction *a = NULL);
+		sgEntity *createTerrainEntity(const char *hmp, unsigned int xverts = 10, unsigned int zverts = 10, float xtexscale = 10.0, float ytexscale = 10.0, sgVector4 hmpscale = sgVector4(0.01, 0, 0, 0), sgAction *a = NULL);
 	
 		/**
 		 *	Create skycube entity.

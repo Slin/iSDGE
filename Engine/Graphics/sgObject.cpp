@@ -724,7 +724,7 @@ sgObject *sgObject::createPlane(unsigned int xverts, unsigned int zverts, float 
 			mesh->vertices[x*zverts+y].position.x = (float)x-0.5f*(float)xverts;
 			mesh->vertices[x*zverts+y].position.y = 0.0f;
 			mesh->vertices[x*zverts+y].position.z = (float)y-0.5f*(float)zverts;
-//			mesh->vertices[x*zverts+y].position.y = sin(mesh->vertices[x*zverts+y].position.x*0.1)*sin(mesh->vertices[x*zverts+y].position.z*0.1)*4.0f;
+//			mesh->vertices[x*zverts+y].position.y = sin(mesh->vertices[x*zverts+y].position.x*0.33)*sin(mesh->vertices[x*zverts+y].position.z*0.33)*2.0f;
 			mesh->vertices[x*zverts+y].uv.x = (float)x/(float)xverts*xtexscale;
 			mesh->vertices[x*zverts+y].uv.y = (float)y/(float)zverts*ytexscale;
 		}

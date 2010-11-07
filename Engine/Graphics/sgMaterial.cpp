@@ -367,3 +367,9 @@ sgMaterial *sgMaterial::getMaterial(const char *vsname, const char *fsname, sgTe
 	sgResourceManager::addResource(mat);
 	return mat;
 }
+
+void sgMaterial::destroy()
+{
+	sgResourceManager::removeResource(this);
+	delete this;
+}

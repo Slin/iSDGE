@@ -51,8 +51,8 @@ void Events::onInit(sgMain *m)
 	sgmain->first_ent->createSkyCubeEntity("sky_right.png", "sky_back.png", "sky_left.png", "sky_front.png", "sky_down.png", "sky_up.png");
 	
 	//Create a terrain entity
-	sgEntity *ent = sgmain->first_ent->createTerrainEntity(100, 100, 100, 100);
-	ent->obj->materials[0]->setTexture2D(-1, "sand.png");
+	sgEntity *ent = sgmain->first_ent->createTerrainEntity("terrain.png", 50, 50, 50, 50, sgVector4(0.01, 0.0, 0.0, 0.0));
+	ent->obj->materials[0]->setTexture2D(-1, "grass.png");
 }
 
 //Called every frame, just before drawing
