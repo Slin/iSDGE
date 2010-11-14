@@ -1,7 +1,7 @@
-//
-//  Shader.fsh
-//  iSDGE
-//
+
+//	Shader.vsh
+//	iSDGE
+
 //	Created by Nils Daumann on 16.04.10.
 //	Copyright (c) 2010 Nils Daumann
 
@@ -23,15 +23,24 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-precision highp float;
+attribute vec3 vertPos;
+attribute vec3 vertNormal;
+attribute vec2 vertTexcoord0;
 
-uniform sampler2D mTexture0;
-uniform lowp vec4 color;
+uniform mat4 matProj;
+uniform mat4 matView;
+uniform mat4 matModel;
+uniform mat4 matNormal;
+uniform mat4 matTex;
 
 varying vec2 texcoord;
-varying lowp float light;
+varying float light;
 
 void main()
 {
-    gl_FragColor = texture2D(mTexture0, texcoord)*light*color;
+	texcoord = (matTex*vec4(vertTexcoord0, 1.0, 1.0)).xy;
+	gl_Position = matProj*matView*matModel*vec4(vertPos, 1.0);
+	vec4 norm = matNormal*vec4(vertNormal, 0.0);
+	
+	light = norm.y;
 }

@@ -131,6 +131,8 @@ sgView *sgview;
 {
 	[EAGLContext setCurrentContext:context];
 	sgmain->drawView();
+//	[EAGLContext setCurrentContext:context];
+//	glBindRenderbuffer(GL_RENDERBUFFER, sgmain->renderer->colorRenderbuffer);
 	if(sgmain->renderer->oglversion >= 2)
 	{
 		[context presentRenderbuffer:GL_RENDERBUFFER];

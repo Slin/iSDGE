@@ -27,6 +27,7 @@
 
 #include "sgMain.h"
 #include "sgAction.h"
+#include "sgDebug.h"
 
 sgEntity::sgEntity(sgEntity* p, sgEntity *n, sgMain *m)
 {
@@ -50,28 +51,10 @@ sgEntity *sgEntity::createObjEntity(const char *name, sgAction *a)
 	return next;
 }
 
-sgEntity *sgEntity::createTerrainEntity(const char *hmp, unsigned int xverts, unsigned int zverts, float xtexscale, float ytexscale, sgVector4 hmpscale, sgAction *a)
+sgEntity *sgEntity::createTerrainEntity(const char *hmp, unsigned int xverts, unsigned int zverts, unsigned char xchunks, unsigned char zchunks, sgVector4 hmpscale, sgAction *a)
 {
 	next = new sgEntity(prev, next, sgmain);
-	next->obj = sgmain->renderer->first_solid->createPlane(xverts, zverts, xtexscale, ytexscale);
-	
-	if(hmp != NULL)
-	{
-		sgTexture *tex = sgTexture::getTexture2D(hmp, false, true);
-		sgColorA color;
-		for(int x = 0; x < xverts; x++)
-		{
-			for(int y = 0; y < zverts; y++)
-			{
-				color = tex->getPixel(x*(tex->width/xverts), y*(tex->height/zverts));
-				next->obj->meshs[0]->vertices[x*zverts+y].position.y = ((float)color.r)*hmpscale.x+((float)color.g)*hmpscale.y+((float)color.b)*hmpscale.z+((float)color.a)*hmpscale.w;
-			}
-		}
-		next->obj->meshs[0]->calculateNormals();
-		next->obj->meshs[0]->generateVBO();
-		
-		tex->destroy();
-	}
+	next->obj = sgmain->renderer->first_solid->createTerrain(xverts, zverts, xchunks, zchunks, hmp, hmpscale);
 	
 	next->act = a;
 	if(next->act)

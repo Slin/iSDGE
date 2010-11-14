@@ -35,6 +35,8 @@
 #include "sgRenderer.h"
 #include "sgColor.h"
 
+#include "sgDebug.h"
+
 sgTexture::sgTexture()
 {
 	loaded = false;
@@ -348,18 +350,45 @@ void sgTexture::unlockPixels()
 	texdata = NULL;
 }
 
-void sgTexture::setPixel(unsigned int x, unsigned int y, sgColorA color)
+void sgTexture::setPixel(int x, int y, sgColorA color)
 {
-	y = height-y-1;
+	if(x < 0)
+	{
+		int facx = -x/width;
+		x += facx*width;
+	}
+	x %= width;
+	
+	if(y < 0)
+	{
+		int facy = -y/height;
+		y += facy*height;
+		sgLog("%i, %i", facy, y);
+	}
+	y %= height;
+	
 	texdata[y*width*4+x*4+0] = color.r;
 	texdata[y*width*4+x*4+1] = color.g;
 	texdata[y*width*4+x*4+2] = color.b;
 	texdata[y*width*4+x*4+3] = color.a;
 }
 
-sgColorA sgTexture::getPixel(unsigned int x, unsigned int y)
+sgColorA sgTexture::getPixel(int x, int y)
 {
-	y = height-y-1;
+	if(x < 0)
+	{
+		int facx = -x/width+1;
+		x += facx*width;
+	}
+	x %= width;
+	
+	if(y < 0)
+	{
+		int facy = -y/height+1;
+		y += facy*height;
+	}
+	y %= height;
+	
 	return sgColorA(texdata[y*width*4+x*4+0], texdata[y*width*4+x*4+1], texdata[y*width*4+x*4+2], texdata[y*width*4+x*4+3]);
 }
 

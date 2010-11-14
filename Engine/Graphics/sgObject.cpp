@@ -682,12 +682,10 @@ sgObject *sgObject::createObject(const char *name)
 	return createObject(name);
 }
 
-sgObject *sgObject::createPlane(unsigned int xverts, unsigned int zverts, float xtexscale, float ytexscale)
+void sgObject::addPlane(unsigned int xverts, unsigned int zverts, sgVector3 posoffset, sgMaterial *mat, unsigned char xchunk, unsigned char zchunk, sgTexture *hmp, sgVector2 hmppartsize, sgVector4 hmpscale)
 {
 	if(xverts < 2 || zverts < 2)
-		return NULL;
-	
-	next = new sgObject(prev, next);
+		return;
 	
 	sgMesh *mesh = new sgMesh;
 	
@@ -717,28 +715,89 @@ sgObject *sgObject::createPlane(unsigned int xverts, unsigned int zverts, float 
 		face++;
 	}
 	
+	float widthfac = 0;
+	float heightfac = 0;
+	
+	if(hmp != NULL)
+	{
+		widthfac = hmppartsize.x/(xverts-1);
+		heightfac = hmppartsize.y/(zverts-1);
+	}
+	
+	int coordx = 0;
+	int coordy = 0;
+	sgColorA color;
 	for(int x = 0; x < xverts; x++)
 	{
 		for(int y = 0; y < zverts; y++)
 		{
-			mesh->vertices[x*zverts+y].position.x = (float)x-0.5f*(float)xverts;
-			mesh->vertices[x*zverts+y].position.y = 0.0f;
-			mesh->vertices[x*zverts+y].position.z = (float)y-0.5f*(float)zverts;
-//			mesh->vertices[x*zverts+y].position.y = sin(mesh->vertices[x*zverts+y].position.x*0.33)*sin(mesh->vertices[x*zverts+y].position.z*0.33)*2.0f;
-			mesh->vertices[x*zverts+y].uv.x = (float)x/(float)xverts*xtexscale;
-			mesh->vertices[x*zverts+y].uv.y = (float)y/(float)zverts*ytexscale;
+			if(hmp != NULL)
+			{
+				coordx = hmppartsize.x*xchunk+x*widthfac;
+				coordy = hmppartsize.y*zchunk+y*heightfac;
+				color = hmp->getPixel(coordx, coordy);
+			}else
+			{
+				color.a = 0;
+			}
+
+			mesh->vertices[x*zverts+y].position.x = (float)x-0.5f*(float)xverts+posoffset.x;
+			mesh->vertices[x*zverts+y].position.y = ((float)color.r)*hmpscale.x+((float)color.g)*hmpscale.y+((float)color.b)*hmpscale.z+((float)color.a)*hmpscale.w+posoffset.y;
+			mesh->vertices[x*zverts+y].position.z = (float)y-0.5f*(float)zverts+posoffset.z;
+			mesh->vertices[x*zverts+y].uv.x = (float)x/(float)xverts;
+			mesh->vertices[x*zverts+y].uv.y = (float)y/(float)zverts;
 		}
 	}
 		
 	mesh->calculateNormals();
 	mesh->generateVBO();
-	next->meshs.push_back(mesh);
+	meshs.push_back(mesh);
 	sgResourceManager::addResource(mesh);
 	
-	next->materials.push_back(sgMaterial::getMaterial());
+	if(mat == NULL)
+	{
+		materials.push_back(sgMaterial::getMaterial());
+	}else
+	{
+		materials.push_back(mat);
+	}
+}
+
+sgObject *sgObject::createTerrain(unsigned int xverts, unsigned int zverts, unsigned char xchunks, unsigned char zchunks, const char *hmp, sgVector4 hmpscale)
+{
+	unsigned int realx = xverts/xchunks;
+	if(xchunks > 1)
+		realx += 1;
+	
+	unsigned int realz = zverts/zchunks;
+	if(zchunks > 1)
+		realz += 1;	
+	
+	next = new sgObject(prev, next);
+	sgMaterial *mat = sgMaterial::getMaterial();
+	
+	sgTexture *tex = NULL;
+	float width = 0;
+	float height = 0;
+	if(hmp != NULL)
+	{
+		tex = sgTexture::getTexture2D(hmp, false, true);
+		width = (tex->width-1)/xchunks;
+		height = (tex->height-1)/zchunks;
+	}
+	
+	for(int x = 0; x < xchunks; x++)
+	{
+		for(int y = 0; y < zchunks; y++)
+		{
+			next->addPlane((unsigned int)realx, (unsigned int)realz, sgVector3((float)xverts/xchunks*(float)x-(float)xverts*0.5+0.5f*realx, 0.0, (float)zverts/zchunks*(float)y-(float)zverts*0.5+0.5f*realz), mat, x, y, tex, sgVector2(width, height), hmpscale);
+		}
+	}
+	
+	if(tex != NULL)
+		tex->destroy();
 	
 	return next;
- return next;
 }
 
 void sgObject::cloneMaterial(unsigned int mat)

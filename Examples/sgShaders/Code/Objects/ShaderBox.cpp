@@ -32,7 +32,7 @@ void ShaderBox::onInit(sgEntity *e)
 	counter = 0;
 	
 	//Set the shader of the first material (which is the only one in this case)
-	ent->obj->materials[0]->setShader("defaultlight", "ShaderCol");
+	ent->obj->materials[0]->setShader("sgsDefaultlight", "ShaderCol");
 	
 	//Add a new parameter of thw type float4 to the material
 	param = ent->obj->materials[0]->addParameter("color", (void*)(new float[4]));

@@ -44,15 +44,16 @@ void Events::onInit(sgMain *m)
 	
 	//Create the camera
 	sgEntity *cam = sgmain->first_ent->createCamEntity((sgAction*)new CameraFree);
-	cam->cam->position = sgVector3(0.0f, 5.0f, 5.0f);
+	cam->cam->position = sgVector3(0.0f, 5.0f, 0.0f);
 	cam->cam->rotation = sgVector3(0.0f, 0.0f, -45.0f);
 	
 	//Create skycube
 	sgmain->first_ent->createSkyCubeEntity("sky_right.png", "sky_back.png", "sky_left.png", "sky_front.png", "sky_down.png", "sky_up.png");
 	
 	//Create a terrain entity
-	sgEntity *ent = sgmain->first_ent->createTerrainEntity("terrain.png", 50, 50, 50, 50, sgVector4(0.01, 0.0, 0.0, 0.0));
+	sgEntity *ent = sgmain->first_ent->createTerrainEntity("terrain.png", 64, 64, 4, 4, sgVector4(0.01, 0.0, 0.0, 0.0));
 	ent->obj->materials[0]->setTexture2D(-1, "grass.png");
+	ent->obj->materials[0]->mattex.makeScale(sgVector4(64, 64));
 }
 
 //Called every frame, just before drawing

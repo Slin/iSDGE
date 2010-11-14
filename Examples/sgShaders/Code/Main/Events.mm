@@ -69,7 +69,7 @@ void Events::onInit(sgMain *m)
 	cam->cam->rendertarget->makeRendertarget();
 	
 	//Create a horizontal blur effect
-	sgMaterial *mat = sgMaterial::getMaterial("pp", "PPBlurX");
+	sgMaterial *mat = sgMaterial::getMaterial("sgsPPBase", "PPBlurX");
 	mat->setTexture2D(-1, cam->cam->rendertarget);
 	
 	//Render it as a panel into the same texture
@@ -81,7 +81,7 @@ void Events::onInit(sgMain *m)
 	pan->pan->rendertarget->makeRendertarget();
 	
 	//Create a vertical blur effect
-	mat = sgMaterial::getMaterial("pp", "PPBlurY");
+	mat = sgMaterial::getMaterial("sgsPPBase", "PPBlurY");
 	mat->setTexture2D(-1, pan->pan->rendertarget);
 	
 	//Render it as a panel to the screen

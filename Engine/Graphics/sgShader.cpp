@@ -67,38 +67,38 @@ sgShader *sgShader::getShader(unsigned int shad)
 	sgShader *shader = NULL;
 	if(shad == 0)
 	{
-		shader = (sgShader*)sgResourceManager::getResource("shaderdefault");
+		shader = (sgShader*)sgResourceManager::getResource("shader_texture");
 		if(shader == NULL)
 		{
-			shader = new sgShader("default", "default");
-			sgResourceManager::addResource("shaderdefault", shader);
+			shader = new sgShader("sgsTexture", "sgsTexture");
+			sgResourceManager::addResource("shader_texture", shader);
 		}
 	}
 	if(shad == 1)
 	{
-		shader = (sgShader*)sgResourceManager::getResource("shaderdefaultlight");
+		shader = (sgShader*)sgResourceManager::getResource("shader_defaultlight");
 		if(shader == NULL)
 		{
-			shader = new sgShader("defaultlight", "defaultlight");
-			sgResourceManager::addResource("shaderdefaultlight", shader);
+			shader = new sgShader("sgsDefaultlight", "sgsDefaultlight");
+			sgResourceManager::addResource("shader_defaultlight", shader);
 		}
 	}
 	if(shad == 2)
 	{
-		shader = (sgShader*)sgResourceManager::getResource("shadershadowvolume");
+		shader = (sgShader*)sgResourceManager::getResource("shader_shadowvolume");
 		if(shader == NULL)
 		{
-			shader = new sgShader("shadowvolume", "shadowvolume");
-			sgResourceManager::addResource("shadershadowvolume", shader);
+			shader = new sgShader("sgsShadowvolume", "sgsShadowvolume");
+			sgResourceManager::addResource("shader_shadowvolume", shader);
 		}
 	}
 	if(shad == 3)
 	{
-		shader = (sgShader*)sgResourceManager::getResource("shadershadowquad");
+		shader = (sgShader*)sgResourceManager::getResource("shader_shadowquad");
 		if(shader == NULL)
 		{
-			shader = new sgShader("shadowquad", "shadowquad");
-			sgResourceManager::addResource("shadershadowquad", shader);
+			shader = new sgShader("sgsShadowquad", "sgsShadowquad");
+			sgResourceManager::addResource("shader_shadowquad", shader);
 		}
 	}
 	return shader;
@@ -253,7 +253,7 @@ bool sgShader::create(const char *vsfilename, const char *fsfilename)
 	// Link program
 	if(!linkProgram(program))
 	{
-//		sgDebug::writeStringFloat("Failed to link program: ", program);
+		sgLog("Failed to link program: %i", program);
 		
 		if(vertShader)
 		{

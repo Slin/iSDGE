@@ -84,13 +84,14 @@ namespace sgResourceManager
 	
 	const char *getFileAsString(const char *filepath)
 	{
-		std::string buf;
-		std::string line;
+		std::string buf("");
+		std::string line("");
 		std::ifstream in(filepath);
 		
 		while(std::getline(in,line))
 		{
-			buf += line+std::string("\n");
+			line += std::string("\n");
+			buf += line;
 		}
 		
 		char *ptr = new char[buf.length()];

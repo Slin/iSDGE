@@ -138,7 +138,7 @@ class sgTexture : public sgBase
 		 * @param y vertical pixel position.
 		 * @param color new pixel color.
 		 */
-		void setPixel(unsigned int x, unsigned int y, sgColorA color);
+		void setPixel(int x, int y, sgColorA color);
 	
 		/**
 		 * Get pixel.
@@ -147,7 +147,7 @@ class sgTexture : public sgBase
 		 * @param y vertical pixel position.
 		 * @return color of the pixel.
 		 */
-		sgColorA getPixel(unsigned int x, unsigned int y);
+		sgColorA getPixel(int x, int y);
 
 		/**
 		 * Set texture parameter int.

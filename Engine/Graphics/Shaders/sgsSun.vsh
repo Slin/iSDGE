@@ -46,14 +46,13 @@ uniform float mShininess;
 uniform vec4 mEmissive;
 
 varying vec2 texcoord;
-varying float light;
+varying vec3 light;
 
 void main()
 {
 	texcoord = (matTex*vec4(vertTexcoord0, 1.0, 1.0)).xy;
 	gl_Position = matProj*matView*matModel*vec4(vertPos, 1.0);
 	
-//	vec3 worldpos = (matModel*vec4(vertPos, 1.0)).xyz;
 	vec3 worldnorm = normalize((matNormal*vec4(vertNormal, 1.0)).xyz);
 //	float att;
 //	vec3 lightdir;
@@ -62,7 +61,7 @@ void main()
 //	vec4 diffuse = vec4(0.0);
 //	vec4 specular = vec4(0.0);
 
-//	lightdir = lPosition[0].xyz-worldpos;
+	lightdir = lPosition[0].xyz-worldpos;
 //	att = length(lightdir);
 //	att = 1.0/(1.0+lAttenuation[0]*att*att);
 	
@@ -73,5 +72,5 @@ void main()
 //	diffuse += max(att*dot(worldnorm, lightdir)*mDiffuse*lDiffuse[0], 0.0);
 //	specular += att*pow(dot(worldnorm, lighthalf), mShininess)*mSpecular*lSpecular[0];
 	
-	light = worldnorm.y+0.5;//ambient;//+diffuse;//+specular+mEmissive;
+	light = dot(worldnormal, lightdir);//ambient;//+diffuse;//+specular+mEmissive;
 }

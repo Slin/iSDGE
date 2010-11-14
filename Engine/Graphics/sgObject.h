@@ -30,11 +30,14 @@
 #include <string>
 
 #include "sgBase.h"
+#include "sgVector4.h"
 #include "sgVector3.h"
+#include "sgVector2.h"
 #include "sgMatrix4x4.h"
 #include "sgQuaternion.h"
 
 //class sgMesh;
+class sgTexture;
 class sgMaterial;
 class sgLight;
 class sgMesh;
@@ -59,8 +62,8 @@ class sgObject
 		/**
 		 *	Constructor.
 		 *	Creates an empty object.
-		 * @param p the previous object in the linked object list
-		 * @param n the next object in the linked object list
+		 * @param p the previous object in the linked object list.
+		 * @param n the next object in the linked object list.
 		 */
 		sgObject(sgObject *p, sgObject *n);
 	
@@ -73,31 +76,51 @@ class sgObject
 		/**
 		 *	Create object.
 		 *	Creates a new object loaded from a model file or a predefined name and makes it next of this.
-		 * @param name name of the object or the file to load it from
-		 * @return pointer to the new object
+		 * @param name name of the object or the file to load it from.
+		 * @return pointer to the new object.
 		 */
 		sgObject *createObject(const char *name);
 	
 		/**
-		 *	Create plane
-		 *	Creates a new plane object with the given number of vertices in x and y direction. The distance of vertices belong one axis is 1 unit by default.
-		 * @param name name of the object or the file to load it from
+		 *	Add plane.
+		 *	Creates a new plane mesh with the given settings and adds it to the object. The distance of vertices belong one axis is 1 unit by default.
+		 * @param xverts vertex count along the x axis.
+		 * @param zverts vertex count along the z axis.
+		 * @param posoffset offset of the position relative to the objects center.
+		 * @param mat material to use for the plane or NULL to create a new one.
+		 * @param xchunk the chunks x position (0 to xchunks). FOR INTERNAL USE!
+		 * @param zchunk the chunks z position (0 to zchunks). FOR INTERNAL USE!
+		 * @param hmp pointer to a locked heightmap texture to extract the height from. FOR INTERNAL USE!
+		 * @param hmppartsize the size in pixels of the texture part used for the chunk. FOR INTERNAL USE!
+		 * @param hmpscale the scale factors for the heightmaps color channels. FOR INTERNAL USE!
+		 */
+		void addPlane(unsigned int xverts = 2, unsigned int zverts = 2, sgVector3 posoffset = sgVector3(0, 0, 0), sgMaterial *mat = NULL, unsigned char xchunk = 0, unsigned char zchunk = 0, sgTexture *hmp = NULL, sgVector2 hmppartsize = sgVector2(1, 1), sgVector4 hmpscale = sgVector4(0, 0, 0, 0));
+	
+		/**
+		 *	Create terrain.
+		 *	Creates a new terrain object with the given settings. The distance of vertices belong one axis is 1 unit by default. When using chunks, the number of vertices differs due to the need of dublicated ones.
+		 * @param xverts vertex count along the x axis. POT recommended.
+		 * @param zverts vertex count along the z axis. POT recommended.
+		 * @param xchunks number of chunks along the x axis. xverts/xchunks should be a clean division.
+		 * @param zchunks number of chunks along the z axis. zverts/zchunks should be a clean division.
+		 * @param hmp filename of heightmap texture to extract the height from.
+		 * @param hmpscale the scale factors for the heightmaps color channels.
 		 * @return pointer to the new object
 		 */
-		sgObject *createPlane(unsigned int xverts, unsigned int zverts, float xtexscale, float ytexscale);
+		sgObject *createTerrain(unsigned int xverts = 2, unsigned int zverts = 2, unsigned char xchunks = 1, unsigned char zchunks = 1, const char *hmp = NULL, sgVector4 hmpscale = sgVector4(0, 0, 0, 0));
 	
 		/**
 		 *	Clone material.
 		 *	Makes the given material a clone from the previous one, to allow independant materials for objects of the same type.
-		 * @param mat index of the material to clone
+		 * @param mat index of the material to clone.
 		 */
 		void cloneMaterial(unsigned int mat);
 	
 		/**
 		 *	Set animation.
 		 *	Sets the meshes given animation frame.
-		 * @param name name of the animation
-		 * @param percent position within the animation in percent
+		 * @param name name of the animation.
+		 * @param percent position within the animation in percent.
 		 */
 		void setAnimation(const char *name, float percent);
 	

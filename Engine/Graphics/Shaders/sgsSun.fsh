@@ -1,6 +1,6 @@
 //
-//  Shader.fsh
-//  iSDGE
+//	Shader.fsh
+//	iSDGE
 //
 //	Created by Nils Daumann on 16.04.10.
 //	Copyright (c) 2010 Nils Daumann
@@ -26,12 +26,14 @@
 precision highp float;
 
 uniform sampler2D mTexture0;
-uniform lowp vec4 color;
+uniform lowp float mAlphaTest;
 
 varying vec2 texcoord;
 varying lowp float light;
 
 void main()
 {
-    gl_FragColor = texture2D(mTexture0, texcoord)*light*color;
+    gl_FragColor = texture2D(mTexture0, texcoord)*light;
+	if(gl_FragColor.a-mAlphaTest <= 0.0)
+		discard;
 }
