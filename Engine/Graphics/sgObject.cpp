@@ -727,29 +727,94 @@ void sgObject::addPlane(unsigned int xverts, unsigned int zverts, sgVector3 poso
 	int coordx = 0;
 	int coordy = 0;
 	sgColorA color;
+	sgVector3 norm = sgVector3(0, 1, 0);
+	float height = 0.0;
+	sgVector3 pos;
+	sgVector3 pos_A;
+	sgVector3 pos_B;
+	sgVector3 pos_C;
+	sgVector3 pos_D;
+	sgVector3 dir_A;
+	sgVector3 dir_B;
+	sgVector3 dir_C;
+	sgVector3 dir_D;
+	sgVector3 norm_AB;
+	sgVector3 norm_BC;
+	sgVector3 norm_CD;
+	sgVector3 norm_DA;
 	for(int x = 0; x < xverts; x++)
 	{
 		for(int y = 0; y < zverts; y++)
 		{
 			if(hmp != NULL)
 			{
+				//Get height
 				coordx = hmppartsize.x*xchunk+x*widthfac;
 				coordy = hmppartsize.y*zchunk+y*heightfac;
 				color = hmp->getPixel(coordx, coordy);
+				height = ((float)color.r)*hmpscale.x+((float)color.g)*hmpscale.y+((float)color.b)*hmpscale.z+((float)color.a)*hmpscale.w;
+				pos.y = height;
+				
+				//Calculate normal
+				coordx = hmppartsize.x*xchunk+(x-1)*widthfac;
+				coordy = hmppartsize.y*zchunk+(y-1)*heightfac;
+				color = hmp->getPixel(coordx, coordy);
+				pos_A.x = -1.0;
+				pos_A.y = ((float)color.r)*hmpscale.x+((float)color.g)*hmpscale.y+((float)color.b)*hmpscale.z+((float)color.a)*hmpscale.w;
+				pos_A.z = -1.0;
+				
+				coordx = hmppartsize.x*xchunk+(x+1)*widthfac;
+				coordy = hmppartsize.y*zchunk+(y-1)*heightfac;
+				color = hmp->getPixel(coordx, coordy);
+				pos_B.x = 1.0;
+				pos_B.y = ((float)color.r)*hmpscale.x+((float)color.g)*hmpscale.y+((float)color.b)*hmpscale.z+((float)color.a)*hmpscale.w;
+				pos_B.z = -1.0;
+				
+				coordx = hmppartsize.x*xchunk+(x+1)*widthfac;
+				coordy = hmppartsize.y*zchunk+(y+1)*heightfac;
+				color = hmp->getPixel(coordx, coordy);
+				pos_C.x = 1.0;
+				pos_C.y = ((float)color.r)*hmpscale.x+((float)color.g)*hmpscale.y+((float)color.b)*hmpscale.z+((float)color.a)*hmpscale.w;
+				pos_C.z = 1.0;
+				
+				coordx = hmppartsize.x*xchunk+(x-1)*widthfac;
+				coordy = hmppartsize.y*zchunk+(y+1)*heightfac;
+				color = hmp->getPixel(coordx, coordy);
+				pos_D.x = -1.0;
+				pos_D.y = ((float)color.r)*hmpscale.x+((float)color.g)*hmpscale.y+((float)color.b)*hmpscale.z+((float)color.a)*hmpscale.w;
+				pos_D.z = 1.0;
+				
+				dir_A = pos-pos_A;
+				dir_B = pos_B-pos;
+				dir_C = pos-pos_C;
+				dir_D = pos_D-pos;
+				
+				norm_AB = dir_A.cross(dir_B);
+				norm_BC = dir_B.cross(dir_C);
+				norm_CD = dir_C.cross(dir_D);
+				norm_DA = dir_D.cross(dir_A);
+				norm_AB.normalize();
+				norm_BC.normalize();
+				norm_CD.normalize();
+				norm_DA.normalize();
+				
+				norm = norm_AB+norm_BC+norm_CD+norm_DA;
+				norm.normalize();
 			}else
 			{
 				color.a = 0;
 			}
 
 			mesh->vertices[x*zverts+y].position.x = (float)x-0.5f*(float)xverts+posoffset.x;
-			mesh->vertices[x*zverts+y].position.y = ((float)color.r)*hmpscale.x+((float)color.g)*hmpscale.y+((float)color.b)*hmpscale.z+((float)color.a)*hmpscale.w+posoffset.y;
+			mesh->vertices[x*zverts+y].position.y = height+posoffset.y;
 			mesh->vertices[x*zverts+y].position.z = (float)y-0.5f*(float)zverts+posoffset.z;
+			mesh->vertices[x*zverts+y].normal = norm;
 			mesh->vertices[x*zverts+y].uv.x = (float)x/(float)xverts;
 			mesh->vertices[x*zverts+y].uv.y = (float)y/(float)zverts;
 		}
 	}
 		
-	mesh->calculateNormals();
+//	mesh->calculateNormals();
 	mesh->generateVBO();
 	meshs.push_back(mesh);
 	sgResourceManager::addResource(mesh);

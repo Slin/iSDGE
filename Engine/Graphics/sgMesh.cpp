@@ -251,7 +251,6 @@ void sgMesh::calculateNormals()
 	}
 }
 
-
 void sgMesh::calculateFaceNormal(sgVertex *vertex, sgVertex *neighbour_a, sgVertex *neighbour_b)
 {
 	float a[3];
@@ -289,83 +288,6 @@ void sgMesh::calculateFaceNormal(sgVertex *vertex, sgVertex *neighbour_a, sgVert
 	neighbour_b->normal.y = normal[1];
 	neighbour_b->normal.z = normal[2];
 }
-
-// normalen des objekts berechnen
-/*void Object3D::CalcNormals()
-{
-	normals = new pilVector3f[noVertices];
-	
-	int curTriangle;
-	pilVector3f normal;
-	for(curTriangle=0; curTriangle<noTriangles; curTriangle++)
-	{
-		pilVector3f a, b;
-		
-		a = vertices[triangles[curTriangle].vertex[0]] - vertices[triangles[curTriangle].vertex[1]];
-		b = vertices[triangles[curTriangle].vertex[0]] - vertices[triangles[curTriangle].vertex[2]];
-		
-		normal = a % b;
-		
-		normals[triangles[curTriangle].vertex[0]] += normal;
-		normals[triangles[curTriangle].vertex[1]] += normal;
-		normals[triangles[curTriangle].vertex[2]] += normal;
-	}
-	
-	int curNormal;
-	for (curNormal=0; curNormal<noVertices; curNormal++)
-	{
-		normals[curNormal].Normalize();
-	}
-}*/
-
-//für jedes polygon herausfinden & abspeichern, welches andere polygon an welcher kante anliegt
-/*void sgMesh::calculateNeighbors()
-{
-	neighbors = new pilIndexTriangle[noTriangles];
-	int curTriangle;
-	for(curTriangle=0; curTriangle<noTriangles; curTriangle++)
-	{
-		neighbors[curTriangle].vertex[0] = -1;
-		neighbors[curTriangle].vertex[1] = -1;
-		neighbors[curTriangle].vertex[2] = -1;
-	}
-	
-	for(curTriangle=0; curTriangle<noTriangles; curTriangle++)
-	{
-		int curBorder;
-		for(curBorder=0; curBorder<3; curBorder++)
-		{
-			bool borderDone = false;
-			
-			int vio1 = triangles[curTriangle].vertex[curBorder];
-			int vio2 = triangles[curTriangle].vertex[(curBorder+1) % 3];
-			
-			if (neighbors[curTriangle].vertex[curBorder] == -1)
-			{
-				int innerTriangle;
-				for(innerTriangle=0; innerTriangle<noTriangles; innerTriangle++)
-				{
-					if (curTriangle == innerTriangle) continue;
-					int innerBorder;
-					for(innerBorder=0; innerBorder<3; innerBorder++)
-					{
-						int vii1 = triangles[innerTriangle].vertex[innerBorder];
-						int vii2 = triangles[innerTriangle].vertex[(innerBorder+1) % 3];
-						
-						if (((vio1 == vii1) && (vio2 == vii2)) || ((vio1 == vii2) && (vio2 == vii1)))
-						{
-							neighbors[curTriangle].vertex[curBorder] = innerTriangle;
-							neighbors[innerTriangle].vertex[innerBorder] = curTriangle;
-							borderDone = true;
-							break;
-						}
-					}
-					if (borderDone) break;
-				}
-			}
-		}
-	}
-}*/
 
 void sgMesh::invertTexCoordsX()
 {

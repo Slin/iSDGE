@@ -34,6 +34,6 @@ varying lowp float light;
 void main()
 {
     gl_FragColor = texture2D(mTexture0, texcoord)*light;
-	if(gl_FragColor.a-mAlphaTest <= 0.0)
-		discard;
+/*	if(gl_FragColor.a-mAlphaTest <= 0.0)
+		discard;*/
 }

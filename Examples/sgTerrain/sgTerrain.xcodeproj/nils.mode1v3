@@ -291,7 +291,7 @@
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 762}, {186, 853}}</string>
+							<string>{{0, 845}, {186, 853}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -340,7 +340,7 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>297C057612904D7500C42E91</string>
+										<string>297C05CA12905FAF00C42E91</string>
 										<key>history</key>
 										<array>
 											<string>296842B1127E07F600FBF153</string>
@@ -363,8 +363,6 @@
 											<string>2935603E1286C987007BE9B7</string>
 											<string>2935605E1286D4E2007BE9B7</string>
 											<string>2935605F1286D4E2007BE9B7</string>
-											<string>2935617F12875563007BE9B7</string>
-											<string>2935619312875662007BE9B7</string>
 											<string>29BAC00D12886A5200FCDE9F</string>
 											<string>29BAC00F12886A5200FCDE9F</string>
 											<string>29BAC01012886A5200FCDE9F</string>
@@ -390,13 +388,15 @@
 											<string>297C052C1290498600C42E91</string>
 											<string>297C052D1290498600C42E91</string>
 											<string>297C052E1290498600C42E91</string>
-											<string>297C052F1290498600C42E91</string>
 											<string>297C05301290498600C42E91</string>
 											<string>297C05311290498600C42E91</string>
 											<string>297C05321290498600C42E91</string>
-											<string>297C053C12904A0500C42E91</string>
 											<string>297C054412904B9200C42E91</string>
-											<string>297C054512904B9200C42E91</string>
+											<string>297C058312905E1000C42E91</string>
+											<string>297C058412905E1000C42E91</string>
+											<string>297C05A012905EC000C42E91</string>
+											<string>297C05A912905EFC00C42E91</string>
+											<string>297C05AA12905EFC00C42E91</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -594,7 +594,7 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>297C057712904D7500C42E91</string>
+		<string>297C05CB12905FAF00C42E91</string>
 		<string>297C04B112902D0D00C42E91</string>
 		<string>297C04B212902D0D00C42E91</string>
 		<string>29684255127DEEDB00FBF153</string>
