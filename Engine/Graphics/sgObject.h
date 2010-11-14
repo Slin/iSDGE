@@ -90,11 +90,12 @@ class sgObject
 		 * @param mat material to use for the plane or NULL to create a new one.
 		 * @param xchunk the chunks x position (0 to xchunks). FOR INTERNAL USE!
 		 * @param zchunk the chunks z position (0 to zchunks). FOR INTERNAL USE!
+		 * @param uvfac factor applied to the texcoords. FOR INTERNAL USE!
 		 * @param hmp pointer to a locked heightmap texture to extract the height from. FOR INTERNAL USE!
 		 * @param hmppartsize the size in pixels of the texture part used for the chunk. FOR INTERNAL USE!
 		 * @param hmpscale the scale factors for the heightmaps color channels. FOR INTERNAL USE!
 		 */
-		void addPlane(unsigned int xverts = 2, unsigned int zverts = 2, sgVector3 posoffset = sgVector3(0, 0, 0), sgMaterial *mat = NULL, unsigned char xchunk = 0, unsigned char zchunk = 0, sgTexture *hmp = NULL, sgVector2 hmppartsize = sgVector2(1, 1), sgVector4 hmpscale = sgVector4(0, 0, 0, 0));
+		void addPlane(unsigned int xverts = 2, unsigned int zverts = 2, sgVector3 posoffset = sgVector3(0, 0, 0), sgMaterial *mat = NULL, unsigned char xchunk = 0, unsigned char zchunk = 0, sgVector2 uvfac = sgVector2(1, 1), sgTexture *hmp = NULL, sgVector2 hmppartsize = sgVector2(1, 1), sgVector4 hmpscale = sgVector4(0, 0, 0, 0));
 	
 		/**
 		 *	Create terrain.

@@ -61,8 +61,8 @@ sgRendererES2::sgRendererES2()
 	
 	glEnable(GL_TEXTURE_2D);
 	
-	shadowvolume = sgMaterial::getMaterial(2);
-	shadowquad = sgMaterial::getMaterial(3);
+	shadowvolume = sgMaterial::getMaterial(-1);
+	shadowquad = sgMaterial::getMaterial(-2);
 }
 
 sgRendererES2::~sgRendererES2()
@@ -452,6 +452,12 @@ void sgRendererES2::renderObjects(sgCamera *cam, sgObject *first)
 	cam->updateView();
 	cam->matview = matglobal3d*cam->matview;
 	
+	//used for the sky
+	sgMatrix4x4 viewmat = cam->rotation.getMatrix();
+	viewmat.transpose();
+	viewmat = matglobal3d*viewmat;
+	
+	sgMatrix4x4 matprojviewmodel;
 	sgObject *curr;
 	int i;
 	for(curr = first->next; curr != NULL; curr = curr->next)
@@ -474,19 +480,21 @@ void sgRendererES2::renderObjects(sgCamera *cam, sgObject *first)
 			if(curr->materials[i]->shader->matview != -1)
 			{
 				if(curr->sky)
-				{
-					sgMatrix4x4 viewmat = cam->rotation.getMatrix();
-					viewmat.transpose();
-					viewmat = matglobal3d*viewmat;
 					glUniformMatrix4fv(curr->materials[i]->shader->matview, 1, GL_FALSE, viewmat.mat);
-				}else
-				{
+				else
 					glUniformMatrix4fv(curr->materials[i]->shader->matview, 1, GL_FALSE, cam->matview.mat);
-				}
 			}
 			if(curr->materials[i]->shader->matmodel != -1)
 			{
 				glUniformMatrix4fv(curr->materials[i]->shader->matmodel, 1, GL_FALSE, curr->matmodel.mat);
+			}
+			if(curr->materials[i]->shader->matprojviewmodel != -1)
+			{
+				if(curr->sky)
+					matprojviewmodel = cam->matproj*viewmat*curr->matmodel;
+				else
+					matprojviewmodel = cam->matproj*cam->matview*curr->matmodel;
+				glUniformMatrix4fv(curr->materials[i]->shader->matprojviewmodel, 1, GL_FALSE, matprojviewmodel.mat);
 			}
 			if(curr->materials[i]->shader->matnormal != -1)
 			{
@@ -562,6 +570,7 @@ void sgRendererES2::renderPanels(sgPanel *first)
 	
 	glBindBuffer(GL_ARRAY_BUFFER, quadvbo);
 	
+	sgMatrix4x4 matprojviewmodel;
 	sgImage *img;
 	sgText *txt;
 	for(sgPanel *curr = first->next; curr != NULL; curr = curr->next)
@@ -620,13 +629,21 @@ void sgRendererES2::renderPanels(sgPanel *first)
 			{
 				//draw image elements
 				img = (sgImage*)curr->elements[i];
-			
-				if(img->mat->shader->matmodel != -1)
+				
+				if(img->mat->shader->matmodel != -1 || img->mat->shader->matprojviewmodel != -1)
 				{
 					matmodel.makeTranslate(sgVector3(img->pos.x, img->pos.y, 0.0));
 					matmodel.scale(sgVector3(img->size.x, img->size.y, 1.0));
 					matmodel.rotate(sgVector3(0.0, img->ang, 0.0));
-					glUniformMatrix4fv(img->mat->shader->matmodel, 1, GL_FALSE, matmodel.mat);
+					
+					if(img->mat->shader->matmodel != -1)
+						glUniformMatrix4fv(img->mat->shader->matmodel, 1, GL_FALSE, matmodel.mat);
+				}
+				
+				if(img->mat->shader->matprojviewmodel != -1)
+				{
+					matprojviewmodel *= matproj*matview*matmodel;
+					glUniformMatrix4fv(img->mat->shader->matprojviewmodel, 1, GL_FALSE, matprojviewmodel.mat);
 				}
 				
 				if(img->mat->shader->mattex != -1)
@@ -656,11 +673,19 @@ void sgRendererES2::renderPanels(sgPanel *first)
 				txt = (sgText*)curr->elements[i];
 				for(int n = 0; n < txt->str.str.size(); n++)
 				{
-					if(txt->mat->shader->matmodel != -1)
+					if(txt->mat->shader->matmodel != -1 || txt->mat->shader->matprojviewmodel != -1)
 					{
 						matmodel.makeTranslate(sgVector3(curr->pos.x+txt->pos.x+txt->size.x*n, curr->pos.y+txt->pos.y, 0.0));
 						matmodel.scale(sgVector3(txt->size.x, txt->size.y, 1.0));
-						glUniformMatrix4fv(txt->mat->shader->matmodel, 1, GL_FALSE, matmodel.mat);
+						
+						if(txt->mat->shader->matmodel != -1)
+							glUniformMatrix4fv(txt->mat->shader->matmodel, 1, GL_FALSE, matmodel.mat);
+					}
+					
+					if(txt->mat->shader->matprojviewmodel != -1)
+					{
+						matprojviewmodel = matproj*matview*matmodel;
+						glUniformMatrix4fv(txt->mat->shader->matprojviewmodel, 1, GL_FALSE, matprojviewmodel.mat);
 					}
 					
 					if(txt->mat->shader->mattex != -1)

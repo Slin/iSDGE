@@ -203,7 +203,8 @@ void sgRendererES1::setMaterial(sgMaterial *mat)
 	}
 	
 	//	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, mat->textures[0]->texid);
+	if(mat->textures.size() > 0)
+		glBindTexture(GL_TEXTURE_2D, mat->textures[0]->texid);
 	
 	if(mat->culling)
 	{

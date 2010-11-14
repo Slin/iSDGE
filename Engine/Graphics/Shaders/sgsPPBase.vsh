@@ -26,10 +26,7 @@
 attribute vec3 vertPos;
 attribute vec2 vertTexcoord0;
 
-uniform mat4 matProj;
-uniform mat4 matView;
-uniform mat4 matModel;
-uniform mat4 matTex;
+uniform mat4 matProjViewModel;
 
 varying vec2 texcoord;
 

@@ -46,8 +46,8 @@
 		297A217611DCBC3A00F0C8E5 /* sgInit.mm in Sources */ = {isa = PBXBuildFile; fileRef = 297A217511DCBC3A00F0C8E5 /* sgInit.mm */; };
 		29A42EDA118346DA0080394F /* sgsTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 29A42ED8118346DA0080394F /* sgsTexture.fsh */; };
 		29A42EDB118346DA0080394F /* sgsTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 29A42ED9118346DA0080394F /* sgsTexture.vsh */; };
-		29A42F241183514B0080394F /* sgsDefaultlight.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 29A42F221183514B0080394F /* sgsDefaultlight.fsh */; };
-		29A42F251183514B0080394F /* sgsDefaultlight.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 29A42F231183514B0080394F /* sgsDefaultlight.vsh */; };
+		29A42F241183514B0080394F /* sgsLight.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 29A42F221183514B0080394F /* sgsLight.fsh */; };
+		29A42F251183514B0080394F /* sgsLight.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 29A42F231183514B0080394F /* sgsLight.vsh */; };
 		29A8D53911E0958E00746D31 /* sgsShadowquad.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 29A8D53511E0958E00746D31 /* sgsShadowquad.fsh */; };
 		29A8D53A11E0958E00746D31 /* sgsShadowquad.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 29A8D53611E0958E00746D31 /* sgsShadowquad.vsh */; };
 		29A8D53B11E0958E00746D31 /* sgsShadowvolume.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 29A8D53711E0958E00746D31 /* sgsShadowvolume.fsh */; };
@@ -139,8 +139,8 @@
 		297A217511DCBC3A00F0C8E5 /* sgInit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = sgInit.mm; sourceTree = "<group>"; };
 		29A42ED8118346DA0080394F /* sgsTexture.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsTexture.fsh; sourceTree = "<group>"; };
 		29A42ED9118346DA0080394F /* sgsTexture.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsTexture.vsh; sourceTree = "<group>"; };
-		29A42F221183514B0080394F /* sgsDefaultlight.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsDefaultlight.fsh; sourceTree = "<group>"; };
-		29A42F231183514B0080394F /* sgsDefaultlight.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsDefaultlight.vsh; sourceTree = "<group>"; };
+		29A42F221183514B0080394F /* sgsLight.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsLight.fsh; sourceTree = "<group>"; };
+		29A42F231183514B0080394F /* sgsLight.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsLight.vsh; sourceTree = "<group>"; };
 		29A8D53511E0958E00746D31 /* sgsShadowquad.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsShadowquad.fsh; sourceTree = "<group>"; };
 		29A8D53611E0958E00746D31 /* sgsShadowquad.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsShadowquad.vsh; sourceTree = "<group>"; };
 		29A8D53711E0958E00746D31 /* sgsShadowvolume.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsShadowvolume.fsh; sourceTree = "<group>"; };
@@ -424,8 +424,8 @@
 				29A8D53611E0958E00746D31 /* sgsShadowquad.vsh */,
 				29A8D53711E0958E00746D31 /* sgsShadowvolume.fsh */,
 				29A8D53811E0958E00746D31 /* sgsShadowvolume.vsh */,
-				29A42F221183514B0080394F /* sgsDefaultlight.fsh */,
-				29A42F231183514B0080394F /* sgsDefaultlight.vsh */,
+				29A42F221183514B0080394F /* sgsLight.fsh */,
+				29A42F231183514B0080394F /* sgsLight.vsh */,
 				29A42ED8118346DA0080394F /* sgsTexture.fsh */,
 				29A42ED9118346DA0080394F /* sgsTexture.vsh */,
 			);
@@ -547,8 +547,8 @@
 				29A8D53B11E0958E00746D31 /* sgsShadowvolume.fsh in Resources */,
 				29A8D53C11E0958E00746D31 /* sgsShadowvolume.vsh in Resources */,
 				29AC5B1311DE75FA009F1A01 /* RedCyanStereo.fsh in Resources */,
-				29A42F241183514B0080394F /* sgsDefaultlight.fsh in Resources */,
-				29A42F251183514B0080394F /* sgsDefaultlight.vsh in Resources */,
+				29A42F241183514B0080394F /* sgsLight.fsh in Resources */,
+				29A42F251183514B0080394F /* sgsLight.vsh in Resources */,
 				29A42EDA118346DA0080394F /* sgsTexture.fsh in Resources */,
 				29A42EDB118346DA0080394F /* sgsTexture.vsh in Resources */,
 				29D7EB5B117CFABF0091D933 /* Entitlements.plist in Resources */,

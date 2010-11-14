@@ -682,7 +682,7 @@ sgObject *sgObject::createObject(const char *name)
 	return createObject(name);
 }
 
-void sgObject::addPlane(unsigned int xverts, unsigned int zverts, sgVector3 posoffset, sgMaterial *mat, unsigned char xchunk, unsigned char zchunk, sgTexture *hmp, sgVector2 hmppartsize, sgVector4 hmpscale)
+void sgObject::addPlane(unsigned int xverts, unsigned int zverts, sgVector3 posoffset, sgMaterial *mat, unsigned char xchunk, unsigned char zchunk, sgVector2 uvfac, sgTexture *hmp, sgVector2 hmppartsize, sgVector4 hmpscale)
 {
 	if(xverts < 2 || zverts < 2)
 		return;
@@ -784,10 +784,10 @@ void sgObject::addPlane(unsigned int xverts, unsigned int zverts, sgVector3 poso
 				pos_D.y = ((float)color.r)*hmpscale.x+((float)color.g)*hmpscale.y+((float)color.b)*hmpscale.z+((float)color.a)*hmpscale.w;
 				pos_D.z = 1.0;
 				
-				dir_A = pos-pos_A;
-				dir_B = pos_B-pos;
-				dir_C = pos-pos_C;
-				dir_D = pos_D-pos;
+				dir_A = pos_A-pos;
+				dir_B = pos-pos_B;
+				dir_C = pos_C-pos;
+				dir_D = pos-pos_D;
 				
 				norm_AB = dir_A.cross(dir_B);
 				norm_BC = dir_B.cross(dir_C);
@@ -808,13 +808,12 @@ void sgObject::addPlane(unsigned int xverts, unsigned int zverts, sgVector3 poso
 			mesh->vertices[x*zverts+y].position.x = (float)x-0.5f*(float)xverts+posoffset.x;
 			mesh->vertices[x*zverts+y].position.y = height+posoffset.y;
 			mesh->vertices[x*zverts+y].position.z = (float)y-0.5f*(float)zverts+posoffset.z;
-			mesh->vertices[x*zverts+y].normal = norm;
-			mesh->vertices[x*zverts+y].uv.x = (float)x/(float)xverts;
-			mesh->vertices[x*zverts+y].uv.y = (float)y/(float)zverts;
+			mesh->vertices[x*zverts+y].normal = norm*-1;
+			mesh->vertices[x*zverts+y].uv.x = mesh->vertices[x*zverts+y].position.x*uvfac.x;//(float)x/(float)xverts*uvfac.x;
+			mesh->vertices[x*zverts+y].uv.y = mesh->vertices[x*zverts+y].position.z*uvfac.y;//(float)y/(float)zverts*uvfac.y;
 		}
 	}
 		
-//	mesh->calculateNormals();
 	mesh->generateVBO();
 	meshs.push_back(mesh);
 	sgResourceManager::addResource(mesh);
@@ -855,7 +854,7 @@ sgObject *sgObject::createTerrain(unsigned int xverts, unsigned int zverts, unsi
 	{
 		for(int y = 0; y < zchunks; y++)
 		{
-			next->addPlane((unsigned int)realx, (unsigned int)realz, sgVector3((float)xverts/xchunks*(float)x-(float)xverts*0.5+0.5f*realx, 0.0, (float)zverts/zchunks*(float)y-(float)zverts*0.5+0.5f*realz), mat, x, y, tex, sgVector2(width, height), hmpscale);
+			next->addPlane((unsigned int)realx, (unsigned int)realz, sgVector3((float)xverts/xchunks*(float)x-(float)xverts*0.5+0.5f*realx, 0.0, (float)zverts/zchunks*(float)y-(float)zverts*0.5+0.5f*realz), mat, x, y, sgVector2(1.0/xverts, 1.0/zverts), tex, sgVector2(width, height), hmpscale);
 		}
 	}
 	

@@ -29,6 +29,7 @@
 #include "sgMaterial.h"
 #include "sgObject.h"
 #include "sgCamera.h"
+#include "sgLight.h"
 #include "sgPanel.h"
 #include "sgVector4.h"
 
@@ -95,6 +96,14 @@ class sgEntity
 		sgEntity *createCamEntity(sgAction *a = NULL);
 	
 		/**
+		 *	Create light entity.
+		 *	Creates a new entity consisting of just a light and makes it next of this.
+		 * @param a pointer to the action which will be assigned to the new entity.
+		 * @return pointer to the new entity
+		 */
+		sgEntity *createLightEntity(sgAction *a = NULL);
+	
+		/**
 		 *	Create panel entity.
 		 *	Creates a new entity consisting of a panel and makes it next of this.
 		 * @param a pointer to the action which will be assigned to the new entity.
@@ -125,6 +134,12 @@ class sgEntity
 		 *	Pointer to the camera handled by this entity or NULL if there is none.
 		 */
 		sgCamera *cam;
+	
+		/**
+		 *	Light.
+		 *	Pointer to the light handled by this entity or NULL if there is none.
+		 */
+		sgLight *light;
 	
 		/**
 		 *	Panel.

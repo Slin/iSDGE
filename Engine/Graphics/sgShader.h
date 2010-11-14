@@ -100,6 +100,7 @@ class sgShader : public sgBase
 		unsigned int matproj;
 		unsigned int matview;
 		unsigned int matmodel;
+		unsigned int matprojviewmodel;
 		unsigned int matnormal;
 		unsigned int mattex;
 	

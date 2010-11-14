@@ -26,9 +26,7 @@
 attribute vec3 vertPos;
 attribute vec2 vertTexcoord0;
 
-uniform mat4 matProj;
-uniform mat4 matView;
-uniform mat4 matModel;
+uniform mat4 matProjViewModel;
 uniform mat4 matTex;
 
 varying vec2 texcoord;
@@ -36,5 +34,5 @@ varying vec2 texcoord;
 void main()
 {
 	texcoord = (matTex*vec4(vertTexcoord0, 1.0, 1.0)).xy;
-	gl_Position = matProj*matView*matModel*vec4(vertPos, 1.0);
+	gl_Position = matProjViewModel*vec4(vertPos, 1.0);
 }

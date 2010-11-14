@@ -65,40 +65,81 @@ sgShader *sgShader::getShader(const char *vsfilename, const char *fsfilename)
 sgShader *sgShader::getShader(unsigned int shad)
 {
 	sgShader *shader = NULL;
-	if(shad == 0)
+	switch(shad)
 	{
-		shader = (sgShader*)sgResourceManager::getResource("shader_texture");
-		if(shader == NULL)
+		//Basic shaders
+		case 0:
 		{
-			shader = new sgShader("sgsTexture", "sgsTexture");
-			sgResourceManager::addResource("shader_texture", shader);
+			shader = (sgShader*)sgResourceManager::getResource("shader_texture");
+			if(shader == NULL)
+			{
+				shader = new sgShader("sgsTexture", "sgsTexture");
+				sgResourceManager::addResource("shader_texture", shader);
+			}
+			break;
 		}
-	}
-	if(shad == 1)
-	{
-		shader = (sgShader*)sgResourceManager::getResource("shader_defaultlight");
-		if(shader == NULL)
+		case 1:
 		{
-			shader = new sgShader("sgsDefaultlight", "sgsDefaultlight");
-			sgResourceManager::addResource("shader_defaultlight", shader);
+			shader = (sgShader*)sgResourceManager::getResource("shader_texture_discard");
+			if(shader == NULL)
+			{
+				shader = new sgShader("sgsTexture", "sgsTextureDiscard");
+				sgResourceManager::addResource("shader_texture_discard", shader);
+			}
+			break;
 		}
-	}
-	if(shad == 2)
-	{
-		shader = (sgShader*)sgResourceManager::getResource("shader_shadowvolume");
-		if(shader == NULL)
+		case 2:
 		{
-			shader = new sgShader("sgsShadowvolume", "sgsShadowvolume");
-			sgResourceManager::addResource("shader_shadowvolume", shader);
+			shader = (sgShader*)sgResourceManager::getResource("shader_sun");
+			if(shader == NULL)
+			{
+				shader = new sgShader("sgsSun", "sgsSun");
+				sgResourceManager::addResource("shader_sun", shader);
+			}
+			break;
 		}
-	}
-	if(shad == 3)
-	{
-		shader = (sgShader*)sgResourceManager::getResource("shader_shadowquad");
-		if(shader == NULL)
+		case 3:
 		{
-			shader = new sgShader("sgsShadowquad", "sgsShadowquad");
-			sgResourceManager::addResource("shader_shadowquad", shader);
+			shader = (sgShader*)sgResourceManager::getResource("shader_light");
+			if(shader == NULL)
+			{
+				shader = new sgShader("sgsLight", "sgsLight");
+				sgResourceManager::addResource("shader_light", shader);
+			}
+			break;
+		}
+			
+		//Special shaders
+		case -1:
+		{
+			shader = (sgShader*)sgResourceManager::getResource("shader_shadowvolume");
+			if(shader == NULL)
+			{
+				shader = new sgShader("sgsShadowvolume", "sgsShadowvolume");
+				sgResourceManager::addResource("shader_shadowvolume", shader);
+			}
+			break;
+		}
+		case -2:
+		{
+			shader = (sgShader*)sgResourceManager::getResource("shader_shadowquad");
+			if(shader == NULL)
+			{
+				shader = new sgShader("sgsShadowquad", "sgsShadowquad");
+				sgResourceManager::addResource("shader_shadowquad", shader);
+			}
+			break;
+		}
+			
+		default:
+		{
+			shader = (sgShader*)sgResourceManager::getResource("shader_texture");
+			if(shader == NULL)
+			{
+				shader = new sgShader("sgsTexture", "sgsTexture");
+				sgResourceManager::addResource("shader_texture", shader);
+			}
+			break;
 		}
 	}
 	return shader;
@@ -128,7 +169,7 @@ bool sgShader::compileShader(GLuint *shader, GLenum type, const char *filepath)
 	{
 		GLchar *log = (GLchar *)malloc(logLength);
 		glGetShaderInfoLog(*shader, logLength, &logLength, log);
-		sgLog("Shader compile log:\n %s", log);
+		sgLog("%s: Shader compile log:\n %s", filepath, log);
 		free(log);
 	}
 	
@@ -175,7 +216,7 @@ bool sgShader::validateProgram()
 	{
 		GLchar *log = (GLchar *)malloc(logLength);
 		glGetProgramInfoLog(program, logLength, &logLength, log);
-//		sgDebug::writeString2("Program validate log:\n", log);
+		sgLog("Program validate log:\n%s", log);
 		free(log);
 	}
 	
@@ -191,6 +232,7 @@ void sgShader::getEngineUniforms()
 	matproj = glGetUniformLocation(program, "matProj");
 	matview = glGetUniformLocation(program, "matView");
 	matmodel = glGetUniformLocation(program, "matModel");
+	matprojviewmodel = glGetUniformLocation(program, "matProjViewModel");
 	matnormal = glGetUniformLocation(program, "matNormal");
 	mattex = glGetUniformLocation(program, "matTex");
 	
@@ -228,8 +270,8 @@ bool sgShader::create(const char *vsfilename, const char *fsfilename)
 	vertShaderPathname = sgResourceManager::getPath(vsfilename, "vsh");
 	if(!compileShader(&vertShader, GL_VERTEX_SHADER, vertShaderPathname))
 	{
+		sgLog("%s: Failed to compile vertex shader", vertShaderPathname);
 		delete[] vertShaderPathname;
-//		sgDebug::writeString("Failed to compile vertex shader");
 		return false;
 	}
 	delete[] vertShaderPathname;
@@ -238,8 +280,8 @@ bool sgShader::create(const char *vsfilename, const char *fsfilename)
 	fragShaderPathname = sgResourceManager::getPath(fsfilename, "fsh");
 	if(!compileShader(&fragShader, GL_FRAGMENT_SHADER, fragShaderPathname))
 	{
+		sgLog("%s: Failed to compile fragment shader", fragShaderPathname);
 		delete[] fragShaderPathname;
-//		sgDebug::writeString("Failed to compile fragment shader");
 		return false;
 	}
 	delete[] fragShaderPathname;

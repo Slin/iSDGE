@@ -37,6 +37,7 @@ sgEntity::sgEntity(sgEntity* p, sgEntity *n, sgMain *m)
 	
 	obj = NULL;
 	cam = NULL;
+	light = NULL;
 	act = NULL;
 	pan = NULL;
 }
@@ -114,6 +115,17 @@ sgEntity *sgEntity::createCamEntity(sgAction *a)
 	return next;
 }
 
+sgEntity *sgEntity::createLightEntity(sgAction *a)
+{
+	next = new sgEntity(prev, next, sgmain);
+	next->light = sgmain->renderer->first_light->createLight();
+	
+	next->act = a;
+	if(next->act)
+		next->act->onInit(next);
+	return next;
+}
+
 sgEntity *sgEntity::createPanEntity(sgAction *a)
 {
 	next = new sgEntity(prev, next, sgmain);
@@ -134,6 +146,9 @@ void sgEntity::destroy()
 	
 	if(cam != NULL)
 		cam->destroy();
+	
+	if(light != NULL)
+		light->destroy();
 	
 	if(pan != NULL)
 		pan->destroy();

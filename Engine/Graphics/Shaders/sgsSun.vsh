@@ -27,23 +27,16 @@ attribute vec3 vertPos;
 attribute vec3 vertNormal;
 attribute vec2 vertTexcoord0;
 
-uniform mat4 matProj;
-uniform mat4 matView;
 uniform mat4 matModel;
+uniform mat4 matProjViewModel;
 uniform mat4 matNormal;
 uniform mat4 matTex;
 
-uniform vec4 lAmbient[2];
+uniform vec4 mAmbient;
+
 uniform vec4 lDiffuse[2];
-uniform vec4 lSpecular[2];
 uniform vec4 lPosition[2];
 uniform float lAttenuation[2];
-
-uniform vec4 mAmbient;
-uniform vec4 mDiffuse;
-uniform vec4 mSpecular;
-uniform float mShininess;
-uniform vec4 mEmissive;
 
 varying vec2 texcoord;
 varying vec3 light;
@@ -51,26 +44,7 @@ varying vec3 light;
 void main()
 {
 	texcoord = (matTex*vec4(vertTexcoord0, 1.0, 1.0)).xy;
-	gl_Position = matProj*matView*matModel*vec4(vertPos, 1.0);
-	
-	vec3 worldnorm = normalize((matNormal*vec4(vertNormal, 1.0)).xyz);
-//	float att;
-//	vec3 lightdir;
-//	vec3 lighthalf;
-//	vec4 ambient = mAmbient;
-//	vec4 diffuse = vec4(0.0);
-//	vec4 specular = vec4(0.0);
-
-	lightdir = lPosition[0].xyz-worldpos;
-//	att = length(lightdir);
-//	att = 1.0/(1.0+lAttenuation[0]*att*att);
-	
-//	lightdir = normalize(lightdir);
-//	lighthalf = normalize(worldpos+lPosition[0].xyz);
-	
-//	ambient += lAmbient[0]*mAmbient*att;
-//	diffuse += max(att*dot(worldnorm, lightdir)*mDiffuse*lDiffuse[0], 0.0);
-//	specular += att*pow(dot(worldnorm, lighthalf), mShininess)*mSpecular*lSpecular[0];
-	
-	light = dot(worldnormal, lightdir);//ambient;//+diffuse;//+specular+mEmissive;
+	gl_Position = matProjViewModel*vec4(vertPos, 1.0);
+	vec4 norm = normalize(matNormal*vec4(vertNormal, 0.0));
+	light = max(dot(norm.xyz, lPosition[0].xyz), 0.0)*lDiffuse[0].rgb+mAmbient.rgb;
 }
