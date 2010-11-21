@@ -449,9 +449,6 @@ void sgRendererES2::setMaterial(sgMaterial *mat)
 
 void sgRendererES2::renderObjects(sgCamera *cam, sgObject *first)
 {
-	cam->updateView();
-	cam->matview = matglobal3d*cam->matview;
-	
 	//used for the sky
 	sgMatrix4x4 viewmat = cam->rotation.getMatrix();
 	viewmat.transpose();
@@ -462,13 +459,16 @@ void sgRendererES2::renderObjects(sgCamera *cam, sgObject *first)
 	int i;
 	for(curr = first->next; curr != NULL; curr = curr->next)
 	{
-		if(curr->tag == cam->tag && cam->tag != 0)
+		if((curr->tag == cam->tag && cam->tag != 0) || curr->culled)
 			continue;
 		
 		curr->updateModel();
 		
 		for(i = 0; i < curr->meshs.size(); i++)
 		{
+			if(curr->meshs[i]->culled)
+				continue;
+			
 			// Use shader program
 			glUseProgram(curr->materials[i]->shader->program);
 			
@@ -909,7 +909,14 @@ void sgRendererES2::render()
 		glClearStencil(0);
 		glClearDepthf(1.0f);
 		glClear(GL_STENCIL_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-
+		
+		//Update camera
+		cam->updateView();
+		cam->matview = matglobal3d*cam->matview;
+		
+		//Do view frustum culling
+		culling(cam, first_solid);
+		
 		//Draw objects
 		glViewport(cam->screenpos.x, cam->screenpos.y, cam->size.x, cam->size.y);
 		renderObjects(cam, first_sky);

@@ -264,9 +264,6 @@ void sgRendererES1::setMaterial(sgMaterial *mat)
 
 void sgRendererES1::renderObjects(sgCamera *cam, sgObject *first)
 {
-	cam->updateView();
-	cam->matview = matglobal3d*cam->matview;
-	
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf(cam->matproj.mat);
 	glMatrixMode(GL_MODELVIEW);
@@ -289,7 +286,7 @@ void sgRendererES1::renderObjects(sgCamera *cam, sgObject *first)
 	int i;
 	for(curr = first->next; curr != NULL; curr = curr->next)
 	{
-		if(curr->tag == cam->tag && cam->tag != 0)
+		if((curr->tag == cam->tag && cam->tag != 0) || curr->culled)
 			continue;
 		
 		curr->updateModel();
@@ -307,6 +304,9 @@ void sgRendererES1::renderObjects(sgCamera *cam, sgObject *first)
 		
 		for(i = 0; i < curr->meshs.size(); i++)
 		{
+			if(curr->meshs[i]->culled)
+				continue;
+			
 			setMaterial(curr->materials[i]);
 			
 			glMatrixMode(GL_TEXTURE);
@@ -493,6 +493,13 @@ void sgRendererES1::render()
 		//Clear depth buffer
 		glClearDepthf(1.0f);
 		glClear(GL_DEPTH_BUFFER_BIT);
+		
+		//Update camera
+		cam->updateView();
+		cam->matview = matglobal3d*cam->matview;
+		
+		//Do view frustum culling
+		culling(cam, first_solid);
 		
 		//Draw objects
 		glViewport(cam->screenpos.x, cam->screenpos.y, cam->size.x, cam->size.y);

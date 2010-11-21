@@ -236,16 +236,18 @@ void sgShadowVolume::update(sgLight *firstlight)
 	unsigned short *volindices;
 	memcpy(tempedges, edges, edgenum*sizeof(sgShadowEdge));
 	
+	if(light->position.w == 0)
+	{
+		lightdir = sgVector3(light->position.x, light->position.y, light->position.z);
+		lightdir.normalize();
+	}
+	
 	//Find silouette
 	for(unsigned int n = 0; n < facenum; n++)
 	{
 		normal = object->matnormal*faces[n].normal;
 		
-		if(light->position.w == 0)
-		{
-			lightdir = sgVector3(light->position.x, light->position.y, light->position.z);
-			lightdir.normalize();
-		}else
+		if(light->position.w != 0)
 		{
 			sgLog("Shadows for point lights aren´t supported yet!");
 			return;

@@ -281,20 +281,19 @@
 								<string>295CBF66121587B300F1F941</string>
 								<string>295CBF581215861700F1F941</string>
 								<string>1C37FBAC04509CD000000102</string>
-								<string>2935615612875310007BE9B7</string>
-								<string>2935615712875310007BE9B7</string>
 								<string>1C37FABC05509CD000000102</string>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>106</integer>
-									<integer>105</integer>
-									<integer>104</integer>
+									<integer>99</integer>
+									<integer>97</integer>
+									<integer>93</integer>
+									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 1527}, {186, 853}}</string>
+							<string>{{0, 957}, {186, 853}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -329,7 +328,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>sgMirror-Info.plist</string>
+								<string>Events.mm</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -337,11 +336,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>sgMirror-Info.plist</string>
+										<string>Events.mm</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>2935615A12875310007BE9B7</string>
+										<string>294BC4A4129329D700BA99CF</string>
 										<key>history</key>
 										<array>
 											<string>294D92BC124572A5000CDCCD</string>
@@ -373,12 +372,12 @@
 											<string>29CC924412462BE1005AFF85</string>
 											<string>29CC924812462C5A005AFF85</string>
 											<string>29CC92561246336E005AFF85</string>
-											<string>29CC925B124633C5005AFF85</string>
 											<string>29440C451257DB2E001C0888</string>
 											<string>29440C461257DB2E001C0888</string>
 											<string>29440C471257DB2E001C0888</string>
-											<string>2935615812875310007BE9B7</string>
-											<string>2935615912875310007BE9B7</string>
+											<string>294BC46F129325CE00BA99CF</string>
+											<string>294BC4A2129329D700BA99CF</string>
+											<string>294BC4A3129329D700BA99CF</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -390,14 +389,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {1712, 693}}</string>
+								<string>{{0, 0}, {1712, 685}}</string>
 								<key>RubberWindowFrame</key>
 								<string>0 146 1920 912 0 0 1920 1058 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>693pt</string>
+							<string>685pt</string>
 						</dict>
 						<dict>
 							<key>ContentConfiguration</key>
@@ -410,14 +409,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 698}, {1712, 173}}</string>
+								<string>{{0, 690}, {1712, 181}}</string>
 								<key>RubberWindowFrame</key>
 								<string>0 146 1920 912 0 0 1920 1058 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
 							<key>Proportion</key>
-							<string>173pt</string>
+							<string>181pt</string>
 						</dict>
 					</array>
 					<key>Proportion</key>
@@ -436,9 +435,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>2935615B12875310007BE9B7</string>
+				<string>294BC4A5129329D700BA99CF</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>2935615C12875310007BE9B7</string>
+				<string>294BC4A6129329D700BA99CF</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -657,7 +656,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>294D92B0124571AC000CDCCD</string>
-				<string>2935615D12875310007BE9B7</string>
+				<string>294BC4A7129329D700BA99CF</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>

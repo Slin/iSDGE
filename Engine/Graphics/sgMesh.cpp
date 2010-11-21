@@ -50,6 +50,8 @@ sgMesh::sgMesh()
 	indexnum = 0;
 	vertices = NULL;
 	indices = NULL;
+	
+	culled = false;
 }
 
 sgMesh::~sgMesh()
@@ -303,4 +305,28 @@ void sgMesh::invertTexCoordsY()
 	{
 		vertices[i].uv.y = 1.0f-vertices[i].uv.y;
 	}
+}
+
+void sgMesh::calcCullSphere()
+{
+	sgVector3 center;
+	float radius = 0;
+	float temp;
+	sgVector3 diff;
+	for(int i = 0; i < vertexnum; i++)
+	{
+		center += vertices[i].position;
+	}
+	center /= vertexnum;
+	
+	radius = 0;
+	for(int i = 0; i < vertexnum; i++)
+	{
+		diff = vertices[i].position-center;
+		temp = diff.length();
+		if(radius < temp)
+			radius = temp;
+		
+	}
+	cullsphere = sgVector4(center.x, center.y, center.z, radius);
 }

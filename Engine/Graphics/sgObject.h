@@ -132,6 +132,12 @@ class sgObject
 		void initShadowVolume();
 	
 		/**
+		 *	Calculate cull sphere.
+		 *	Calculates the cull sphere for the object and its meshs.
+		 */
+		void calcCullSphere();
+	
+		/**
 		 *	Destroy.
 		 *	Destroys this object.
 		 */
@@ -190,6 +196,18 @@ class sgObject
 		 * Allows to ignore this object for rendering or whereever one can specify it.
 		 **/
 		unsigned int tag;
+	
+		/**
+		 *	Culled.
+		 *	True, if the object wasn´t rendered the previous frame.
+		 */
+		bool culled;
+	
+		/**
+		 *	Cull sphere.
+		 *	Sphere checked against the view frustum for culling. XYZ is the local center and W the radius.
+		 */
+		sgVector4 cullsphere;
 	
 		/**
 		 *	Shadow volume mesh.

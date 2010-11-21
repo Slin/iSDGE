@@ -52,9 +52,11 @@ void Events::onInit(sgMain *m)
 	sgmain->first_ent->createSkyCubeEntity("sky_right.png", "sky_back.png", "sky_left.png", "sky_front.png", "sky_down.png", "sky_up.png");
 	
 	//Create a terrain entity
-	sgEntity *ent = sgmain->first_ent->createTerrainEntity("terrain.png", 64, 64, 8, 8, sgVector4(0.01, 0.0, 0.0, 0.0));
-	ent->obj->materials[0]->setTexture2D(-1, "grass.png");
-	ent->obj->materials[0]->mattex.makeScale(sgVector4(64, 64, 1, 1));
+	sgEntity *ent = sgmain->first_ent->createTerrainEntity("czTerrHMP.png", 512, 512, 16, 16, sgVector4(0.1, 0.1, 0.1, 0.0));
+	ent->obj->materials[0]->setTexture2D(-1, "czTerrTex.png");
+	ent->obj->materials[0]->setTexture2D(-1, "czTerrDet.png");
+	ent->obj->materials[0]->setShader("TerrDetail", "TerrDetail");
+//	ent->obj->materials[0]->mattex.makeScale(sgVector4(64, 64, 1, 1));
 }
 
 //Called every frame, just before drawing

@@ -36,6 +36,12 @@
 		2936A2F611C06569008EAD35 /* sgXML.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2936A2F511C06569008EAD35 /* sgXML.cpp */; };
 		2941E31611C1113C00B6EC59 /* CameraFree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2941E31211C1113C00B6EC59 /* CameraFree.cpp */; };
 		2941E31711C1113C00B6EC59 /* FPSDisplay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2941E31411C1113C00B6EC59 /* FPSDisplay.cpp */; };
+		294BC409129317F200BA99CF /* terrain3.png in Resources */ = {isa = PBXBuildFile; fileRef = 294BC408129317F200BA99CF /* terrain3.png */; };
+		294BC41C12931E0D00BA99CF /* czTerrHMP.png in Resources */ = {isa = PBXBuildFile; fileRef = 294BC41912931E0D00BA99CF /* czTerrHMP.png */; };
+		294BC41D12931E0D00BA99CF /* czTerrDet.png in Resources */ = {isa = PBXBuildFile; fileRef = 294BC41A12931E0D00BA99CF /* czTerrDet.png */; };
+		294BC41E12931E0D00BA99CF /* czTerrTex.png in Resources */ = {isa = PBXBuildFile; fileRef = 294BC41B12931E0D00BA99CF /* czTerrTex.png */; };
+		294BC44B1293245000BA99CF /* TerrDetail.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 294BC4441293245000BA99CF /* TerrDetail.fsh */; };
+		294BC44C1293245000BA99CF /* TerrDetail.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 294BC4451293245000BA99CF /* TerrDetail.vsh */; };
 		2952EE1C117A4EEC006FAB6F /* sgQuaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2952EE1B117A4EEC006FAB6F /* sgQuaternion.cpp */; };
 		2952EEAE117A6F90006FAB6F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2952EEAD117A6F90006FAB6F /* CoreGraphics.framework */; };
 		2952F04E117A7F60006FAB6F /* sgColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2952F04D117A7F60006FAB6F /* sgColor.cpp */; };
@@ -122,6 +128,12 @@
 		2941E31311C1113C00B6EC59 /* CameraFree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraFree.h; sourceTree = "<group>"; };
 		2941E31411C1113C00B6EC59 /* FPSDisplay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FPSDisplay.cpp; sourceTree = "<group>"; };
 		2941E31511C1113C00B6EC59 /* FPSDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPSDisplay.h; sourceTree = "<group>"; };
+		294BC408129317F200BA99CF /* terrain3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = terrain3.png; sourceTree = "<group>"; };
+		294BC41912931E0D00BA99CF /* czTerrHMP.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = czTerrHMP.png; sourceTree = "<group>"; };
+		294BC41A12931E0D00BA99CF /* czTerrDet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = czTerrDet.png; sourceTree = "<group>"; };
+		294BC41B12931E0D00BA99CF /* czTerrTex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = czTerrTex.png; sourceTree = "<group>"; };
+		294BC4441293245000BA99CF /* TerrDetail.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TerrDetail.fsh; sourceTree = "<group>"; };
+		294BC4451293245000BA99CF /* TerrDetail.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TerrDetail.vsh; sourceTree = "<group>"; };
 		2952EE1A117A4EEC006FAB6F /* sgQuaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgQuaternion.h; sourceTree = "<group>"; };
 		2952EE1B117A4EEC006FAB6F /* sgQuaternion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgQuaternion.cpp; sourceTree = "<group>"; };
 		2952EEAD117A6F90006FAB6F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -351,6 +363,7 @@
 		292FFB8A12159B4A003564EE /* Media */ = {
 			isa = PBXGroup;
 			children = (
+				294BC43E1293245000BA99CF /* Shaders */,
 				292FFBA712159B4A003564EE /* Textures */,
 			);
 			name = Media;
@@ -360,6 +373,10 @@
 		292FFBA712159B4A003564EE /* Textures */ = {
 			isa = PBXGroup;
 			children = (
+				294BC41912931E0D00BA99CF /* czTerrHMP.png */,
+				294BC41A12931E0D00BA99CF /* czTerrDet.png */,
+				294BC41B12931E0D00BA99CF /* czTerrTex.png */,
+				294BC408129317F200BA99CF /* terrain3.png */,
 				293560511286D172007BE9B7 /* terrain.png */,
 				29355FE31286B6C2007BE9B7 /* grass.png */,
 				292FFBA812159B4A003564EE /* font1.png */,
@@ -383,6 +400,15 @@
 				2941E31511C1113C00B6EC59 /* FPSDisplay.h */,
 			);
 			path = Templates;
+			sourceTree = "<group>";
+		};
+		294BC43E1293245000BA99CF /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				294BC4441293245000BA99CF /* TerrDetail.fsh */,
+				294BC4451293245000BA99CF /* TerrDetail.vsh */,
+			);
+			path = Shaders;
 			sourceTree = "<group>";
 		};
 		295CBF571215861700F1F941 /* Code */ = {
@@ -538,6 +564,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				294BC44B1293245000BA99CF /* TerrDetail.fsh in Resources */,
+				294BC44C1293245000BA99CF /* TerrDetail.vsh in Resources */,
 				29BAC01E12886A9000FCDE9F /* sgsTextureDiscard.fsh in Resources */,
 				29BAC02112886B5500FCDE9F /* sgsSun.vsh in Resources */,
 				29BAC02212886B5500FCDE9F /* sgsSun.fsh in Resources */,
@@ -562,6 +590,10 @@
 				292FFBD212159B4A003564EE /* sky_up.png in Resources */,
 				29355FE41286B6C2007BE9B7 /* grass.png in Resources */,
 				293560521286D172007BE9B7 /* terrain.png in Resources */,
+				294BC409129317F200BA99CF /* terrain3.png in Resources */,
+				294BC41C12931E0D00BA99CF /* czTerrHMP.png in Resources */,
+				294BC41D12931E0D00BA99CF /* czTerrDet.png in Resources */,
+				294BC41E12931E0D00BA99CF /* czTerrTex.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

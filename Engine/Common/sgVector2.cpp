@@ -193,6 +193,11 @@ float sgVector2::length()
 	return sqrt(x*x+y*y);
 }
 
+float sgVector2::squaredLength()
+{
+	return x*x+y*y;
+}
+
 void sgVector2::normalize()
 {
 	float len = length();

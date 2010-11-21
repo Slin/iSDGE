@@ -190,7 +190,7 @@ class sgRenderer
 	protected:
 		void updateOrientation();
 	
-		void culling();
+		void culling(sgCamera *cam, sgObject *first);
 		void sorting();
 		void optimizing();
 	

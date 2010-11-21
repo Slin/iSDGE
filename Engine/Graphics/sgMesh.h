@@ -27,6 +27,7 @@
 #define __SGMESH_H__
 
 #include "sgBase.h"
+#include "sgVector4.h"
 
 class sgVertex;
 class sgVector3;
@@ -103,6 +104,12 @@ class sgMesh : public sgBase
 		void invertTexCoordsY();
 	
 		/**
+		 *	Calculate cull sphere.
+		 *	Calculates the cull sphere for this mesh.
+		 */
+		void calcCullSphere();
+	
+		/**
 		 *	Vertex format.
 		 *	The format of the vertices of this mesh (ranging from 0 to 3).
 		 */
@@ -149,6 +156,18 @@ class sgMesh : public sgBase
 		 *	True, if the mesh is meant to be dynamically changed.
 		 */
 		bool dynamic;
+	
+		/**
+		 *	Culled.
+		 *	True, if the mesh wasn´t rendered the previous frame.
+		 */
+		bool culled;
+	
+		/**
+		 *	Cull sphere.
+		 *	Sphere checked against the view frustum for culling. XYZ is the local center and W the radius.
+		 */
+		sgVector4 cullsphere;
 	
 		/**
 		 *	Bone number.

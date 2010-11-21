@@ -48,6 +48,7 @@ sgObject::sgObject(sgObject* p, sgObject *n)
 	sky = false;
 	shadowvolume = NULL;
 	tag = 0;
+	culled = false;
 }
 
 sgObject::~sgObject()
@@ -809,8 +810,8 @@ void sgObject::addPlane(unsigned int xverts, unsigned int zverts, sgVector3 poso
 			mesh->vertices[x*zverts+y].position.y = height+posoffset.y;
 			mesh->vertices[x*zverts+y].position.z = (float)y-0.5f*(float)zverts+posoffset.z;
 			mesh->vertices[x*zverts+y].normal = norm*-1;
-			mesh->vertices[x*zverts+y].uv.x = mesh->vertices[x*zverts+y].position.x*uvfac.x;//(float)x/(float)xverts*uvfac.x;
-			mesh->vertices[x*zverts+y].uv.y = mesh->vertices[x*zverts+y].position.z*uvfac.y;//(float)y/(float)zverts*uvfac.y;
+			mesh->vertices[x*zverts+y].uv.x = mesh->vertices[x*zverts+y].position.x*uvfac.x+0.5f;
+			mesh->vertices[x*zverts+y].uv.y = mesh->vertices[x*zverts+y].position.z*uvfac.y+0.5f;
 		}
 	}
 		
@@ -854,12 +855,18 @@ sgObject *sgObject::createTerrain(unsigned int xverts, unsigned int zverts, unsi
 	{
 		for(int y = 0; y < zchunks; y++)
 		{
-			next->addPlane((unsigned int)realx, (unsigned int)realz, sgVector3((float)xverts/xchunks*(float)x-(float)xverts*0.5+0.5f*realx, 0.0, (float)zverts/zchunks*(float)y-(float)zverts*0.5+0.5f*realz), mat, x, y, sgVector2(1.0/xverts, 1.0/zverts), tex, sgVector2(width, height), hmpscale);
+			next->addPlane((unsigned int)realx, (unsigned int)realz,
+						   sgVector3((float)xverts/xchunks*(float)x-(float)xverts*0.5+0.5f*realx, 0.0,
+									 (float)zverts/zchunks*(float)y-(float)zverts*0.5+0.5f*realz),
+						   mat, x, y,
+						   sgVector2(1.0/xverts, 1.0/zverts), tex, sgVector2(width, height), hmpscale);
 		}
 	}
 	
 	if(tex != NULL)
 		tex->destroy();
+
+	next->calcCullSphere();
 	
 	return next;
 }
@@ -886,6 +893,18 @@ void sgObject::initShadowVolume()
 {
 	if(shadowvolume == NULL && sgRenderer::oglversion > 1)
 		shadowvolume = new sgShadowVolume(this);
+}
+
+void sgObject::calcCullSphere()
+{
+	sgVector3 center;
+	float radius = 0;
+	float temp;
+	sgVector3 diff;
+	for(int m = 0; m < meshs.size(); m++)
+	{
+		meshs[m]->calcCullSphere();
+	}
 }
 
 void sgObject::updateModel()

@@ -173,6 +173,13 @@ class sgVector2
 		 * @return the vectors length
 		 */
 		float length();
+	
+		/**
+		 *	Squared length.
+		 *	Get the squared length of the vector.
+		 * @return the vectors squared length
+		 */
+		float squaredLength();
 		
 		/**
 		 *	Make identity.

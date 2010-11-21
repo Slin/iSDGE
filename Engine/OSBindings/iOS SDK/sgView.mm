@@ -30,7 +30,7 @@
 #include <OpenGLES/ES2/gl.h>
 #include <OpenGLES/ES2/glext.h>
 
-//#define DISABLE_OPENGL_ES_2_0
+#define DISABLE_OPENGL_ES_2_0
 
 @implementation sgView
 

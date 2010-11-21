@@ -249,6 +249,11 @@ float sgVector3::length()
 	return sqrt(x*x+y*y+z*z);
 }
 
+float sgVector3::squaredLength()
+{
+	return x*x+y*y+z*z;
+}
+
 void sgVector3::normalize()
 {
 	float len = length();
