@@ -23,12 +23,20 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-#include "Rotate.h"
-#include "sgVector3.h"
+#include "Water.h"
+
+void Water::onInit(sgEntity *e)
+{
+	ent = e;
+	
+	ent->obj->materials[0]->setTexture2D(-1, "waterbump.png");
+	ent->obj->materials[0]->setTexture2D(-1, "sky.png");
+	ent->obj->materials[0]->setShader("Water", "Water");
+	ent->obj->materials[0]->mattex.makeScale(sgVector3(100, 100, 1));
+}
 
 //This method is called every frame, just before drawing for each object with this action attached
-void Rotate::onDraw(float timestep)
+void Water::onDraw(float timestep)
 {
-	//Rotate the object
-	ent->obj->rotation += sgVector3(timestep*20.0f, 0.0, 0.0);
+	ent->obj->materials[0]->mattex.mat[12] += 0.1*timestep;
 }

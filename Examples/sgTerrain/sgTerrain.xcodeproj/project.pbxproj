@@ -47,7 +47,7 @@
 		2952F04E117A7F60006FAB6F /* sgColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2952F04D117A7F60006FAB6F /* sgColor.cpp */; };
 		295CBF5C1215861700F1F941 /* Events.mm in Sources */ = {isa = PBXBuildFile; fileRef = 295CBF5A1215861700F1F941 /* Events.mm */; };
 		295CBF5D1215861700F1F941 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295CBF5B1215861700F1F941 /* main.cpp */; };
-		295CBF69121587B300F1F941 /* Rotate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295CBF67121587B300F1F941 /* Rotate.cpp */; };
+		295CBF69121587B300F1F941 /* Water.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295CBF67121587B300F1F941 /* Water.cpp */; };
 		295EDDD911AACF840065C43C /* sgMatrix4x4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295EDDD811AACF840065C43C /* sgMatrix4x4.cpp */; };
 		297A217611DCBC3A00F0C8E5 /* sgInit.mm in Sources */ = {isa = PBXBuildFile; fileRef = 297A217511DCBC3A00F0C8E5 /* sgInit.mm */; };
 		29A42EDA118346DA0080394F /* sgsTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 29A42ED8118346DA0080394F /* sgsTexture.fsh */; };
@@ -74,6 +74,10 @@
 		29BAC01E12886A9000FCDE9F /* sgsTextureDiscard.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 29BAC01D12886A9000FCDE9F /* sgsTextureDiscard.fsh */; };
 		29BAC02112886B5500FCDE9F /* sgsSun.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 29BAC01F12886B5500FCDE9F /* sgsSun.vsh */; };
 		29BAC02212886B5500FCDE9F /* sgsSun.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 29BAC02012886B5500FCDE9F /* sgsSun.fsh */; };
+		29C8F83C129ACC3B003DB20D /* Water.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 29C8F83A129ACC3B003DB20D /* Water.vsh */; };
+		29C8F83D129ACC3B003DB20D /* Water.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 29C8F83B129ACC3B003DB20D /* Water.fsh */; };
+		29C8F840129ACDC4003DB20D /* sky.png in Resources */ = {isa = PBXBuildFile; fileRef = 29C8F83E129ACDC4003DB20D /* sky.png */; };
+		29C8F841129ACDC4003DB20D /* waterbump.png in Resources */ = {isa = PBXBuildFile; fileRef = 29C8F83F129ACDC4003DB20D /* waterbump.png */; };
 		29D7EA86117CA95D0091D933 /* sgLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29D7EA85117CA95D0091D933 /* sgLight.cpp */; };
 		29D7EB26117CEF010091D933 /* sgObjectFiles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29D7EB25117CEF010091D933 /* sgObjectFiles.cpp */; };
 		29D7EB29117CF34E0091D933 /* sgTools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29D7EB28117CF34E0091D933 /* sgTools.cpp */; };
@@ -142,8 +146,8 @@
 		295CBF591215861700F1F941 /* Events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Events.h; sourceTree = "<group>"; };
 		295CBF5A1215861700F1F941 /* Events.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Events.mm; sourceTree = "<group>"; };
 		295CBF5B1215861700F1F941 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		295CBF67121587B300F1F941 /* Rotate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Rotate.cpp; sourceTree = "<group>"; };
-		295CBF68121587B300F1F941 /* Rotate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rotate.h; sourceTree = "<group>"; };
+		295CBF67121587B300F1F941 /* Water.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Water.cpp; sourceTree = "<group>"; };
+		295CBF68121587B300F1F941 /* Water.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Water.h; sourceTree = "<group>"; };
 		295CBF8C12158A9600F1F941 /* sgTerrain-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "sgTerrain-Info.plist"; sourceTree = "<group>"; };
 		295EDDD711AACF840065C43C /* sgMatrix4x4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgMatrix4x4.h; sourceTree = "<group>"; };
 		295EDDD811AACF840065C43C /* sgMatrix4x4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgMatrix4x4.cpp; sourceTree = "<group>"; };
@@ -186,6 +190,10 @@
 		29BAC01D12886A9000FCDE9F /* sgsTextureDiscard.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsTextureDiscard.fsh; sourceTree = "<group>"; };
 		29BAC01F12886B5500FCDE9F /* sgsSun.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsSun.vsh; sourceTree = "<group>"; };
 		29BAC02012886B5500FCDE9F /* sgsSun.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsSun.fsh; sourceTree = "<group>"; };
+		29C8F83A129ACC3B003DB20D /* Water.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Water.vsh; sourceTree = "<group>"; };
+		29C8F83B129ACC3B003DB20D /* Water.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Water.fsh; sourceTree = "<group>"; };
+		29C8F83E129ACDC4003DB20D /* sky.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sky.png; sourceTree = "<group>"; };
+		29C8F83F129ACDC4003DB20D /* waterbump.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = waterbump.png; sourceTree = "<group>"; };
 		29D7EA84117CA95D0091D933 /* sgLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgLight.h; sourceTree = "<group>"; };
 		29D7EA85117CA95D0091D933 /* sgLight.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgLight.cpp; sourceTree = "<group>"; };
 		29D7EB24117CEF010091D933 /* sgObjectFiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgObjectFiles.h; sourceTree = "<group>"; };
@@ -373,6 +381,8 @@
 		292FFBA712159B4A003564EE /* Textures */ = {
 			isa = PBXGroup;
 			children = (
+				29C8F83E129ACDC4003DB20D /* sky.png */,
+				29C8F83F129ACDC4003DB20D /* waterbump.png */,
 				294BC41912931E0D00BA99CF /* czTerrHMP.png */,
 				294BC41A12931E0D00BA99CF /* czTerrDet.png */,
 				294BC41B12931E0D00BA99CF /* czTerrTex.png */,
@@ -405,6 +415,8 @@
 		294BC43E1293245000BA99CF /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
+				29C8F83A129ACC3B003DB20D /* Water.vsh */,
+				29C8F83B129ACC3B003DB20D /* Water.fsh */,
 				294BC4441293245000BA99CF /* TerrDetail.fsh */,
 				294BC4451293245000BA99CF /* TerrDetail.vsh */,
 			);
@@ -433,8 +445,8 @@
 		295CBF66121587B300F1F941 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
-				295CBF67121587B300F1F941 /* Rotate.cpp */,
-				295CBF68121587B300F1F941 /* Rotate.h */,
+				295CBF67121587B300F1F941 /* Water.cpp */,
+				295CBF68121587B300F1F941 /* Water.h */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -564,6 +576,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29C8F83C129ACC3B003DB20D /* Water.vsh in Resources */,
+				29C8F83D129ACC3B003DB20D /* Water.fsh in Resources */,
 				294BC44B1293245000BA99CF /* TerrDetail.fsh in Resources */,
 				294BC44C1293245000BA99CF /* TerrDetail.vsh in Resources */,
 				29BAC01E12886A9000FCDE9F /* sgsTextureDiscard.fsh in Resources */,
@@ -594,6 +608,8 @@
 				294BC41C12931E0D00BA99CF /* czTerrHMP.png in Resources */,
 				294BC41D12931E0D00BA99CF /* czTerrDet.png in Resources */,
 				294BC41E12931E0D00BA99CF /* czTerrTex.png in Resources */,
+				29C8F840129ACDC4003DB20D /* sky.png in Resources */,
+				29C8F841129ACDC4003DB20D /* waterbump.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -641,7 +657,7 @@
 				29ECE04A1213086D00385A1E /* sgShadowVolume.cpp in Sources */,
 				295CBF5C1215861700F1F941 /* Events.mm in Sources */,
 				295CBF5D1215861700F1F941 /* main.cpp in Sources */,
-				295CBF69121587B300F1F941 /* Rotate.cpp in Sources */,
+				295CBF69121587B300F1F941 /* Water.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

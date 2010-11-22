@@ -1,8 +1,8 @@
 //
-//	Events.h
-//	Engine
+//	Shader.fsh
+//	iSDGE
 //
-//	Created by Nils Daumann on 01.05.10.
+//	Created by Nils Daumann on 16.04.10.
 //	Copyright (c) 2010 Nils Daumann
 
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,27 +23,18 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-#ifndef __EVENTS_H__
-#define __EVENTS_H__
+precision highp float;
 
-#include "sgEvents.h"
-#include "sgMain.h"
-#include "sgDebug.h"
+uniform sampler2D mTexture0;
+uniform sampler2D mTexture1;
 
-#include "CameraFree.h"
-#include "FPSDisplay.h"
+varying vec2 texcoord;
+varying vec3 projpos;
+varying float fog;
 
-#include "Water.h"
-
-
-class Events : public sgEvents
+void main()
 {
-	public:
-		void onInit(sgMain *m);
-		void onDraw(float timestep);
-		
-	private:
-		sgMain *sgmain;
-};
-
-#endif
+	vec4 dis = texture2D(mTexture0, texcoord.xy)*2.0-1.0;
+	vec4 color = texture2D(mTexture1, projpos.xy/projpos.z*0.5+0.5+dis.rg*0.8);
+    gl_FragColor = mix(color, vec4(0.8, 0.9, 1.0, 1.0), fog);
+}

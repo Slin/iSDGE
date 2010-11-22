@@ -45,7 +45,7 @@ void Events::onInit(sgMain *m)
 	
 	//Create the camera
 	sgEntity *cam = sgmain->first_ent->createCamEntity((sgAction*)new CameraFree);
-	cam->cam->position = sgVector3(0.0f, 5.0f, 0.0f);
+	cam->cam->position = sgVector3(0.0f, 50.0f, 0.0f);
 	cam->cam->rotation = sgVector3(0.0f, 0.0f, -45.0f);
 	
 	//Create skycube
@@ -56,7 +56,11 @@ void Events::onInit(sgMain *m)
 	ent->obj->materials[0]->setTexture2D(-1, "czTerrTex.png");
 	ent->obj->materials[0]->setTexture2D(-1, "czTerrDet.png");
 	ent->obj->materials[0]->setShader("TerrDetail", "TerrDetail");
-//	ent->obj->materials[0]->mattex.makeScale(sgVector4(64, 64, 1, 1));
+	
+	//Create water entity
+	ent = sgmain->first_ent->createTerrainEntity(NULL, 2, 2, 2, 2, sgVector4(0.0, 0.0, 0.0, 0.0), (sgAction*)new Water);
+	ent->obj->position.y = 23.0;
+	ent->obj->scale *= 1000.0;
 }
 
 //Called every frame, just before drawing

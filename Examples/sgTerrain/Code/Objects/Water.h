@@ -23,14 +23,15 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-#ifndef __ROTATE_H__
-#define __ROTATE_H__
+#ifndef __WATER_H__
+#define __WATER_H__
 
 #include "sgAction.h"
 
-class Rotate : public sgAction
+class Water : public sgAction
 {
 	public:
+		void onInit(sgEntity *e);
 		void onDraw(float timestep);
 };
 

@@ -170,10 +170,9 @@ void sgRenderer::culling(sgCamera *cam, sgObject *first)
 	float realrad;
 	for(sgObject *obj = first->next; obj != NULL; obj = obj->next)
 	{
-		obj->culled = false;
-		for(int i = 0; i < obj->meshs.size(); i++)
+		if(obj->cullsphere.w >= 0)
 		{
-			pos = obj->meshs[i]->cullsphere;
+			pos = obj->cullsphere;
 			projviewmodel = projview*obj->matmodel;
 			pos.w = 1.0;
 			pos = projviewmodel*pos;
@@ -183,9 +182,9 @@ void sgRenderer::culling(sgCamera *cam, sgObject *first)
 			realrad = obj->scale.x;
 			if(realrad < obj->scale.y)
 				realrad = obj->scale.y;
-			if(realrad < obj->scale.y)
-				realrad = obj->scale.y;
-			realrad *= obj->meshs[i]->cullsphere.w;
+			if(realrad < obj->scale.z)
+				realrad = obj->scale.z;
+			realrad *= obj->cullsphere.w;
 			
 			temp = sgVector4(realrad, 0.0, pos.w, 1.0);
 			temp = cam->matproj*temp;
@@ -199,10 +198,46 @@ void sgRenderer::culling(sgCamera *cam, sgObject *first)
 			if(radius.y < 0)
 				radius.y *= -1;
 			
-			if((pos.x < 1.0+radius.x && pos.x > -1.0-radius.x && pos.y < 1.0+radius.y && pos.y > -1.0-radius.y && pos.w > 0) || (((pos.w < 0)?(-pos.w):(pos.w)) <= obj->meshs[i]->cullsphere.w))
-				obj->meshs[i]->culled = false;
+			if((pos.x < 1.0+radius.x && pos.x > -1.0-radius.x && pos.y < 1.0+radius.y && pos.y > -1.0-radius.y && pos.w > 0) || (((pos.w < 0)?(-pos.w):(pos.w)) <= realrad))
+				obj->culled = false;
 			else
-				obj->meshs[i]->culled = true;
+				obj->culled = true;
+		}else
+		{
+			obj->culled = false;
+			for(int i = 0; i < obj->meshs.size(); i++)
+			{
+				pos = obj->meshs[i]->cullsphere;
+				projviewmodel = projview*obj->matmodel;
+				pos.w = 1.0;
+				pos = projviewmodel*pos;
+				pos.x /= pos.w;
+				pos.y /= pos.w;
+				
+				realrad = obj->scale.x;
+				if(realrad < obj->scale.y)
+					realrad = obj->scale.y;
+				if(realrad < obj->scale.y)
+					realrad = obj->scale.y;
+				realrad *= obj->meshs[i]->cullsphere.w;
+				
+				temp = sgVector4(realrad, 0.0, pos.w, 1.0);
+				temp = cam->matproj*temp;
+				radius.x = temp.x/temp.w*1.1;
+				temp = sgVector4(0.0, realrad, pos.w, 1.0);
+				temp = cam->matproj*temp;
+				radius.y = temp.y/temp.w*1.1;
+				
+				if(radius.x < 0)
+					radius.x *= -1;
+				if(radius.y < 0)
+					radius.y *= -1;
+				
+				if((pos.x < 1.0+radius.x && pos.x > -1.0-radius.x && pos.y < 1.0+radius.y && pos.y > -1.0-radius.y && pos.w > 0) || (((pos.w < 0)?(-pos.w):(pos.w)) <= realrad))
+					obj->meshs[i]->culled = false;
+				else
+					obj->meshs[i]->culled = true;
+			}
 		}
 	}
 }

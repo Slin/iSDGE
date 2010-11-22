@@ -904,7 +904,26 @@ void sgObject::calcCullSphere()
 	for(int m = 0; m < meshs.size(); m++)
 	{
 		meshs[m]->calcCullSphere();
+		center += sgVector3(meshs[m]->cullsphere);
 	}
+	center /= meshs.size();
+	cullsphere = center;
+	
+	for(int m = 0; m < meshs.size(); m++)
+	{
+		diff = sgVector3(meshs[m]->cullsphere)-center;
+		temp = diff.length();
+		if(temp > meshs[m]->cullsphere.w*2.0)
+		{
+			radius = -1.0;
+			break;
+		}
+			
+		temp += meshs[m]->cullsphere.w;
+		if(temp > radius)
+			radius = temp;
+	}
+	cullsphere.w = radius;
 }
 
 void sgObject::updateModel()

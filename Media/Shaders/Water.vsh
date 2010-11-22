@@ -1,8 +1,8 @@
 //
-//	Events.h
-//	Engine
+//	Shader.vsh
+//	iSDGE
 //
-//	Created by Nils Daumann on 01.05.10.
+//	Created by Nils Daumann on 16.04.10.
 //	Copyright (c) 2010 Nils Daumann
 
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,27 +23,20 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-#ifndef __EVENTS_H__
-#define __EVENTS_H__
+attribute vec3 vertPos;
+attribute vec2 vertTexcoord0;
 
-#include "sgEvents.h"
-#include "sgMain.h"
-#include "sgDebug.h"
+uniform mat4 matProjViewModel;
+uniform mat4 matTex;
 
-#include "CameraFree.h"
-#include "FPSDisplay.h"
+varying vec2 texcoord;
+varying vec3 projpos;
+varying float fog;
 
-#include "Water.h"
-
-
-class Events : public sgEvents
+void main()
 {
-	public:
-		void onInit(sgMain *m);
-		void onDraw(float timestep);
-		
-	private:
-		sgMain *sgmain;
-};
-
-#endif
+	texcoord.xy = (matTex*vec4(vertTexcoord0, 1.0, 1.0)).xy;
+	gl_Position = matProjViewModel*vec4(vertPos, 1.0);
+	projpos = gl_Position.xyw;
+	fog = min(gl_Position.w/800.0, 0.4);
+}
