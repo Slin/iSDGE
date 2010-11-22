@@ -35,7 +35,7 @@ varying float fog;
 void main()
 {
 	texcoord.xy = (matTex*vec4(vertTexcoord0, 1.0, 1.0)).xy;
-	texcoord.zw = texcoord.xy*100.0;
+	texcoord.zw = texcoord.xy*200.0;
 	gl_Position = matProjViewModel*vec4(vertPos, 1.0);
 	
 	fog = min(gl_Position.w/800.0, 0.4);

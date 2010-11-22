@@ -286,14 +286,14 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>118</integer>
-									<integer>117</integer>
-									<integer>116</integer>
+									<integer>6</integer>
+									<integer>2</integer>
+									<integer>1</integer>
 									<integer>0</integer>
 								</array>
 							</array>
 							<key>PBXSmartGroupTreeModuleOutlineStateVisibleRectKey</key>
-							<string>{{0, 1459}, {186, 853}}</string>
+							<string>{{0, 0}, {186, 853}}</string>
 						</dict>
 						<key>PBXTopSmartGroupGIDs</key>
 						<array/>
@@ -312,7 +312,7 @@
 							<real>186</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>0 146 1920 912 0 0 1920 1058 </string>
+						<string>2 145 1920 912 0 0 1920 1058 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -330,7 +330,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>Water.cpp</string>
+								<string>TerrDetail.vsh</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -338,11 +338,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>Water.cpp</string>
+										<string>TerrDetail.vsh</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>29C8F888129AD4F4003DB20D</string>
+										<string>29C8F8AA129AFA3B003DB20D</string>
 										<key>history</key>
 										<array>
 											<string>293BF160127F516F00515999</string>
@@ -352,7 +352,6 @@
 											<string>295265AB1284C2EE006CB79E</string>
 											<string>29F6EE4A128613D6005474A4</string>
 											<string>293560351286BF9D007BE9B7</string>
-											<string>2935603E1286C987007BE9B7</string>
 											<string>2935605E1286D4E2007BE9B7</string>
 											<string>2935605F1286D4E2007BE9B7</string>
 											<string>29BAC00D12886A5200FCDE9F</string>
@@ -376,8 +375,6 @@
 											<string>29D53DAB1291E0F400224E6E</string>
 											<string>29D53DAD1291E0F400224E6E</string>
 											<string>29D53DAE1291E0F400224E6E</string>
-											<string>29D53DAF1291E0F400224E6E</string>
-											<string>29D53DB21291E0F400224E6E</string>
 											<string>29D53DB51291E0F400224E6E</string>
 											<string>29D53DB61291E0F400224E6E</string>
 											<string>29D53DB71291E0F400224E6E</string>
@@ -392,18 +389,15 @@
 											<string>29B2983F129939810033D5A2</string>
 											<string>29B298521299479C0033D5A2</string>
 											<string>29B298871299D6230033D5A2</string>
-											<string>29B298881299D6230033D5A2</string>
 											<string>29B298891299D6230033D5A2</string>
 											<string>29B2988A1299D6230033D5A2</string>
 											<string>29B298A31299E94B0033D5A2</string>
-											<string>29B298A41299E94B0033D5A2</string>
 											<string>29B298A51299E94B0033D5A2</string>
 											<string>29B298A61299E94B0033D5A2</string>
 											<string>29B298A91299E94B0033D5A2</string>
 											<string>29B298AB1299E94B0033D5A2</string>
 											<string>29B298AC1299E94B0033D5A2</string>
 											<string>29C8F84B129ACE77003DB20D</string>
-											<string>29C8F84D129ACE77003DB20D</string>
 											<string>29C8F84E129ACE77003DB20D</string>
 											<string>29C8F850129ACE77003DB20D</string>
 											<string>29C8F851129ACE77003DB20D</string>
@@ -415,7 +409,6 @@
 											<string>29C8F857129ACE77003DB20D</string>
 											<string>29C8F859129ACE77003DB20D</string>
 											<string>29C8F871129AD3AD003DB20D</string>
-											<string>29C8F872129AD3AD003DB20D</string>
 											<string>29C8F873129AD3AD003DB20D</string>
 											<string>29C8F874129AD3AD003DB20D</string>
 											<string>29C8F875129AD3AD003DB20D</string>
@@ -423,10 +416,18 @@
 											<string>29C8F877129AD3AD003DB20D</string>
 											<string>29C8F878129AD3AD003DB20D</string>
 											<string>29C8F879129AD3AD003DB20D</string>
-											<string>29C8F884129AD4F4003DB20D</string>
-											<string>29C8F885129AD4F4003DB20D</string>
 											<string>29C8F886129AD4F4003DB20D</string>
-											<string>29C8F887129AD4F4003DB20D</string>
+											<string>29C8F898129AF56E003DB20D</string>
+											<string>29C8F899129AF56E003DB20D</string>
+											<string>29C8F89A129AF56E003DB20D</string>
+											<string>29C8F89B129AF56E003DB20D</string>
+											<string>29C8F89C129AF56E003DB20D</string>
+											<string>29C8F89D129AF56E003DB20D</string>
+											<string>29C8F89E129AF56E003DB20D</string>
+											<string>29C8F89F129AF56E003DB20D</string>
+											<string>29C8F8A8129AFA3B003DB20D</string>
+											<string>29C8F8A9129AFA3B003DB20D</string>
+											<string>29B298A41299E94B0033D5A2</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -440,7 +441,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {1712, 567}}</string>
 								<key>RubberWindowFrame</key>
-								<string>0 146 1920 912 0 0 1920 1058 </string>
+								<string>2 145 1920 912 0 0 1920 1058 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -460,7 +461,7 @@
 								<key>Frame</key>
 								<string>{{0, 572}, {1712, 299}}</string>
 								<key>RubberWindowFrame</key>
-								<string>0 146 1920 912 0 0 1920 1058 </string>
+								<string>2 145 1920 912 0 0 1920 1058 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
@@ -624,7 +625,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>29C8F889129AD4F4003DB20D</string>
 		<string>29C8F85E129ACE77003DB20D</string>
 		<string>29C8F85F129ACE77003DB20D</string>
 		<string>1C78EAAD065D492600B07095</string>
@@ -633,7 +633,7 @@
 		<string>/Users/nils/Documents/X-Code Projects/iSDGE_Complete/iSDGE_GIT/Examples/sgTerrain/sgTerrain.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>0 146 1920 912 0 0 1920 1058 </string>
+	<string>2 145 1920 912 0 0 1920 1058 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>

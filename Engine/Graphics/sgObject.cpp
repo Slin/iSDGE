@@ -725,8 +725,8 @@ void sgObject::addPlane(unsigned int xverts, unsigned int zverts, sgVector3 poso
 		heightfac = hmppartsize.y/(zverts-1);
 	}
 	
-	int coordx = 0;
-	int coordy = 0;
+	float coordx = 0;
+	float coordy = 0;
 	sgColorA color;
 	sgVector3 norm = sgVector3(0, 1, 0);
 	float height = 0.0;

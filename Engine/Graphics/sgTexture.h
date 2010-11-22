@@ -148,6 +148,15 @@ class sgTexture : public sgBase
 		 * @return color of the pixel.
 		 */
 		sgColorA getPixel(int x, int y);
+	
+		/**
+		 * Get pixel.
+		 * Returns a textures pixel color between a lock and unlock call.
+		 * @param x horizontal pixel position.
+		 * @param y vertical pixel position.
+		 * @return interpolated color of the pixel.
+		 */
+		sgColorA getPixel(float x, float y);
 
 		/**
 		 * Set texture parameter int.

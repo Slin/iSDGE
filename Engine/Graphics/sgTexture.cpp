@@ -392,6 +392,38 @@ sgColorA sgTexture::getPixel(int x, int y)
 	return sgColorA(texdata[y*width*4+x*4+0], texdata[y*width*4+x*4+1], texdata[y*width*4+x*4+2], texdata[y*width*4+x*4+3]);
 }
 
+sgColorA sgTexture::getPixel(float x, float y)
+{
+	int posx = (int)x;
+	int posy = (int)y;
+	float facx = x-posx;
+	float facy = y-posy;
+	sgColorA col0 = getPixel(posx, posy);
+	sgColorA col1 = getPixel(posx+1, posy);
+	sgColorA col2 = getPixel(posx, posy+1);
+	sgColorA col3 = getPixel(posx+1, posy+1);
+	
+	sgColorA middlex0;
+	middlex0.r = col0.r*facx+col1.r*(1.0-facx);
+	middlex0.g = col0.g*facx+col1.g*(1.0-facx);
+	middlex0.b = col0.b*facx+col1.b*(1.0-facx);
+	middlex0.a = col0.a*facx+col1.a*(1.0-facx);
+	
+	sgColorA middlex1;
+	middlex1.r = col2.r*facx+col3.r*(1.0-facx);
+	middlex1.g = col2.g*facx+col3.g*(1.0-facx);
+	middlex1.b = col2.b*facx+col3.b*(1.0-facx);
+	middlex1.a = col2.a*facx+col3.a*(1.0-facx);
+	
+	sgColorA middle;
+	middle.r = middlex0.r*facy+middlex1.r*(1.0-facy);
+	middle.g = middlex0.g*facy+middlex1.g*(1.0-facy);
+	middle.b = middlex0.b*facy+middlex1.b*(1.0-facy);
+	middle.a = middlex0.a*facy+middlex1.a*(1.0-facy);
+	
+	return middle;
+}
+
 void sgTexture::destroy()
 {
 	sgResourceManager::removeResource(this);
