@@ -42,6 +42,7 @@ class sgMaterial;
 class sgLight;
 class sgMesh;
 class sgShadowVolume;
+class sgObjectBody;
 
 /**
  * Object container class. Used to store objects in and load objects from.
@@ -208,6 +209,18 @@ class sgObject
 		 *	Sphere checked against the view frustum for culling. XYZ is the local center and W the radius.
 		 */
 		sgVector4 cullsphere;
+	
+		/**
+		 *	LOD max dist.
+		 *	Maximum distance to show this object at.
+		 */
+		float loddist;
+		
+		/**
+		 *	LOD object.
+		 *	Object switched to at distances higher than loddist.
+		 */
+		sgObject *lodobj;
 	
 		/**
 		 *	Shadow volume mesh.

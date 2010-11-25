@@ -309,17 +309,33 @@ void sgMesh::invertTexCoordsY()
 
 void sgMesh::calcCullSphere()
 {
+	//Find the center
+	sgVector3 vmax(-1000000000.0, -1000000000.0, -1000000000.0);
+	sgVector3 vmin(1000000000.0, 1000000000.0, 1000000000.0);
 	sgVector3 center;
+	for(int i = 0; i < vertexnum; i++)
+	{
+		if(vertices[i].position.x > vmax.x)
+			vmax.x = vertices[i].position.x;
+		if(vertices[i].position.y > vmax.y)
+			vmax.y = vertices[i].position.y;
+		if(vertices[i].position.z > vmax.z)
+			vmax.z = vertices[i].position.z;
+		
+		if(vertices[i].position.x < vmin.x)
+			vmin.x = vertices[i].position.x;
+		if(vertices[i].position.y < vmin.y)
+			vmin.y = vertices[i].position.y;
+		if(vertices[i].position.z < vmin.z)
+			vmin.z = vertices[i].position.z;
+	}
+	center = vmin+vmax;
+	center *= 0.5;
+	
+	//Find the radius
 	float radius = 0;
 	float temp;
 	sgVector3 diff;
-	for(int i = 0; i < vertexnum; i++)
-	{
-		center += vertices[i].position;
-	}
-	center /= vertexnum;
-	
-	radius = 0;
 	for(int i = 0; i < vertexnum; i++)
 	{
 		diff = vertices[i].position-center;

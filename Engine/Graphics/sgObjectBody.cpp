@@ -1,8 +1,8 @@
 //
-//	sgCamera.cpp
+//	sgObjectBody.cpp
 //	iSDGE
 //
-//	Created by Nils Daumann on 17.04.10.
+//	Created by Nils Daumann on 24.11.10.
 //	Copyright (c) 2010 Nils Daumann
 
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,66 +23,15 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-#include <cstring>
-#include "sgCamera.h"
-#include "sgTexture.h"
+#include "sgObjectBody.h"
 
-sgCamera::sgCamera(sgCamera *p, sgCamera *n)
+sgObjectBody::sgObjectBody()
 {
-	rendertarget = NULL;
 	
-	size = sgVector2(100, 100);
-	aspect = 1;
-	arc = 70;
-	clipnear = 0.01;
-	clipfar = 500.0;
-	updateProj();
 	
-	tag = 0;
+}
+
+sgObjectBody::~sgObjectBody()
+{
 	
-	prev = p;
-	next = n;
-}
-
-sgCamera *sgCamera::createCamera()
-{
-	next = new sgCamera(prev, next);
-	return next;
-}
-
-sgVector3 sgCamera::projectDir(sgVector3 dir)
-{
-	return matproj.transform(dir);
-}
-
-void sgCamera::updateProj()
-{
-	matproj.makeProjectionPersp(arc, aspect, clipnear, clipfar);
-}
-
-void sgCamera::updateView()
-{
-	matview = rotation.getMatrix();
-	matview.transpose();
-	matview.translate(position*(-1));
-}
-
-void sgCamera::destroy()
-{
-	if(prev)
-		prev->next = next;
-	if(next)
-		next->prev = prev;
-	
-	delete this;
-}
-
-void sgCamera::destroyAll()
-{
-	destroy();
-	
-	if(next)
-		next->destroyAll();
-	if(prev)
-		prev->destroyAll();
 }

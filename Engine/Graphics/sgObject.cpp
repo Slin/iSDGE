@@ -897,18 +897,37 @@ void sgObject::initShadowVolume()
 
 void sgObject::calcCullSphere()
 {
+	//Find center
+	sgVector3 vmax(-1000000000.0, -1000000000.0, -1000000000.0);
+	sgVector3 vmin(1000000000.0, 1000000000.0, 1000000000.0);
 	sgVector3 center;
-	float radius = 0;
-	float temp;
-	sgVector3 diff;
 	for(int m = 0; m < meshs.size(); m++)
 	{
 		meshs[m]->calcCullSphere();
 		center += sgVector3(meshs[m]->cullsphere);
+		
+		if(meshs[m]->cullsphere.x > vmax.x)
+			vmax.x = meshs[m]->cullsphere.x;
+		if(meshs[m]->cullsphere.y > vmax.y)
+			vmax.y = meshs[m]->cullsphere.y;
+		if(meshs[m]->cullsphere.z > vmax.z)
+			vmax.z = meshs[m]->cullsphere.z;
+		
+		if(meshs[m]->cullsphere.x < vmin.x)
+			vmin.x = meshs[m]->cullsphere.x;
+		if(meshs[m]->cullsphere.y < vmin.y)
+			vmin.y = meshs[m]->cullsphere.y;
+		if(meshs[m]->cullsphere.z < vmin.z)
+			vmin.z = meshs[m]->cullsphere.z;
 	}
-	center /= meshs.size();
+	center = vmin+vmax;
+	center *= 0.5f;
 	cullsphere = center;
 	
+	//Find radius
+	float radius = 0;
+	float temp;
+	sgVector3 diff;
 	for(int m = 0; m < meshs.size(); m++)
 	{
 		diff = sgVector3(meshs[m]->cullsphere)-center;
