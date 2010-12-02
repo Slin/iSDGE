@@ -456,6 +456,7 @@ void sgRendererES2::renderObjects(sgCamera *cam, sgObject *first)
 	
 	sgMatrix4x4 matprojviewmodel;
 	sgObject *curr;
+	sgObjectBody *currbod;
 	int i;
 	for(curr = first->next; curr != NULL; curr = curr->next)
 	{
@@ -463,96 +464,97 @@ void sgRendererES2::renderObjects(sgCamera *cam, sgObject *first)
 			continue;
 		
 		curr->updateModel();
+		currbod = curr->currbody;
 		
-		for(i = 0; i < curr->meshs.size(); i++)
+		for(i = 0; i < currbod->meshs.size(); i++)
 		{
-			if(curr->meshs[i]->culled)
+			if(currbod->meshs[i]->culled)
 				continue;
 			
 			// Use shader program
-			glUseProgram(curr->materials[i]->shader->program);
+			glUseProgram(currbod->materials[i]->shader->program);
 			
 			// Set shader matrices
-			if(curr->materials[i]->shader->matproj != -1)
+			if(currbod->materials[i]->shader->matproj != -1)
 			{
-				glUniformMatrix4fv(curr->materials[i]->shader->matproj, 1, GL_FALSE, cam->matproj.mat);
+				glUniformMatrix4fv(currbod->materials[i]->shader->matproj, 1, GL_FALSE, cam->matproj.mat);
 			}
-			if(curr->materials[i]->shader->matview != -1)
+			if(currbod->materials[i]->shader->matview != -1)
 			{
 				if(curr->sky)
-					glUniformMatrix4fv(curr->materials[i]->shader->matview, 1, GL_FALSE, viewmat.mat);
+					glUniformMatrix4fv(currbod->materials[i]->shader->matview, 1, GL_FALSE, viewmat.mat);
 				else
-					glUniformMatrix4fv(curr->materials[i]->shader->matview, 1, GL_FALSE, cam->matview.mat);
+					glUniformMatrix4fv(currbod->materials[i]->shader->matview, 1, GL_FALSE, cam->matview.mat);
 			}
-			if(curr->materials[i]->shader->matmodel != -1)
+			if(currbod->materials[i]->shader->matmodel != -1)
 			{
-				glUniformMatrix4fv(curr->materials[i]->shader->matmodel, 1, GL_FALSE, curr->matmodel.mat);
+				glUniformMatrix4fv(currbod->materials[i]->shader->matmodel, 1, GL_FALSE, curr->matmodel.mat);
 			}
-			if(curr->materials[i]->shader->matprojviewmodel != -1)
+			if(currbod->materials[i]->shader->matprojviewmodel != -1)
 			{
 				if(curr->sky)
 					matprojviewmodel = cam->matproj*viewmat*curr->matmodel;
 				else
 					matprojviewmodel = cam->matproj*cam->matview*curr->matmodel;
-				glUniformMatrix4fv(curr->materials[i]->shader->matprojviewmodel, 1, GL_FALSE, matprojviewmodel.mat);
+				glUniformMatrix4fv(currbod->materials[i]->shader->matprojviewmodel, 1, GL_FALSE, matprojviewmodel.mat);
 			}
-			if(curr->materials[i]->shader->matnormal != -1)
+			if(currbod->materials[i]->shader->matnormal != -1)
 			{
-				glUniformMatrix4fv(curr->materials[i]->shader->matnormal, 1, GL_FALSE, curr->matnormal.mat);
+				glUniformMatrix4fv(currbod->materials[i]->shader->matnormal, 1, GL_FALSE, curr->matnormal.mat);
 			}
-			if(curr->materials[i]->shader->mattex != -1)
+			if(currbod->materials[i]->shader->mattex != -1)
 			{
-				glUniformMatrix4fv(curr->materials[i]->shader->mattex, 1, GL_FALSE, curr->materials[i]->mattex.mat);
+				glUniformMatrix4fv(currbod->materials[i]->shader->mattex, 1, GL_FALSE, currbod->materials[i]->mattex.mat);
 			}
 			
-			setMaterial(curr->materials[i]);
+			setMaterial(currbod->materials[i]);
 			
-			if(curr->meshs[i]->vbo != -1)
+			if(currbod->meshs[i]->vbo != -1)
 			{
-				glBindBuffer(GL_ARRAY_BUFFER, curr->meshs[i]->vbo);
-				if(curr->materials[i]->shader->position != -1)
+				glBindBuffer(GL_ARRAY_BUFFER, currbod->meshs[i]->vbo);
+				if(currbod->materials[i]->shader->position != -1)
 				{
-					glEnableVertexAttribArray(curr->materials[i]->shader->position);
-					glVertexAttribPointer(curr->materials[i]->shader->position, 3, GL_FLOAT, 0, sizeof(sgVertex), 0);
+					glEnableVertexAttribArray(currbod->materials[i]->shader->position);
+					glVertexAttribPointer(currbod->materials[i]->shader->position, 3, GL_FLOAT, 0, sizeof(sgVertex), 0);
 				}
-				if(curr->materials[i]->shader->normal != -1)
+				if(currbod->materials[i]->shader->normal != -1)
 				{
-					glEnableVertexAttribArray(curr->materials[i]->shader->normal);
-					glVertexAttribPointer(curr->materials[i]->shader->normal, 3, GL_FLOAT, 0, sizeof(sgVertex), (const void*)12);
+					glEnableVertexAttribArray(currbod->materials[i]->shader->normal);
+					glVertexAttribPointer(currbod->materials[i]->shader->normal, 3, GL_FLOAT, 0, sizeof(sgVertex), (const void*)12);
 				}
-				if(curr->materials[i]->shader->texcoord0 != -1)
+				if(currbod->materials[i]->shader->texcoord0 != -1)
 				{
-					glEnableVertexAttribArray(curr->materials[i]->shader->texcoord0);
-					glVertexAttribPointer(curr->materials[i]->shader->texcoord0, 2, GL_FLOAT, 0, sizeof(sgVertex), (const void*)24);
+					glEnableVertexAttribArray(currbod->materials[i]->shader->texcoord0);
+					glVertexAttribPointer(currbod->materials[i]->shader->texcoord0, 2, GL_FLOAT, 0, sizeof(sgVertex), (const void*)24);
 				}
 				glBindBuffer(GL_ARRAY_BUFFER, 0);
 			}else
 			{
-				if(curr->materials[i]->shader->position != -1)
+				if(currbod->materials[i]->shader->position != -1)
 				{
-					glVertexAttribPointer(curr->materials[i]->shader->position, 3, GL_FLOAT, 0, sizeof(sgVertex), &curr->meshs[i]->vertices->position.x);
-					glEnableVertexAttribArray(curr->materials[i]->shader->position);
+					glVertexAttribPointer(currbod->materials[i]->shader->position, 3, GL_FLOAT, 0, sizeof(sgVertex), &currbod->meshs[i]->vertices->position.x);
+					glEnableVertexAttribArray(currbod->materials[i]->shader->position);
 				}
-				if(curr->materials[i]->shader->normal != -1)
+				if(currbod->materials[i]->shader->normal != -1)
 				{
-					glVertexAttribPointer(curr->materials[i]->shader->normal, 3, GL_FLOAT, 0, sizeof(sgVertex), &curr->meshs[i]->vertices->normal.x);
-					glEnableVertexAttribArray(curr->materials[i]->shader->normal);
+					glVertexAttribPointer(currbod->materials[i]->shader->normal, 3, GL_FLOAT, 0, sizeof(sgVertex), &currbod->meshs[i]->vertices->normal.x);
+					glEnableVertexAttribArray(currbod->materials[i]->shader->normal);
 				}
-				if(curr->materials[i]->shader->texcoord0 != -1)
+				if(currbod->materials[i]->shader->texcoord0 != -1)
 				{
-					glVertexAttribPointer(curr->materials[i]->shader->texcoord0, 2, GL_FLOAT, 0, sizeof(sgVertex), &curr->meshs[i]->vertices->uv.x);
-					glEnableVertexAttribArray(curr->materials[i]->shader->texcoord0);
+					glVertexAttribPointer(currbod->materials[i]->shader->texcoord0, 2, GL_FLOAT, 0, sizeof(sgVertex), &currbod->meshs[i]->vertices->uv.x);
+					glEnableVertexAttribArray(currbod->materials[i]->shader->texcoord0);
 				}
 			}
 			
-			if(curr->meshs[i]->ivbo != -1)
+			if(currbod->meshs[i]->ivbo != -1)
 			{
-				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, curr->meshs[i]->ivbo);
-				glDrawElements(GL_TRIANGLES, curr->meshs[i]->indexnum, GL_UNSIGNED_SHORT, 0);
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, currbod->meshs[i]->ivbo);
+				glDrawElements(GL_TRIANGLES, currbod->meshs[i]->indexnum, GL_UNSIGNED_SHORT, 0);
 				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 			}else
 			{
-				glDrawElements(GL_TRIANGLES, curr->meshs[i]->indexnum, GL_UNSIGNED_SHORT, curr->meshs[i]->indices);
+				glDrawElements(GL_TRIANGLES, currbod->meshs[i]->indexnum, GL_UNSIGNED_SHORT, currbod->meshs[i]->indices);
 			}
 		}
 	}

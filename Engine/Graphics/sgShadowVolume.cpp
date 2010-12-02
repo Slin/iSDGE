@@ -27,6 +27,7 @@
 #include "sgShadowVolume.h"
 #include "sgVertex.h"
 #include "sgMesh.h"
+#include "sgObjectBody.h"
 #include "sgObject.h"
 #include "sgLight.h"
 #include "sgDebug.h"
@@ -60,20 +61,23 @@ bool sgShadowEdge::operator== (const sgShadowEdge &other)
 	return false;
 }
 
-sgShadowVolume::sgShadowVolume(sgObject *obj)
+sgShadowVolume::sgShadowVolume(sgObject *obj, unsigned int lod)
 {
 	//Set object and create a mesh
 	object = obj;
+	sgObjectBody *lodstep = object->body;
+	for(int i = 0; i < lod; i++)
+		lodstep = lodstep->nextbody;
 	mesh = new sgMesh;
 	
 	//Get vertex and face count
 	unsigned int vertexnum = 0;
 	unsigned int indexnum = 0;
 	
-	for(int i = 0; i < object->meshs.size(); i++)
+	for(int i = 0; i < lodstep->meshs.size(); i++)
 	{
-		vertexnum += object->meshs[i]->vertexnum;
-		indexnum += object->meshs[i]->indexnum;
+		vertexnum += lodstep->meshs[i]->vertexnum;
+		indexnum += lodstep->meshs[i]->indexnum;
 	}
 	
 	//Create vertex and face array
@@ -82,10 +86,10 @@ sgShadowVolume::sgShadowVolume(sgObject *obj)
 	
 	//Init the vertex array
 	vertexnum = 0;
-	for(int i = 0; i < object->meshs.size(); i++)
+	for(int i = 0; i < lodstep->meshs.size(); i++)
 	{
-		memcpy(&(vertices[vertexnum]), object->meshs[i]->vertices, object->meshs[i]->vertexnum*sizeof(sgVertex));
-		vertexnum += object->meshs[i]->vertexnum;
+		memcpy(&(vertices[vertexnum]), lodstep->meshs[i]->vertices, lodstep->meshs[i]->vertexnum*sizeof(sgVertex));
+		vertexnum += lodstep->meshs[i]->vertexnum;
 	}
 	
 	//Create array of unique edges and initialize the faces
@@ -98,30 +102,30 @@ sgShadowVolume::sgShadowVolume(sgObject *obj)
 	unsigned int edgeincl3;
 	vertexnum = 0;
 	unsigned int realn = 0;
-	for(int i = 0; i < object->meshs.size(); i++)
+	for(int i = 0; i < lodstep->meshs.size(); i++)
 	{
 		unsigned int n = 0;
-		for(n = 0; n < object->meshs[i]->indexnum; n += 3)
+		for(n = 0; n < lodstep->meshs[i]->indexnum; n += 3)
 		{
 			tempedge1.verts = vertices;
-			tempedge1.vert1 = object->meshs[i]->indices[n+0]+vertexnum;
-			tempedge1.vert2 = object->meshs[i]->indices[n+1]+vertexnum;
+			tempedge1.vert1 = lodstep->meshs[i]->indices[n+0]+vertexnum;
+			tempedge1.vert2 = lodstep->meshs[i]->indices[n+1]+vertexnum;
 			tempedge1.counter1 = 1;
 			tempedge1.counter2 = 0;
 			
 			tempedge2.verts = vertices;
-			tempedge2.vert1 = object->meshs[i]->indices[n+1]+vertexnum;
-			tempedge2.vert2 = object->meshs[i]->indices[n+2]+vertexnum;
+			tempedge2.vert1 = lodstep->meshs[i]->indices[n+1]+vertexnum;
+			tempedge2.vert2 = lodstep->meshs[i]->indices[n+2]+vertexnum;
 			tempedge2.counter1 = 1;
 			tempedge2.counter2 = 0;
 			
 			tempedge3.verts = vertices;
-			tempedge3.vert1 = object->meshs[i]->indices[n+2]+vertexnum;
-			tempedge3.vert2 = object->meshs[i]->indices[n+0]+vertexnum;
+			tempedge3.vert1 = lodstep->meshs[i]->indices[n+2]+vertexnum;
+			tempedge3.vert2 = lodstep->meshs[i]->indices[n+0]+vertexnum;
 			tempedge3.counter1 = 1;
 			tempedge3.counter2 = 0;
 			
-			calculateFaceNormal(&faces[realn], &vertices[object->meshs[i]->indices[n]+vertexnum], &vertices[object->meshs[i]->indices[n+2]+vertexnum], &vertices[object->meshs[i]->indices[n+1]+vertexnum]);
+			calculateFaceNormal(&faces[realn], &vertices[lodstep->meshs[i]->indices[n]+vertexnum], &vertices[lodstep->meshs[i]->indices[n+2]+vertexnum], &vertices[lodstep->meshs[i]->indices[n+1]+vertexnum]);
 			faces[realn].flipped1 = false;
 			faces[realn].flipped2 = false;
 			faces[realn].flipped3 = false;
@@ -199,7 +203,7 @@ sgShadowVolume::sgShadowVolume(sgObject *obj)
 			realn += 1;
 		}
 		
-		vertexnum += object->meshs[i]->vertexnum;
+		vertexnum += lodstep->meshs[i]->vertexnum;
 	}	
 	
 	edges = new sgShadowEdge[edgesvec.size()];

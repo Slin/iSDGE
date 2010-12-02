@@ -283,6 +283,7 @@ void sgRendererES1::renderObjects(sgCamera *cam, sgObject *first)
 	}
 	
 	sgObject *curr;
+	sgObjectBody *currbod;
 	int i;
 	for(curr = first->next; curr != NULL; curr = curr->next)
 	{
@@ -290,6 +291,7 @@ void sgRendererES1::renderObjects(sgCamera *cam, sgObject *first)
 			continue;
 		
 		curr->updateModel();
+		currbod = curr->currbody;
 		if(curr->sky)
 		{
 			sgMatrix4x4 viewmat = cam->rotation.getMatrix();
@@ -302,42 +304,42 @@ void sgRendererES1::renderObjects(sgCamera *cam, sgObject *first)
 		}
 		glMultMatrixf(curr->matmodel.mat);
 		
-		for(i = 0; i < curr->meshs.size(); i++)
+		for(i = 0; i < currbod->meshs.size(); i++)
 		{
-			if(curr->meshs[i]->culled)
+			if(currbod->meshs[i]->culled)
 				continue;
 			
-			setMaterial(curr->materials[i]);
+			setMaterial(currbod->materials[i]);
 			
 			glMatrixMode(GL_TEXTURE);
-			glLoadMatrixf(curr->materials[i]->mattex.mat);
+			glLoadMatrixf(currbod->materials[i]->mattex.mat);
 			glMatrixMode(GL_MODELVIEW);
 			
-			if(curr->meshs[i]->vbo != -1)
+			if(currbod->meshs[i]->vbo != -1)
 			{
-				glBindBuffer(GL_ARRAY_BUFFER, curr->meshs[i]->vbo);
+				glBindBuffer(GL_ARRAY_BUFFER, currbod->meshs[i]->vbo);
 				glVertexPointer(3, GL_FLOAT, sizeof(sgVertex), 0);
 				glNormalPointer(GL_FLOAT, sizeof(sgVertex), (const void*)12);
 				glTexCoordPointer(2, GL_FLOAT, sizeof(sgVertex), (const void*)24);
 				glBindBuffer(GL_ARRAY_BUFFER, 0);
 			}else
 			{
-				glVertexPointer(3, GL_FLOAT, sizeof(sgVertex), &curr->meshs[i]->vertices->position.x);
-				glNormalPointer(GL_FLOAT, sizeof(sgVertex), &curr->meshs[i]->vertices->normal.x);
-				glTexCoordPointer(2, GL_FLOAT, sizeof(sgVertex), &curr->meshs[i]->vertices->uv.x);
+				glVertexPointer(3, GL_FLOAT, sizeof(sgVertex), &currbod->meshs[i]->vertices->position.x);
+				glNormalPointer(GL_FLOAT, sizeof(sgVertex), &currbod->meshs[i]->vertices->normal.x);
+				glTexCoordPointer(2, GL_FLOAT, sizeof(sgVertex), &currbod->meshs[i]->vertices->uv.x);
 			}
 			   
-			if(curr->meshs[i]->ivbo != -1)
+			if(currbod->meshs[i]->ivbo != -1)
 			{
-				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, curr->meshs[i]->ivbo);
-				glDrawElements(GL_TRIANGLES, curr->meshs[i]->indexnum, GL_UNSIGNED_SHORT, 0);
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, currbod->meshs[i]->ivbo);
+				glDrawElements(GL_TRIANGLES, currbod->meshs[i]->indexnum, GL_UNSIGNED_SHORT, 0);
 				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 			}else
 			{
-				glDrawElements(GL_TRIANGLES, curr->meshs[i]->indexnum, GL_UNSIGNED_SHORT, curr->meshs[i]->indices);
+				glDrawElements(GL_TRIANGLES, currbod->meshs[i]->indexnum, GL_UNSIGNED_SHORT, currbod->meshs[i]->indices);
 			}
 			
-			if(curr->meshs[i]->vertexformat == 1 || curr->meshs[i]->vertexformat == 3)
+			if(currbod->meshs[i]->vertexformat == 1 || currbod->meshs[i]->vertexformat == 3)
 			{
 				glDisableClientState(GL_COLOR_ARRAY);
 			}

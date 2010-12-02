@@ -28,6 +28,7 @@
 #include <cmath>
 #include "sgMatrix4x4.h"
 #include "sgQuaternion.h"
+#include "sgVector4.h"
 
 sgVector3::sgVector3(float x_, float y_, float z_)
 {
@@ -37,6 +38,13 @@ sgVector3::sgVector3(float x_, float y_, float z_)
 }
 
 sgVector3::sgVector3(const sgVector3 &other)
+{
+	x = other.x;
+	y = other.y;
+	z = other.z;
+}
+
+sgVector3::sgVector3(const sgVector4 &other)
 {
 	x = other.x;
 	y = other.y;
@@ -60,6 +68,14 @@ bool sgVector3::operator!= (const sgVector3 &other)
 }
 
 sgVector3 &sgVector3::operator= (const sgVector3 &other)
+{
+	x = other.x;
+	y = other.y;
+	z = other.z;
+	return *this;
+}
+
+sgVector3 &sgVector3::operator= (const sgVector4 &other)
 {
 	x = other.x;
 	y = other.y;

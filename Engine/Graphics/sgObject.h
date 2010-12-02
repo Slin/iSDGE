@@ -44,15 +44,6 @@ class sgMesh;
 class sgShadowVolume;
 class sgObjectBody;
 
-/**
- * Object container class. Used to store objects in and load objects from.
- */
-class sgObjectContainer : public sgBase
-{
-	public:
-		std::vector<sgMesh*>meshs;
-		std::vector<sgMaterial*>materials;
-};
 
 /**
  * Object class. Responsible for object handling.
@@ -73,7 +64,7 @@ class sgObject
 		 *	Frees the object.
 		 */
 		~sgObject();
-	
+		
 		/**
 		 *	Create object.
 		 *	Creates a new object loaded from a model file or a predefined name and makes it next of this.
@@ -81,23 +72,7 @@ class sgObject
 		 * @return pointer to the new object.
 		 */
 		sgObject *createObject(const char *name);
-	
-		/**
-		 *	Add plane.
-		 *	Creates a new plane mesh with the given settings and adds it to the object. The distance of vertices belong one axis is 1 unit by default.
-		 * @param xverts vertex count along the x axis.
-		 * @param zverts vertex count along the z axis.
-		 * @param posoffset offset of the position relative to the objects center.
-		 * @param mat material to use for the plane or NULL to create a new one.
-		 * @param xchunk the chunks x position (0 to xchunks). FOR INTERNAL USE!
-		 * @param zchunk the chunks z position (0 to zchunks). FOR INTERNAL USE!
-		 * @param uvfac factor applied to the texcoords. FOR INTERNAL USE!
-		 * @param hmp pointer to a locked heightmap texture to extract the height from. FOR INTERNAL USE!
-		 * @param hmppartsize the size in pixels of the texture part used for the chunk. FOR INTERNAL USE!
-		 * @param hmpscale the scale factors for the heightmaps color channels. FOR INTERNAL USE!
-		 */
-		void addPlane(unsigned int xverts = 2, unsigned int zverts = 2, sgVector3 posoffset = sgVector3(0, 0, 0), sgMaterial *mat = NULL, unsigned char xchunk = 0, unsigned char zchunk = 0, sgVector2 uvfac = sgVector2(1, 1), sgTexture *hmp = NULL, sgVector2 hmppartsize = sgVector2(1, 1), sgVector4 hmpscale = sgVector4(0, 0, 0, 0));
-	
+		
 		/**
 		 *	Create terrain.
 		 *	Creates a new terrain object with the given settings. The distance of vertices belong one axis is 1 unit by default. When using chunks, the number of vertices differs due to the need of dublicated ones.
@@ -105,26 +80,12 @@ class sgObject
 		 * @param zverts vertex count along the z axis. POT recommended.
 		 * @param xchunks number of chunks along the x axis. xverts/xchunks should be a clean division.
 		 * @param zchunks number of chunks along the z axis. zverts/zchunks should be a clean division.
+		 * @param lodsteps number of lod steps to create for this terrain.
 		 * @param hmp filename of heightmap texture to extract the height from.
 		 * @param hmpscale the scale factors for the heightmaps color channels.
 		 * @return pointer to the new object
 		 */
-		sgObject *createTerrain(unsigned int xverts = 2, unsigned int zverts = 2, unsigned char xchunks = 1, unsigned char zchunks = 1, const char *hmp = NULL, sgVector4 hmpscale = sgVector4(0, 0, 0, 0));
-	
-		/**
-		 *	Clone material.
-		 *	Makes the given material a clone from the previous one, to allow independant materials for objects of the same type.
-		 * @param mat index of the material to clone.
-		 */
-		void cloneMaterial(unsigned int mat);
-	
-		/**
-		 *	Set animation.
-		 *	Sets the meshes given animation frame.
-		 * @param name name of the animation.
-		 * @param percent position within the animation in percent.
-		 */
-		void setAnimation(const char *name, float percent);
+		sgObject *createTerrain(unsigned int xverts = 2, unsigned int zverts = 2, unsigned char xchunks = 1, unsigned char zchunks = 1, unsigned int lodsteps = 3, const char *hmp = NULL, sgVector4 hmpscale = sgVector4(0, 0, 0, 0));
 	
 		/**
 		 * Init shadow volume.
@@ -199,6 +160,12 @@ class sgObject
 		unsigned int tag;
 	
 		/**
+		 * Per mesh lod
+		 * LOD is applied per mesh.
+		 **/
+		bool permeshlod;
+	
+		/**
 		 *	Culled.
 		 *	True, if the object wasn´t rendered the previous frame.
 		 */
@@ -220,25 +187,19 @@ class sgObject
 		 *	LOD object.
 		 *	Object switched to at distances higher than loddist.
 		 */
-		sgObject *lodobj;
+		sgObjectBody *body;
+	
+		/**
+		 *	LOD object.
+		 *	Object switched to at distances higher than loddist.
+		 */
+		sgObjectBody *currbody;
 	
 		/**
 		 *	Shadow volume mesh.
 		 *	The mesh of the volume used for stencil shadows. Generated automatically.
 		 */
 		sgShadowVolume *shadowvolume;
-	
-		/**
-		 *	Materials.
-		 *	A vector of the materials. There have to be as many materials as meshes, where each mesh is rendered with the material at the same position as the mesh in the mesh array.
-		 */
-		std::vector<sgMaterial*> materials;
-	
-		/**
-		 *	Meshs.
-		 *	A vector of the meshs. There have to be as many meshes as materials, where each mesh is rendered with the material at the same position in the material array.
-		 */
-		std::vector<sgMesh*> meshs;
 	
 		/**
 		 *	Sky.

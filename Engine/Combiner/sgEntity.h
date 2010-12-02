@@ -67,11 +67,12 @@ class sgEntity
 		 * @param zverts number of vertices along the z axis. POT recommended.
 		 * @param xchunks number of chunks along the x axis. xverts/xchunks should be a clean division.
 		 * @param zchunks number of chunks along the z axis. zverts/zchunks should be a clean division.
+		 * @param lodsteps number of lod steps to create for this terrain.
 		 * @param hmpscale vector defining how much each heightmap color channel effects the terrains height.
 		 * @param a pointer to the action which will be assigned to the new entity.
 		 * @return pointer to the new entity
 		 */
-		sgEntity *createTerrainEntity(const char *hmp, unsigned int xverts = 10, unsigned int zverts = 10, unsigned char xchunks = 1, unsigned char zchunks = 1, sgVector4 hmpscale = sgVector4(0.01, 0, 0, 0), sgAction *a = NULL);
+		sgEntity *createTerrainEntity(const char *hmp, unsigned int xverts = 10, unsigned int zverts = 10, unsigned char xchunks = 1, unsigned char zchunks = 1, unsigned int lodsteps = 3, sgVector4 hmpscale = sgVector4(0.01, 0, 0, 0), sgAction *a = NULL);
 	
 		/**
 		 *	Create skycube entity.

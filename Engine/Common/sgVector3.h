@@ -28,6 +28,7 @@
 
 class sgMatrix4x4;
 class sgQuaternion;
+class sgVector4;
 
 /**
  * 3D vector class. Stores a vector with three elements and provides functionality for it.
@@ -53,6 +54,13 @@ class sgVector3
 	
 		/**
 		 *	Constructor.
+		 *	Initializes a new instance.
+		 * @param other vector to copy the values from
+		 */
+		sgVector3(const sgVector4 &other);
+	
+		/**
+		 *	Constructor.
 		 *	Initializes a new instance from a quaternion.
 		 * @param other quaternion to to get the euler angles from
 		 */
@@ -75,6 +83,12 @@ class sgVector3
 		 *	Copy the values of one instance to the other.
 		 */
 		sgVector3 &operator= (const sgVector3 &other);
+	
+		/**
+		 *	Copy.
+		 *	Copy the values of one instance to the other.
+		 */
+		sgVector3 &operator= (const sgVector4 &other);
 	
 		/**
 		 *	Copy.

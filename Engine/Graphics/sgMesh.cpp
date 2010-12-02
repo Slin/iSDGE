@@ -67,14 +67,6 @@ sgMesh::~sgMesh()
 	
 	delete[] vertices;
 	delete[] indices;
-	
-/*	delete[] bones;
-	
-	std::multimap<std::string, unsigned int*>::iterator it;
-	for(it = animations.begin(); it != animations.end(); it++)
-	{
-		delete[] it->second;
-	}*/
 }
 
 void sgMesh::generateVBO(bool dyn)
@@ -170,41 +162,6 @@ void sgMesh::updateVBO()
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 
-}
-
-void sgMesh::prepareAnimation()
-{
-/*	for(int i = 0; i < bonenum; i++)
-	{
-		bones[i].prepareAnimation(this);
-	}*/
-}
-
-void sgMesh::setAnimation(const char *name, float percent)
-{
-/*	std::multimap<std::string, unsigned int*>::iterator it;
-	sgBoneAnimation *anm = NULL;
-	for(it = animations.begin(); it != animations.end(); it++)
-	{
-		if(it->first.compare(std::string(name)) == 0)
-		{
-			bones[it->second[0]].resetVertices(this);
-			anm = bones[it->second[0]].animations[it->second[1]];
-		}
-	}
-	
-	if(anm == NULL)
-		return;
-	
-	float val = anm->duration*0.01;
-	
-	for(it = animations.begin(); it != animations.end(); it++)
-	{
-		if(it->first.compare(std::string(name)) == 0)
-		{
-			bones[it->second[0]].setAnimation(this, it->second[1], val*percent);
-		}
-	}*/
 }
 
 void sgMesh::calculateNormals()

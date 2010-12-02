@@ -205,9 +205,36 @@ void sgRenderer::culling(sgCamera *cam, sgObject *first)
 		}else
 		{
 			obj->culled = false;
-			for(int i = 0; i < obj->meshs.size(); i++)
+			sgObjectBody *bod = obj->currbody;
+			sgObjectBody *lod = obj->body;
+			float meshdist = 0.0;
+			
+			if(obj->body->nextbody != NULL)
 			{
-				pos = obj->meshs[i]->cullsphere;
+				bod->meshs.clear();
+				bod->materials.clear();
+				for(int i = 0; i < obj->body->meshs.size(); i++)
+				{
+					pos = obj->body->meshs[i]->cullsphere;
+					pos.w = 1.0;
+					pos = obj->matmodel*pos;
+					sgVector3 p = pos;
+					meshdist = cam->position.dist(p);
+					
+					lod = obj->body;
+					while(meshdist > lod->loddist && lod->nextbody != NULL)
+					{
+						lod = lod->nextbody;
+					}
+					
+					bod->meshs.push_back(lod->meshs[i]);
+					bod->materials.push_back(lod->materials[i]);
+				}
+			}
+			
+			for(int i = 0; i < bod->meshs.size(); i++)
+			{
+				pos = bod->meshs[i]->cullsphere;
 				projviewmodel = projview*obj->matmodel;
 				pos.w = 1.0;
 				pos = projviewmodel*pos;
@@ -219,7 +246,7 @@ void sgRenderer::culling(sgCamera *cam, sgObject *first)
 					realrad = obj->scale.y;
 				if(realrad < obj->scale.y)
 					realrad = obj->scale.y;
-				realrad *= obj->meshs[i]->cullsphere.w;
+				realrad *= bod->meshs[i]->cullsphere.w;
 				
 				temp = sgVector4(realrad, 0.0, pos.w, 1.0);
 				temp = cam->matproj*temp;
@@ -234,9 +261,13 @@ void sgRenderer::culling(sgCamera *cam, sgObject *first)
 					radius.y *= -1;
 				
 				if((pos.x < 1.0+radius.x && pos.x > -1.0-radius.x && pos.y < 1.0+radius.y && pos.y > -1.0-radius.y && pos.w > 0) || (((pos.w < 0)?(-pos.w):(pos.w)) <= realrad))
-					obj->meshs[i]->culled = false;
+				{
+					bod->meshs[i]->culled = false;
+				}
 				else
-					obj->meshs[i]->culled = true;
+				{
+					bod->meshs[i]->culled = true;
+				}
 			}
 		}
 	}
@@ -245,7 +276,7 @@ void sgRenderer::culling(sgCamera *cam, sgObject *first)
 void sgRenderer::sorting()
 {
 	//delete previous ones
-	sgOptimizedMesh *mt = NULL;
+/*	sgOptimizedMesh *mt = NULL;
 	for(sgOptimizedMesh *m = first_optimized; m != NULL; m = m->next)
 	{
 		if(mt != NULL)
@@ -302,7 +333,7 @@ void sgRenderer::sorting()
 		}
 		
 		curr = curr->next;
-	}
+	}*/
 }
 
 void sgRenderer::optimizing()

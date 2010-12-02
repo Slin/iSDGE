@@ -52,10 +52,10 @@ sgEntity *sgEntity::createObjEntity(const char *name, sgAction *a)
 	return next;
 }
 
-sgEntity *sgEntity::createTerrainEntity(const char *hmp, unsigned int xverts, unsigned int zverts, unsigned char xchunks, unsigned char zchunks, sgVector4 hmpscale, sgAction *a)
+sgEntity *sgEntity::createTerrainEntity(const char *hmp, unsigned int xverts, unsigned int zverts, unsigned char xchunks, unsigned char zchunks, unsigned int lodsteps, sgVector4 hmpscale, sgAction *a)
 {
 	next = new sgEntity(prev, next, sgmain);
-	next->obj = sgmain->renderer->first_solid->createTerrain(xverts, zverts, xchunks, zchunks, hmp, hmpscale);
+	next->obj = sgmain->renderer->first_solid->createTerrain(xverts, zverts, xchunks, zchunks, lodsteps, hmp, hmpscale);
 	
 	next->act = a;
 	if(next->act)
@@ -71,30 +71,30 @@ sgEntity *sgEntity::createSkyCubeEntity(const char *right, const char *back, con
 	if(next->act)
 		next->act->onInit(next);
 	
-	next->obj->materials[0]->setTexture2D(-1, right, false);
-	next->obj->materials[0]->depthtest = false;
-	next->obj->materials[0]->textures[0]->setParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	next->obj->materials[0]->textures[0]->setParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	next->obj->materials[1]->setTexture2D(-1, back, false);
-	next->obj->materials[1]->depthtest = false;
-	next->obj->materials[1]->textures[0]->setParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	next->obj->materials[1]->textures[0]->setParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	next->obj->materials[2]->setTexture2D(-1, left, false);
-	next->obj->materials[2]->textures[0]->setParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	next->obj->materials[2]->textures[0]->setParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	next->obj->materials[2]->depthtest = false;
-	next->obj->materials[3]->setTexture2D(-1, front, false);
-	next->obj->materials[3]->textures[0]->setParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	next->obj->materials[3]->textures[0]->setParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	next->obj->materials[3]->depthtest = false;
-	next->obj->materials[4]->setTexture2D(-1, down, false);
-	next->obj->materials[4]->textures[0]->setParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	next->obj->materials[4]->textures[0]->setParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	next->obj->materials[4]->depthtest = false;
-	next->obj->materials[5]->setTexture2D(-1, up, false);
-	next->obj->materials[5]->textures[0]->setParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	next->obj->materials[5]->textures[0]->setParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	next->obj->materials[5]->depthtest = false;
+	next->obj->body->materials[0]->setTexture2D(-1, right, false);
+	next->obj->body->materials[0]->depthtest = false;
+	next->obj->body->materials[0]->textures[0]->setParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	next->obj->body->materials[0]->textures[0]->setParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	next->obj->body->materials[1]->setTexture2D(-1, back, false);
+	next->obj->body->materials[1]->depthtest = false;
+	next->obj->body->materials[1]->textures[0]->setParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	next->obj->body->materials[1]->textures[0]->setParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	next->obj->body->materials[2]->setTexture2D(-1, left, false);
+	next->obj->body->materials[2]->textures[0]->setParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	next->obj->body->materials[2]->textures[0]->setParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	next->obj->body->materials[2]->depthtest = false;
+	next->obj->body->materials[3]->setTexture2D(-1, front, false);
+	next->obj->body->materials[3]->textures[0]->setParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	next->obj->body->materials[3]->textures[0]->setParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	next->obj->body->materials[3]->depthtest = false;
+	next->obj->body->materials[4]->setTexture2D(-1, down, false);
+	next->obj->body->materials[4]->textures[0]->setParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	next->obj->body->materials[4]->textures[0]->setParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	next->obj->body->materials[4]->depthtest = false;
+	next->obj->body->materials[5]->setTexture2D(-1, up, false);
+	next->obj->body->materials[5]->textures[0]->setParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	next->obj->body->materials[5]->textures[0]->setParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	next->obj->body->materials[5]->depthtest = false;
 	next->obj->sky = true;
 	
 	return next;

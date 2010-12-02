@@ -24,19 +24,20 @@
 //	THE SOFTWARE.
 
 #include "Water.h"
+#include "sgObjectBody.h"
 
 void Water::onInit(sgEntity *e)
 {
 	ent = e;
 	
-	ent->obj->materials[0]->setTexture2D(-1, "waterbump.png");
-	ent->obj->materials[0]->setTexture2D(-1, "sky.png");
-	ent->obj->materials[0]->setShader("Water", "Water");
-	ent->obj->materials[0]->mattex.makeScale(sgVector3(100, 100, 1));
+	ent->obj->body->materials[0]->setTexture2D(-1, "waterbump.png");
+	ent->obj->body->materials[0]->setTexture2D(-1, "sky.png");
+	ent->obj->body->materials[0]->setShader("Water", "Water");
+	ent->obj->body->materials[0]->mattex.makeScale(sgVector3(100, 100, 1));
 }
 
 //This method is called every frame, just before drawing for each object with this action attached
 void Water::onDraw(float timestep)
 {
-	ent->obj->materials[0]->mattex.mat[12] += 0.1*timestep;
+	ent->obj->body->materials[0]->mattex.mat[12] += 0.1*timestep;
 }

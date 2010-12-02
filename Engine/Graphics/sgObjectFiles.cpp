@@ -29,7 +29,7 @@
 #include "sgResourceManager.h"
 #include "sgMaterial.h"
 #include "sgMesh.h"
-#include "sgObject.h"
+#include "sgObjectBody.h"
 
 namespace sgObjectFiles
 {

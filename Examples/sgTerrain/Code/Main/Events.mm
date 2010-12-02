@@ -52,13 +52,13 @@ void Events::onInit(sgMain *m)
 	sgmain->first_ent->createSkyCubeEntity("sky_right.png", "sky_back.png", "sky_left.png", "sky_front.png", "sky_down.png", "sky_up.png");
 	
 	//Create a terrain entity
-	sgEntity *ent = sgmain->first_ent->createTerrainEntity("czTerrHMP.png", 512, 512, 16, 16, sgVector4(0.1, 0.1, 0.1, 0.0));
-	ent->obj->materials[0]->setTexture2D(-1, "czTerrTex.png");
-	ent->obj->materials[0]->setTexture2D(-1, "czTerrDet.png");
-	ent->obj->materials[0]->setShader("TerrDetail", "TerrDetail");
+	sgEntity *ent = sgmain->first_ent->createTerrainEntity("czTerrHMP.png", 512, 512, 8, 8, 4, sgVector4(0.1, 0.1, 0.1, 0.0));
+	ent->obj->body->materials[0]->setTexture2D(-1, "czTerrTex.png");
+	ent->obj->body->materials[0]->setTexture2D(-1, "czTerrDet.png");
+	ent->obj->body->materials[0]->setShader("TerrDetail", "TerrDetail");
 	
 	//Create water entity
-	ent = sgmain->first_ent->createTerrainEntity(NULL, 2, 2, 2, 2, sgVector4(0.0, 0.0, 0.0, 0.0), (sgAction*)new Water);
+	ent = sgmain->first_ent->createTerrainEntity(NULL, 2, 2, 2, 2, 0, sgVector4(0.0, 0.0, 0.0, 0.0), (sgAction*)new Water);
 	ent->obj->position.y = 23.0;
 	ent->obj->scale *= 1000.0;
 }

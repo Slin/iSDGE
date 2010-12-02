@@ -63,20 +63,6 @@ class sgMesh : public sgBase
 		void updateVBO();
 	
 		/**
-		 *	Prepare for animation.
-		 *	Transforms the vertexpositions into their bones space.
-		 */
-		void prepareAnimation();
-	
-		/**
-		 *	Set animation.
-		 *	Sets to a given position within the animation with the specified name.
-		 * @param name name of the animation
-		 * @param percent position within the animation in percent (0-100)
-		 */
-		void setAnimation(const char *name, float percent);
-	
-		/**
 		 *	Calculate normals.
 		 *	Calculates new normals for the mesh, which is needed for correct shading after the mesh was manipulated.
 		 */
@@ -168,20 +154,6 @@ class sgMesh : public sgBase
 		 *	Sphere checked against the view frustum for culling. XYZ is the local center and W the radius.
 		 */
 		sgVector4 cullsphere;
-	
-		/**
-		 *	Bone number.
-		 *	The number of the meshs bones.
-		 */
-//		unsigned int bonenum;
-	
-		/**
-		 *	Bone array.
-		 *	Array containing the bones of this model, which are used for animations.
-		 */
-//		sgBone *bones;
-	
-//		std::multimap<std::string, unsigned int*> animations;
 	
 	private:
 		bool vbotoggle;

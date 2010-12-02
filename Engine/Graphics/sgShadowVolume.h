@@ -72,8 +72,9 @@ class sgShadowVolume
 		 *	Constructor.
 		 *	Initializes the shadow volume.
 		 *  @param obj pointer to the object, this volume is attached to.
+		 *	@param lod the lod step to create the shadow from.
 		 */
-		sgShadowVolume(sgObject *obj);
+		sgShadowVolume(sgObject *obj, unsigned int lod = 0);
 	
 		/**
 		 *	Deconstructor.

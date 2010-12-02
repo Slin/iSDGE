@@ -43,6 +43,7 @@
 #include "sgMaterial.h"
 #include "sgVertex.h"
 #include "sgMesh.h"
+#include "sgObjectBody.h"
 
 #include "sgMatrix4x4.h"
 #include "sgColor.h";
