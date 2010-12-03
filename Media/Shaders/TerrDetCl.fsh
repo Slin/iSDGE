@@ -1,8 +1,8 @@
 //
-//	sgAction.cpp
-//	Engine
+//	Shader.fsh
+//	iSDGE
 //
-//	Created by Nils Daumann on 30.04.10.
+//	Created by Nils Daumann on 16.04.10.
 //	Copyright (c) 2010 Nils Daumann
 
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,24 +23,21 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-#include "sgAction.h"
+precision highp float;
 
-void sgAction::onInit(sgEntity *e)
-{
-	ent = e;
-}
+uniform sampler2D mTexture0;
+uniform sampler2D mTexture1;
+uniform float clipheight;
 
-void sgAction::onDraw(float timestep)
-{
-	
-}
+varying vec4 texcoord;
+varying float fog;
+varying float height;
 
-void sgAction::onDrawLate(float timestep)
+void main()
 {
-	
-}
+	if(/*clipheight >= 0.0) &&*/ height < 23.0)//clipheight)
+		discard;
 
-void sgAction::onDestroy()
-{
-	delete this;
+	vec4 color = texture2D(mTexture0, texcoord.xy)*(texture2D(mTexture1, texcoord.zw).r+0.5);
+    gl_FragColor = mix(color, vec4(0.8, 0.9, 1.0, 1.0), fog);
 }

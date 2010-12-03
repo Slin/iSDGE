@@ -37,6 +37,8 @@
 		2941E31611C1113C00B6EC59 /* CameraFree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2941E31211C1113C00B6EC59 /* CameraFree.cpp */; };
 		2941E31711C1113C00B6EC59 /* FPSDisplay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2941E31411C1113C00B6EC59 /* FPSDisplay.cpp */; };
 		2943A9C0129D6F7000234E77 /* sgObjectBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2943A9BE129D6F7000234E77 /* sgObjectBody.cpp */; };
+		294BADBD12A94169008ED967 /* TerrDetCl.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 294BADBB12A94169008ED967 /* TerrDetCl.vsh */; };
+		294BADBE12A94169008ED967 /* TerrDetCl.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 294BADBC12A94169008ED967 /* TerrDetCl.fsh */; };
 		294BC409129317F200BA99CF /* terrain3.png in Resources */ = {isa = PBXBuildFile; fileRef = 294BC408129317F200BA99CF /* terrain3.png */; };
 		294BC41C12931E0D00BA99CF /* czTerrHMP.png in Resources */ = {isa = PBXBuildFile; fileRef = 294BC41912931E0D00BA99CF /* czTerrHMP.png */; };
 		294BC41D12931E0D00BA99CF /* czTerrDet.png in Resources */ = {isa = PBXBuildFile; fileRef = 294BC41A12931E0D00BA99CF /* czTerrDet.png */; };
@@ -135,6 +137,8 @@
 		2941E31511C1113C00B6EC59 /* FPSDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPSDisplay.h; sourceTree = "<group>"; };
 		2943A9BE129D6F7000234E77 /* sgObjectBody.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgObjectBody.cpp; sourceTree = "<group>"; };
 		2943A9BF129D6F7000234E77 /* sgObjectBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgObjectBody.h; sourceTree = "<group>"; };
+		294BADBB12A94169008ED967 /* TerrDetCl.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TerrDetCl.vsh; sourceTree = "<group>"; };
+		294BADBC12A94169008ED967 /* TerrDetCl.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TerrDetCl.fsh; sourceTree = "<group>"; };
 		294BC408129317F200BA99CF /* terrain3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = terrain3.png; sourceTree = "<group>"; };
 		294BC41912931E0D00BA99CF /* czTerrHMP.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = czTerrHMP.png; sourceTree = "<group>"; };
 		294BC41A12931E0D00BA99CF /* czTerrDet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = czTerrDet.png; sourceTree = "<group>"; };
@@ -420,6 +424,8 @@
 		294BC43E1293245000BA99CF /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
+				294BADBB12A94169008ED967 /* TerrDetCl.vsh */,
+				294BADBC12A94169008ED967 /* TerrDetCl.fsh */,
 				29C8F83A129ACC3B003DB20D /* Water.vsh */,
 				29C8F83B129ACC3B003DB20D /* Water.fsh */,
 				294BC4441293245000BA99CF /* TerrDetail.fsh */,
@@ -581,6 +587,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				294BADBD12A94169008ED967 /* TerrDetCl.vsh in Resources */,
+				294BADBE12A94169008ED967 /* TerrDetCl.fsh in Resources */,
 				29C8F83C129ACC3B003DB20D /* Water.vsh in Resources */,
 				29C8F83D129ACC3B003DB20D /* Water.fsh in Resources */,
 				294BC44B1293245000BA99CF /* TerrDetail.fsh in Resources */,

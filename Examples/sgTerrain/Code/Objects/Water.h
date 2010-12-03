@@ -32,7 +32,10 @@ class Water : public sgAction
 {
 	public:
 		void onInit(sgEntity *e);
-		void onDraw(float timestep);
+		void onDrawLate(float timestep);
+	
+	private:
+		sgEntity *mirror;
 };
 
 #endif

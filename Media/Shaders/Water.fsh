@@ -35,6 +35,8 @@ varying float fog;
 void main()
 {
 	vec4 dis = texture2D(mTexture0, texcoord.xy)*2.0-1.0;
-	vec4 color = texture2D(mTexture1, projpos.xy/projpos.z*0.5+0.5+dis.rg*0.8);
+	vec2 reflcoords = projpos.xy/projpos.z*0.5+0.5;
+	reflcoords.x = 1.0-reflcoords.x;
+	vec4 color = texture2D(mTexture1, reflcoords+dis.rg*0.8);
     gl_FragColor = mix(color, vec4(0.8, 0.9, 1.0, 1.0), fog);
 }

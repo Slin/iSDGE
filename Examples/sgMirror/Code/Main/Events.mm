@@ -71,10 +71,10 @@ void Events::onInit(sgMain *m)
 	ent->obj->scale.y *= 0.1;
 	ent->obj->scale.z *= 10;
 	ent->obj->position.y = -0.1;
-	ent->obj->materials[0]->setTexture2D(-1, "marble.png");
-	ent->obj->materials[0]->mattex.makeScale(sgVector3(10, 10, 10));
-	ent->obj->materials[0]->setTexture2D(-1, mirror->cam->rendertarget);
-	ent->obj->materials[0]->setShader("Reflect", "Reflect");
+	ent->obj->body->materials[0]->setTexture2D(-1, "marble.png");
+	ent->obj->body->materials[0]->mattex.makeScale(sgVector3(10, 10, 10));
+	ent->obj->body->materials[0]->setTexture2D(-1, mirror->cam->rendertarget);
+	ent->obj->body->materials[0]->setShader("Reflect", "Reflect");
 	ent->obj->tag = 1;
 }
 

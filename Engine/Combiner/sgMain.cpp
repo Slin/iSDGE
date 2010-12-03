@@ -73,6 +73,14 @@ void sgMain::drawView()
 	if(eventhandler != NULL)
 		eventhandler->onDrawLate(timestep);
 	
+	for(sgEntity *it = first_ent->next; it != NULL; it = it->next)
+	{
+		if(it->act != NULL)
+		{
+			it->act->onDrawLate(timestep);
+		}
+	}
+	
 	renderer->render();
 }
 

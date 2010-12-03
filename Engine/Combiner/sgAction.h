@@ -50,6 +50,13 @@ class sgAction
 		virtual void onDraw(float timestep);
 	
 		/**
+		 *	On draw late.
+		 *	This function is called every frame just before rendering anything, but after all entities onDraw. It is called in the order of the entities in their list.
+		 * @param timestep the time in seconds since the previous frame was rendered.
+		 */
+		virtual void onDrawLate(float timestep);
+	
+		/**
 		 *	On destroy.
 		 *	This function is called directly before the entity is destroyed.
 		 */

@@ -21,7 +21,6 @@
 		290B487D11BFB54E00A54048 /* sgView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 290B487C11BFB54E00A54048 /* sgView.mm */; };
 		290B48A711BFB58C00A54048 /* sgMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 290B48A511BFB58C00A54048 /* sgMain.cpp */; };
 		290B48AC11BFB5BB00A54048 /* sgTimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 290B48AA11BFB5BB00A54048 /* sgTimer.cpp */; };
-		292E2533121611140036F672 /* pp.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 292E2532121611140036F672 /* pp.vsh */; };
 		292FFBC912159B4A003564EE /* font1.png in Resources */ = {isa = PBXBuildFile; fileRef = 292FFBA812159B4A003564EE /* font1.png */; };
 		292FFBCD12159B4A003564EE /* sky_back.png in Resources */ = {isa = PBXBuildFile; fileRef = 292FFBAC12159B4A003564EE /* sky_back.png */; };
 		292FFBCE12159B4A003564EE /* sky_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 292FFBAD12159B4A003564EE /* sky_down.png */; };
@@ -34,6 +33,19 @@
 		2936A2F611C06569008EAD35 /* sgXML.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2936A2F511C06569008EAD35 /* sgXML.cpp */; };
 		2941E31611C1113C00B6EC59 /* CameraFree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2941E31211C1113C00B6EC59 /* CameraFree.cpp */; };
 		2941E31711C1113C00B6EC59 /* FPSDisplay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2941E31411C1113C00B6EC59 /* FPSDisplay.cpp */; };
+		294BAD5D12A934D5008ED967 /* sgObjectBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 294BAD5C12A934D5008ED967 /* sgObjectBody.cpp */; };
+		294BAD6A12A934E7008ED967 /* sgsSun.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 294BAD5E12A934E6008ED967 /* sgsSun.fsh */; };
+		294BAD6B12A934E7008ED967 /* sgsSun.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 294BAD5F12A934E6008ED967 /* sgsSun.vsh */; };
+		294BAD6C12A934E7008ED967 /* sgsLight.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 294BAD6012A934E6008ED967 /* sgsLight.vsh */; };
+		294BAD6D12A934E7008ED967 /* sgsTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 294BAD6112A934E6008ED967 /* sgsTexture.vsh */; };
+		294BAD6E12A934E7008ED967 /* sgsPPBase.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 294BAD6212A934E6008ED967 /* sgsPPBase.vsh */; };
+		294BAD6F12A934E7008ED967 /* sgsLight.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 294BAD6312A934E6008ED967 /* sgsLight.fsh */; };
+		294BAD7012A934E7008ED967 /* sgsTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 294BAD6412A934E6008ED967 /* sgsTexture.fsh */; };
+		294BAD7112A934E7008ED967 /* sgsShadowvolume.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 294BAD6512A934E6008ED967 /* sgsShadowvolume.vsh */; };
+		294BAD7212A934E7008ED967 /* sgsShadowvolume.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 294BAD6612A934E6008ED967 /* sgsShadowvolume.fsh */; };
+		294BAD7312A934E7008ED967 /* sgsShadowquad.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 294BAD6712A934E6008ED967 /* sgsShadowquad.fsh */; };
+		294BAD7412A934E7008ED967 /* sgsShadowquad.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 294BAD6812A934E7008ED967 /* sgsShadowquad.vsh */; };
+		294BAD7512A934E7008ED967 /* sgsTextureDiscard.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 294BAD6912A934E7008ED967 /* sgsTextureDiscard.fsh */; };
 		294D929F12457091000CDCCD /* Reflect.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 294D929B12457091000CDCCD /* Reflect.fsh */; };
 		294D92D412457465000CDCCD /* Reflect.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 294D92D312457465000CDCCD /* Reflect.vsh */; };
 		2952EE1C117A4EEC006FAB6F /* sgQuaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2952EE1B117A4EEC006FAB6F /* sgQuaternion.cpp */; };
@@ -44,14 +56,6 @@
 		295CBF69121587B300F1F941 /* Rotate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295CBF67121587B300F1F941 /* Rotate.cpp */; };
 		295EDDD911AACF840065C43C /* sgMatrix4x4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295EDDD811AACF840065C43C /* sgMatrix4x4.cpp */; };
 		297A217611DCBC3A00F0C8E5 /* sgInit.mm in Sources */ = {isa = PBXBuildFile; fileRef = 297A217511DCBC3A00F0C8E5 /* sgInit.mm */; };
-		29A42EDA118346DA0080394F /* default.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 29A42ED8118346DA0080394F /* default.fsh */; };
-		29A42EDB118346DA0080394F /* default.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 29A42ED9118346DA0080394F /* default.vsh */; };
-		29A42F241183514B0080394F /* defaultlight.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 29A42F221183514B0080394F /* defaultlight.fsh */; };
-		29A42F251183514B0080394F /* defaultlight.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 29A42F231183514B0080394F /* defaultlight.vsh */; };
-		29A8D53911E0958E00746D31 /* shadowquad.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 29A8D53511E0958E00746D31 /* shadowquad.fsh */; };
-		29A8D53A11E0958E00746D31 /* shadowquad.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 29A8D53611E0958E00746D31 /* shadowquad.vsh */; };
-		29A8D53B11E0958E00746D31 /* shadowvolume.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 29A8D53711E0958E00746D31 /* shadowvolume.fsh */; };
-		29A8D53C11E0958E00746D31 /* shadowvolume.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 29A8D53811E0958E00746D31 /* shadowvolume.vsh */; };
 		29AB96B41184F61B0071CC97 /* sgPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29AB96B31184F61B0071CC97 /* sgPanel.cpp */; };
 		29AC5B1311DE75FA009F1A01 /* RedCyanStereo.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 29AC5B1211DE75FA009F1A01 /* RedCyanStereo.fsh */; };
 		29AD37351179C3710089F607 /* sgVector4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29AD37341179C3710089F607 /* sgVector4.cpp */; };
@@ -102,7 +106,6 @@
 		290B48A611BFB58C00A54048 /* sgMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgMain.h; sourceTree = "<group>"; };
 		290B48AA11BFB5BB00A54048 /* sgTimer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgTimer.cpp; sourceTree = "<group>"; };
 		290B48AB11BFB5BB00A54048 /* sgTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgTimer.h; sourceTree = "<group>"; };
-		292E2532121611140036F672 /* pp.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = pp.vsh; sourceTree = "<group>"; };
 		292FFBA812159B4A003564EE /* font1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = font1.png; sourceTree = "<group>"; };
 		292FFBAC12159B4A003564EE /* sky_back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sky_back.png; sourceTree = "<group>"; };
 		292FFBAD12159B4A003564EE /* sky_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sky_down.png; sourceTree = "<group>"; };
@@ -120,6 +123,20 @@
 		2941E31311C1113C00B6EC59 /* CameraFree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraFree.h; sourceTree = "<group>"; };
 		2941E31411C1113C00B6EC59 /* FPSDisplay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FPSDisplay.cpp; sourceTree = "<group>"; };
 		2941E31511C1113C00B6EC59 /* FPSDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FPSDisplay.h; sourceTree = "<group>"; };
+		294BAD5B12A934D5008ED967 /* sgObjectBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgObjectBody.h; sourceTree = "<group>"; };
+		294BAD5C12A934D5008ED967 /* sgObjectBody.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgObjectBody.cpp; sourceTree = "<group>"; };
+		294BAD5E12A934E6008ED967 /* sgsSun.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsSun.fsh; sourceTree = "<group>"; };
+		294BAD5F12A934E6008ED967 /* sgsSun.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsSun.vsh; sourceTree = "<group>"; };
+		294BAD6012A934E6008ED967 /* sgsLight.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsLight.vsh; sourceTree = "<group>"; };
+		294BAD6112A934E6008ED967 /* sgsTexture.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsTexture.vsh; sourceTree = "<group>"; };
+		294BAD6212A934E6008ED967 /* sgsPPBase.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsPPBase.vsh; sourceTree = "<group>"; };
+		294BAD6312A934E6008ED967 /* sgsLight.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsLight.fsh; sourceTree = "<group>"; };
+		294BAD6412A934E6008ED967 /* sgsTexture.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsTexture.fsh; sourceTree = "<group>"; };
+		294BAD6512A934E6008ED967 /* sgsShadowvolume.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsShadowvolume.vsh; sourceTree = "<group>"; };
+		294BAD6612A934E6008ED967 /* sgsShadowvolume.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsShadowvolume.fsh; sourceTree = "<group>"; };
+		294BAD6712A934E6008ED967 /* sgsShadowquad.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsShadowquad.fsh; sourceTree = "<group>"; };
+		294BAD6812A934E7008ED967 /* sgsShadowquad.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsShadowquad.vsh; sourceTree = "<group>"; };
+		294BAD6912A934E7008ED967 /* sgsTextureDiscard.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsTextureDiscard.fsh; sourceTree = "<group>"; };
 		294D929B12457091000CDCCD /* Reflect.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Reflect.fsh; sourceTree = "<group>"; };
 		294D92D312457465000CDCCD /* Reflect.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Reflect.vsh; sourceTree = "<group>"; };
 		2952EE1A117A4EEC006FAB6F /* sgQuaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgQuaternion.h; sourceTree = "<group>"; };
@@ -137,14 +154,6 @@
 		295EDDD811AACF840065C43C /* sgMatrix4x4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgMatrix4x4.cpp; sourceTree = "<group>"; };
 		297A217411DCBC3A00F0C8E5 /* sgInit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgInit.h; sourceTree = "<group>"; };
 		297A217511DCBC3A00F0C8E5 /* sgInit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = sgInit.mm; sourceTree = "<group>"; };
-		29A42ED8118346DA0080394F /* default.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = default.fsh; sourceTree = "<group>"; };
-		29A42ED9118346DA0080394F /* default.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = default.vsh; sourceTree = "<group>"; };
-		29A42F221183514B0080394F /* defaultlight.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = defaultlight.fsh; sourceTree = "<group>"; };
-		29A42F231183514B0080394F /* defaultlight.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = defaultlight.vsh; sourceTree = "<group>"; };
-		29A8D53511E0958E00746D31 /* shadowquad.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shadowquad.fsh; sourceTree = "<group>"; };
-		29A8D53611E0958E00746D31 /* shadowquad.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shadowquad.vsh; sourceTree = "<group>"; };
-		29A8D53711E0958E00746D31 /* shadowvolume.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shadowvolume.fsh; sourceTree = "<group>"; };
-		29A8D53811E0958E00746D31 /* shadowvolume.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shadowvolume.vsh; sourceTree = "<group>"; };
 		29AB96B21184F61B0071CC97 /* sgPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgPanel.h; sourceTree = "<group>"; };
 		29AB96B31184F61B0071CC97 /* sgPanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgPanel.cpp; sourceTree = "<group>"; };
 		29AC5B1211DE75FA009F1A01 /* RedCyanStereo.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = RedCyanStereo.fsh; sourceTree = "<group>"; };
@@ -252,6 +261,8 @@
 		290B10B4117905E500AC324E /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				294BAD5B12A934D5008ED967 /* sgObjectBody.h */,
+				294BAD5C12A934D5008ED967 /* sgObjectBody.cpp */,
 				29A42ED7118346DA0080394F /* Shaders */,
 				290B10FC11792EAE00AC324E /* sgRenderer.h */,
 				290B10FD11792EAE00AC324E /* sgRenderer.cpp */,
@@ -434,15 +445,18 @@
 		29A42ED7118346DA0080394F /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
-				292E2532121611140036F672 /* pp.vsh */,
-				29A8D53511E0958E00746D31 /* shadowquad.fsh */,
-				29A8D53611E0958E00746D31 /* shadowquad.vsh */,
-				29A8D53711E0958E00746D31 /* shadowvolume.fsh */,
-				29A8D53811E0958E00746D31 /* shadowvolume.vsh */,
-				29A42F221183514B0080394F /* defaultlight.fsh */,
-				29A42F231183514B0080394F /* defaultlight.vsh */,
-				29A42ED8118346DA0080394F /* default.fsh */,
-				29A42ED9118346DA0080394F /* default.vsh */,
+				294BAD5E12A934E6008ED967 /* sgsSun.fsh */,
+				294BAD5F12A934E6008ED967 /* sgsSun.vsh */,
+				294BAD6012A934E6008ED967 /* sgsLight.vsh */,
+				294BAD6112A934E6008ED967 /* sgsTexture.vsh */,
+				294BAD6212A934E6008ED967 /* sgsPPBase.vsh */,
+				294BAD6312A934E6008ED967 /* sgsLight.fsh */,
+				294BAD6412A934E6008ED967 /* sgsTexture.fsh */,
+				294BAD6512A934E6008ED967 /* sgsShadowvolume.vsh */,
+				294BAD6612A934E6008ED967 /* sgsShadowvolume.fsh */,
+				294BAD6712A934E6008ED967 /* sgsShadowquad.fsh */,
+				294BAD6812A934E7008ED967 /* sgsShadowquad.vsh */,
+				294BAD6912A934E7008ED967 /* sgsTextureDiscard.fsh */,
 			);
 			path = Shaders;
 			sourceTree = "<group>";
@@ -565,16 +579,7 @@
 			files = (
 				294D92D412457465000CDCCD /* Reflect.vsh in Resources */,
 				294D929F12457091000CDCCD /* Reflect.fsh in Resources */,
-				292E2533121611140036F672 /* pp.vsh in Resources */,
-				29A8D53911E0958E00746D31 /* shadowquad.fsh in Resources */,
-				29A8D53A11E0958E00746D31 /* shadowquad.vsh in Resources */,
-				29A8D53B11E0958E00746D31 /* shadowvolume.fsh in Resources */,
-				29A8D53C11E0958E00746D31 /* shadowvolume.vsh in Resources */,
 				29AC5B1311DE75FA009F1A01 /* RedCyanStereo.fsh in Resources */,
-				29A42F241183514B0080394F /* defaultlight.fsh in Resources */,
-				29A42F251183514B0080394F /* defaultlight.vsh in Resources */,
-				29A42EDA118346DA0080394F /* default.fsh in Resources */,
-				29A42EDB118346DA0080394F /* default.vsh in Resources */,
 				29D7EB5B117CFABF0091D933 /* Entitlements.plist in Resources */,
 				29D7EB61117CFC750091D933 /* icon.png in Resources */,
 				292FFBC912159B4A003564EE /* font1.png in Resources */,
@@ -584,6 +589,18 @@
 				292FFBD012159B4A003564EE /* sky_left.png in Resources */,
 				292FFBD112159B4A003564EE /* sky_right.png in Resources */,
 				292FFBD212159B4A003564EE /* sky_up.png in Resources */,
+				294BAD6A12A934E7008ED967 /* sgsSun.fsh in Resources */,
+				294BAD6B12A934E7008ED967 /* sgsSun.vsh in Resources */,
+				294BAD6C12A934E7008ED967 /* sgsLight.vsh in Resources */,
+				294BAD6D12A934E7008ED967 /* sgsTexture.vsh in Resources */,
+				294BAD6E12A934E7008ED967 /* sgsPPBase.vsh in Resources */,
+				294BAD6F12A934E7008ED967 /* sgsLight.fsh in Resources */,
+				294BAD7012A934E7008ED967 /* sgsTexture.fsh in Resources */,
+				294BAD7112A934E7008ED967 /* sgsShadowvolume.vsh in Resources */,
+				294BAD7212A934E7008ED967 /* sgsShadowvolume.fsh in Resources */,
+				294BAD7312A934E7008ED967 /* sgsShadowquad.fsh in Resources */,
+				294BAD7412A934E7008ED967 /* sgsShadowquad.vsh in Resources */,
+				294BAD7512A934E7008ED967 /* sgsTextureDiscard.fsh in Resources */,
 				29CC91A7124618FD005AFF85 /* marble.png in Resources */,
 				29CC91CC12461B2D005AFF85 /* f360r.sgm in Resources */,
 				29CC91CD12461B2D005AFF85 /* fskinr.png in Resources */,
@@ -635,6 +652,7 @@
 				295CBF5C1215861700F1F941 /* Events.mm in Sources */,
 				295CBF5D1215861700F1F941 /* main.cpp in Sources */,
 				295CBF69121587B300F1F941 /* Rotate.cpp in Sources */,
+				294BAD5D12A934D5008ED967 /* sgObjectBody.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

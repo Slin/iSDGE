@@ -55,10 +55,11 @@ void Events::onInit(sgMain *m)
 	sgEntity *ent = sgmain->first_ent->createTerrainEntity("czTerrHMP.png", 512, 512, 8, 8, 4, sgVector4(0.1, 0.1, 0.1, 0.0));
 	ent->obj->body->materials[0]->setTexture2D(-1, "czTerrTex.png");
 	ent->obj->body->materials[0]->setTexture2D(-1, "czTerrDet.png");
-	ent->obj->body->materials[0]->setShader("TerrDetail", "TerrDetail");
+	ent->obj->body->materials[0]->setShader("TerrDetCl", "TerrDetCl");
 	
 	//Create water entity
 	ent = sgmain->first_ent->createTerrainEntity(NULL, 2, 2, 2, 2, 0, sgVector4(0.0, 0.0, 0.0, 0.0), (sgAction*)new Water);
+	ent->cam = cam->cam;
 	ent->obj->position.y = 23.0;
 	ent->obj->scale *= 1000.0;
 }
