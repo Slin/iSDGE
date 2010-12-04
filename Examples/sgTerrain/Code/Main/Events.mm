@@ -25,6 +25,7 @@
 
 #include "Events.h"
 #import "sgView.h"
+#include "RenderEvent.h"
 
 //This method will be called directly after initializing the engine and is meant to be used to initialize your project in
 void Events::onInit(sgMain *m)
@@ -52,16 +53,18 @@ void Events::onInit(sgMain *m)
 	sgmain->first_ent->createSkyCubeEntity("sky_right.png", "sky_back.png", "sky_left.png", "sky_front.png", "sky_down.png", "sky_up.png");
 	
 	//Create a terrain entity
-	sgEntity *ent = sgmain->first_ent->createTerrainEntity("czTerrHMP.png", 512, 512, 8, 8, 4, sgVector4(0.1, 0.1, 0.1, 0.0));
-	ent->obj->body->materials[0]->setTexture2D(-1, "czTerrTex.png");
-	ent->obj->body->materials[0]->setTexture2D(-1, "czTerrDet.png");
-	ent->obj->body->materials[0]->setShader("TerrDetCl", "TerrDetCl");
+	sgEntity *terr = sgmain->first_ent->createTerrainEntity("czTerrHMP.png", 512, 512, 8, 8, 4, sgVector4(0.1, 0.1, 0.1, 0.0));
+	terr->obj->body->materials[0]->setTexture2D(-1, "czTerrTex.png");
+	terr->obj->body->materials[0]->setTexture2D(-1, "czTerrDet.png");
 	
 	//Create water entity
-	ent = sgmain->first_ent->createTerrainEntity(NULL, 2, 2, 0, 0, 0, sgVector4(0.0, 0.0, 0.0, 0.0), (sgAction*)new Water);
-	ent->cam = cam->cam;
-	ent->obj->position.y = 23.0;
-	ent->obj->scale *= 1000.0;
+	sgEntity *water = sgmain->first_ent->createTerrainEntity(NULL, 2, 2, 0, 0, 0, sgVector4(0.0, 0.0, 0.0, 0.0), (sgAction*)new Water);
+	water->cam = cam->cam;
+	water->obj->position.y = 23.0;
+	water->obj->scale *= 1000.0;
+	
+	//Set render event
+	sgmain->renderer->event = (sgRenderEvent*)new RenderEvent(terr, "TerrDetail", "TerrCl");
 }
 
 //Called every frame, just before drawing

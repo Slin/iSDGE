@@ -916,6 +916,9 @@ void sgRendererES2::render()
 		cam->updateView();
 		cam->matview = matglobal3d*cam->matview;
 		
+		if(event != NULL)
+			event->onDrawCam(cam, this);
+		
 		//Do view frustum culling
 		culling(cam, first_solid);
 		

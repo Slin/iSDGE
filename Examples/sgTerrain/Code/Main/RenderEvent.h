@@ -1,8 +1,8 @@
 //
-//	Shader.vsh
+//	RenderEvent.h
 //	iSDGE
 //
-//	Created by Nils Daumann on 16.04.10.
+//	Created by Nils Daumann on 04.12.10.
 //	Copyright (c) 2010 Nils Daumann
 
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,18 +23,25 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-attribute vec3 vertPos;
-attribute vec2 vertTexcoord0;
+#ifndef __RENDEREVENT_H__
+#define __RENDEREVENT_H__
 
-uniform mat4 matProjViewModel;
-uniform mat4 matTex;
+#include "sgRenderEvent.h"
+#include "sgEntity.h"
+#include "sgMaterial.h"
+#include "sgShader.h"
 
-varying vec2 texcoord;
-varying vec3 projpos;
-
-void main()
+class RenderEvent : sgRenderEvent
 {
-	texcoord.xy = (matTex*vec4(vertTexcoord0, 1.0, 1.0)).xy;
-	gl_Position = matProjViewModel*vec4(vertPos, 1.0);
-	projpos = gl_Position.xyw;
-}
+	public:
+		RenderEvent(sgEntity *terr, const char *base, const char *clip);
+		void initTerrShads(sgEntity *terr, const char *base, const char *clip);
+		void onDrawCam(sgCamera *cam, sgRenderer *rend);
+	
+	private:
+		sgEntity *terrent;
+		sgShader *baseshad;
+		sgShader *clipshad;
+};
+
+#endif

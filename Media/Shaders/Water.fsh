@@ -30,7 +30,6 @@ uniform sampler2D mTexture1;
 
 varying vec2 texcoord;
 varying vec3 projpos;
-varying float fog;
 
 void main()
 {
@@ -38,5 +37,5 @@ void main()
 	vec2 reflcoords = projpos.xy/projpos.z*0.5+0.5;
 	reflcoords.x = 1.0-reflcoords.x;
 	vec4 color = texture2D(mTexture1, reflcoords+dis.rg*0.8);
-    gl_FragColor = mix(color, vec4(0.8, 0.9, 1.0, 1.0), fog);
+    gl_FragColor = color;
 }

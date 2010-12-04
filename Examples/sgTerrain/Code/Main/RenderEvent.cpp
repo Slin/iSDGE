@@ -1,8 +1,8 @@
 //
-//	Shader.vsh
+//	RenderEvent.cpp
 //	iSDGE
 //
-//	Created by Nils Daumann on 16.04.10.
+//	Created by Nils Daumann on 04.12.10.
 //	Copyright (c) 2010 Nils Daumann
 
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,18 +23,32 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-attribute vec3 vertPos;
-attribute vec2 vertTexcoord0;
+#include "RenderEvent.h"
+#include "sgRenderer.h"
+#include "sgCamera.h"
 
-uniform mat4 matProjViewModel;
-uniform mat4 matTex;
-
-varying vec2 texcoord;
-varying vec3 projpos;
-
-void main()
+RenderEvent::RenderEvent(sgEntity *terr, const char *base, const char *clip)
 {
-	texcoord.xy = (matTex*vec4(vertTexcoord0, 1.0, 1.0)).xy;
-	gl_Position = matProjViewModel*vec4(vertPos, 1.0);
-	projpos = gl_Position.xyw;
+	initTerrShads(terr, base, clip);
+}
+
+void RenderEvent::initTerrShads(sgEntity *terr, const char *base, const char *clip)
+{
+	terrent = terr;
+	baseshad = sgShader::getShader(base, base);
+	terrent->obj->body->materials[0]->shader = baseshad;
+	terrent->obj->body->materials[0]->getUniforms();
+	clipshad = sgShader::getShader(clip, clip);
+}
+
+void RenderEvent::onDrawCam(sgCamera *cam, sgRenderer *rend)
+{
+	//Change shader depending on the camera
+	if(cam == rend->first_cam->next)	//Reflection camera
+	{
+		terrent->obj->body->materials[0]->shader = clipshad;
+	}else
+	{
+		terrent->obj->body->materials[0]->shader = baseshad;
+	}
 }

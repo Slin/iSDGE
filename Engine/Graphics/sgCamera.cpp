@@ -39,6 +39,7 @@ sgCamera::sgCamera(sgCamera *p, sgCamera *n)
 	updateProj();
 	
 	tag = 0;
+	lodshift = 0.0;
 	
 	prev = p;
 	next = n;

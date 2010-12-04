@@ -1,8 +1,8 @@
 //
-//	Shader.vsh
+//	sgRenderEvent.h
 //	iSDGE
 //
-//	Created by Nils Daumann on 16.04.10.
+//	Created by Nils Daumann on 04.12.10.
 //	Copyright (c) 2010 Nils Daumann
 
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,18 +23,25 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-attribute vec3 vertPos;
-attribute vec2 vertTexcoord0;
+#ifndef __SGRENDEREVENT_H__
+#define __SGRENDEREVENT_H__
 
-uniform mat4 matProjViewModel;
-uniform mat4 matTex;
+class sgRenderer;
+class sgCamera;
 
-varying vec2 texcoord;
-varying vec3 projpos;
-
-void main()
+/**
+ * Renderer event class. Inherit from this one and assign an instance of it to the view to handle renderer events.
+ */
+class sgRenderEvent
 {
-	texcoord.xy = (matTex*vec4(vertTexcoord0, 1.0, 1.0)).xy;
-	gl_Position = matProjViewModel*vec4(vertPos, 1.0);
-	projpos = gl_Position.xyw;
-}
+	public:
+		/**
+		 *	On draw.
+		 *	This function is called every frame just before drawing each camera.
+		 * @param cam pointer to the camera.
+		 * @param rend pointer to the renderer.
+		 */
+		virtual void onDrawCam(sgCamera *cam, sgRenderer *rend);
+};
+
+#endif

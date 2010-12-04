@@ -77,10 +77,14 @@ sgRenderer::sgRenderer()
 	currfbo = -1;
 	
 	lastmat = NULL;
+	event = NULL;
 }
 
 sgRenderer::~sgRenderer()
 {
+	if(event != NULL)
+		delete event;
+	
 	first_sky->destroyAll();
 	first_solid->destroyAll();
 	first_cam->destroyAll();
@@ -219,7 +223,7 @@ void sgRenderer::culling(sgCamera *cam, sgObject *first)
 					pos.w = 1.0;
 					pos = obj->matmodel*pos;
 					sgVector3 p = pos;
-					meshdist = cam->position.dist(p);
+					meshdist = cam->position.dist(p)+cam->lodshift;
 					
 					lod = obj->body;
 					while(meshdist > lod->loddist && lod->nextbody != NULL)

@@ -37,6 +37,7 @@ void Water::onInit(sgEntity *e)
 	mirror->cam->rendertarget = sgTexture::getTexture2D(128, 128);
 	mirror->cam->rendertarget->makeRendertarget();
 	mirror->cam->tag = 1;
+	mirror->cam->lodshift = 150.0;
 	
 	ent->obj->body->materials[0]->setTexture2D(-1, "waterbump.png");
 	ent->obj->body->materials[0]->setTexture2D(-1, mirror->cam->rendertarget);

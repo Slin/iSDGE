@@ -1,5 +1,5 @@
 //
-//	Shader.vsh
+//	Shader.fsh
 //	iSDGE
 //
 //	Created by Nils Daumann on 16.04.10.
@@ -23,18 +23,20 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-attribute vec3 vertPos;
-attribute vec2 vertTexcoord0;
+precision highp float;
 
-uniform mat4 matProjViewModel;
-uniform mat4 matTex;
+uniform sampler2D mTexture0;
+uniform float clipheight;
 
-varying vec2 texcoord;
-varying vec3 projpos;
+varying vec4 texcoord;
+varying float fog;
+varying float height;
 
 void main()
 {
-	texcoord.xy = (matTex*vec4(vertTexcoord0, 1.0, 1.0)).xy;
-	gl_Position = matProjViewModel*vec4(vertPos, 1.0);
-	projpos = gl_Position.xyw;
+	if(/*clipheight >= 0.0) &&*/ height < 23.0)//clipheight)
+		discard;
+
+	vec4 color = texture2D(mTexture0, texcoord.xy);
+    gl_FragColor = mix(color, vec4(0.8, 0.9, 1.0, 1.0), fog);
 }

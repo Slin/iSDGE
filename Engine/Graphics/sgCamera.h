@@ -122,6 +122,12 @@ class sgCamera
 		unsigned int tag;
 	
 		/**
+		 * LOD shift.
+		 * This is the distance LOD steps are shifted with for this view.
+		 **/
+		float lodshift;
+	
+		/**
 		 *	Position.
 		 *	The position of the camera.
 		 */

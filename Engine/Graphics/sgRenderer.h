@@ -48,6 +48,8 @@
 #include "sgMatrix4x4.h"
 #include "sgColor.h";
 
+#include "sgRenderEvent.h"
+
 struct sgOptimizedMesh
 {
 	sgMesh *mesh;
@@ -121,6 +123,12 @@ class sgRenderer
 		 * Height of the window the engine is rendering into.
 		 */
 		static int backingHeight;
+	
+		/**
+		 * Renderer event class.
+		 * Class used for renderer events. NULL to just ignore them. It will be freed automatically if set.
+		 */
+		sgRenderEvent *event;
 	
 		/**
 		 * First sky.
