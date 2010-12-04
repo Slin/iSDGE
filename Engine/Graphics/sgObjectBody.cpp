@@ -30,6 +30,7 @@
 #include "sgColor.h"
 #include "sgTexture.h"
 #include "sgResourceManager.h"
+#include "sgDebug.h"
 
 
 sgObjectBody::sgObjectBody()
@@ -791,9 +792,9 @@ void sgObjectBody::addTerrainPlane(unsigned int xverts, unsigned int zverts, sgV
 				color.a = 0;
 			}
 			
-			mesh->vertices[x*zverts+y].position.x = ((float)x-0.5f*(float)xverts)*scale.x+posoffset.x;
+			mesh->vertices[x*zverts+y].position.x = ((float)x-0.5f*(float)(xverts-1.0))*scale.x+posoffset.x;
 			mesh->vertices[x*zverts+y].position.y = height+posoffset.y;
-			mesh->vertices[x*zverts+y].position.z = ((float)y-0.5f*(float)zverts)*scale.y+posoffset.z;
+			mesh->vertices[x*zverts+y].position.z = ((float)y-0.5f*(float)(zverts-1.0))*scale.y+posoffset.z;
 			mesh->vertices[x*zverts+y].normal = norm*-1;
 			mesh->vertices[x*zverts+y].uv.x = mesh->vertices[x*zverts+y].position.x*uvfac.x+0.5f;
 			mesh->vertices[x*zverts+y].uv.y = mesh->vertices[x*zverts+y].position.z*uvfac.y+0.5f;

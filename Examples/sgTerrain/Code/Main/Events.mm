@@ -58,7 +58,7 @@ void Events::onInit(sgMain *m)
 	ent->obj->body->materials[0]->setShader("TerrDetCl", "TerrDetCl");
 	
 	//Create water entity
-	ent = sgmain->first_ent->createTerrainEntity(NULL, 2, 2, 2, 2, 0, sgVector4(0.0, 0.0, 0.0, 0.0), (sgAction*)new Water);
+	ent = sgmain->first_ent->createTerrainEntity(NULL, 2, 2, 0, 0, 0, sgVector4(0.0, 0.0, 0.0, 0.0), (sgAction*)new Water);
 	ent->cam = cam->cam;
 	ent->obj->position.y = 23.0;
 	ent->obj->scale *= 1000.0;

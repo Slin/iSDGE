@@ -54,6 +54,9 @@ sgEntity *sgEntity::createObjEntity(const char *name, sgAction *a)
 
 sgEntity *sgEntity::createTerrainEntity(const char *hmp, unsigned int xverts, unsigned int zverts, unsigned char xchunks, unsigned char zchunks, unsigned int lodsteps, sgVector4 hmpscale, sgAction *a)
 {
+	if(xverts == 0 || zverts == 0)
+		return NULL;
+	
 	next = new sgEntity(prev, next, sgmain);
 	next->obj = sgmain->renderer->first_solid->createTerrain(xverts, zverts, xchunks, zchunks, lodsteps, hmp, hmpscale);
 	

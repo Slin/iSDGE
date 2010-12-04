@@ -77,8 +77,14 @@ sgObject *sgObject::createObject(const char *name)
 
 sgObject *sgObject::createTerrain(unsigned int xverts, unsigned int zverts, unsigned char xchunks, unsigned char zchunks, unsigned int lodsteps, const char *hmp, sgVector4 hmpscale)
 {
-	if(lodsteps == 0)
-		lodsteps = 1;
+	if(xverts == 0 || zverts == 0)
+		return NULL;
+	
+	lodsteps += 1;
+	if(xchunks == 0)
+		xchunks = 1;
+	if(zchunks == 0)
+		zchunks = 1;
 	
 	next = new sgObject(prev, next);
 	sgMaterial *mat = sgMaterial::getMaterial();
@@ -125,8 +131,8 @@ sgObject *sgObject::createTerrain(unsigned int xverts, unsigned int zverts, unsi
 			for(int y = 0; y < zchunks; y++)
 			{
 				next->currbody->addTerrainPlane(realx, realz,
-									 sgVector3((float)(xverts/xchunks*(float)x-(float)xverts*0.5+0.5f*realx)*scl, 0.0,
-									(float)(zverts/zchunks*(float)y-(float)zverts*0.5+0.5f*realz)*scl),
+									 sgVector3((float)((xverts-1.0)/xchunks*(float)x-(float)(xverts-1.0)*0.5+0.5f*(realx-1.0))*scl, 0.0,
+									(float)((zverts-1.0)/zchunks*(float)y-(float)(zverts-1.0)*0.5+0.5f*(realz-1.0))*scl),
 									 mat, sgVector2(scl, scl), x, y,
 												sgVector2(1.0/xverts/scl, 1.0/zverts/scl), tex, sgVector2(width, height), hmpscale, islod);
 			}
