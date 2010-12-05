@@ -32,6 +32,8 @@ void Events::onInit(sgMain *m)
 	//Set device orientation
 	sgmain->setOrientation(2);
 	
+//	sgmain->renderer->setMultisampling(2);
+	
 	//Create a light source
 	sgmain->renderer->first_light->createLight();
 	sgmain->renderer->first_light->next->attenuation = 0.0001;

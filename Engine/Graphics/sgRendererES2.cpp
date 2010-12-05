@@ -644,7 +644,7 @@ void sgRendererES2::renderPanels(sgPanel *first)
 				
 				if(img->mat->shader->matprojviewmodel != -1)
 				{
-					matprojviewmodel *= matproj*matview*matmodel;
+					matprojviewmodel = matproj*matview*matmodel;
 					glUniformMatrix4fv(img->mat->shader->matprojviewmodel, 1, GL_FALSE, matprojviewmodel.mat);
 				}
 				
@@ -827,7 +827,7 @@ void sgRendererES2::renderShadows(sgObject *first)
 	glDepthMask(GL_FALSE);
 
 	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LEQUAL);
+	glDepthFunc(GL_LESS);
 	glEnable(GL_STENCIL_TEST);
 	glStencilFunc(GL_ALWAYS, 1, 0xFFFFFFFF);
 	
@@ -931,6 +931,12 @@ void sgRendererES2::render()
 	
 	//Draw panels
 	renderPanels(first_panel);
+	
+	if(currfbo != mainFramebuffer)
+	{
+		glBindFramebuffer(GL_FRAMEBUFFER, mainFramebuffer);
+		currfbo = mainFramebuffer;
+	}
 	
 	if(msaasamples > 0)
 	{

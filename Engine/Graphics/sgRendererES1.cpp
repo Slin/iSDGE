@@ -512,6 +512,12 @@ void sgRendererES1::render()
 	//Draw panels
 	renderPanels(first_panel);
 	
+	if(currfbo != mainFramebuffer)
+	{
+		glBindFramebufferOES(GL_FRAMEBUFFER_OES, mainFramebuffer);
+		currfbo = mainFramebuffer;
+	}
+	
 	if(msaasamples > 0)
 	{
 		//Resolve from msaaFramebuffer to resolveFramebuffer
