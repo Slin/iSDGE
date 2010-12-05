@@ -34,5 +34,5 @@ void main()
 {
 	texcoord = vertTexcoord0;
 	texcoord.y = 1.0-texcoord.y;
-	gl_Position = matProj*matView*matModel*vec4(vertPos, 1.0);
+	gl_Position = matProjViewModel*vec4(vertPos, 1.0);
 }

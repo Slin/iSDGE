@@ -35,6 +35,7 @@
 #include "sgVector2.h"
 #include "sgMatrix4x4.h"
 #include "sgQuaternion.h"
+#include "sgObjectBody.h"
 
 //class sgMesh;
 class sgTexture;
@@ -42,7 +43,6 @@ class sgMaterial;
 class sgLight;
 class sgMesh;
 class sgShadowVolume;
-class sgObjectBody;
 
 
 /**

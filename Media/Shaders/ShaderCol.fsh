@@ -29,9 +29,9 @@ uniform sampler2D mTexture0;
 uniform lowp vec4 color;
 
 varying vec2 texcoord;
-varying lowp float light;
+varying lowp vec3 light;
 
 void main()
 {
-    gl_FragColor = texture2D(mTexture0, texcoord)*light*color;
+    gl_FragColor = texture2D(mTexture0, texcoord)*vec4(light, 1.0)*color;
 }

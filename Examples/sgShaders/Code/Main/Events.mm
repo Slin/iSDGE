@@ -57,9 +57,9 @@ void Events::onInit(sgMain *m)
 	ent->obj->position.y = -5.0f;
 	
 	//Clone its material (which is shared between primitives) and assign a texture and set its tiling
-	ent->obj->cloneMaterial(0);
-	ent->obj->materials[0]->setTexture2D(-1, "sand.png");
-	ent->obj->materials[0]->mattex.makeScale(sgVector3(10.0f, 10.0f, 10.0f));
+	ent->obj->body->cloneMaterial(0);
+	ent->obj->body->materials[0]->setTexture2D(-1, "sand.png");
+	ent->obj->body->materials[0]->mattex.makeScale(sgVector3(10.0f, 10.0f, 10.0f));
 	
 	
 	

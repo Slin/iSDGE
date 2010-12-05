@@ -33,7 +33,6 @@
 #include "sgShadowVolume.h"
 #include "sgRenderer.h"
 #include "sgDebug.h"
-#include "sgObjectBody.h"
 
 #include <stdlib.h>
 #include <math.h>s

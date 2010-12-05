@@ -45,14 +45,6 @@
 		297A217611DCBC3A00F0C8E5 /* sgInit.mm in Sources */ = {isa = PBXBuildFile; fileRef = 297A217511DCBC3A00F0C8E5 /* sgInit.mm */; };
 		299A742E1215AD0700863967 /* Interface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 299A742D1215AD0700863967 /* Interface.cpp */; };
 		299A74651215AF9900863967 /* logo_64.png in Resources */ = {isa = PBXBuildFile; fileRef = 299A74601215AF9900863967 /* logo_64.png */; };
-		29A42EDA118346DA0080394F /* default.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 29A42ED8118346DA0080394F /* default.fsh */; };
-		29A42EDB118346DA0080394F /* default.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 29A42ED9118346DA0080394F /* default.vsh */; };
-		29A42F241183514B0080394F /* defaultlight.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 29A42F221183514B0080394F /* defaultlight.fsh */; };
-		29A42F251183514B0080394F /* defaultlight.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 29A42F231183514B0080394F /* defaultlight.vsh */; };
-		29A8D53911E0958E00746D31 /* shadowquad.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 29A8D53511E0958E00746D31 /* shadowquad.fsh */; };
-		29A8D53A11E0958E00746D31 /* shadowquad.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 29A8D53611E0958E00746D31 /* shadowquad.vsh */; };
-		29A8D53B11E0958E00746D31 /* shadowvolume.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 29A8D53711E0958E00746D31 /* shadowvolume.fsh */; };
-		29A8D53C11E0958E00746D31 /* shadowvolume.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 29A8D53811E0958E00746D31 /* shadowvolume.vsh */; };
 		29AB96B41184F61B0071CC97 /* sgPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29AB96B31184F61B0071CC97 /* sgPanel.cpp */; };
 		29AC5B1311DE75FA009F1A01 /* RedCyanStereo.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 29AC5B1211DE75FA009F1A01 /* RedCyanStereo.fsh */; };
 		29AD37351179C3710089F607 /* sgVector4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29AD37341179C3710089F607 /* sgVector4.cpp */; };
@@ -70,8 +62,29 @@
 		29D7EB26117CEF010091D933 /* sgObjectFiles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29D7EB25117CEF010091D933 /* sgObjectFiles.cpp */; };
 		29D7EB29117CF34E0091D933 /* sgTools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29D7EB28117CF34E0091D933 /* sgTools.cpp */; };
 		29D7EB5B117CFABF0091D933 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29D7EB5A117CFABF0091D933 /* Entitlements.plist */; };
-		29D7EB61117CFC750091D933 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 29D7EB60117CFC750091D933 /* icon.png */; };
 		29ECE04A1213086D00385A1E /* sgShadowVolume.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29ECE0491213086D00385A1E /* sgShadowVolume.cpp */; };
+		29F1832F12AB159200B7F5F2 /* sgRenderEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29F1832D12AB159200B7F5F2 /* sgRenderEvent.cpp */; };
+		29F1833C12AB15AA00B7F5F2 /* sgsLight.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 29F1833012AB15AA00B7F5F2 /* sgsLight.fsh */; };
+		29F1833D12AB15AA00B7F5F2 /* sgsLight.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 29F1833112AB15AA00B7F5F2 /* sgsLight.vsh */; };
+		29F1833E12AB15AA00B7F5F2 /* sgsPPBase.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 29F1833212AB15AA00B7F5F2 /* sgsPPBase.vsh */; };
+		29F1833F12AB15AA00B7F5F2 /* sgsShadowquad.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 29F1833312AB15AA00B7F5F2 /* sgsShadowquad.fsh */; };
+		29F1834012AB15AA00B7F5F2 /* sgsShadowquad.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 29F1833412AB15AA00B7F5F2 /* sgsShadowquad.vsh */; };
+		29F1834112AB15AA00B7F5F2 /* sgsShadowvolume.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 29F1833512AB15AA00B7F5F2 /* sgsShadowvolume.fsh */; };
+		29F1834212AB15AA00B7F5F2 /* sgsShadowvolume.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 29F1833612AB15AA00B7F5F2 /* sgsShadowvolume.vsh */; };
+		29F1834312AB15AA00B7F5F2 /* sgsSun.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 29F1833712AB15AA00B7F5F2 /* sgsSun.fsh */; };
+		29F1834412AB15AA00B7F5F2 /* sgsSun.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 29F1833812AB15AA00B7F5F2 /* sgsSun.vsh */; };
+		29F1834512AB15AA00B7F5F2 /* sgsTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 29F1833912AB15AA00B7F5F2 /* sgsTexture.fsh */; };
+		29F1834612AB15AA00B7F5F2 /* sgsTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 29F1833A12AB15AA00B7F5F2 /* sgsTexture.vsh */; };
+		29F1834712AB15AA00B7F5F2 /* sgsTextureDiscard.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 29F1833B12AB15AA00B7F5F2 /* sgsTextureDiscard.fsh */; };
+		29F1834A12AB15B800B7F5F2 /* sgObjectBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29F1834812AB15B800B7F5F2 /* sgObjectBody.cpp */; };
+		29F1835412AB15D400B7F5F2 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 29F1834C12AB15D400B7F5F2 /* Default.png */; };
+		29F1835512AB15D400B7F5F2 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29F1834D12AB15D400B7F5F2 /* Default@2x.png */; };
+		29F1835612AB15D400B7F5F2 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 29F1834E12AB15D400B7F5F2 /* Icon-72.png */; };
+		29F1835712AB15D400B7F5F2 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 29F1834F12AB15D400B7F5F2 /* Icon-Small-50.png */; };
+		29F1835812AB15D400B7F5F2 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 29F1835012AB15D400B7F5F2 /* Icon-Small.png */; };
+		29F1835912AB15D400B7F5F2 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29F1835112AB15D400B7F5F2 /* Icon-Small@2x.png */; };
+		29F1835A12AB15D400B7F5F2 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 29F1835212AB15D400B7F5F2 /* Icon.png */; };
+		29F1835B12AB15D400B7F5F2 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29F1835312AB15D400B7F5F2 /* Icon@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -137,14 +150,6 @@
 		299A742C1215AD0700863967 /* Interface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Interface.h; sourceTree = "<group>"; };
 		299A742D1215AD0700863967 /* Interface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Interface.cpp; sourceTree = "<group>"; };
 		299A74601215AF9900863967 /* logo_64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_64.png; sourceTree = "<group>"; };
-		29A42ED8118346DA0080394F /* default.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = default.fsh; sourceTree = "<group>"; };
-		29A42ED9118346DA0080394F /* default.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = default.vsh; sourceTree = "<group>"; };
-		29A42F221183514B0080394F /* defaultlight.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = defaultlight.fsh; sourceTree = "<group>"; };
-		29A42F231183514B0080394F /* defaultlight.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = defaultlight.vsh; sourceTree = "<group>"; };
-		29A8D53511E0958E00746D31 /* shadowquad.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shadowquad.fsh; sourceTree = "<group>"; };
-		29A8D53611E0958E00746D31 /* shadowquad.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shadowquad.vsh; sourceTree = "<group>"; };
-		29A8D53711E0958E00746D31 /* shadowvolume.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shadowvolume.fsh; sourceTree = "<group>"; };
-		29A8D53811E0958E00746D31 /* shadowvolume.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shadowvolume.vsh; sourceTree = "<group>"; };
 		29AB96B21184F61B0071CC97 /* sgPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgPanel.h; sourceTree = "<group>"; };
 		29AB96B31184F61B0071CC97 /* sgPanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgPanel.cpp; sourceTree = "<group>"; };
 		29AC5B1211DE75FA009F1A01 /* RedCyanStereo.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = RedCyanStereo.fsh; sourceTree = "<group>"; };
@@ -178,9 +183,32 @@
 		29D7EB27117CF34E0091D933 /* sgTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgTools.h; sourceTree = "<group>"; };
 		29D7EB28117CF34E0091D933 /* sgTools.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgTools.cpp; sourceTree = "<group>"; };
 		29D7EB5A117CFABF0091D933 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
-		29D7EB60117CFC750091D933 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		29ECE0481213086D00385A1E /* sgShadowVolume.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgShadowVolume.h; sourceTree = "<group>"; };
 		29ECE0491213086D00385A1E /* sgShadowVolume.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgShadowVolume.cpp; sourceTree = "<group>"; };
+		29F1832D12AB159200B7F5F2 /* sgRenderEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgRenderEvent.cpp; sourceTree = "<group>"; };
+		29F1832E12AB159200B7F5F2 /* sgRenderEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgRenderEvent.h; sourceTree = "<group>"; };
+		29F1833012AB15AA00B7F5F2 /* sgsLight.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsLight.fsh; sourceTree = "<group>"; };
+		29F1833112AB15AA00B7F5F2 /* sgsLight.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsLight.vsh; sourceTree = "<group>"; };
+		29F1833212AB15AA00B7F5F2 /* sgsPPBase.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsPPBase.vsh; sourceTree = "<group>"; };
+		29F1833312AB15AA00B7F5F2 /* sgsShadowquad.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsShadowquad.fsh; sourceTree = "<group>"; };
+		29F1833412AB15AA00B7F5F2 /* sgsShadowquad.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsShadowquad.vsh; sourceTree = "<group>"; };
+		29F1833512AB15AA00B7F5F2 /* sgsShadowvolume.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsShadowvolume.fsh; sourceTree = "<group>"; };
+		29F1833612AB15AA00B7F5F2 /* sgsShadowvolume.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsShadowvolume.vsh; sourceTree = "<group>"; };
+		29F1833712AB15AA00B7F5F2 /* sgsSun.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsSun.fsh; sourceTree = "<group>"; };
+		29F1833812AB15AA00B7F5F2 /* sgsSun.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsSun.vsh; sourceTree = "<group>"; };
+		29F1833912AB15AA00B7F5F2 /* sgsTexture.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsTexture.fsh; sourceTree = "<group>"; };
+		29F1833A12AB15AA00B7F5F2 /* sgsTexture.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsTexture.vsh; sourceTree = "<group>"; };
+		29F1833B12AB15AA00B7F5F2 /* sgsTextureDiscard.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsTextureDiscard.fsh; sourceTree = "<group>"; };
+		29F1834812AB15B800B7F5F2 /* sgObjectBody.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgObjectBody.cpp; sourceTree = "<group>"; };
+		29F1834912AB15B800B7F5F2 /* sgObjectBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgObjectBody.h; sourceTree = "<group>"; };
+		29F1834C12AB15D400B7F5F2 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		29F1834D12AB15D400B7F5F2 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		29F1834E12AB15D400B7F5F2 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
+		29F1834F12AB15D400B7F5F2 /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
+		29F1835012AB15D400B7F5F2 /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
+		29F1835112AB15D400B7F5F2 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
+		29F1835212AB15D400B7F5F2 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		29F1835312AB15D400B7F5F2 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -267,6 +295,8 @@
 				29AD37B21179D7A30089F607 /* sgMaterial.cpp */,
 				29AD37D71179E2BD0089F607 /* sgObject.h */,
 				29AD37D81179E2BD0089F607 /* sgObject.cpp */,
+				29F1834812AB15B800B7F5F2 /* sgObjectBody.cpp */,
+				29F1834912AB15B800B7F5F2 /* sgObjectBody.h */,
 				29AB96B21184F61B0071CC97 /* sgPanel.h */,
 				29AB96B31184F61B0071CC97 /* sgPanel.cpp */,
 				29AD37AE1179D7380089F607 /* sgCamera.h */,
@@ -298,6 +328,8 @@
 		290B12001179492700AC324E /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				29F1832D12AB159200B7F5F2 /* sgRenderEvent.cpp */,
+				29F1832E12AB159200B7F5F2 /* sgRenderEvent.h */,
 				2936A2F411C06569008EAD35 /* sgXML.h */,
 				2936A2F511C06569008EAD35 /* sgXML.cpp */,
 				290B48AA11BFB5BB00A54048 /* sgTimer.cpp */,
@@ -440,14 +472,18 @@
 		29A42ED7118346DA0080394F /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
-				29A8D53511E0958E00746D31 /* shadowquad.fsh */,
-				29A8D53611E0958E00746D31 /* shadowquad.vsh */,
-				29A8D53711E0958E00746D31 /* shadowvolume.fsh */,
-				29A8D53811E0958E00746D31 /* shadowvolume.vsh */,
-				29A42F221183514B0080394F /* defaultlight.fsh */,
-				29A42F231183514B0080394F /* defaultlight.vsh */,
-				29A42ED8118346DA0080394F /* default.fsh */,
-				29A42ED9118346DA0080394F /* default.vsh */,
+				29F1833012AB15AA00B7F5F2 /* sgsLight.fsh */,
+				29F1833112AB15AA00B7F5F2 /* sgsLight.vsh */,
+				29F1833212AB15AA00B7F5F2 /* sgsPPBase.vsh */,
+				29F1833312AB15AA00B7F5F2 /* sgsShadowquad.fsh */,
+				29F1833412AB15AA00B7F5F2 /* sgsShadowquad.vsh */,
+				29F1833512AB15AA00B7F5F2 /* sgsShadowvolume.fsh */,
+				29F1833612AB15AA00B7F5F2 /* sgsShadowvolume.vsh */,
+				29F1833712AB15AA00B7F5F2 /* sgsSun.fsh */,
+				29F1833812AB15AA00B7F5F2 /* sgsSun.vsh */,
+				29F1833912AB15AA00B7F5F2 /* sgsTexture.fsh */,
+				29F1833A12AB15AA00B7F5F2 /* sgsTexture.vsh */,
+				29F1833B12AB15AA00B7F5F2 /* sgsTextureDiscard.fsh */,
 			);
 			path = Shaders;
 			sourceTree = "<group>";
@@ -487,8 +523,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				29F1834B12AB15D400B7F5F2 /* Device */,
 				295CBF8C12158A9600F1F941 /* sgPanels-Info.plist */,
-				29D7EB60117CFC750091D933 /* icon.png */,
 				29D7EB5A117CFABF0091D933 /* Entitlements.plist */,
 			);
 			name = Resources;
@@ -505,6 +541,22 @@
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
+		};
+		29F1834B12AB15D400B7F5F2 /* Device */ = {
+			isa = PBXGroup;
+			children = (
+				29F1834C12AB15D400B7F5F2 /* Default.png */,
+				29F1834D12AB15D400B7F5F2 /* Default@2x.png */,
+				29F1834E12AB15D400B7F5F2 /* Icon-72.png */,
+				29F1834F12AB15D400B7F5F2 /* Icon-Small-50.png */,
+				29F1835012AB15D400B7F5F2 /* Icon-Small.png */,
+				29F1835112AB15D400B7F5F2 /* Icon-Small@2x.png */,
+				29F1835212AB15D400B7F5F2 /* Icon.png */,
+				29F1835312AB15D400B7F5F2 /* Icon@2x.png */,
+			);
+			name = Device;
+			path = ../../Media/Device;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -558,17 +610,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				29A8D53911E0958E00746D31 /* shadowquad.fsh in Resources */,
-				29A8D53A11E0958E00746D31 /* shadowquad.vsh in Resources */,
-				29A8D53B11E0958E00746D31 /* shadowvolume.fsh in Resources */,
-				29A8D53C11E0958E00746D31 /* shadowvolume.vsh in Resources */,
+				29F1833C12AB15AA00B7F5F2 /* sgsLight.fsh in Resources */,
+				29F1833D12AB15AA00B7F5F2 /* sgsLight.vsh in Resources */,
+				29F1833E12AB15AA00B7F5F2 /* sgsPPBase.vsh in Resources */,
+				29F1833F12AB15AA00B7F5F2 /* sgsShadowquad.fsh in Resources */,
+				29F1834012AB15AA00B7F5F2 /* sgsShadowquad.vsh in Resources */,
+				29F1834112AB15AA00B7F5F2 /* sgsShadowvolume.fsh in Resources */,
+				29F1834212AB15AA00B7F5F2 /* sgsShadowvolume.vsh in Resources */,
+				29F1834312AB15AA00B7F5F2 /* sgsSun.fsh in Resources */,
+				29F1834412AB15AA00B7F5F2 /* sgsSun.vsh in Resources */,
+				29F1834512AB15AA00B7F5F2 /* sgsTexture.fsh in Resources */,
+				29F1834612AB15AA00B7F5F2 /* sgsTexture.vsh in Resources */,
+				29F1834712AB15AA00B7F5F2 /* sgsTextureDiscard.fsh in Resources */,
 				29AC5B1311DE75FA009F1A01 /* RedCyanStereo.fsh in Resources */,
-				29A42F241183514B0080394F /* defaultlight.fsh in Resources */,
-				29A42F251183514B0080394F /* defaultlight.vsh in Resources */,
-				29A42EDA118346DA0080394F /* default.fsh in Resources */,
-				29A42EDB118346DA0080394F /* default.vsh in Resources */,
 				29D7EB5B117CFABF0091D933 /* Entitlements.plist in Resources */,
-				29D7EB61117CFC750091D933 /* icon.png in Resources */,
 				292FFBBE12159B4A003564EE /* space.png in Resources */,
 				292FFBBF12159B4A003564EE /* spacecraft.sgm in Resources */,
 				292FFBC912159B4A003564EE /* font1.png in Resources */,
@@ -579,6 +634,14 @@
 				292FFBD112159B4A003564EE /* sky_right.png in Resources */,
 				292FFBD212159B4A003564EE /* sky_up.png in Resources */,
 				299A74651215AF9900863967 /* logo_64.png in Resources */,
+				29F1835412AB15D400B7F5F2 /* Default.png in Resources */,
+				29F1835512AB15D400B7F5F2 /* Default@2x.png in Resources */,
+				29F1835612AB15D400B7F5F2 /* Icon-72.png in Resources */,
+				29F1835712AB15D400B7F5F2 /* Icon-Small-50.png in Resources */,
+				29F1835812AB15D400B7F5F2 /* Icon-Small.png in Resources */,
+				29F1835912AB15D400B7F5F2 /* Icon-Small@2x.png in Resources */,
+				29F1835A12AB15D400B7F5F2 /* Icon.png in Resources */,
+				29F1835B12AB15D400B7F5F2 /* Icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -628,6 +691,8 @@
 				295CBF5D1215861700F1F941 /* main.cpp in Sources */,
 				295CBF69121587B300F1F941 /* Rotate.cpp in Sources */,
 				299A742E1215AD0700863967 /* Interface.cpp in Sources */,
+				29F1832F12AB159200B7F5F2 /* sgRenderEvent.cpp in Sources */,
+				29F1834A12AB15B800B7F5F2 /* sgObjectBody.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -670,14 +735,15 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Nils Daumann";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PREBINDING = NO;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "59BAED19-C32F-43D3-B492-61B32A30960A";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos4.1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = AdHoc;
 		};
@@ -708,6 +774,7 @@
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos4.1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -722,6 +789,7 @@
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PREBINDING = NO;
 				SDKROOT = iphoneos4.1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
