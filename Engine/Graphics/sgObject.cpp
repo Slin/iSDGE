@@ -203,6 +203,7 @@ void sgObject::calcCullSphere()
 	//Find radius
 	float radius = 0;
 	float temp;
+	float fac = 1.0;
 	sgVector3 diff;
 	for(int m = 0; m < body->meshs.size(); m++)
 	{
@@ -210,15 +211,14 @@ void sgObject::calcCullSphere()
 		temp = diff.length();
 		if(temp > body->meshs[m]->cullsphere.w*2.0)
 		{
-			radius = -1.0;
-			break;
+			fac = -1.0;
 		}
 			
 		temp += body->meshs[m]->cullsphere.w;
 		if(temp > radius)
 			radius = temp;
 	}
-	cullsphere.w = radius;
+	cullsphere.w = radius*fac;
 }
 
 void sgObject::updateModel()

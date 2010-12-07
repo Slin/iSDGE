@@ -163,7 +163,103 @@ bool sgRenderer::checkForExtension(char *name)
     return (extensionsString.rfind(name) != std::string::npos);
 }
 
+void sgRenderer::chooseObjLOD(sgObject *obj, float dist)
+{
+	sgObjectBody *bod = obj->body;
+	
+	if(obj->body->nextbody != NULL)
+	{
+		while(dist > bod->loddist && bod->nextbody != NULL)
+		{
+			bod = bod->nextbody;
+		}
+		
+		obj->currbody = bod;
+	}
+}
+
+void sgRenderer::chooseMeshLOD(sgObject *obj, unsigned int mesh, float dist)
+{
+	sgObjectBody *bod = obj->body;
+	sgObjectBody *currbod = obj->currbody;
+	
+	if(obj->body->nextbody != NULL)
+	{
+		while(dist > bod->loddist && bod->nextbody != NULL)
+		{
+			bod = bod->nextbody;
+		}
+		
+		currbod->meshs.push_back(bod->meshs[mesh]);
+		currbod->materials.push_back(bod->materials[mesh]);
+	}
+}
+
+bool sgRenderer::cullSphere(sgVector4 worldsphere, sgCamera *cam)
+{
+	return true;
+}
+
 void sgRenderer::culling(sgCamera *cam, sgObject *first)
+{
+	sgMatrix4x4 projview = cam->matproj*cam->matview;
+	
+	sgMatrix4x4 projviewmodel;
+	sgVector4 pos;
+	float dist;
+	float radius;
+	
+	for(sgObject *obj = first->next; obj != NULL; obj = obj->next)
+	{
+		pos = obj->cullsphere;
+		pos.w = 1.0;
+		pos = obj->matmodel*pos;
+		
+		radius = obj->cullsphere.w;
+		
+		if(1)
+		{
+			obj->culled = false;
+			
+			if(obj->cullsphere.w < 0)
+			{
+				//Reset LOD
+				obj->currbody->meshs.clear();
+				obj->currbody->materials.clear();
+				
+				for(int i = 0; i < obj->body->meshs.size(); i++)
+				{
+					pos = obj->body->meshs[i]->cullsphere;
+					pos.w = 1.0;
+					pos = obj->matmodel*pos;
+					
+					radius = -obj->body->meshs[i]->cullsphere.w;
+					
+					if(1)
+					{
+						obj->body->meshs[i]->culled = false;
+						
+						dist = sgVector3(pos).dist(cam->position);
+						chooseMeshLOD(obj, i, dist-radius+cam->lodshift);
+					}else
+					{
+						obj->body->meshs[i]->culled = true;
+					}
+				}
+			}else
+			{
+				dist = sgVector3(pos).dist(cam->position);
+				chooseObjLOD(obj, dist+cam->lodshift);
+			}
+		}else
+		{
+			obj->culled = true;
+		}
+	}
+}
+
+
+/*void sgRenderer::culling(sgCamera *cam, sgObject *first)
 {
 	sgMatrix4x4 projview = cam->matproj*cam->matview;
 	
@@ -275,7 +371,7 @@ void sgRenderer::culling(sgCamera *cam, sgObject *first)
 			}
 		}
 	}
-}
+}*/
 
 void sgRenderer::sorting()
 {

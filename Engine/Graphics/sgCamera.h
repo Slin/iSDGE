@@ -55,11 +55,20 @@ class sgCamera
 		sgCamera *createCamera();
 	
 		/**
-		 *	Project direction.
-		 *	Transforms the vector with the camera transformation matrix.
-		 * @return dir the vector to transform
+		 *	Project proj to view.
+		 *	Transforms the vector with the cameras projection matrix to viewspace.
+		 * @param dir the vector to transform.
+		 * @return the transformed vector.
 		 */
-		sgVector3 projectDir(sgVector3 dir);
+		sgVector3 camToView(sgVector3 dir);
+	
+		/**
+		 *	Project proj to world.
+		 *	Transforms the vector with the cameras projection and view matrices to worldspace.
+		 * @param dir the vector to transform.
+		 * @return the transformed vector.
+		 */
+		sgVector3 camToWorld(sgVector3 dir);
 	
 		/**
 		 *	Destroy.
@@ -150,25 +159,25 @@ class sgCamera
 		 *	The position the cameras window is rendered at.
 		 */
 		sgVector2 screenpos;
-	
+		
 		/**
 		 *	Projection matrix.
 		 *	The transformation matrix for this cameras projection.
 		 */
 		sgMatrix4x4 matproj;
-	
+		
 		/**
 		 *	View matrix.
 		 *	The transformation matrix of this camera.
 		 */
 		sgMatrix4x4 matview;
-	
+		
 		/**
 		 *	Previous.
 		 *	Pointer to the previous camera within the cameras list or NULL if there is none.
 		 */
 		sgCamera *prev;
-	
+		
 		/**
 		 *	Next.
 		 *	Pointer to the next camera within the cameras list or NULL if there is none.

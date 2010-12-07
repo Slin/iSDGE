@@ -51,9 +51,16 @@ sgCamera *sgCamera::createCamera()
 	return next;
 }
 
-sgVector3 sgCamera::projectDir(sgVector3 dir)
+sgVector3 sgCamera::camToView(sgVector3 dir)
 {
 	return matproj.transform(dir);
+}
+
+sgVector3 sgCamera::camToWorld(sgVector3 dir)
+{
+	sgVector3 temp = camToView(dir);
+	temp = matview.transform(dir);
+	return temp;
 }
 
 void sgCamera::updateProj()
