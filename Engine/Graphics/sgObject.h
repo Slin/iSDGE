@@ -64,6 +64,13 @@ class sgObject
 		 *	Frees the object.
 		 */
 		~sgObject();
+	
+		/**
+		 *	Create object.
+		 *	Creates a new empty object and makes it next of this.
+		 * @return pointer to the new object.
+		 */
+		sgObject *createObject();
 		
 		/**
 		 *	Create object.

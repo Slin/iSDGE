@@ -47,7 +47,7 @@ sgCamera::sgCamera(sgCamera *p, sgCamera *n)
 
 sgCamera *sgCamera::createCamera()
 {
-	next = new sgCamera(prev, next);
+	next = new sgCamera(this, next);
 	return next;
 }
 

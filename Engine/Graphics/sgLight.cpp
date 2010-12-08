@@ -34,7 +34,7 @@ sgLight::sgLight(sgLight *p, sgLight *n)
 
 sgLight *sgLight::createLight()
 {
-	next = new sgLight(prev, next);
+	next = new sgLight(this, next);
 	return next;
 }
 

@@ -42,9 +42,28 @@ sgEntity::sgEntity(sgEntity* p, sgEntity *n, sgMain *m)
 	pan = NULL;
 }
 
+sgEntity *sgEntity::createEmptyEntity(sgAction *a)
+{
+	next = new sgEntity(this, next, sgmain);
+	next->act = a;
+	if(next->act)
+		next->act->onInit(next);
+	return next;
+}
+
+sgEntity *sgEntity::createEmptyObjEntity(sgAction *a)
+{
+	next = new sgEntity(this, next, sgmain);
+	next->obj = sgmain->renderer->first_solid->createObject();
+	next->act = a;
+	if(next->act)
+		next->act->onInit(next);
+	return next;
+}
+
 sgEntity *sgEntity::createObjEntity(const char *name, sgAction *a)
 {
-	next = new sgEntity(prev, next, sgmain);
+	next = new sgEntity(this, next, sgmain);
 	next->obj = sgmain->renderer->first_solid->createObject(name);
 	next->act = a;
 	if(next->act)
@@ -57,7 +76,7 @@ sgEntity *sgEntity::createTerrainEntity(const char *hmp, unsigned int xverts, un
 	if(xverts == 0 || zverts == 0)
 		return NULL;
 	
-	next = new sgEntity(prev, next, sgmain);
+	next = new sgEntity(this, next, sgmain);
 	next->obj = sgmain->renderer->first_solid->createTerrain(xverts, zverts, xchunks, zchunks, lodsteps, hmp, hmpscale);
 	
 	next->act = a;
@@ -68,7 +87,7 @@ sgEntity *sgEntity::createTerrainEntity(const char *hmp, unsigned int xverts, un
 
 sgEntity *sgEntity::createSkyCubeEntity(const char *right, const char *back, const char *left, const char *front, const char *down, const char *up, sgAction *a)
 {
-	next = new sgEntity(prev, next, sgmain);
+	next = new sgEntity(this, next, sgmain);
 	next->obj = sgmain->renderer->first_sky->createObject("skycube");
 	next->act = a;
 	if(next->act)
@@ -105,7 +124,7 @@ sgEntity *sgEntity::createSkyCubeEntity(const char *right, const char *back, con
 
 sgEntity *sgEntity::createCamEntity(sgAction *a)
 {
-	next = new sgEntity(prev, next, sgmain);
+	next = new sgEntity(this, next, sgmain);
 	next->cam = sgmain->renderer->first_cam->createCamera();
 	
 	next->cam->size = sgVector2(sgRenderer::backingWidth, sgRenderer::backingHeight);
@@ -120,7 +139,7 @@ sgEntity *sgEntity::createCamEntity(sgAction *a)
 
 sgEntity *sgEntity::createLightEntity(sgAction *a)
 {
-	next = new sgEntity(prev, next, sgmain);
+	next = new sgEntity(this, next, sgmain);
 	next->light = sgmain->renderer->first_light->createLight();
 	
 	next->act = a;
@@ -131,7 +150,7 @@ sgEntity *sgEntity::createLightEntity(sgAction *a)
 
 sgEntity *sgEntity::createPanEntity(sgAction *a)
 {
-	next = new sgEntity(prev, next, sgmain);
+	next = new sgEntity(this, next, sgmain);
 	next->pan = sgmain->renderer->first_panel->createPanel();
 	next->act = a;
 	if(next->act)
@@ -155,6 +174,12 @@ void sgEntity::destroy()
 	
 	if(pan != NULL)
 		pan->destroy();
+	
+	act = NULL;
+	obj = NULL;
+	cam = NULL;
+	light = NULL;
+	pan = NULL;
 	
 	if(prev)
 		prev->next = next;

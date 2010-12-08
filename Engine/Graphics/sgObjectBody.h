@@ -96,6 +96,14 @@ class sgObjectBody
 		void addTerrainPlane(unsigned int xverts, unsigned int zverts, sgVector3 posoffset, sgMaterial *mat, sgVector2 scale, unsigned char xchunk, unsigned char zchunk, sgVector2 uvfac, sgTexture *hmp, sgVector2 hmppartsize, sgVector4 hmpscale, bool addborder);
 	
 		/**
+		 *	Add mesh.
+		 *	Adds the specified mesh to the object.
+		 * @param m the mesh to add. It will be freed automatically.
+		 * @param mat material to use for the mesh, or NULL for the default material.
+		 */
+		void addMesh(sgMesh *m, sgMaterial *mat = NULL);
+	
+		/**
 		 *	Calculate cull sphere.
 		 *	Calculates the cull spheres for the meshs.
 		 */

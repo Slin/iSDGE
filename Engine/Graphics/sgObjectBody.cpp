@@ -908,6 +908,16 @@ void sgObjectBody::addTerrainPlane(unsigned int xverts, unsigned int zverts, sgV
 	}
 }
 
+void sgObjectBody::addMesh(sgMesh *m, sgMaterial *mat)
+{
+	meshs.push_back(m);
+	sgResourceManager::addResource(m);
+	if(mat == NULL)
+		materials.push_back(sgMaterial::getMaterial());
+	else
+		materials.push_back(mat);
+}
+
 void sgObjectBody::calcCullSphere()
 {
 	for(int m = 0; m < meshs.size(); m++)

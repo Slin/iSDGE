@@ -49,6 +49,22 @@ class sgEntity
 		 * @param n the next entity in the linked object list
 		 */
 		sgEntity(sgEntity *p, sgEntity *n, sgMain *v);
+	
+		/**
+		 *	Create empty entity.
+		 *	Creates a new entity and makes it next of this.
+		 * @param a pointer to the action which will be assigned to the new entity.
+		 * @return pointer to the new entity
+		 */
+		sgEntity *createEmptyEntity(sgAction *a);
+	
+		/**
+		 *	Create empty object entity.
+		 *	Creates a new entity with an empty object and makes it next of this.
+		 * @param a pointer to the action which will be assigned to the new entity.
+		 * @return pointer to the new entity
+		 */
+		sgEntity *createEmptyObjEntity(sgAction *a);
 		
 		/**
 		 *	Create object entity.

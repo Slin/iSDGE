@@ -269,7 +269,7 @@ sgPanel::~sgPanel()
 
 sgPanel *sgPanel::createPanel()
 {
-	next = new sgPanel(prev, next);
+	next = new sgPanel(this, next);
 	return next;
 }
 

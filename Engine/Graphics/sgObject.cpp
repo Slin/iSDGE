@@ -65,9 +65,17 @@ sgObject::~sgObject()
 		body->destroyAll();
 }
 
+sgObject *sgObject::createObject()
+{
+	next = new sgObject(this, next);
+	next->body = new sgObjectBody;
+	next->currbody = next->body;
+	return next;
+}
+
 sgObject *sgObject::createObject(const char *name)
 {
-	next = new sgObject(prev, next);
+	next = new sgObject(this, next);
 	next->body = new sgObjectBody;
 	next->body->makeObject(name);
 	next->currbody = next->body;
@@ -85,7 +93,7 @@ sgObject *sgObject::createTerrain(unsigned int xverts, unsigned int zverts, unsi
 	if(zchunks == 0)
 		zchunks = 1;
 	
-	next = new sgObject(prev, next);
+	next = new sgObject(this, next);
 	sgMaterial *mat = sgMaterial::getMaterial();
 	
 	sgTexture *tex = NULL;
