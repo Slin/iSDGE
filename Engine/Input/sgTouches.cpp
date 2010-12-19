@@ -50,4 +50,12 @@ namespace sgTouches
 		delete touches[num];
 		touches.erase(touches.begin()+num);
 	}
+	
+	void resetDirections()
+	{
+		for(int i = 0; i < touches.size(); i++)
+		{
+			touches[i]->direction = 0.0;
+		}
+	}
 }

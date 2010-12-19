@@ -314,26 +314,6 @@
 		vrLen = 1131;
 		vrLoc = 1172;
 	};
-	2926DF5112AAF7E600B52DD5 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 29C8F83B129ACC3B003DB20D /* Water.fsh */;
-		name = "Water.fsh: 32";
-		rLen = 0;
-		rLoc = 1301;
-		rType = 0;
-		vrLen = 1357;
-		vrLoc = 185;
-	};
-	2926DF5212AAF7E600B52DD5 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 29C8F83A129ACC3B003DB20D /* Water.vsh */;
-		name = "Water.vsh: 39";
-		rLen = 0;
-		rLoc = 1479;
-		rType = 0;
-		vrLen = 1377;
-		vrLoc = 104;
-	};
 	2926DF5312AAF7E600B52DD5 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 29AD37AF1179D7380089F607 /* sgCamera.cpp */;
@@ -530,17 +510,6 @@
 			sepNavSelRange = "{1259, 0}";
 			sepNavVisRange = "{0, 1418}";
 		};
-	};
-	293560351286BF9D007BE9B7 /* PlistBookmark */ = {
-		isa = PlistBookmark;
-		fRef = 295CBF8C12158A9600F1F941 /* sgTerrain-Info.plist */;
-		fallbackIsa = PBXBookmark;
-		isK = 0;
-		kPath = (
-		);
-		name = "/Users/nils/Documents/X-Code Projects/iSDGE_Complete/iSDGE_GIT/Examples/sgTerrain/sgTerrain-Info.plist";
-		rLen = 0;
-		rLoc = 9223372036854775808;
 	};
 	293BF160127F516F00515999 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -753,14 +722,14 @@
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1651, 650}}";
 			sepNavSelRange = "{1347, 0}";
-			sepNavVisRange = "{103, 1315}";
+			sepNavVisRange = "{345, 1073}";
 		};
 	};
 	295CBF5A1215861700F1F941 /* Events.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1651, 988}}";
-			sepNavSelRange = "{556, 0}";
-			sepNavVisRange = "{0, 1408}";
+			sepNavIntBoundsRect = "{{0, 0}, {1651, 975}}";
+			sepNavSelRange = "{2404, 240}";
+			sepNavVisRange = "{1512, 1328}";
 		};
 	};
 	295CBF5B1215861700F1F941 /* main.cpp */ = {
@@ -957,6 +926,38 @@
 		vrLen = 1665;
 		vrLoc = 104;
 	};
+	2999C5EB12B1850300876E15 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 295CBF8C12158A9600F1F941 /* sgTerrain-Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			CFBundleIdentifier,
+		);
+		name = "/Users/nils/Documents/X-Code Projects/iSDGE_Complete/iSDGE_GIT/Examples/sgTerrain/sgTerrain-Info.plist";
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
+	2999C5EC12B1850300876E15 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 295CBF591215861700F1F941 /* Events.h */;
+		name = "Events.h: 36";
+		rLen = 0;
+		rLoc = 1347;
+		rType = 0;
+		vrLen = 1073;
+		vrLoc = 345;
+	};
+	2999C5ED12B1850300876E15 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 295CBF5A1215861700F1F941 /* Events.mm */;
+		name = "Events.mm: 60";
+		rLen = 240;
+		rLoc = 2404;
+		rType = 0;
+		vrLen = 1328;
+		vrLoc = 1512;
+	};
 	29A3C58F12A8416E00BF4B3F /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 297A217511DCBC3A00F0C8E5 /* sgInit.mm */;
@@ -966,16 +967,6 @@
 		rType = 0;
 		vrLen = 1368;
 		vrLoc = 0;
-	};
-	29A3C5A012A8491400BF4B3F /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 295CBF591215861700F1F941 /* Events.h */;
-		name = "Events.h: 36";
-		rLen = 0;
-		rLoc = 1347;
-		rType = 0;
-		vrLen = 1315;
-		vrLoc = 103;
 	};
 	29A3C5A212A8491400BF4B3F /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
@@ -1324,8 +1315,8 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 313203681;
-			PBXWorkspaceStateSaveDate = 313203681;
+			PBXPerProjectTemplateStateSaveDate = 313610354;
+			PBXWorkspaceStateSaveDate = 313610354;
 		};
 		perUserProjectItems = {
 			290C8F1612A1C2EE008AF460 /* PBXTextBookmark */ = 290C8F1612A1C2EE008AF460 /* PBXTextBookmark */;
@@ -1344,8 +1335,6 @@
 			2919A32612AAC79600829B08 /* PBXTextBookmark */ = 2919A32612AAC79600829B08 /* PBXTextBookmark */;
 			2926DF4F12AAF7E600B52DD5 /* PBXTextBookmark */ = 2926DF4F12AAF7E600B52DD5 /* PBXTextBookmark */;
 			2926DF5012AAF7E600B52DD5 /* PBXTextBookmark */ = 2926DF5012AAF7E600B52DD5 /* PBXTextBookmark */;
-			2926DF5112AAF7E600B52DD5 /* PBXTextBookmark */ = 2926DF5112AAF7E600B52DD5 /* PBXTextBookmark */;
-			2926DF5212AAF7E600B52DD5 /* PBXTextBookmark */ = 2926DF5212AAF7E600B52DD5 /* PBXTextBookmark */;
 			2926DF5312AAF7E600B52DD5 /* PBXTextBookmark */ = 2926DF5312AAF7E600B52DD5 /* PBXTextBookmark */;
 			2926DF5412AAF7E600B52DD5 /* PBXTextBookmark */ = 2926DF5412AAF7E600B52DD5 /* PBXTextBookmark */;
 			2926DF5512AAF7E600B52DD5 /* PBXTextBookmark */ = 2926DF5512AAF7E600B52DD5 /* PBXTextBookmark */;
@@ -1365,7 +1354,6 @@
 			2926DF6312AAF7E600B52DD5 /* PBXTextBookmark */ = 2926DF6312AAF7E600B52DD5 /* PBXTextBookmark */;
 			2926DF6412AAF7E600B52DD5 /* PBXTextBookmark */ = 2926DF6412AAF7E600B52DD5 /* PBXTextBookmark */;
 			2926DF6512AAF7E600B52DD5 /* PBXTextBookmark */ = 2926DF6512AAF7E600B52DD5 /* PBXTextBookmark */;
-			293560351286BF9D007BE9B7 /* PlistBookmark */ = 293560351286BF9D007BE9B7 /* PlistBookmark */;
 			293BF160127F516F00515999 /* PBXTextBookmark */ = 293BF160127F516F00515999 /* PBXTextBookmark */;
 			294BADAA12A94135008ED967 /* PBXTextBookmark */ = 294BADAA12A94135008ED967 /* PBXTextBookmark */;
 			294BADAC12A94135008ED967 /* PBXTextBookmark */ = 294BADAC12A94135008ED967 /* PBXTextBookmark */;
@@ -1387,8 +1375,10 @@
 			297C0683129079E400C42E91 /* PBXTextBookmark */ = 297C0683129079E400C42E91 /* PBXTextBookmark */;
 			297C076B129085D500C42E91 /* PBXTextBookmark */ = 297C076B129085D500C42E91 /* PBXTextBookmark */;
 			297C077D1290868000C42E91 /* PBXTextBookmark */ = 297C077D1290868000C42E91 /* PBXTextBookmark */;
+			2999C5EB12B1850300876E15 /* PlistBookmark */ = 2999C5EB12B1850300876E15 /* PlistBookmark */;
+			2999C5EC12B1850300876E15 /* PBXTextBookmark */ = 2999C5EC12B1850300876E15 /* PBXTextBookmark */;
+			2999C5ED12B1850300876E15 /* PBXTextBookmark */ = 2999C5ED12B1850300876E15 /* PBXTextBookmark */;
 			29A3C58F12A8416E00BF4B3F /* PBXTextBookmark */ = 29A3C58F12A8416E00BF4B3F /* PBXTextBookmark */;
-			29A3C5A012A8491400BF4B3F /* PBXTextBookmark */ = 29A3C5A012A8491400BF4B3F /* PBXTextBookmark */;
 			29A3C5A212A8491400BF4B3F /* PBXTextBookmark */ = 29A3C5A212A8491400BF4B3F /* PBXTextBookmark */;
 			29A3C5A312A8491400BF4B3F /* PBXTextBookmark */ = 29A3C5A312A8491400BF4B3F /* PBXTextBookmark */;
 			29AB09B912944F11006C6379 /* PBXTextBookmark */ = 29AB09B912944F11006C6379 /* PBXTextBookmark */;
@@ -1421,7 +1411,6 @@
 			29D53DB91291E0F400224E6E /* PBXTextBookmark */ = 29D53DB91291E0F400224E6E /* PBXTextBookmark */;
 			29D53DBB1291E0F400224E6E /* PBXTextBookmark */ = 29D53DBB1291E0F400224E6E /* PBXTextBookmark */;
 			29F1844712AB1CB100B7F5F2 /* PBXTextBookmark */ = 29F1844712AB1CB100B7F5F2 /* PBXTextBookmark */;
-			29F1844812AB1CB100B7F5F2 /* PlistBookmark */ = 29F1844812AB1CB100B7F5F2 /* PlistBookmark */;
 			29F6EE4A128613D6005474A4 /* PBXTextBookmark */ = 29F6EE4A128613D6005474A4 /* PBXTextBookmark */;
 		};
 		sourceControlManager = 29684253127DEECE00FBF153 /* Source Control */;
@@ -1727,18 +1716,6 @@
 		rType = 0;
 		vrLen = 1408;
 		vrLoc = 0;
-	};
-	29F1844812AB1CB100B7F5F2 /* PlistBookmark */ = {
-		isa = PlistBookmark;
-		fRef = 295CBF8C12158A9600F1F941 /* sgTerrain-Info.plist */;
-		fallbackIsa = PBXBookmark;
-		isK = 0;
-		kPath = (
-			CFBundleIdentifier,
-		);
-		name = "/Users/nils/Documents/X-Code Projects/iSDGE_Complete/iSDGE_GIT/Examples/sgTerrain/sgTerrain-Info.plist";
-		rLen = 0;
-		rLoc = 9223372036854775807;
 	};
 	29F6EE4A128613D6005474A4 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;

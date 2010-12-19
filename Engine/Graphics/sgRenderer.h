@@ -93,7 +93,7 @@ class sgRenderer
 		/**
 		 * Set device orientation.
 		 * Sets the device orientation to display everything for.
-		 * @param layer pointer to the iPhones rendering layer
+		 * @param ori the new orientation 0 = portrait, 1 = flipped portrait, 2 = landscape right, 3 = landscape left
 		 */
 		void setOrientation(unsigned int ori);
 	

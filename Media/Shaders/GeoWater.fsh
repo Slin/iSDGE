@@ -1,8 +1,8 @@
 //
-//	sgVertex.h
+//	Shader.fsh
 //	iSDGE
 //
-//	Created by Nils Daumann on 17.04.10.
+//	Created by Nils Daumann on 16.04.10.
 //	Copyright (c) 2010 Nils Daumann
 
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,57 +23,20 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-#ifndef __SGVERTEX_H__
-#define __SGVERTEX_H__
+precision highp float;
 
-#include "sgVector4.h"
-#include "sgVector3.h"
-#include "sgVector2.h"
+uniform sampler2D mTexture0;
+uniform sampler2D mTexture1;
 
-enum vertexformat
+varying vec2 texcoord;
+varying vec3 projpos;
+varying vec3 normal_;
+varying float light;
+
+void main()
 {
-	BASIC = 32,
-	SECONDUV = 34,
-	COLOR = 36,
-	SECONDUVCOLOR = 38
-};
-
-/**
- * Vertex base class. This is the base vertex format.
- */
-class sgVertex
-{
-	public:
-		sgVertex &operator= (const sgVertex &other)
-		{
-			position = other.position;
-			normal = 0;//other.normal;
-			uv = other.uv;
-			return *this;
-		}
-	
-		sgVector3 position;
-		sgVector3 normal;
-		sgVector2 uv;
-};
-
-struct sgVertexUV : sgVertex
-{
-	public:
-		sgVector2 uv2;
-};
-
-struct sgVertexCol : sgVertex
-{
-	public:
-		sgVector4 color;
-};
-
-struct sgVertexUVCol : sgVertex
-{
-	public:
-		sgVector2 uv2;
-		sgVector4 color;
-};
-
-#endif
+	vec2 dis = texture2D(mTexture0, texcoord.xy).rg*1.5+normal_.xz;
+	vec2 reflcoords = projpos.xy/projpos.z+0.5;
+	vec4 color = texture2D(mTexture1, reflcoords+dis.rg)*light*vec4(0.5, 0.5, 0.55, 1.0);
+    gl_FragColor = color;
+}

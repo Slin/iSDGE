@@ -31,7 +31,6 @@
 #include <OpenGLES/ES1/glext.h>
 #include <OpenGLES/ES2/gl.h>
 #include <OpenGLES/ES2/glext.h>
-#include "sgVertex.h"
 #include "sgVector3.h"
 #include "sgDebug.h"
 
@@ -161,7 +160,6 @@ void sgMesh::updateVBO()
 		glBufferSubData(GL_ARRAY_BUFFER, 0, indexnum*sizeof(unsigned short), indices);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
-
 }
 
 void sgMesh::calculateNormals()

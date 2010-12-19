@@ -88,6 +88,12 @@ namespace sgTouches
 	 * @param num the position of the touch within the touch array to remove
 	 */
 	void removeTouch(int num);
+	
+	/**
+	 *	Reset directions.
+	 *	Resets the touches directions to 0.
+	 */
+	void resetDirections();
 }
 
 #endif

@@ -62,7 +62,7 @@ sgObjectBody *sgObjectBody::makeObject(const char *name)
 	{
 		sgMesh *mesh = new sgMesh;
 		
-		mesh->vertexformat = 0;
+		mesh->vtxform = BASIC;
 		mesh->vertexnum = 36;
 		mesh->indexnum = 36;
 		
@@ -320,7 +320,7 @@ sgObjectBody *sgObjectBody::makeObject(const char *name)
 		float widthoff = 0;
 		float heightoff = 0;
 		
-		mesh->vertexformat = 0;
+		mesh->vtxform = BASIC;
 		mesh->vertexnum = 6;
 		mesh->indexnum = 6;
 		
@@ -374,7 +374,7 @@ sgObjectBody *sgObjectBody::makeObject(const char *name)
 		
 		mesh = new sgMesh;
 		
-		mesh->vertexformat = 0;
+		mesh->vtxform = BASIC;
 		mesh->vertexnum = 6;
 		mesh->indexnum = 6;
 		
@@ -428,7 +428,7 @@ sgObjectBody *sgObjectBody::makeObject(const char *name)
 		
 		mesh = new sgMesh;
 		
-		mesh->vertexformat = 0;
+		mesh->vtxform = BASIC;
 		mesh->vertexnum = 6;
 		mesh->indexnum = 6;
 		
@@ -482,7 +482,7 @@ sgObjectBody *sgObjectBody::makeObject(const char *name)
 		
 		mesh = new sgMesh;
 		
-		mesh->vertexformat = 0;
+		mesh->vtxform = BASIC;
 		mesh->vertexnum = 6;
 		mesh->indexnum = 6;
 		
@@ -536,7 +536,7 @@ sgObjectBody *sgObjectBody::makeObject(const char *name)
 		
 		mesh = new sgMesh;
 		
-		mesh->vertexformat = 0;
+		mesh->vtxform = BASIC;
 		mesh->vertexnum = 6;
 		mesh->indexnum = 6;
 		
@@ -590,7 +590,7 @@ sgObjectBody *sgObjectBody::makeObject(const char *name)
 		
 		mesh = new sgMesh;
 		
-		mesh->vertexformat = 0;
+		mesh->vtxform = BASIC;
 		mesh->vertexnum = 6;
 		mesh->indexnum = 6;
 		
@@ -672,7 +672,7 @@ void sgObjectBody::addTerrainPlane(unsigned int xverts, unsigned int zverts, sgV
 	
 	sgMesh *mesh = new sgMesh;
 	
-	mesh->vertexformat = 0;
+	mesh->vtxform = BASIC;
 	mesh->vertexnum = xverts*zverts;
 	mesh->indexnum = 3*2*(xverts-1)*(zverts-1);
 	if(addborder)

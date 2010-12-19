@@ -43,8 +43,9 @@ class sgRendererES2 : public sgRenderer
 	
 		void setMaterial(sgMaterial *mat);
 		void renderObjects(sgCamera *cam, sgObject *first);
-		void renderShadowVolumes(sgObject *first);
-		void renderShadows(sgObject *first);
+		void renderShadowVolumes(sgCamera *cam, sgObject *first);
+		void renderShadows(sgCamera *cam, sgObject *first);
+		void updateShadows(sgObject *first);
 		void renderPanels(sgPanel *first);
 	
 		sgMaterial *shadowvolume;

@@ -30,6 +30,7 @@
 #include "sgVector3.h"
 #include "sgVector2.h"
 #include "sgQuaternion.h"
+#include "sgPlane.h"
 
 class sgTexture;
 
@@ -93,6 +94,12 @@ class sgCamera
 		 *	Updates this cameras view transformation matrix. This function is called automatically before rendering.
 		 */
 		void updateView();
+	
+		/**
+		 *	Update frustum.
+		 *	Updates this cameras view frustum planes. This function is called automatically before view frustum culling.
+		 */
+		void updateFrustum();
 	
 		/**
 		 *	Rendertarget.
@@ -171,7 +178,22 @@ class sgCamera
 		 *	The transformation matrix of this camera.
 		 */
 		sgMatrix4x4 matview;
+	
+		/**
+		 *	Inverse view matrix.
+		 *	The inverse transformation matrix of this camera.
+		 */
+		sgMatrix4x4 matinvview;
 		
+		/**
+		 *	View frustum.
+		 *	The view frustum planes.
+		 */
+		sgPlane plleft;
+		sgPlane plright;
+		sgPlane pltop;
+		sgPlane pldown;
+	
 		/**
 		 *	Previous.
 		 *	Pointer to the previous camera within the cameras list or NULL if there is none.

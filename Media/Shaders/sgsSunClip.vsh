@@ -1,8 +1,8 @@
 //
-//	sgVertex.h
+//	Shader.vsh
 //	iSDGE
 //
-//	Created by Nils Daumann on 17.04.10.
+//	Created by Nils Daumann on 16.04.10.
 //	Copyright (c) 2010 Nils Daumann
 
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,57 +23,30 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-#ifndef __SGVERTEX_H__
-#define __SGVERTEX_H__
+attribute vec3 vertPos;
+attribute vec3 vertNormal;
+attribute vec2 vertTexcoord0;
 
-#include "sgVector4.h"
-#include "sgVector3.h"
-#include "sgVector2.h"
+uniform mat4 matModel;
+uniform mat4 matProjViewModel;
+uniform mat4 matNormal;
+uniform mat4 matTex;
 
-enum vertexformat
+uniform vec4 mAmbient;
+
+uniform vec4 lDiffuse[2];
+uniform vec4 lPosition[2];
+uniform float lAttenuation[2];
+
+varying vec2 texcoord;
+varying vec3 light;
+varying float height;
+
+void main()
 {
-	BASIC = 32,
-	SECONDUV = 34,
-	COLOR = 36,
-	SECONDUVCOLOR = 38
-};
-
-/**
- * Vertex base class. This is the base vertex format.
- */
-class sgVertex
-{
-	public:
-		sgVertex &operator= (const sgVertex &other)
-		{
-			position = other.position;
-			normal = 0;//other.normal;
-			uv = other.uv;
-			return *this;
-		}
-	
-		sgVector3 position;
-		sgVector3 normal;
-		sgVector2 uv;
-};
-
-struct sgVertexUV : sgVertex
-{
-	public:
-		sgVector2 uv2;
-};
-
-struct sgVertexCol : sgVertex
-{
-	public:
-		sgVector4 color;
-};
-
-struct sgVertexUVCol : sgVertex
-{
-	public:
-		sgVector2 uv2;
-		sgVector4 color;
-};
-
-#endif
+	texcoord = (matTex*vec4(vertTexcoord0, 1.0, 1.0)).xy;
+	gl_Position = matProjViewModel*vec4(vertPos, 1.0);
+	vec4 norm = normalize(matNormal*vec4(-vertNormal, 0.0));
+	light = max(dot(norm.xyz, lPosition[0].xyz), 0.0)*lDiffuse[0].rgb+mAmbient.rgb;
+	height = (matModel*vec4(vertPos, 1.0)).y;
+}

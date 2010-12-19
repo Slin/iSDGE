@@ -486,6 +486,10 @@ void sgRendererES2::renderObjects(sgCamera *cam, sgObject *first)
 				else
 					glUniformMatrix4fv(currbod->materials[i]->shader->matview, 1, GL_FALSE, cam->matview.mat);
 			}
+			if(currbod->materials[i]->shader->vposition != -1)
+			{
+				glUniform3fv(currbod->materials[i]->shader->vposition, 1, &cam->position.x);
+			}
 			if(currbod->materials[i]->shader->matmodel != -1)
 			{
 				glUniformMatrix4fv(currbod->materials[i]->shader->matmodel, 1, GL_FALSE, curr->matmodel.mat);
@@ -719,109 +723,81 @@ void sgRendererES2::renderPanels(sgPanel *first)
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void sgRendererES2::renderShadowVolumes(sgObject *first)
+void sgRendererES2::renderShadowVolumes(sgCamera *cam, sgObject *first)
 {
 	// Use shader program
 	glUseProgram(shadowvolume->shader->program);
 	
-	sgCamera *cam;
-	for(cam = first_cam->next; cam != NULL; cam = cam->next)
+	// Set shader matrices
+	if(shadowvolume->shader->matproj != -1)
 	{
-		if(cam->rendertarget != NULL)
+		glUniformMatrix4fv(shadowvolume->shader->matproj, 1, GL_FALSE, cam->matproj.mat);
+	}
+	if(shadowvolume->shader->matview != -1)
+	{
+		glUniformMatrix4fv(shadowvolume->shader->matview, 1, GL_FALSE, cam->matview.mat);
+	}
+	
+	sgObject *curr;
+	for(curr = first->next; curr != NULL; curr = curr->next)
+	{
+		if(!curr->shadow || curr->shadowvolume == NULL)
 			continue;
 		
 		// Set shader matrices
-		if(shadowvolume->shader->matproj != -1)
+		if(shadowvolume->shader->matmodel != -1)
 		{
-			glUniformMatrix4fv(shadowvolume->shader->matproj, 1, GL_FALSE, cam->matproj.mat);
+			glUniformMatrix4fv(shadowvolume->shader->matmodel, 1, GL_FALSE, curr->matmodel.mat);
 		}
-		if(shadowvolume->shader->matview != -1)
+		if(shadowvolume->shader->matnormal != -1)
 		{
-			glUniformMatrix4fv(shadowvolume->shader->matview, 1, GL_FALSE, cam->matview.mat);
+			glUniformMatrix4fv(shadowvolume->shader->matnormal, 1, GL_FALSE, curr->matnormal.mat);
 		}
 		
-		sgObject *curr;
-		for(curr = first->next; curr != NULL; curr = curr->next)
+		if(curr->shadowvolume->mesh->vbo != -1)
 		{
-			if(!curr->shadow || curr->shadowvolume == NULL)
-				continue;
-			
-			// Set shader matrices
-			if(shadowvolume->shader->matmodel != -1)
+			glBindBuffer(GL_ARRAY_BUFFER, curr->shadowvolume->mesh->vbo);
+			if(shadowvolume->shader->position != -1)
 			{
-				glUniformMatrix4fv(shadowvolume->shader->matmodel, 1, GL_FALSE, curr->matmodel.mat);
+				glEnableVertexAttribArray(shadowvolume->shader->position);
+				glVertexAttribPointer(shadowvolume->shader->position, 3, GL_FLOAT, 0, sizeof(sgVertex), 0);
 			}
-			if(shadowvolume->shader->matnormal != -1)
+			if(shadowvolume->shader->normal != -1)
 			{
-				glUniformMatrix4fv(shadowvolume->shader->matnormal, 1, GL_FALSE, curr->matnormal.mat);
+				glEnableVertexAttribArray(shadowvolume->shader->normal);
+				glVertexAttribPointer(shadowvolume->shader->normal, 3, GL_FLOAT, 0, sizeof(sgVertex), (const void*)12);
 			}
-			
-			if(curr->shadowvolume->mesh->vbo != -1)
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
+		}else
+		{
+			if(shadowvolume->shader->position != -1)
 			{
-				glBindBuffer(GL_ARRAY_BUFFER, curr->shadowvolume->mesh->vbo);
-				if(shadowvolume->shader->position != -1)
-				{
-					glEnableVertexAttribArray(shadowvolume->shader->position);
-					glVertexAttribPointer(shadowvolume->shader->position, 3, GL_FLOAT, 0, sizeof(sgVertex), 0);
-				}
-				if(shadowvolume->shader->normal != -1)
-				{
-					glEnableVertexAttribArray(shadowvolume->shader->normal);
-					glVertexAttribPointer(shadowvolume->shader->normal, 3, GL_FLOAT, 0, sizeof(sgVertex), (const void*)12);
-				}
-				glBindBuffer(GL_ARRAY_BUFFER, 0);
-			}else
-			{
-				if(shadowvolume->shader->position != -1)
-				{
-					glEnableVertexAttribArray(shadowvolume->shader->position);
-					glVertexAttribPointer(shadowvolume->shader->position, 3, GL_FLOAT, 0, sizeof(sgVertex), &(curr->shadowvolume->mesh->vertices->position.x));
-				}
-				if(shadowvolume->shader->normal != -1)
-				{
-					glEnableVertexAttribArray(shadowvolume->shader->normal);
-					glVertexAttribPointer(shadowvolume->shader->normal, 3, GL_FLOAT, 0, sizeof(sgVertex), &(curr->shadowvolume->mesh->vertices->normal.x));
-				}
+				glEnableVertexAttribArray(shadowvolume->shader->position);
+				glVertexAttribPointer(shadowvolume->shader->position, 3, GL_FLOAT, 0, sizeof(sgVertex), &(curr->shadowvolume->mesh->vertices->position.x));
 			}
-			
-			if(curr->shadowvolume->mesh->ivbo != -1)
+			if(shadowvolume->shader->normal != -1)
 			{
-				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, curr->shadowvolume->mesh->ivbo);
-				glDrawElements(GL_TRIANGLES, curr->shadowvolume->mesh->indexnum, GL_UNSIGNED_SHORT, 0);
-				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-			}else
-			{
-				glDrawElements(GL_TRIANGLES, curr->shadowvolume->mesh->indexnum, GL_UNSIGNED_SHORT, curr->shadowvolume->mesh->indices);
+				glEnableVertexAttribArray(shadowvolume->shader->normal);
+				glVertexAttribPointer(shadowvolume->shader->normal, 3, GL_FLOAT, 0, sizeof(sgVertex), &(curr->shadowvolume->mesh->vertices->normal.x));
 			}
+		}
+		
+		if(curr->shadowvolume->mesh->ivbo != -1)
+		{
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, curr->shadowvolume->mesh->ivbo);
+			glDrawElements(GL_TRIANGLES, curr->shadowvolume->mesh->indexnum, GL_UNSIGNED_SHORT, 0);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		}else
+		{
+			glDrawElements(GL_TRIANGLES, curr->shadowvolume->mesh->indexnum, GL_UNSIGNED_SHORT, curr->shadowvolume->mesh->indices);
 		}
 	}
 }
 
-void sgRendererES2::renderShadows(sgObject *first)
+void sgRendererES2::renderShadows(sgCamera *cam, sgObject *first)
 {
-	for(sgLight *light = first_light->next; light != NULL; light = light->next)
-	{
-		if(light->shadow)
-		{
-			for(sgObject *curr = first->next; curr != NULL; curr = curr->next)
-			{
-				if(curr->shadow && curr->shadowvolume != NULL)
-				{
-					curr->shadowvolume->update(light);
-				}
-			}
-			break;
-		}
-	}
-	
-/*	for(sgObject *curr = first->next; curr != NULL; curr = curr->next)
-	{
-		if(curr->shadow && curr->shadowvolume != NULL)
-		{
-			if(curr->shadowvolume->mesh != NULL)
-				curr->shadowvolume->mesh->updateVBO();
-		}
-	}*/
+	if(cam->rendertarget != NULL)
+		return;
 	
 	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
 	glDepthMask(GL_FALSE);
@@ -835,7 +811,7 @@ void sgRendererES2::renderShadows(sgObject *first)
 	glStencilOpSeparate(GL_BACK, GL_KEEP, GL_KEEP, GL_DECR_WRAP);
 	
 	glDisable(GL_CULL_FACE);
-	renderShadowVolumes(first);
+	renderShadowVolumes(cam, first);
 	glEnable(GL_CULL_FACE);
 	
 	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
@@ -859,6 +835,25 @@ void sgRendererES2::renderShadows(sgObject *first)
 	glDisable(GL_STENCIL_TEST);
 }
 
+void sgRendererES2::updateShadows(sgObject *first)
+{
+	for(sgLight *light = first_light->next; light != NULL; light = light->next)
+	{
+		if(light->shadow)
+		{
+			for(sgObject *curr = first->next; curr != NULL; curr = curr->next)
+			{
+				if(curr->shadow && curr->shadowvolume != NULL)
+				{
+					curr->shadowvolume->update(light);
+//					curr->shadowvolume->mesh->updateVBO();
+				}
+			}
+			break;
+		}
+	}
+}
+
 void sgRendererES2::render()
 {
 	//Clear color buffer
@@ -879,6 +874,9 @@ void sgRendererES2::render()
 	}
 	glClearColor(clearcolor.r, clearcolor.g, clearcolor.b, clearcolor.a);
 	glClear(GL_COLOR_BUFFER_BIT);
+	
+	//Update the shadow volumes
+	updateShadows(first_solid);
 	
 	//Draw cameras
 	sgCamera *cam;
@@ -926,7 +924,7 @@ void sgRendererES2::render()
 		glViewport(cam->screenpos.x, cam->screenpos.y, cam->size.x, cam->size.y);
 		renderObjects(cam, first_sky);
 		renderObjects(cam, first_solid);
-		renderShadows(first_solid);
+		renderShadows(cam, first_solid);
 	}
 	
 	//Draw panels

@@ -207,7 +207,7 @@ void sgMaterial::setDefault()
 	if(sgRenderer::oglversion > 1)
 	{
 		if(shader == NULL)
-			shader = sgShader::getShader(2);
+			shader = sgShader::getShader(0);
 		
 		getUniforms();
 	}else

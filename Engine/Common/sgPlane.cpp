@@ -1,8 +1,8 @@
 //
-//	sgVertex.h
+//	sgPlane.cpp
 //	iSDGE
 //
-//	Created by Nils Daumann on 17.04.10.
+//	Created by Nils Daumann on 08.12.10.
 //	Copyright (c) 2010 Nils Daumann
 
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,57 +23,42 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-#ifndef __SGVERTEX_H__
-#define __SGVERTEX_H__
+#include "sgPlane.h"
 
-#include "sgVector4.h"
-#include "sgVector3.h"
-#include "sgVector2.h"
-
-enum vertexformat
+sgPlane::sgPlane(sgVector3 pos, sgVector3 norm)
 {
-	BASIC = 32,
-	SECONDUV = 34,
-	COLOR = 36,
-	SECONDUVCOLOR = 38
-};
+	setPlane(pos, norm);
+}
 
-/**
- * Vertex base class. This is the base vertex format.
- */
-class sgVertex
+sgPlane::sgPlane(sgVector3 pos1, sgVector3 pos2, sgVector3 pos3)
 {
-	public:
-		sgVertex &operator= (const sgVertex &other)
-		{
-			position = other.position;
-			normal = 0;//other.normal;
-			uv = other.uv;
-			return *this;
-		}
-	
-		sgVector3 position;
-		sgVector3 normal;
-		sgVector2 uv;
-};
+	setPlane(pos1, pos2, pos3);
+}
 
-struct sgVertexUV : sgVertex
+void sgPlane::setPlane(sgVector3 pos, sgVector3 norm)
 {
-	public:
-		sgVector2 uv2;
-};
+	position = pos;
+	normal = norm;
+	normal.normalize();
+	calcD();
+}
 
-struct sgVertexCol : sgVertex
+void sgPlane::setPlane(sgVector3 pos1, sgVector3 pos2, sgVector3 pos3)
 {
-	public:
-		sgVector4 color;
-};
+	position = pos1;
+	pos2 = pos2-pos1;
+	pos3 = pos3-pos1;
+	normal = pos2.cross(pos2);
+	normal.normalize();
+	calcD();
+}
 
-struct sgVertexUVCol : sgVertex
+void sgPlane::calcD()
 {
-	public:
-		sgVector2 uv2;
-		sgVector4 color;
-};
+	d = normal.dot(position);
+}
 
-#endif
+float sgPlane::dist(sgVector3 pos)
+{
+	return pos.dot(normal)-d;
+}

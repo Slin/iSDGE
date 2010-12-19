@@ -233,7 +233,7 @@ namespace sgObjectFiles
 		{
 			sgMesh *mesh_ = new sgMesh;
 			
-			mesh_->vertexformat = 0;
+			mesh_->vtxform = BASIC;
 			mesh_->vertexnum = meshes[meshnum]->vertices.size();
 			mesh_->indexnum = meshes[meshnum]->indices.size();
 			

@@ -26,7 +26,7 @@
 #ifndef __SGQUATERNION_H__
 #define __SGQUATERNION_H__
 
-class sgVector3;
+#include "sgVector3.h"
 class sgVector4;
 class sgMatrix4x4;
 
@@ -227,6 +227,14 @@ class sgQuaternion
 		 * @param axis vector containing the orientation of the axis to rotate around and the angle as fourth parameter
 		 */
 		void makeAxisAngle(const sgVector4 &axis);
+		
+		/**
+		 *	Make look at.
+		 *	Set the quaternion to the representation of the given look at vector.
+		 * @param dir look at direction vector
+		 * @param up up vector
+		 */
+		void makeLookAt(sgVector3 dir, sgVector3 up = sgVector3(0.0, 1.0, 0.0));
 
 		/**
 		 *	Make spherical interpolation.

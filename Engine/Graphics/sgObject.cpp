@@ -167,10 +167,24 @@ sgObject *sgObject::createTerrain(unsigned int xverts, unsigned int zverts, unsi
 	return next;
 }
 
-void sgObject::initShadowVolume()
+void sgObject::addLOD(const char *name)
+{
+	if(body == NULL)
+		return;
+	
+	currbody = body;
+	while(currbody->nextbody != NULL)
+	{
+		currbody = currbody->nextbody;
+	}
+	currbody->nextbody = new sgObjectBody;
+	currbody->nextbody->makeObject(name);
+}
+
+void sgObject::initShadowVolume(unsigned int lod)
 {
 	if(shadowvolume == NULL && sgRenderer::oglversion > 1)
-		shadowvolume = new sgShadowVolume(this);
+		shadowvolume = new sgShadowVolume(this, lod);
 }
 
 void sgObject::calcCullSphere()

@@ -28,6 +28,7 @@
 
 #include "sgBase.h"
 #include "sgVector4.h"
+#include "sgVertex.h"
 
 class sgVertex;
 class sgVector3;
@@ -97,9 +98,9 @@ class sgMesh : public sgBase
 	
 		/**
 		 *	Vertex format.
-		 *	The format of the vertices of this mesh (ranging from 0 to 3).
+		 *	The format of the vertices of this mesh.
 		 */
-		unsigned int vertexformat;
+		vertexformat vtxform;
 	
 		/**
 		 *	Vertex number.

@@ -253,6 +253,8 @@ void sgShader::getEngineUniforms()
 	lspecularloc = glGetUniformLocation(program, "lSpecular");
 	lpositionloc = glGetUniformLocation(program, "lPosition");
 	lattenuationloc = glGetUniformLocation(program, "lAttenuation");
+	
+	vposition = glGetUniformLocation(program, "vPosition");
 }
 
 bool sgShader::create(const char *vsfilename, const char *fsfilename)

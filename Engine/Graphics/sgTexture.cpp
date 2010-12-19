@@ -222,7 +222,7 @@ void sgTexture::makeRendertarget()
 	{
 		glGenFramebuffers(1, &fbo);
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-//		glBindTexture(GL_TEXTURE_2D, texid);
+		glBindTexture(GL_TEXTURE_2D, 0);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texid, 0);
 		glClear(GL_COLOR_BUFFER_BIT);
 		
@@ -235,12 +235,12 @@ void sgTexture::makeRendertarget()
 	{
 		glGenFramebuffersOES(1, &fbo);
 		glBindFramebufferOES(GL_FRAMEBUFFER_OES, fbo);
-//		glBindTexture(GL_TEXTURE_2D, texid);
+		glBindTexture(GL_TEXTURE_2D, 0);
 		glFramebufferTexture2DOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_TEXTURE_2D, texid, 0);
 		
 		glGenRenderbuffersOES(1, &fbo_depth);
 		glBindRenderbufferOES(GL_RENDERBUFFER_OES, fbo_depth);
-		glRenderbufferStorageOES(GL_RENDERBUFFER_OES, GL_DEPTH_COMPONENT24_OES, width, height);
+		glRenderbufferStorageOES(GL_RENDERBUFFER_OES, GL_DEPTH_COMPONENT16_OES, width, height);
 		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_DEPTH_ATTACHMENT_OES, GL_RENDERBUFFER_OES, fbo_depth);
 	}
 }

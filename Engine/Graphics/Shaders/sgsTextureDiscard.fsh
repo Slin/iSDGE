@@ -33,6 +33,6 @@ varying vec2 texcoord;
 void main()
 {
 	gl_FragColor = texture2D(mTexture0, texcoord);
-	if(gl_FragColor.a-mAlphaTest <= 0.0)
+	if(gl_FragColor.a < mAlphaTest)
 		discard;
 }

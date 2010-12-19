@@ -26,6 +26,7 @@
 #include <cstring>
 #include "sgCamera.h"
 #include "sgTexture.h"
+#include "sgDebug.h"
 
 sgCamera::sgCamera(sgCamera *p, sgCamera *n)
 {
@@ -58,8 +59,12 @@ sgVector3 sgCamera::camToView(sgVector3 dir)
 
 sgVector3 sgCamera::camToWorld(sgVector3 dir)
 {
+	sgMatrix4x4 mat;
+	mat.makeTranslate(position*(-1));
+	mat.rotate(rotation);
+	
 	sgVector3 temp = camToView(dir);
-	temp = matview.transform(dir);
+	temp = mat*temp;
 	return temp;
 }
 
@@ -73,6 +78,19 @@ void sgCamera::updateView()
 	matview = rotation.getMatrix();
 	matview.transpose();
 	matview.translate(position*(-1));
+	
+//	matinvview = 
+}
+
+void sgCamera::updateFrustum()
+{
+	plleft.setPlane(position, camToWorld(sgVector3(-1.0, 1.0, 0.0)), camToWorld(sgVector3(-1.0, -1.0, 0.0)));
+	plright.setPlane(position, camToWorld(sgVector3(1.0, 1.0, 0.0)), camToWorld(sgVector3(1.0, -1.0, 0.0)));
+	pltop.setPlane(position, camToWorld(sgVector3(-1.0, 1.0, 0.0)), camToWorld(sgVector3(1.0, 1.0, 0.0)));
+	pldown.setPlane(position, camToWorld(sgVector3(-1.0, -1.0, 0.0)), camToWorld(sgVector3(1.0, -1.0, 0.0)));
+	
+/*	sgVector3 dir = camToWorld(sgVector3(0.0, 0.0, 0.0));
+	sgLog("X: %f, Y: %f, Z: %f", dir.x, dir.y, dir.z);*/
 }
 
 void sgCamera::destroy()

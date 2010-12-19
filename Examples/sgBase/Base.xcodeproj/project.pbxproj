@@ -83,6 +83,7 @@
 		29F182E612AB13C000B7F5F2 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29F182DE12AB13C000B7F5F2 /* Icon-Small@2x.png */; };
 		29F182E712AB13C000B7F5F2 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 29F182DF12AB13C000B7F5F2 /* Icon.png */; };
 		29F182E812AB13C000B7F5F2 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29F182E012AB13C000B7F5F2 /* Icon@2x.png */; };
+		29F1B38612AFF56B00B2D0C7 /* sgPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29F1B38412AFF56B00B2D0C7 /* sgPlane.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -204,6 +205,8 @@
 		29F182DE12AB13C000B7F5F2 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
 		29F182DF12AB13C000B7F5F2 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		29F182E012AB13C000B7F5F2 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		29F1B38412AFF56B00B2D0C7 /* sgPlane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgPlane.cpp; sourceTree = "<group>"; };
+		29F1B38512AFF56B00B2D0C7 /* sgPlane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgPlane.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -323,6 +326,8 @@
 		290B12001179492700AC324E /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				29F1B38412AFF56B00B2D0C7 /* sgPlane.cpp */,
+				29F1B38512AFF56B00B2D0C7 /* sgPlane.h */,
 				29F181CD12AAF9AE00B7F5F2 /* sgRenderEvent.h */,
 				29F181CE12AAF9AE00B7F5F2 /* sgRenderEvent.cpp */,
 				2936A2F411C06569008EAD35 /* sgXML.h */,
@@ -675,6 +680,7 @@
 				295CBF69121587B300F1F941 /* Rotate.cpp in Sources */,
 				29A3C5B212A8494B00BF4B3F /* sgObjectBody.cpp in Sources */,
 				29F181CF12AAF9AE00B7F5F2 /* sgRenderEvent.cpp in Sources */,
+				29F1B38612AFF56B00B2D0C7 /* sgPlane.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

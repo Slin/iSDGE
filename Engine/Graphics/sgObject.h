@@ -95,10 +95,18 @@ class sgObject
 		sgObject *createTerrain(unsigned int xverts = 2, unsigned int zverts = 2, unsigned char xchunks = 1, unsigned char zchunks = 1, unsigned int lodsteps = 3, const char *hmp = NULL, sgVector4 hmpscale = sgVector4(0, 0, 0, 0));
 	
 		/**
+		 *	Add LOD.
+		 *	Adds a new LOD step to the object loaded from a model file or a predefined name.
+		 * @param name name of the object or the file to load it from.
+		 */
+		void addLOD(const char *name);
+	
+		/**
 		 * Init shadow volume.
 		 * Initializes the shadow volume. Has to be called once, before shadows will be displayed. This function is slow and best called at object creation time.
+		 * @param lod lod level to use for the shadows.
 		 **/
-		void initShadowVolume();
+		void initShadowVolume(unsigned int lod = 0);
 	
 		/**
 		 *	Calculate cull sphere.

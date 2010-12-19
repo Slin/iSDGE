@@ -41,7 +41,7 @@ int sgRenderer::backingHeight = 480;
 sgRenderer::sgRenderer()
 {
 	supportmultisampling = checkForExtension((char*)"APPLE_framebuffer_multisample");
-	supportdiscard = checkForExtension((char*)"EXT_discard_framebuffer");
+	supportdiscard = true;//checkForExtension((char*)"EXT_discard_framebuffer");
 //	supportpackedstencil = true;//true;//false;//checkForExtension((char*)"EXT_packed_depth_stencil");
 	
 #if TARGET_IPHONE_SIMULATOR
@@ -202,6 +202,8 @@ bool sgRenderer::cullSphere(sgVector4 worldsphere, sgCamera *cam)
 
 void sgRenderer::culling(sgCamera *cam, sgObject *first)
 {
+	cam->updateFrustum();
+	
 	sgMatrix4x4 projview = cam->matproj*cam->matview;
 	
 	sgMatrix4x4 projviewmodel;

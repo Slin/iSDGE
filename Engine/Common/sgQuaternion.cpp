@@ -257,6 +257,21 @@ void sgQuaternion::makeAxisAngle(const sgVector4 &axis)
     makeAxisAngle(sgVector3(axis.x, axis.y, axis.z), axis.w);
 }
 
+void sgQuaternion::makeLookAt(sgVector3 dir, sgVector3 up)
+{
+	//Setup basis vectors describing the rotation given the input vector
+	sgVector3 right = up.cross(dir);    // The perpendicular vector to Up and Direction
+	up = dir.cross(right);            // The actual up vector given the direction and the right vector
+	
+	//Build a quaternion from the matrix
+	w = (float)sqrt(1.0f + right.x + up.y + dir.z) / 2.0f;
+	double dfwscale = w * 4.0;
+	x = (float)((dir.y - up.z) / dfwscale);
+	y = (float)((right.z - dir.x) / dfwscale);
+	z = (float)((up.x - right.y) / dfwscale);
+	normalize();
+}
+
 void sgQuaternion::makeLerpS(const sgQuaternion &quat1, const sgQuaternion &quat2, float fac)
 {
 	sgQuaternion q1(quat1);

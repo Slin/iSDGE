@@ -97,7 +97,7 @@ class sgMaterial : public sgBase
 		 * @param mipmaps has to be set to false if you don´t want mipmaps to be created for the texture
 		 * @param shad the default shader to use
 		 */
-		sgMaterial(const char *texfile, bool mipmaps = true, unsigned int shad = 1);
+		sgMaterial(const char *texfile, bool mipmaps = true, unsigned int shad = 0);
 	
 		/**
 		 *	Constructor.
@@ -105,7 +105,7 @@ class sgMaterial : public sgBase
 		 * @param tex pointer to the textures instance
 		 * @param shad the default shader to use
 		 */
-		sgMaterial(sgTexture *tex, unsigned int shad = 1);
+		sgMaterial(sgTexture *tex, unsigned int shad = 0);
 	
 		/**
 		 *	Constructor.
@@ -235,7 +235,7 @@ class sgMaterial : public sgBase
 		 * @param mipmaps has to be set to false if you don´t want mipmaps to be created for the texture
 		 * @param shad the default shader to use
 		 */
-		static sgMaterial *getMaterial(const char *texfile, bool mipmaps = true, unsigned int shad = 1);
+		static sgMaterial *getMaterial(const char *texfile, bool mipmaps = true, unsigned int shad = 0);
 	
 		/**
 		 *	Get material.
@@ -243,7 +243,7 @@ class sgMaterial : public sgBase
 		 * @param tex pointer to the textures instance
 		 * @param shad the default shader to use
 		 */
-		static sgMaterial *getMaterial(sgTexture *tex, unsigned int shad = 1);
+		static sgMaterial *getMaterial(sgTexture *tex, unsigned int shad = 0);
 		
 		/**
 		 *	Get material.

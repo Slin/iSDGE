@@ -339,10 +339,10 @@ void sgRendererES1::renderObjects(sgCamera *cam, sgObject *first)
 				glDrawElements(GL_TRIANGLES, currbod->meshs[i]->indexnum, GL_UNSIGNED_SHORT, currbod->meshs[i]->indices);
 			}
 			
-			if(currbod->meshs[i]->vertexformat == 1 || currbod->meshs[i]->vertexformat == 3)
+/*			if(currbod->meshs[i]->vertexformat == 1 || currbod->meshs[i]->vertexformat == 3)
 			{
 				glDisableClientState(GL_COLOR_ARRAY);
-			}
+			}*/
 		}
 	}
 }

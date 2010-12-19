@@ -122,6 +122,8 @@ class sgShader : public sgBase
 		unsigned int lpositionloc;
 		unsigned int lattenuationloc;
 	
+		unsigned int vposition;
+	
 	private:
 		bool create(const char *vsfilename, const char *fsfilename);
 		bool compileShader(unsigned int *shader, unsigned int type, const char *filepath);
