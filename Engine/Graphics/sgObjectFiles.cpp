@@ -68,6 +68,10 @@ namespace sgObjectFiles
 			meshes[meshes.size()-1]->id_ = atoi(sgXML::valueOfAttribute("id", meshs));
 			unsigned int matid = atoi(sgXML::valueOfAttribute("material", meshs));
 			unsigned int uvcount = atoi(sgXML::valueOfAttribute("texcoordcount", meshs));
+			const char *datacountstr = sgXML::valueOfAttribute("datachannels", meshs);
+			unsigned int datacount = 0;
+			if(datacountstr != NULL)
+				datacount = atoi(datacountstr);
 			for(int i = 0; i < materials.size(); i++)
 			{
 				if(materials[i]->id_ == matid)
@@ -79,7 +83,16 @@ namespace sgObjectFiles
 			
 			meshes[meshes.size()-1]->vtxformat = BASIC;
 			if(uvcount > 1)
+			{
 				meshes[meshes.size()-1]->vtxformat = SECONDUV;
+				if(datacount == 4)
+				{
+					meshes[meshes.size()-1]->vtxformat = SECONDUVCOLOR;
+				}
+			}else if(datacount == 4)
+			{
+				meshes[meshes.size()-1]->vtxformat = COLOR;
+			}
 			
 			//Positions
 			TBXMLElement *vpos = sgXML::childElement("vertexpos", meshs);
@@ -98,6 +111,10 @@ namespace sgObjectFiles
 					meshes[meshes.size()-1]->vertices_.push_back(*vert);
 				else if(meshes[meshes.size()-1]->vtxformat == SECONDUV)
 					meshes[meshes.size()-1]->vertices_uv.push_back(*((sgVertexUV*)vert));
+				else if(meshes[meshes.size()-1]->vtxformat == COLOR)
+					meshes[meshes.size()-1]->vertices_col.push_back(*((sgVertexCol*)vert));
+				else if(meshes[meshes.size()-1]->vtxformat == SECONDUVCOLOR)
+					meshes[meshes.size()-1]->vertices_uvcol.push_back(*((sgVertexUVCol*)vert));
 			}
 			
 			//Texcoords
@@ -139,8 +156,74 @@ namespace sgObjectFiles
 							vuvlist = strtok(NULL, " ");
 						}
 					}
+				}else if(meshes[meshes.size()-1]->vtxformat == COLOR)
+				{
+					for(int i = 0; i < meshes[meshes.size()-1]->vertices_col.size(); i++)
+					{
+						meshes[meshes.size()-1]->vertices_col[i].uv.x = atof(vuvlist);
+						vuvlist = strtok(NULL, " ");
+						meshes[meshes.size()-1]->vertices_col[i].uv.y = atof(vuvlist);
+						vuvlist = strtok(NULL, " ");
+					}
+				}else if(meshes[meshes.size()-1]->vtxformat == SECONDUVCOLOR)
+				{
+					if(uvset == 0)
+					{
+						for(int i = 0; i < meshes[meshes.size()-1]->vertices_uvcol.size(); i++)
+						{
+							meshes[meshes.size()-1]->vertices_uvcol[i].uv.x = atof(vuvlist);
+							vuvlist = strtok(NULL, " ");
+							meshes[meshes.size()-1]->vertices_uvcol[i].uv.y = atof(vuvlist);
+							vuvlist = strtok(NULL, " ");
+						}
+					}else if(uvset == 1)
+					{
+						for(int i = 0; i < meshes[meshes.size()-1]->vertices_uvcol.size(); i++)
+						{
+							meshes[meshes.size()-1]->vertices_uvcol[i].uv2.x = atof(vuvlist);
+							vuvlist = strtok(NULL, " ");
+							meshes[meshes.size()-1]->vertices_uvcol[i].uv2.y = atof(vuvlist);
+							vuvlist = strtok(NULL, " ");
+						}
+					}
 				}
 				vuv = sgXML::nextSibling("vertextexcoord", vuv);
+			}
+			
+			//Colors
+			if(datacount == 4)
+			{
+				TBXMLElement *vcol = sgXML::childElement("vertexdata", meshs);
+				char *vcolstr = (char*)sgXML::textForElement(vcol);
+				char *vcollist = strtok(vcolstr, " ");
+				if(meshes[meshes.size()-1]->vtxformat == COLOR)
+				{
+					for(int i = 0; i < meshes[meshes.size()-1]->vertices_col.size(); i++)
+					{
+						meshes[meshes.size()-1]->vertices_col[i].color.x = atof(vcollist);
+						vcollist = strtok(NULL, " ");
+						meshes[meshes.size()-1]->vertices_col[i].color.y = atof(vcollist);
+						vcollist = strtok(NULL, " ");
+						meshes[meshes.size()-1]->vertices_col[i].color.z = atof(vcollist);
+						vcollist = strtok(NULL, " ");
+						meshes[meshes.size()-1]->vertices_col[i].color.w = atof(vcollist);
+						vcollist = strtok(NULL, " ");
+					}
+				}
+				if(meshes[meshes.size()-1]->vtxformat == SECONDUVCOLOR)
+				{
+					for(int i = 0; i < meshes[meshes.size()-1]->vertices_col.size(); i++)
+					{
+						meshes[meshes.size()-1]->vertices_uvcol[i].color.x = atof(vcollist);
+						vcollist = strtok(NULL, " ");
+						meshes[meshes.size()-1]->vertices_uvcol[i].color.y = atof(vcollist);
+						vcollist = strtok(NULL, " ");
+						meshes[meshes.size()-1]->vertices_uvcol[i].color.z = atof(vcollist);
+						vcollist = strtok(NULL, " ");
+						meshes[meshes.size()-1]->vertices_uvcol[i].color.w = atof(vcollist);
+						vcollist = strtok(NULL, " ");
+					}
+				}
 			}
 			
 			//Indices
@@ -173,6 +256,16 @@ namespace sgObjectFiles
 				mesh_->vertexnum = meshes[meshnum]->vertices_uv.size();
 				mesh_->vertices = (sgVertex*)new sgVertexUV[mesh_->vertexnum];
 				memcpy(mesh_->vertices, &meshes[meshnum]->vertices_uv[0], mesh_->vertexnum*SECONDUV);
+			}else if(meshes[meshes.size()-1]->vtxformat == COLOR)
+			{
+				mesh_->vertexnum = meshes[meshnum]->vertices_col.size();
+				mesh_->vertices = (sgVertex*)new sgVertexCol[mesh_->vertexnum];
+				memcpy(mesh_->vertices, &meshes[meshnum]->vertices_col[0], mesh_->vertexnum*COLOR);
+			}else if(meshes[meshes.size()-1]->vtxformat == SECONDUVCOLOR)
+			{
+				mesh_->vertexnum = meshes[meshnum]->vertices_uvcol.size();
+				mesh_->vertices = (sgVertex*)new sgVertexUVCol[mesh_->vertexnum];
+				memcpy(mesh_->vertices, &meshes[meshnum]->vertices_uvcol[0], mesh_->vertexnum*SECONDUVCOLOR);
 			}
 			mesh_->indexnum = meshes[meshnum]->indices.size();
 			mesh_->indices = new unsigned short[mesh_->indexnum];

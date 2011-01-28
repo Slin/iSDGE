@@ -141,7 +141,10 @@ class c_object(object):
 		
 		print("write meshs")
 		for i, mesh in enumerate(self.meshs):
-			file.write("\t<mesh id=\"%i\" material=\"%i\" texcoordcount=\"%i\">\n" % (i, i, len(mesh.images)))
+			datachennels = 0
+			if mesh.vertices[0].color != None:
+				datachannels = 4
+			file.write("\t<mesh id=\"%i\" material=\"%i\" texcoordcount=\"%i\" datachannels=\"%i\">\n" % (i, i, len(mesh.images), datachannels))
 		
 			print("write vertices")
 			file.write("\t\t<vertexpos>")
@@ -160,10 +163,10 @@ class c_object(object):
 				
 			if mesh.vertices[0].color != None:
 				print("write colors")
-				file.write("\t\t<vertexcol>")
+				file.write("\t\t<vertexdata>")
 				for vertex in mesh.vertices:
 					file.write("%f %f %f %f " % (vertex.color[0], vertex.color[1], vertex.color[2], vertex.color[3]))
-				file.write("</vertexcol>\n")
+				file.write("</vertexdata>\n")
 		
 			print("write indices")
 			file.write("\t\t<indices>")
@@ -191,79 +194,79 @@ def exportobject(filename, context):
 	
 	
 #   for i, modi in enumerate(context.object.modifiers):
-#	   if modi.type == 'ARMATURE':
-#		   print("write armature")
+#	  if modi.type == 'ARMATURE':
+#		  print("write armature")
 			
-#		   modi.object.data.pose_position = 'REST'
-#		   file.write("\t<armature name=\"%s\">\n" % modi.object.data.name)
-#		   for i, bone in enumerate(modi.object.data.bones):
-#			   for parnum, parent in enumerate(modi.object.data.bones):
-#				   if parent == bone.parent:
-#					   break
-#				   elif parnum == (len(modi.object.data.bones)-1):
-#					   parnum = -1
+#		  modi.object.data.pose_position = 'REST'
+#		  file.write("\t<armature name=\"%s\">\n" % modi.object.data.name)
+#		  for i, bone in enumerate(modi.object.data.bones):
+#			  for parnum, parent in enumerate(modi.object.data.bones):
+#				  if parent == bone.parent:
+#					  break
+#				  elif parnum == (len(modi.object.data.bones)-1):
+#					  parnum = -1
 				
-#			   file.write("\t\t<name=\"%s\" bone id=\"%i\" parent=\"%i\">\n" % (bone.name, (i+1), (parnum+1)))
-#			   file.write("\t\t\t<abshead>%f %f %f</abshead>\n" % (bone.head_local.x, bone.head_local.y, bone.head_local.z))
-#			   file.write("\t\t\t<abstail>%f %f %f</abstail>\n" % (bone.tail_local.x, bone.tail_local.y, bone.tail_local.z))
+#			  file.write("\t\t<name=\"%s\" bone id=\"%i\" parent=\"%i\">\n" % (bone.name, (i+1), (parnum+1)))
+#			  file.write("\t\t\t<abshead>%f %f %f</abshead>\n" % (bone.head_local.x, bone.head_local.y, bone.head_local.z))
+#			  file.write("\t\t\t<abstail>%f %f %f</abstail>\n" % (bone.tail_local.x, bone.tail_local.y, bone.tail_local.z))
 				
-#			   for n, mat in enumerate(weight_dict):
-#				   iseffected = 0
-#				   for ind in weight_dict[mat]:
-#					   for group in context.object.data.vertices[ind[0]].groups:
-#						   if context.object.vertex_groups[group.group].name == bone.name:
-#							   iseffected += 1
+#			  for n, mat in enumerate(weight_dict):
+#				  iseffected = 0
+#				  for ind in weight_dict[mat]:
+#					  for group in context.object.data.vertices[ind[0]].groups:
+#						  if context.object.vertex_groups[group.group].name == bone.name:
+#							  iseffected += 1
 					
-#				   if iseffected > 0:
-#					   file.write("\t\t\t<vertices mesh=\"%i\">" % n)
-#					   for ind in weight_dict[mat]:
-#						   for group in context.object.data.vertices[ind[0]].groups:
-#							   if context.object.vertex_groups[group.group].name == bone.name:
-#								   file.write("%i %f " % (ind[1], group.weight))
-#					   file.write("</vertices>\n")
+#				  if iseffected > 0:
+#					  file.write("\t\t\t<vertices mesh=\"%i\">" % n)
+#					  for ind in weight_dict[mat]:
+#						  for group in context.object.data.vertices[ind[0]].groups:
+#							  if context.object.vertex_groups[group.group].name == bone.name:
+#								  file.write("%i %f " % (ind[1], group.weight))
+#					  file.write("</vertices>\n")
 				
-#			   file.write("\t\t</bone>\n")
-#		   file.write("\t</armature>\n\n")
+#			  file.write("\t\t</bone>\n")
+#		  file.write("\t</armature>\n\n")
 	
-#		   print("write animations")
-#		   modi.object.data.pose_position = 'POSE'
-#		   for act in bpy.data.actions:
-#			   actinuse = 0
+#		  print("write animations")
+#		  modi.object.data.pose_position = 'POSE'
+#		  for act in bpy.data.actions:
+#			  actinuse = 0
 				
-#			   for group in act.groups:
-#				   for bone in modi.object.data.bones:
-#					   if group.name == bone.name:
-#						   actinuse = 1
-#						   break
-#				   if actinuse == 1:
-#					   break
-#			   if not len(act.fcurves):
-#				   actinuse = 0
+#			  for group in act.groups:
+#				  for bone in modi.object.data.bones:
+#					  if group.name == bone.name:
+#						  actinuse = 1
+#						  break
+#				  if actinuse == 1:
+#					  break
+#			  if not len(act.fcurves):
+#				  actinuse = 0
 				
-#			   if actinuse == 1:
-#				   keyframes = []
-#				   for group in act.groups:
-#					   for fc in group.channels:
-#						   for kf in fc.keyframe_points:
-#							   if int(kf.co[0]) not in keyframes:
-#								   keyframes.append(int(kf.co[0]))
+#			  if actinuse == 1:
+#				  keyframes = []
+#				  for group in act.groups:
+#					  for fc in group.channels:
+#						  for kf in fc.keyframe_points:
+#							  if int(kf.co[0]) not in keyframes:
+#								  keyframes.append(int(kf.co[0]))
 					
-#				   framemin, framemax = act.frame_range
-#				   start_frame = int(framemin)
-#				   end_frame = int(framemax)
-#				   scene_frames = range(start_frame, end_frame+1)
-#				   frame_count = len(scene_frames)
-#				   file.write("\t<animation name=\"%s\" duration=\"%i\">\n" % (act.name, frame_count))
-#				   for bone in modi.object.data.bones:
-#					   file.write("\t\t<bone name=\"%s\">" % bone.name)
-#					   for f in keyframes:
-#						   context.scene.frame_set(f)
-#						   file.write("%i %f %f %f %f %f %f " % (f, bone.head.x, bone.head.y, bone.head.z, bone.tail.x, bone.tail.y, bone.tail.z))
-#					   file.write("\t\t</bone>\n")
+#				  framemin, framemax = act.frame_range
+#				  start_frame = int(framemin)
+#				  end_frame = int(framemax)
+#				  scene_frames = range(start_frame, end_frame+1)
+#				  frame_count = len(scene_frames)
+#				  file.write("\t<animation name=\"%s\" duration=\"%i\">\n" % (act.name, frame_count))
+#				  for bone in modi.object.data.bones:
+#					  file.write("\t\t<bone name=\"%s\">" % bone.name)
+#					  for f in keyframes:
+#						  context.scene.frame_set(f)
+#						  file.write("%i %f %f %f %f %f %f " % (f, bone.head.x, bone.head.y, bone.head.z, bone.tail.x, bone.tail.y, bone.tail.z))
+#					  file.write("\t\t</bone>\n")
 					
-#				   file.write("\t</animation>\n")
+#				  file.write("\t</animation>\n")
 			
-#		   break
+#		  break
 			
 
 	

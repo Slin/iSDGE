@@ -49,6 +49,7 @@
 #include "sgColor.h";
 
 #include "sgRenderEvent.h"
+#include "sgTimer.h"
 
 struct sgOptimizedMesh
 {
@@ -123,6 +124,12 @@ class sgRenderer
 		 * Height of the window the engine is rendering into.
 		 */
 		static int backingHeight;
+	
+		/**
+		 * Current time.
+		 * The time in seconds, the renderer is already running (automatically passed to shaders defining it as "Time").
+		 */
+		double currenttime;
 	
 		/**
 		 * Renderer event class.
@@ -224,6 +231,8 @@ class sgRenderer
 		bool supportmultisampling;
 		bool supportdiscard;
 		bool supportpackedstencil;
+	
+		sgTimer timer;
 };
 
 #endif

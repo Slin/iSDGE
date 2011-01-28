@@ -486,6 +486,10 @@ void sgRendererES2::renderObjects(sgCamera *cam, sgObject *first)
 				else
 					glUniformMatrix4fv(currbod->materials[i]->shader->matview, 1, GL_FALSE, cam->matview.mat);
 			}
+			if(currbod->materials[i]->shader->time != -1)
+			{
+				glUniform1f(currbod->materials[i]->shader->time, (float)currenttime);
+			}
 			if(currbod->materials[i]->shader->vposition != -1)
 			{
 				glUniform3fv(currbod->materials[i]->shader->vposition, 1, &cam->position.x);
@@ -538,6 +542,26 @@ void sgRendererES2::renderObjects(sgCamera *cam, sgObject *first)
 						glEnableVertexAttribArray(currbod->materials[i]->shader->texcoord1);
 						glVertexAttribPointer(currbod->materials[i]->shader->texcoord1, 2, GL_FLOAT, 0, currbod->meshs[i]->vtxform, (const void*)32);
 					}
+				}else if(currbod->meshs[i]->vtxform == COLOR)
+				{
+					if(currbod->materials[i]->shader->color != -1)
+					{
+						glEnableVertexAttribArray(currbod->materials[i]->shader->color);
+						glVertexAttribPointer(currbod->materials[i]->shader->color, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxform, (const void*)32);
+					}
+				}else if(currbod->meshs[i]->vtxform == SECONDUVCOLOR)
+				{
+					if(currbod->materials[i]->shader->texcoord1 != -1)
+					{
+						glEnableVertexAttribArray(currbod->materials[i]->shader->texcoord1);
+						glVertexAttribPointer(currbod->materials[i]->shader->texcoord1, 2, GL_FLOAT, 0, currbod->meshs[i]->vtxform, (const void*)32);
+					}
+					
+					if(currbod->materials[i]->shader->color != -1)
+					{
+						glEnableVertexAttribArray(currbod->materials[i]->shader->color);
+						glVertexAttribPointer(currbod->materials[i]->shader->color, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxform, (const void*)40);
+					}
 				}
 				glBindBuffer(GL_ARRAY_BUFFER, 0);
 			}else
@@ -563,6 +587,26 @@ void sgRendererES2::renderObjects(sgCamera *cam, sgObject *first)
 					{
 						glVertexAttribPointer(currbod->materials[i]->shader->texcoord1, 2, GL_FLOAT, 0, currbod->meshs[i]->vtxform, &((sgVertexUV*)currbod->meshs[i]->vertices)->uv2.x);
 						glEnableVertexAttribArray(currbod->materials[i]->shader->texcoord1);
+					}
+				}else if(currbod->meshs[i]->vtxform == COLOR)
+				{
+					if(currbod->materials[i]->shader->color != -1)
+					{
+						glVertexAttribPointer(currbod->materials[i]->shader->color, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxform, &((sgVertexCol*)currbod->meshs[i]->vertices)->color.x);
+						glEnableVertexAttribArray(currbod->materials[i]->shader->color);
+					}
+				}else if(currbod->meshs[i]->vtxform == SECONDUVCOLOR)
+				{
+					if(currbod->materials[i]->shader->texcoord1 != -1)
+					{
+						glVertexAttribPointer(currbod->materials[i]->shader->texcoord1, 2, GL_FLOAT, 0, currbod->meshs[i]->vtxform, &((sgVertexUVCol*)currbod->meshs[i]->vertices)->uv2.x);
+						glEnableVertexAttribArray(currbod->materials[i]->shader->texcoord1);
+					}
+					
+					if(currbod->materials[i]->shader->color != -1)
+					{
+						glVertexAttribPointer(currbod->materials[i]->shader->color, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxform, &((sgVertexUVCol*)currbod->meshs[i]->vertices)->color.x);
+						glEnableVertexAttribArray(currbod->materials[i]->shader->color);
 					}
 				}
 			}
@@ -955,7 +999,7 @@ void sgRendererES2::render()
 	if(msaasamples > 0)
 	{
 		//Resolve from msaaFramebuffer to resolveFramebuffer
-		glDisable(GL_SCISSOR_TEST);     
+		glDisable(GL_SCISSOR_TEST);
 		glBindFramebuffer(GL_READ_FRAMEBUFFER_APPLE, msaaFramebuffer);
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER_APPLE, mainFramebuffer);
 		glResolveMultisampleFramebufferAPPLE();

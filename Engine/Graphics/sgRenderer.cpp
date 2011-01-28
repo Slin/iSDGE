@@ -40,6 +40,8 @@ int sgRenderer::backingHeight = 480;
 
 sgRenderer::sgRenderer()
 {
+	currenttime = 0.0;
+	
 	supportmultisampling = checkForExtension((char*)"APPLE_framebuffer_multisample");
 	supportdiscard = true;//checkForExtension((char*)"EXT_discard_framebuffer");
 //	supportpackedstencil = true;//true;//false;//checkForExtension((char*)"EXT_packed_depth_stencil");

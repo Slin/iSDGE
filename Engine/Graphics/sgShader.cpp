@@ -265,6 +265,7 @@ void sgShader::getEngineUniforms()
 	lpositionloc = glGetUniformLocation(program, "lPosition");
 	lattenuationloc = glGetUniformLocation(program, "lAttenuation");
 	
+	time = glGetUniformLocation(program, "Time");
 	vposition = glGetUniformLocation(program, "vPosition");
 }
 

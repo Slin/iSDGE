@@ -32,7 +32,7 @@ sgEvents *sgMain::eventhandler = NULL;
 
 sgMain::sgMain(unsigned int oglvers)
 {
-	timestep = 0;
+	timestep = 1.0/60.0;
 	if(oglvers == 1)
 	{
 		renderer = new sgRendererES1;
@@ -56,8 +56,10 @@ sgMain::~sgMain()
 void sgMain::drawView()
 {
 	timer.stop();
-	timestep = timestep*0.99f+timer.getElapsedTime()*0.01f;
+	timestep = timestep*0.9f+timer.getElapsedTime()*0.1f;
 	timer.start();
+	
+	renderer->currenttime += timestep;
 	
 	if(eventhandler != NULL)
 		eventhandler->onDraw(timestep);

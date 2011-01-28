@@ -123,6 +123,7 @@ class sgShader : public sgBase
 		unsigned int lpositionloc;
 		unsigned int lattenuationloc;
 	
+		unsigned int time;
 		unsigned int vposition;
 	
 	private:
