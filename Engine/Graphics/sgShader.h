@@ -107,6 +107,7 @@ class sgShader : public sgBase
 		unsigned int position;
 		unsigned int normal;
 		unsigned int texcoord0;
+		unsigned int texcoord1;
 		unsigned int color;
 	
 		unsigned int mambientloc;

@@ -1,8 +1,8 @@
 //
-//	ShaderBox.cpp
-//	Engine
+//	Shader.vsh
+//	iSDGE
 //
-//	Created by Nils Daumann on 02.06.10.
+//	Created by Nils Daumann on 16.04.10.
 //	Copyright (c) 2010 Nils Daumann
 
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,28 +23,26 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-#include "ShaderBox.h"
-#include <cmath>
+attribute vec3 vertPos;
+attribute vec3 vertNormal;
+attribute vec2 vertTexcoord0;
 
-void ShaderBox::onInit(sgEntity *e)
-{
-	ent = e;
-	counter = 0;
-	
-	//Set the shader of the first material (which is the only one in this case)
-	ent->obj->body->materials[0]->setShader("sgsLight", "ShaderCol");
-	
-	//Add a new parameter of the type float4 to the material
-	param = ent->obj->body->materials[0]->addParameter("color", (void*)(new float[4]));
-}
+uniform mat4 matProjViewModel;
+uniform mat4 matNormal;
 
-void ShaderBox::onDraw(float timestep)
+uniform vec4 mAmbient;
+
+uniform vec4 lDiffuse[2];
+uniform vec4 lPosition[2];
+
+varying vec2 texcoord;
+varying vec4 light;
+
+void main()
 {
-	counter += timestep*5.0f;
-	
-	//Update the material parameters values
-	((float*)param->parameter)[0] = sin(counter);
-	((float*)param->parameter)[1] = cos(counter);
-	((float*)param->parameter)[2] = 1.0f;
-	((float*)param->parameter)[3] = 1.0f;
+	texcoord = vertTexcoord0;
+	gl_Position = matProjViewModel*vec4(vertPos, 1.0);
+	vec4 norm = normalize(matNormal*vec4(vertNormal, 0.0));
+	light.rgb = max(dot(norm.xyz, -lPosition[0].xyz), 0.0)*lDiffuse[0].rgb+mAmbient.rgb;
+	light.a = 1.0;
 }

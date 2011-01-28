@@ -1,8 +1,8 @@
 //
-//	ShaderBox.cpp
-//	Engine
+//	Shader.fsh
+//	iSDGE
 //
-//	Created by Nils Daumann on 02.06.10.
+//	Created by Nils Daumann on 16.04.10.
 //	Copyright (c) 2010 Nils Daumann
 
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,28 +23,21 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-#include "ShaderBox.h"
-#include <cmath>
+precision mediump float;
 
-void ShaderBox::onInit(sgEntity *e)
-{
-	ent = e;
-	counter = 0;
-	
-	//Set the shader of the first material (which is the only one in this case)
-	ent->obj->body->materials[0]->setShader("sgsLight", "ShaderCol");
-	
-	//Add a new parameter of the type float4 to the material
-	param = ent->obj->body->materials[0]->addParameter("color", (void*)(new float[4]));
-}
+uniform sampler2D mTexture0;
+uniform sampler2D mTexture1;
+uniform vec3 vPosition;
 
-void ShaderBox::onDraw(float timestep)
+varying vec2 texcoord;
+varying vec3 projpos;
+varying vec2 vertpos;
+
+void main()
 {
-	counter += timestep*5.0f;
-	
-	//Update the material parameters values
-	((float*)param->parameter)[0] = sin(counter);
-	((float*)param->parameter)[1] = cos(counter);
-	((float*)param->parameter)[2] = 1.0f;
-	((float*)param->parameter)[3] = 1.0f;
+	float camdist = distance(vertpos, vPosition.xz)-150.0;
+	vec2 dis = texture2D(mTexture0, texcoord.xy).rg*1.5-0.75;
+	vec2 reflcoords = projpos.xy/projpos.z+0.5;
+	vec4 color = texture2D(mTexture1, reflcoords+dis.rg)*0.5;
+    gl_FragColor = mix(color, vec4(0.7333, 0.7843, 0.8549, 1.0), min(max(camdist*0.004, 0.0), 1.0));
 }

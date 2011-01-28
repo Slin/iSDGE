@@ -30,23 +30,20 @@ attribute vec2 vertTexcoord0;
 uniform mat4 matModel;
 uniform mat4 matProjViewModel;
 uniform mat4 matNormal;
-uniform mat4 matTex;
 
 uniform vec4 mAmbient;
 
 uniform vec4 lDiffuse[2];
 uniform vec4 lPosition[2];
-uniform float lAttenuation[2];
 
 varying vec2 texcoord;
-varying vec3 light;
-varying float height;
+varying vec4 light;
 
 void main()
 {
-	texcoord = (matTex*vec4(vertTexcoord0, 1.0, 1.0)).xy;
+	texcoord = vertTexcoord0;
 	gl_Position = matProjViewModel*vec4(vertPos, 1.0);
 	vec4 norm = normalize(matNormal*vec4(-vertNormal, 0.0));
-	light = max(dot(norm.xyz, lPosition[0].xyz), 0.0)*lDiffuse[0].rgb+mAmbient.rgb;
-	height = (matModel*vec4(vertPos, 1.0)).y;
+	light.rgb = max(dot(norm.xyz, lPosition[0].xyz), 0.0)*lDiffuse[0].rgb+mAmbient.rgb;
+	light.a = (matModel*vec4(vertPos, 1.0)).y;
 }

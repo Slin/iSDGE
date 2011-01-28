@@ -226,8 +226,11 @@ void sgRenderer::culling(sgCamera *cam, sgObject *first)
 			if(obj->cullsphere.w < 0)
 			{
 				//Reset LOD
-				obj->currbody->meshs.clear();
-				obj->currbody->materials.clear();
+				if(obj->body->nextbody != NULL)
+				{
+					obj->currbody->meshs.clear();
+					obj->currbody->materials.clear();
+				}
 				
 				for(int i = 0; i < obj->body->meshs.size(); i++)
 				{

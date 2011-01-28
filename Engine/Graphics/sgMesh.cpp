@@ -27,6 +27,7 @@
 
 #include <cmath>
 #include <cstring>
+#include <cstdlib>
 #include <OpenGLES/ES1/gl.h>
 #include <OpenGLES/ES1/glext.h>
 #include <OpenGLES/ES2/gl.h>
@@ -64,7 +65,7 @@ sgMesh::~sgMesh()
 	if(ivbo1 != -1)
 		glDeleteBuffers(1, &ivbo1);
 	
-	delete[] vertices;
+	free(vertices);
 	delete[] indices;
 }
 
@@ -93,7 +94,7 @@ void sgMesh::generateVBO(bool dyn)
 	{
 		glGenBuffers(1, &vbo0);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo0);
-		glBufferData(GL_ARRAY_BUFFER, vertexnum*sizeof(sgVertex), vertices, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, vertexnum*vtxform, vertices, GL_STATIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		
 		glGenBuffers(1, &ivbo0);
@@ -106,7 +107,7 @@ void sgMesh::generateVBO(bool dyn)
 	{
 		glGenBuffers(1, &vbo0);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo0);
-		glBufferData(GL_ARRAY_BUFFER, vertexnum*sizeof(sgVertex), vertices, GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, vertexnum*vtxform, vertices, GL_DYNAMIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		
 		glGenBuffers(1, &ivbo0);
@@ -116,7 +117,7 @@ void sgMesh::generateVBO(bool dyn)
 		
 		glGenBuffers(1, &vbo1);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo1);
-		glBufferData(GL_ARRAY_BUFFER, vertexnum*sizeof(sgVertex), vertices, GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, vertexnum*vtxform, vertices, GL_DYNAMIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		
 		glGenBuffers(1, &ivbo1);
@@ -141,7 +142,7 @@ void sgMesh::updateVBO()
 		ivbo = ivbo1;
 		
 		glBindBuffer(GL_ARRAY_BUFFER, vbo0);
-		glBufferSubData(GL_ARRAY_BUFFER, 0, vertexnum*sizeof(sgVertex), vertices);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, vertexnum*vtxform, vertices);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		
 		glBindBuffer(GL_ARRAY_BUFFER, ivbo0);
@@ -153,7 +154,7 @@ void sgMesh::updateVBO()
 		ivbo = ivbo0;
 		
 		glBindBuffer(GL_ARRAY_BUFFER, vbo1);
-		glBufferSubData(GL_ARRAY_BUFFER, 0, vertexnum*sizeof(sgVertex), vertices);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, vertexnum*vtxform, vertices);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		
 		glBindBuffer(GL_ARRAY_BUFFER, ivbo1);
@@ -166,27 +167,67 @@ void sgMesh::calculateNormals()
 {
 	int i;
 	int n;
-	sgVertex *tempverts = new sgVertex[vertexnum];
+	sgVertex *tempvtx;
+	sgVertex *tempverts = (sgVertex*)malloc(vtxform*vertexnum);
 	
 	//Reset all normals
 	for(i = 0; i < vertexnum; i++)
 	{
-		vertices[i].normal.x = 0;
-		vertices[i].normal.y = 0;
-		vertices[i].normal.z = 0;
+		if(vtxform == BASIC)
+		{
+			tempvtx = &vertices[i];
+		}else if(vtxform == SECONDUV)
+		{
+			tempvtx = (sgVertex*)&((sgVertexUV*)vertices)[i];
+		}else if(vtxform == COLOR)
+		{
+			tempvtx = (sgVertex*)&((sgVertexCol*)vertices)[i];
+		}else if(vtxform == SECONDUVCOLOR)
+		{
+			tempvtx = (sgVertex*)&((sgVertexUVCol*)vertices)[i];
+		}
+		
+		tempvtx->normal.x = 0;
+		tempvtx->normal.y = 0;
+		tempvtx->normal.z = 0;
 	}
-	memcpy(tempverts, vertices, sizeof(sgVertex)*vertexnum);
+	memcpy(tempverts, vertices, vtxform*vertexnum);
 	
 	//Calculate the normal of each vertex
 	for(i = 0; i < indexnum; i += 3)
 	{
-		calculateFaceNormal(&vertices[indices[i]], &vertices[indices[i+2]], &vertices[indices[i+1]]);
+		if(vtxform == BASIC)
+		{
+			calculateFaceNormal(&vertices[indices[i]], &vertices[indices[i+2]], &vertices[indices[i+1]]);
+		}else if(vtxform == SECONDUV)
+		{
+			calculateFaceNormal((sgVertex*)&((sgVertexUV*)vertices)[indices[i]], (sgVertex*)&((sgVertexUV*)vertices)[indices[i+2]], (sgVertex*)&((sgVertexUV*)vertices)[indices[i+1]]);
+		}else if(vtxform == COLOR)
+		{
+			calculateFaceNormal((sgVertex*)&((sgVertexCol*)vertices)[indices[i]], (sgVertex*)&((sgVertexCol*)vertices)[indices[i+2]], (sgVertex*)&((sgVertexCol*)vertices)[indices[i+1]]);
+		}else if(vtxform == SECONDUVCOLOR)
+		{
+			calculateFaceNormal((sgVertex*)&((sgVertexUVCol*)vertices)[indices[i]], (sgVertex*)&((sgVertexUVCol*)vertices)[indices[i+2]], (sgVertex*)&((sgVertexUVCol*)vertices)[indices[i+1]]);
+		}
 	}
 	
 	//Normalize all normals
 	for(i = 0; i < vertexnum; i++)
 	{
-		vertices[i].normal.normalize();
+		if(vtxform == BASIC)
+		{
+			tempvtx = &vertices[i];
+		}else if(vtxform == SECONDUV)
+		{
+			tempvtx = (sgVertex*)&((sgVertexUV*)vertices)[i];
+		}else if(vtxform == COLOR)
+		{
+			tempvtx = (sgVertex*)&((sgVertexCol*)vertices)[i];
+		}else if(vtxform == SECONDUVCOLOR)
+		{
+			tempvtx = (sgVertex*)&((sgVertexUVCol*)vertices)[i];
+		}
+		tempvtx->normal.normalize();
 	}
 	
 	//Interpolate normals between doublicated vertices
@@ -194,17 +235,46 @@ void sgMesh::calculateNormals()
 	{
 		for(n = 0; n < vertexnum; n++)
 		{
-			if(vertices[i].position.dist(vertices[n].position) < 0.000001)
-				tempverts[i].normal += vertices[n].normal;
+			if(vtxform == BASIC)
+			{
+				tempvtx = &vertices[i];
+				if(vertices[i].position.dist(vertices[n].position) < 0.000001)
+					tempverts[i].normal += vertices[n].normal;
+			}else if(vtxform == SECONDUV)
+			{
+				if(((sgVertexUV*)vertices)[i].position.dist(((sgVertexUV*)vertices)[n].position) < 0.000001)
+					((sgVertexUV*)tempverts)[i].normal += ((sgVertexUV*)vertices)[n].normal;
+			}else if(vtxform == COLOR)
+			{
+				if(((sgVertexCol*)vertices)[i].position.dist(((sgVertexCol*)vertices)[n].position) < 0.000001)
+					((sgVertexCol*)tempverts)[i].normal += ((sgVertexCol*)vertices)[n].normal;
+			}else if(vtxform == SECONDUVCOLOR)
+			{
+				if(((sgVertexUVCol*)vertices)[i].position.dist(((sgVertexUVCol*)vertices)[n].position) < 0.000001)
+					((sgVertexUVCol*)tempverts)[i].normal += ((sgVertexUVCol*)vertices)[n].normal;
+			}
 		}
 	}
-	delete[] vertices;
+	free(vertices);
 	vertices = tempverts;
 	
 	//Normalize all normals
 	for(i = 0; i < vertexnum; i++)
 	{
-		vertices[i].normal.normalize();
+		if(vtxform == BASIC)
+		{
+			tempvtx = &vertices[i];
+		}else if(vtxform == SECONDUV)
+		{
+			tempvtx = (sgVertex*)&((sgVertexUV*)vertices)[i];
+		}else if(vtxform == COLOR)
+		{
+			tempvtx = (sgVertex*)&((sgVertexCol*)vertices)[i];
+		}else if(vtxform == SECONDUVCOLOR)
+		{
+			tempvtx = (sgVertex*)&((sgVertexUVCol*)vertices)[i];
+		}
+		tempvtx->normal.normalize();
 	}
 }
 
@@ -248,17 +318,59 @@ void sgMesh::calculateFaceNormal(sgVertex *vertex, sgVertex *neighbour_a, sgVert
 
 void sgMesh::invertTexCoordsX()
 {
-	for(int i = 0; i < vertexnum; i++)
+	if(vtxform == BASIC)
 	{
-		vertices[i].uv.x = 1.0f-vertices[i].uv.x;
+		for(int i = 0; i < vertexnum; i++)
+		{
+			vertices[i].uv.x = 1.0f-vertices[i].uv.x;
+		}
+	}else if(vtxform == SECONDUV)
+	{
+		for(int i = 0; i < vertexnum; i++)
+		{
+			((sgVertexUV*)vertices)[i].uv.x = 1.0f-((sgVertexUV*)vertices)[i].uv.x;
+		}
+	}else if(vtxform == COLOR)
+	{
+		for(int i = 0; i < vertexnum; i++)
+		{
+			((sgVertexCol*)vertices)[i].uv.x = 1.0f-((sgVertexCol*)vertices)[i].uv.x;
+		}
+	}else if(vtxform == SECONDUVCOLOR)
+	{
+		for(int i = 0; i < vertexnum; i++)
+		{
+			((sgVertexUVCol*)vertices)[i].uv.x = 1.0f-((sgVertexUVCol*)vertices)[i].uv.x;
+		}
 	}
 }
 
 void sgMesh::invertTexCoordsY()
 {
-	for(int i = 0; i < vertexnum; i++)
+	if(vtxform == BASIC)
 	{
-		vertices[i].uv.y = 1.0f-vertices[i].uv.y;
+		for(int i = 0; i < vertexnum; i++)
+		{
+			vertices[i].uv.y = 1.0f-vertices[i].uv.y;
+		}
+	}else if(vtxform == SECONDUV)
+	{
+		for(int i = 0; i < vertexnum; i++)
+		{
+			((sgVertexUV*)vertices)[i].uv.y = 1.0f-((sgVertexUV*)vertices)[i].uv.y;
+		}
+	}else if(vtxform == COLOR)
+	{
+		for(int i = 0; i < vertexnum; i++)
+		{
+			((sgVertexCol*)vertices)[i].uv.y = 1.0f-((sgVertexCol*)vertices)[i].uv.y;
+		}
+	}else if(vtxform == SECONDUVCOLOR)
+	{
+		for(int i = 0; i < vertexnum; i++)
+		{
+			((sgVertexUVCol*)vertices)[i].uv.y = 1.0f-((sgVertexUVCol*)vertices)[i].uv.y;
+		}
 	}
 }
 
@@ -268,21 +380,36 @@ void sgMesh::calcCullSphere()
 	sgVector3 vmax(-1000000000.0, -1000000000.0, -1000000000.0);
 	sgVector3 vmin(1000000000.0, 1000000000.0, 1000000000.0);
 	sgVector3 center;
+	sgVertex *tempvtx;
 	for(int i = 0; i < vertexnum; i++)
 	{
-		if(vertices[i].position.x > vmax.x)
-			vmax.x = vertices[i].position.x;
-		if(vertices[i].position.y > vmax.y)
-			vmax.y = vertices[i].position.y;
-		if(vertices[i].position.z > vmax.z)
-			vmax.z = vertices[i].position.z;
+		if(vtxform == BASIC)
+		{
+			tempvtx = &vertices[i];
+		}else if(vtxform == SECONDUV)
+		{
+			tempvtx = (sgVertex*)&((sgVertexUV*)vertices)[i];
+		}else if(vtxform == COLOR)
+		{
+			tempvtx = (sgVertex*)&((sgVertexCol*)vertices)[i];
+		}else if(vtxform == SECONDUVCOLOR)
+		{
+			tempvtx = (sgVertex*)&((sgVertexUVCol*)vertices)[i];
+		}
 		
-		if(vertices[i].position.x < vmin.x)
-			vmin.x = vertices[i].position.x;
-		if(vertices[i].position.y < vmin.y)
-			vmin.y = vertices[i].position.y;
-		if(vertices[i].position.z < vmin.z)
-			vmin.z = vertices[i].position.z;
+		if(tempvtx->position.x > vmax.x)
+			vmax.x = tempvtx->position.x;
+		if(tempvtx->position.y > vmax.y)
+			vmax.y = tempvtx->position.y;
+		if(tempvtx->position.z > vmax.z)
+			vmax.z = tempvtx->position.z;
+		
+		if(tempvtx->position.x < vmin.x)
+			vmin.x = tempvtx->position.x;
+		if(tempvtx->position.y < vmin.y)
+			vmin.y = tempvtx->position.y;
+		if(tempvtx->position.z < vmin.z)
+			vmin.z = tempvtx->position.z;
 	}
 	center = vmin+vmax;
 	center *= 0.5;
@@ -293,7 +420,21 @@ void sgMesh::calcCullSphere()
 	sgVector3 diff;
 	for(int i = 0; i < vertexnum; i++)
 	{
-		diff = vertices[i].position-center;
+		if(vtxform == BASIC)
+		{
+			tempvtx = &vertices[i];
+		}else if(vtxform == SECONDUV)
+		{
+			tempvtx = (sgVertex*)&((sgVertexUV*)vertices)[i];
+		}else if(vtxform == COLOR)
+		{
+			tempvtx = (sgVertex*)&((sgVertexCol*)vertices)[i];
+		}else if(vtxform == SECONDUVCOLOR)
+		{
+			tempvtx = (sgVertex*)&((sgVertexUVCol*)vertices)[i];
+		}
+		
+		diff = tempvtx->position-center;
 		temp = diff.length();
 		if(radius < temp)
 			radius = temp;

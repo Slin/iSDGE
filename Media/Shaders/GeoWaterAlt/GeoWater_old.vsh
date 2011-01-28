@@ -61,7 +61,7 @@ void main()
 	gl_Position = matProjViewModel*vec4(vertPos.x, vertPos.y+height, vertPos.z, 1.0);
 	projpos = gl_Position.xyw*vec3(-0.5, 0.5, 1.0);
 	
-	texcoord.xy = matTex[3].xy*0.3+vertpos;
+	texcoord.xy = matTex[3].xy*0.15+vertpos*0.3;
 	
 	vec3 norm = getNormal(vec3(0.0, height, 0.0), vec3(1.0, height2, 0.0), vec3(0.0, height3, 1.0));
 	light = 0.8+max(dot(norm, normalize(vec3(1.0, -1.0, 1.0))), 0.0)*0.25;

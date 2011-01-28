@@ -519,35 +519,51 @@ void sgRendererES2::renderObjects(sgCamera *cam, sgObject *first)
 				if(currbod->materials[i]->shader->position != -1)
 				{
 					glEnableVertexAttribArray(currbod->materials[i]->shader->position);
-					glVertexAttribPointer(currbod->materials[i]->shader->position, 3, GL_FLOAT, 0, sizeof(sgVertex), 0);
+					glVertexAttribPointer(currbod->materials[i]->shader->position, 3, GL_FLOAT, 0, currbod->meshs[i]->vtxform, 0);
 				}
 				if(currbod->materials[i]->shader->normal != -1)
 				{
 					glEnableVertexAttribArray(currbod->materials[i]->shader->normal);
-					glVertexAttribPointer(currbod->materials[i]->shader->normal, 3, GL_FLOAT, 0, sizeof(sgVertex), (const void*)12);
+					glVertexAttribPointer(currbod->materials[i]->shader->normal, 3, GL_FLOAT, 0, currbod->meshs[i]->vtxform, (const void*)12);
 				}
 				if(currbod->materials[i]->shader->texcoord0 != -1)
 				{
 					glEnableVertexAttribArray(currbod->materials[i]->shader->texcoord0);
-					glVertexAttribPointer(currbod->materials[i]->shader->texcoord0, 2, GL_FLOAT, 0, sizeof(sgVertex), (const void*)24);
+					glVertexAttribPointer(currbod->materials[i]->shader->texcoord0, 2, GL_FLOAT, 0, currbod->meshs[i]->vtxform, (const void*)24);
+				}
+				if(currbod->meshs[i]->vtxform == SECONDUV)
+				{
+					if(currbod->materials[i]->shader->texcoord1 != -1)
+					{
+						glEnableVertexAttribArray(currbod->materials[i]->shader->texcoord1);
+						glVertexAttribPointer(currbod->materials[i]->shader->texcoord1, 2, GL_FLOAT, 0, currbod->meshs[i]->vtxform, (const void*)32);
+					}
 				}
 				glBindBuffer(GL_ARRAY_BUFFER, 0);
 			}else
 			{
 				if(currbod->materials[i]->shader->position != -1)
 				{
-					glVertexAttribPointer(currbod->materials[i]->shader->position, 3, GL_FLOAT, 0, sizeof(sgVertex), &currbod->meshs[i]->vertices->position.x);
+					glVertexAttribPointer(currbod->materials[i]->shader->position, 3, GL_FLOAT, 0, currbod->meshs[i]->vtxform, &currbod->meshs[i]->vertices->position.x);
 					glEnableVertexAttribArray(currbod->materials[i]->shader->position);
 				}
 				if(currbod->materials[i]->shader->normal != -1)
 				{
-					glVertexAttribPointer(currbod->materials[i]->shader->normal, 3, GL_FLOAT, 0, sizeof(sgVertex), &currbod->meshs[i]->vertices->normal.x);
+					glVertexAttribPointer(currbod->materials[i]->shader->normal, 3, GL_FLOAT, 0, currbod->meshs[i]->vtxform, &currbod->meshs[i]->vertices->normal.x);
 					glEnableVertexAttribArray(currbod->materials[i]->shader->normal);
 				}
 				if(currbod->materials[i]->shader->texcoord0 != -1)
 				{
-					glVertexAttribPointer(currbod->materials[i]->shader->texcoord0, 2, GL_FLOAT, 0, sizeof(sgVertex), &currbod->meshs[i]->vertices->uv.x);
+					glVertexAttribPointer(currbod->materials[i]->shader->texcoord0, 2, GL_FLOAT, 0, currbod->meshs[i]->vtxform, &currbod->meshs[i]->vertices->uv.x);
 					glEnableVertexAttribArray(currbod->materials[i]->shader->texcoord0);
+				}
+				if(currbod->meshs[i]->vtxform == SECONDUV)
+				{
+					if(currbod->materials[i]->shader->texcoord1 != -1)
+					{
+						glVertexAttribPointer(currbod->materials[i]->shader->texcoord1, 2, GL_FLOAT, 0, currbod->meshs[i]->vtxform, &((sgVertexUV*)currbod->meshs[i]->vertices)->uv2.x);
+						glEnableVertexAttribArray(currbod->materials[i]->shader->texcoord1);
+					}
 				}
 			}
 			

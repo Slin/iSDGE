@@ -27,23 +27,24 @@ attribute vec3 vertPos;
 attribute vec2 vertTexcoord0;
 
 uniform mat4 matProjViewModel;
-uniform mat4 matModel;
-uniform vec3 vPosition;
 uniform mat4 matTex;
+uniform mat4 matModel;
+
+uniform vec3 vPosition;
 
 varying vec2 texcoord;
 varying vec3 projpos;
-varying float light;
-varying float camdist;
+varying vec3 worldpos;
+varying vec3 viewpos;
 
 void main()
 {
 	gl_Position = matProjViewModel*vec4(vertPos, 1.0);
-	projpos = gl_Position.xyw*vec3(-0.5, 0.5, 1.0);
-	
-	vec2 vertpos = (matModel*vec4(vertPos, 1.0)).xz;
-	texcoord.xy = matTex[3].xy*0.3+vertpos;
-	light = 0.95;
-	
-	camdist = distance(vertpos, vPosition.xz)-150.0;
+	projpos = gl_Position.xyw;
+	projpos.xy *= vec2(-0.5, 0.5);
+	projpos.xy += projpos.z*0.5;
+	worldpos = (matModel*vec4(vertPos, 1.0)).xyz;
+	texcoord.xy = (matTex*vec4(worldpos.xz, 1.0, 1.0)).xy;
+	worldpos *= 0.002;
+	viewpos = vPosition*0.002;
 }

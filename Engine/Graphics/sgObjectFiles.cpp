@@ -30,6 +30,7 @@
 #include "sgMaterial.h"
 #include "sgMesh.h"
 #include "sgObjectBody.h"
+#include "sgDebug.h"
 
 namespace sgObjectFiles
 {
@@ -66,7 +67,7 @@ namespace sgObjectFiles
 			meshes.push_back(new sgSGMMesh);
 			meshes[meshes.size()-1]->id_ = atoi(sgXML::valueOfAttribute("id", meshs));
 			unsigned int matid = atoi(sgXML::valueOfAttribute("material", meshs));
-//			unsigned int uvcount = [[TBXML valueOfAttributeNamed:@"texcoordcount" forElement:meshs] intValue];
+			unsigned int uvcount = atoi(sgXML::valueOfAttribute("texcoordcount", meshs));
 			for(int i = 0; i < materials.size(); i++)
 			{
 				if(materials[i]->id_ == matid)
@@ -76,32 +77,70 @@ namespace sgObjectFiles
 				}
 			}
 			
+			meshes[meshes.size()-1]->vtxformat = BASIC;
+			if(uvcount > 1)
+				meshes[meshes.size()-1]->vtxformat = SECONDUV;
+			
 			//Positions
 			TBXMLElement *vpos = sgXML::childElement("vertexpos", meshs);
 			char *vposstr = (char*)sgXML::textForElement(vpos);
 			char *vposlist = strtok(vposstr, " ");
-			sgVertex vert;
+			sgVertex *vert = (sgVertex*)malloc(meshes[meshes.size()-1]->vtxformat);
 			while(vposlist != NULL)
 			{
-				vert.position.x = atof(vposlist);
+				vert->position.x = atof(vposlist);
 				vposlist = strtok(NULL, " ");
-				vert.position.y = atof(vposlist);
+				vert->position.y = atof(vposlist);
 				vposlist = strtok(NULL, " ");
-				vert.position.z = atof(vposlist);
+				vert->position.z = atof(vposlist);
 				vposlist = strtok(NULL, " ");
-				meshes[meshes.size()-1]->vertices.push_back(vert);
+				if(meshes[meshes.size()-1]->vtxformat == BASIC)
+					meshes[meshes.size()-1]->vertices_.push_back(*vert);
+				else if(meshes[meshes.size()-1]->vtxformat == SECONDUV)
+					meshes[meshes.size()-1]->vertices_uv.push_back(*((sgVertexUV*)vert));
 			}
 			
 			//Texcoords
-			TBXMLElement *vuv = sgXML::childElement("vertextexcoord", meshs);
-			char *vuvstr = (char*)sgXML::textForElement(vuv);
-			char *vuvlist = strtok(vuvstr, " ");
-			for(int i = 0; i < meshes[meshes.size()-1]->vertices.size(); i++)
+			TBXMLElement *vuv;
+			char *vuvstr;
+			char *vuvlist;
+			vuv = sgXML::childElement("vertextexcoord", meshs);
+			for(int uvset = 0; uvset < uvcount; uvset += 1)
 			{
-				meshes[meshes.size()-1]->vertices[i].uv.x = atof(vuvlist);
-				vuvlist = strtok(NULL, " ");
-				meshes[meshes.size()-1]->vertices[i].uv.y = atof(vuvlist);
-				vuvlist = strtok(NULL, " ");
+				vuvstr = (char*)sgXML::textForElement(vuv);
+				vuvlist = strtok(vuvstr, " ");
+				if(meshes[meshes.size()-1]->vtxformat == BASIC)
+				{
+					for(int i = 0; i < meshes[meshes.size()-1]->vertices_.size(); i++)
+					{
+						meshes[meshes.size()-1]->vertices_[i].uv.x = atof(vuvlist);
+						vuvlist = strtok(NULL, " ");
+						meshes[meshes.size()-1]->vertices_[i].uv.y = atof(vuvlist);
+						vuvlist = strtok(NULL, " ");
+					}
+				}else if(meshes[meshes.size()-1]->vtxformat == SECONDUV)
+				{
+					if(uvset == 0)
+					{
+						for(int i = 0; i < meshes[meshes.size()-1]->vertices_uv.size(); i++)
+						{
+							meshes[meshes.size()-1]->vertices_uv[i].uv.x = atof(vuvlist);
+							vuvlist = strtok(NULL, " ");
+							meshes[meshes.size()-1]->vertices_uv[i].uv.y = atof(vuvlist);
+							vuvlist = strtok(NULL, " ");
+						}
+					}else if(uvset == 1)
+					{
+						for(int i = 0; i < meshes[meshes.size()-1]->vertices_uv.size(); i++)
+						{
+							meshes[meshes.size()-1]->vertices_uv[i].uv2.x = atof(vuvlist);
+							vuvlist = strtok(NULL, " ");
+							meshes[meshes.size()-1]->vertices_uv[i].uv2.y = atof(vuvlist);
+							vuvlist = strtok(NULL, " ");
+						}
+					}
+				}
+				vuv = sgXML::nextSibling("vertextexcoord", vuv);
 			}
 			
 			//Indices
@@ -114,118 +153,8 @@ namespace sgObjectFiles
 				vindlist = strtok(NULL, " ");
 			}
 			
-/*			//Bones
-			TBXMLElement *vbone = [TBXML childElementNamed:@"bone" parentElement:meshs];
-			while(vbone != NULL)
-			{
-				sgBone bone;
-				bone.keepdata = TRUE;
-				bone.name = std::string([[TBXML valueOfAttributeNamed:@"name" forElement:vbone] UTF8String]);
-				TBXMLElement *vbel = [TBXML childElementNamed:@"matrix" parentElement:vbone];
-				float mat[16];
-				NSString *vbelstr = [TBXML textForElement:vbel];
-				NSArray *vbellist = [vbelstr componentsSeparatedByString:@" "];
-				for(int i = 0; i < [vbellist count]; i++)
-				{
-					mat[i] = [[vbellist objectAtIndex:i] floatValue];
-				}
-				bone.matbase.setArray(mat);
-				
-				vbel = [TBXML childElementNamed:@"vertsweights" parentElement:vbone];
-				vbelstr = [TBXML textForElement:vbel];
-				vbellist = [vbelstr componentsSeparatedByString:@" "];
-				bone.indnum = [vbellist count]*0.5;
-				bone.indices = new unsigned int[bone.indnum];
-				bone.weights = new float[bone.indnum];
-				for(int i = 0; i < [vbellist count]; i += 2)
-				{
-					bone.indices[i/2] = [[vbellist objectAtIndex:i+0] intValue];
-					bone.weights[i/2] = [[vbellist objectAtIndex:i+1] floatValue];
-				}
-				
-				meshes[meshes.size()-1]->bones.push_back(bone);
-				vbone = [TBXML nextSiblingNamed:@"bone" searchFromElement:vbone];
-			}*/
-			
 			meshs = sgXML::nextSibling("mesh", meshs);
 		}
-		
-		//Get animations
-/*		TBXMLElement *vanm = [TBXML childElementNamed:@"animation" parentElement:root];
-		while(vanm != NULL)
-		{
-			TBXMLElement *vael = [TBXML childElementNamed:@"bone" parentElement:vanm];
-			while(vael != NULL)
-			{
-				sgBoneAnimation *animation = new sgBoneAnimation;
-				sgRessourceManager::addRessource(animation);
-				
-				animation->name = std::string([[TBXML valueOfAttributeNamed:@"name" forElement:vanm] UTF8String]);
-				animation->duration = [[TBXML valueOfAttributeNamed:@"duration" forElement:vanm] floatValue];
-				
-				for(int i = 0; i < meshes.size(); i++)
-				{
-					unsigned int *ptr = new unsigned int[2];
-					for(int n = 0; n < meshes[i]->bones.size(); n++)
-					{
-						if(meshes[i]->bones[n].name.compare(std::string([[TBXML valueOfAttributeNamed:@"name" forElement:vael] UTF8String])) == 0)
-						{
-							meshes[i]->bones[n].animations.push_back(animation);
-							ptr[0] = n;
-							ptr[1] = meshes[i]->bones[n].animations.size()-1;
-							meshes[i]->animations.insert(std::pair<std::string, unsigned int*>(animation->name, ptr));
-							break;
-						}
-					}
-				}
-				
-				TBXMLElement *vabel = [TBXML childElementNamed:@"positions" parentElement:vael];
-				NSString *vabelstr = [TBXML textForElement:vabel];
-				NSArray *vabellist = [vabelstr componentsSeparatedByString:@" "];
-				animation->posnum = [vabellist count]/4;
-				animation->postimes = new float[animation->posnum];
-				animation->positions = new sgVector3[animation->posnum];
-				for(int i = 0; i < [vabellist count]; i += 4)
-				{
-					animation->postimes[i/4] = [[vabellist objectAtIndex:i+0] floatValue];
-					animation->positions[i/4].x = [[vabellist objectAtIndex:i+1] floatValue];
-					animation->positions[i/4].y = [[vabellist objectAtIndex:i+2] floatValue];
-					animation->positions[i/4].z = [[vabellist objectAtIndex:i+3] floatValue];
-				}
-				
-				vabel = [TBXML childElementNamed:@"scales" parentElement:vael];
-				vabelstr = [TBXML textForElement:vabel];
-				vabellist = [vabelstr componentsSeparatedByString:@" "];
-				animation->scalenum = [vabellist count]/4;
-				animation->scaletimes = new float[animation->scalenum];
-				animation->scales = new sgVector3[animation->scalenum];
-				for(int i = 0; i < [vabellist count]; i += 4)
-				{
-					animation->scaletimes[i/4] = [[vabellist objectAtIndex:i+0] floatValue];
-					animation->scales[i/4].x = [[vabellist objectAtIndex:i+1] floatValue];
-					animation->scales[i/4].y = [[vabellist objectAtIndex:i+2] floatValue];
-					animation->scales[i/4].z = [[vabellist objectAtIndex:i+3] floatValue];
-				}
-				
-				vabel = [TBXML childElementNamed:@"rotations" parentElement:vael];
-				vabelstr = [TBXML textForElement:vabel];
-				vabellist = [vabelstr componentsSeparatedByString:@" "];
-				animation->rotnum = [vabellist count]/5;
-				animation->rottimes = new float[animation->rotnum];
-				animation->rotations = new sgQuaternion[animation->rotnum];
-				for(int i = 0; i < [vabellist count]; i += 5)
-				{
-					animation->rottimes[i/5] = [[vabellist objectAtIndex:i+0] floatValue];
-					animation->rotations[i/5].w = [[vabellist objectAtIndex:i+1] floatValue];
-					animation->rotations[i/5].x = [[vabellist objectAtIndex:i+2] floatValue];
-					animation->rotations[i/5].y = [[vabellist objectAtIndex:i+3] floatValue];
-					animation->rotations[i/5].z = [[vabellist objectAtIndex:i+4] floatValue];
-				}
-				
-				vael = [TBXML nextSiblingNamed:@"bone" searchFromElement:vael];
-			}
-			vanm = [TBXML nextSiblingNamed:@"animation" searchFromElement:vanm];
-		}*/
 		
 		delete tbxml;
 		
@@ -233,38 +162,21 @@ namespace sgObjectFiles
 		{
 			sgMesh *mesh_ = new sgMesh;
 			
-			mesh_->vtxform = BASIC;
-			mesh_->vertexnum = meshes[meshnum]->vertices.size();
-			mesh_->indexnum = meshes[meshnum]->indices.size();
-			
-			mesh_->vertices = new sgVertex[mesh_->vertexnum];
-			mesh_->indices = new unsigned short[mesh_->indexnum];
-
-			memcpy(mesh_->vertices, &meshes[meshnum]->vertices[0], mesh_->vertexnum*sizeof(sgVertex));
-			memcpy(mesh_->indices, &meshes[meshnum]->indices[0], mesh_->indexnum*sizeof(unsigned short));
-			
-/*			mesh_->bonenum = meshes[meshnum]->bones.size();
-			if(mesh_->bonenum > 0)
+			mesh_->vtxform = meshes[meshnum]->vtxformat;
+			if(meshes[meshes.size()-1]->vtxformat == BASIC)
 			{
-				mesh_->bones = new sgBone[mesh_->bonenum];
-				
-				for(int i = 0; i < mesh_->bonenum; i++)
-				{
-					mesh_->bones[i].name = meshes[meshnum]->bones[i].name;
-					mesh_->bones[i].indnum = meshes[meshnum]->bones[i].indnum;
-					mesh_->bones[i].indices = meshes[meshnum]->bones[i].indices;
-					mesh_->bones[i].weights = meshes[meshnum]->bones[i].weights;
-					mesh_->bones[i].matbase = meshes[meshnum]->bones[i].matbase;
-					
-					for(int n = 0; n < meshes[meshnum]->bones[i].animations.size(); n++)
-					{
-						mesh_->bones[i].animations.push_back(meshes[meshnum]->bones[i].animations[n]);
-					}
-				}
-				
-				mesh_->animations = meshes[meshnum]->animations;
-				mesh_->prepareAnimation();
-			}*/
+				mesh_->vertexnum = meshes[meshnum]->vertices_.size();
+				mesh_->vertices = new sgVertex[mesh_->vertexnum];
+				memcpy(mesh_->vertices, &meshes[meshnum]->vertices_[0], mesh_->vertexnum*BASIC);
+			}else if(meshes[meshes.size()-1]->vtxformat == SECONDUV)
+			{
+				mesh_->vertexnum = meshes[meshnum]->vertices_uv.size();
+				mesh_->vertices = (sgVertex*)new sgVertexUV[mesh_->vertexnum];
+				memcpy(mesh_->vertices, &meshes[meshnum]->vertices_uv[0], mesh_->vertexnum*SECONDUV);
+			}
+			mesh_->indexnum = meshes[meshnum]->indices.size();
+			mesh_->indices = new unsigned short[mesh_->indexnum];
+			memcpy(mesh_->indices, &meshes[meshnum]->indices[0], mesh_->indexnum*sizeof(unsigned short));
 
 			mesh_->calculateNormals();
 			mesh_->generateVBO();
@@ -275,6 +187,10 @@ namespace sgObjectFiles
 			if(meshes[meshnum]->material->texnames.size() > 0)
 			{
 				obj->materials.push_back(sgMaterial::getMaterial(meshes[meshnum]->material->texnames[0].c_str()));
+				for(int tex = 1; tex < meshes[meshnum]->material->texnames.size(); tex++)
+				{
+					obj->materials[obj->materials.size()-1]->setTexture2D(-1, meshes[meshnum]->material->texnames[tex].c_str());
+				}
 			}else
 			{
 				obj->materials.push_back(sgMaterial::getMaterial());

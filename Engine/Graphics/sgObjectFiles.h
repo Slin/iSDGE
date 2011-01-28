@@ -53,10 +53,12 @@ namespace sgObjectFiles
 	{
 		unsigned int id_;
 		sgSGMMaterial *material;
-		std::vector<sgVertex> vertices;
+		vertexformat vtxformat;
+		std::vector<sgVertex> vertices_;
+		std::vector<sgVertexUV> vertices_uv;
+		std::vector<sgVertexCol> vertices_col;
+		std::vector<sgVertexUVCol> vertices_uvcol;
 		std::vector<unsigned short> indices;
-//		std::vector<sgBone> bones;
-//		std::multimap<std::string, unsigned int*> animations;
 	};
 
 

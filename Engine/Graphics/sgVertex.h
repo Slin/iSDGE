@@ -33,9 +33,9 @@
 enum vertexformat
 {
 	BASIC = 32,
-	SECONDUV = 34,
-	COLOR = 36,
-	SECONDUVCOLOR = 38
+	SECONDUV = 40,
+	COLOR = 48,
+	SECONDUVCOLOR = 56
 };
 
 /**
@@ -57,21 +57,30 @@ class sgVertex
 		sgVector2 uv;
 };
 
-struct sgVertexUV : sgVertex
+class sgVertexUV
 {
 	public:
+		sgVector3 position;
+		sgVector3 normal;
+		sgVector2 uv;
 		sgVector2 uv2;
 };
 
-struct sgVertexCol : sgVertex
+class sgVertexCol
 {
 	public:
+		sgVector3 position;
+		sgVector3 normal;
+		sgVector2 uv;
 		sgVector4 color;
 };
 
-struct sgVertexUVCol : sgVertex
+class sgVertexUVCol
 {
 	public:
+		sgVector3 position;
+		sgVector3 normal;
+		sgVector2 uv;
 		sgVector2 uv2;
 		sgVector4 color;
 };

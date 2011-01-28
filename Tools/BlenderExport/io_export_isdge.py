@@ -4,7 +4,7 @@
 bl_addon_info = {
 	'name': 'Export: iSDGE model format',
 	'author': 'Nils Daumann',
-	'version': '0.1 2010/07/26',
+	'version': '0.2 2011/01/25',
 	'blender': (2, 5, 3),
 	'category': 'Import/Export',
 	'location': 'File > Export'}
@@ -17,209 +17,256 @@ import os
 import bpy
 
 
-#################################
-#Get triangles
-#################################
-class tri_wrapper(object):
-	__slots__ = 'vertex_index', 'mat', 'image', 'faceuvs', 'offset'
-	def __init__(self, vindex = (0,0,0), mat = None, image = None, faceuvs = None):
-		self.vertex_index = vindex
-		self.mat = mat
-		self.image = image
-		self.faceuvs = faceuvs
-		self.offset = [0, 0, 0]
+#Container classes for a better overview
+class c_vertex(object):
+	__slots__ = 'blendindex', 'position', 'uvs', 'color'
+	def __init__(self, blendindex, position = (0,0,0), uvs = [], color = None):
+		self.blendindex = blendindex	#index within the blender mesh
+		self.position = position
+		self.uvs = uvs
+		self.color = color
 
-def uv_key(uv):
-	return round(uv[0], 6), round(uv[1], 6)
-
-def extract_triangles(mesh):
-	tri_list = []
-	do_uv = len(mesh.uv_textures)
-
-	img = None
-	for i, face in enumerate(mesh.faces):
-		f_v = face.verts
-
-		uf = mesh.active_uv_texture.data[i] if do_uv else None
-
-		if do_uv:
-			f_uv = uf.uv
-			img = uf.image if uf else None
-			if img: img = img.name
-
-		if len(f_v)==3:
-			new_tri = tri_wrapper((f_v[0], f_v[1], f_v[2]), face.material_index, img)
-			if (do_uv): new_tri.faceuvs = uv_key(f_uv[0]), uv_key(f_uv[1]), uv_key(f_uv[2])
-			tri_list.append(new_tri)
-
-		else: #it's a quad
-			new_tri = tri_wrapper((f_v[0], f_v[1], f_v[2]), face.material_index, img)
-			new_tri_2 = tri_wrapper((f_v[0], f_v[2], f_v[3]), face.material_index, img)
-
-			if (do_uv):
-				new_tri.faceuvs = uv_key(f_uv[0]), uv_key(f_uv[1]), uv_key(f_uv[2])
-				new_tri_2.faceuvs = uv_key(f_uv[0]), uv_key(f_uv[2]), uv_key(f_uv[3])
-
-			tri_list.append(new_tri)
-			tri_list.append(new_tri_2)
-
-	return tri_list
-
-
-#################################
-#Get arrays
-#################################
-class _point_uv(object):
-	__slots__ = 'uv'
-	def __init__(self, point=(0.0,0.0)):
-		self.uv = point
-
-def extract_arrays(verts, tris):
-	points_list = []
-	uv_list = []
-	index_list = []
-	
-	# initialize a list of UniqueLists, one per vertex:
-	unique_uvs= [{} for i in range(len(verts))]
-
-	# for each face uv coordinate, add it to the UniqueList of the vertex
-	for tri in tris:
-		for i in range(3):
-			context_uv_vert= unique_uvs[tri.vertex_index[i]]
-			uvkey= tri.faceuvs[i]
-
-			offset_index__uv_3ds = context_uv_vert.get(uvkey)
-
-			if not offset_index__uv_3ds:
-				offset_index__uv_3ds = context_uv_vert[uvkey] = len(context_uv_vert), _point_uv(uvkey)
-
-			tri.offset[i] = offset_index__uv_3ds[0]
-	
-	# Now we need to duplicate every vertex as many times as it has uv coordinates and make sure the
-	# faces refer to the new face indices:
-	vert_index = 0
-	for i,vert in enumerate(verts):
-		index_list.append(vert_index)
-
-		pt = vert.co
-		uvmap = [None] * len(unique_uvs[i])
-		for ii, uv_3ds in unique_uvs[i].values():
-			# add a vertex duplicate to the vertex_array for every uv associated with this vertex:
-			points_list.append(pt)
-			# add the uv coordinate to the uv array:
-			# This for loop does not give uv's ordered by ii, so we create a new map
-			# and add the uv's later
-			uvmap[ii] = uv_3ds
-
-		# Add the uv's in the correct order
-		for uv_3ds in uvmap:
-			# add the uv coordinate to the uv array:
-			uv_list.append(uv_3ds)
-
-		vert_index += len(unique_uvs[i])
-
-	# Make sure the triangle vertex indices now refer to the new vertex list:
-	for tri in tris:
-		for i in range(3):
-			tri.offset[i] += index_list[tri.vertex_index[i]]
-		tri.vertex_index = tri.offset
-	
-	points_dict = {}
-	uv_dict = {}
-	index_dict = {}
-	index_swap_dict = {}
-	material_dict = {}
-	
-	#sort vertices depending on the texture
-	for tri in tris:
-		if tri.image not in points_dict:
-			points_dict[tri.image] = []
-			uv_dict[tri.image] = []
+class c_triangle(object):
+	__slots__ = 'vertices', 'images', 'newindices'
+	def __init__(self, vertices = [], images = [], newindices = None):
+		self.vertices = vertices
+		self.images = images
+		self.newindices = newindices		#indices within the c_mesh
 		
-		if tri.image not in index_swap_dict:
-			index_swap_dict[tri.image] = {}
-		
-		if tri.vertex_index[0] not in index_swap_dict[tri.image]:
-			(index_swap_dict[tri.image])[tri.vertex_index[0]] = len(points_dict[tri.image])
-			points_dict[tri.image].append(points_list[tri.vertex_index[0]])
-			uv_dict[tri.image].append(uv_list[tri.vertex_index[0]])
-		
-		if tri.vertex_index[1] not in index_swap_dict[tri.image]:
-			(index_swap_dict[tri.image])[tri.vertex_index[1]] = len(points_dict[tri.image])
-			points_dict[tri.image].append(points_list[tri.vertex_index[1]])
-			uv_dict[tri.image].append(uv_list[tri.vertex_index[1]])
+class c_mesh(object):
+	__slots__ = 'triangles', 'images', 'vertices', 'indices'
+	def __init__(self, images = [], triangles = [], vertices = [], indices = []):
+		self.vertices = vertices
+		self.triangles = triangles
+		self.images = images
+		self.indices = indices
+	
+	#doublicates face vertices with different uv coords and sets the new index
+	def uvsplit(self):
+		for tri in self.triangles:
+			ind = []
+			for trivert in tri.vertices:
+				check = 0
+				for i, vert in enumerate(self.vertices):
+					if vert == trivert:
+						ind.append(i)
+						check = 1
+						break
+				if check == 0:
+					ind.append(len(self.vertices))
+					self.vertices.append(trivert)
 			
-		if tri.vertex_index[2] not in index_swap_dict[tri.image]:
-			(index_swap_dict[tri.image])[tri.vertex_index[2]] = len(points_dict[tri.image])
-			points_dict[tri.image].append(points_list[tri.vertex_index[2]])
-			uv_dict[tri.image].append(uv_list[tri.vertex_index[2]])
-	
-	#correct the indices
-	for tri in tris:
-		if tri.image not in index_dict:
-			index_dict[tri.image] = []
-		index_dict[tri.image].append((index_swap_dict[tri.image])[tri.vertex_index[2]])
-		index_dict[tri.image].append((index_swap_dict[tri.image])[tri.vertex_index[1]])
-		index_dict[tri.image].append((index_swap_dict[tri.image])[tri.vertex_index[0]])
+			self.indices.append(ind[0])
+			self.indices.append(ind[1])
+			self.indices.append(ind[2])
+			
+
+
+class c_object(object):
+	__slots__ = 'meshs'
+	#splits the blender object into triangle meshs with the same textures
+	def __init__(self, obj):
+		triangles = []
+		#generate vertices and triangles
+		for i, face in enumerate(obj.faces):
+			images = []
+			for tex in obj.uv_textures:
+				imgpath = tex.data[i].image.filepath
+				img = imgpath.split('/')
+				images.append(img[len(img)-1])
+			
+			verts = []
+			for n, vertind in enumerate(face.vertices):
+				uvs = []
+				for tex in obj.uv_textures:
+					uvs.append((round(tex.data[i].uv[n][0], 6), round(tex.data[i].uv[n][1], 6)))
+				color = None
+				if len(obj.vertex_colors) > 0:
+					alpha = 1.0
+					if len(obj.vertex_colors) > 1:
+						alpha = obj.vertex_colors[1].data[i].color1[0]
+					if n == 0:
+						color = (obj.vertex_colors[0].data[i].color1[0], obj.vertex_colors[0].data[i].color1[1], obj.vertex_colors[0].data[i].color1[2], alpha)
+					if n == 1:
+						color = (obj.vertex_colors[0].data[i].color2[0], obj.vertex_colors[0].data[i].color2[1], obj.vertex_colors[0].data[i].color2[2], alpha)
+					if n == 2:
+						color = (obj.vertex_colors[0].data[i].color3[0], obj.vertex_colors[0].data[i].color3[1], obj.vertex_colors[0].data[i].color3[2], alpha)
+					if n == 3:
+						color = (obj.vertex_colors[0].data[i].color4[0], obj.vertex_colors[0].data[i].color4[1], obj.vertex_colors[0].data[i].color4[2], alpha)
+				verts.append(c_vertex(vertind, obj.vertices[vertind].co, uvs, color))
+			
+			if len(face.vertices) == 3:
+				triangles.append(c_triangle(verts, images))
+			else:
+				tri1 = [verts[0], verts[1], verts[2]]
+				tri2 = [verts[0], verts[2], verts[3]]
+				triangles.append(c_triangle(tri1, images))
+				triangles.append(c_triangle(tri2, images))
 		
-		#collect materials
-		material_dict[tri.image] = tri.image
+		#generate meshs
+		self.meshs = []
+		self.meshs.append(c_mesh(triangles[0].images))
+		for tri in triangles:
+			check = 0
+			for mesh in self.meshs:
+				if mesh.images == tri.images:
+					mesh.triangles.append(tri)
+					check = 1
+					break
+			if check == 0:
+				self.meshs.append(c_mesh(tri.images, [tri]))
+		
+		for mesh in self.meshs:
+			mesh.uvsplit()
 	
-	return points_dict, uv_dict, index_dict, material_dict
+	
+	
+	def write(self, filename):
+		print("open or create file")
+		file = open( filename, 'w' )
+	
+		file.write("<?xml version=\"1.0\" ?>\n")
+		file.write("<environment>\n")
+		
+		print("write materials")
+		for i, mesh in enumerate(self.meshs):
+			file.write("\t<material id=\"%i\">\n" % i)
+			file.write("\t\t<textures>")
+			for img in mesh.images:
+				file.write("%s " % img)
+			file.write("</textures>\n")
+			file.write("\t</material>\n")
+		
+		file.write("\n")
+		
+		print("write meshs")
+		for i, mesh in enumerate(self.meshs):
+			file.write("\t<mesh id=\"%i\" material=\"%i\" texcoordcount=\"%i\">\n" % (i, i, len(mesh.images)))
+		
+			print("write vertices")
+			file.write("\t\t<vertexpos>")
+			for vertex in mesh.vertices:
+				file.write("%f %f %f " % (-vertex.position.x, vertex.position.z, vertex.position.y))
+			file.write("</vertexpos>\n")
+		
+			print("write texcoords")
+			set = 0
+			while set < len(mesh.images):
+				file.write("\t\t<vertextexcoord id=\"%i\">" % set)
+				for vertex in mesh.vertices:
+					file.write("%f %f " % (vertex.uvs[set][0], 1.0-vertex.uvs[set][1]))
+				file.write("</vertextexcoord>\n")
+				set += 1
+				
+			if mesh.vertices[0].color != None:
+				print("write colors")
+				file.write("\t\t<vertexcol>")
+				for vertex in mesh.vertices:
+					file.write("%f %f %f %f " % (vertex.color[0], vertex.color[1], vertex.color[2], vertex.color[3]))
+				file.write("</vertexcol>\n")
+		
+			print("write indices")
+			file.write("\t\t<indices>")
+			for ind in mesh.indices:
+				file.write("%i " % ind)
+			file.write("</indices>\n")
+			file.write("\t</mesh>\n")
+			
+		file.write("\n")
+		
+		file.write("</environment>\n")
+	
+		file.close()
+		print("finished export")
 
 
 #################################
 #Writing the file
 #################################
 def exportobject(filename, context):
+	
 	bpy.ops.object.mode_set(mode='OBJECT')
+	obj = c_object(context.object.data)
+	obj.write(filename)
 	
-	print("convert quads to tris")
-	tri_list = extract_triangles(context.object.data)
-	print("convert face uv to vertex uv")
-	point_dict, uv_dict, index_dict, material_dict = extract_arrays(context.object.data.verts, tri_list)
 	
-	print("open or create file")
-	file = open( filename, 'w' )
+#   for i, modi in enumerate(context.object.modifiers):
+#	   if modi.type == 'ARMATURE':
+#		   print("write armature")
+			
+#		   modi.object.data.pose_position = 'REST'
+#		   file.write("\t<armature name=\"%s\">\n" % modi.object.data.name)
+#		   for i, bone in enumerate(modi.object.data.bones):
+#			   for parnum, parent in enumerate(modi.object.data.bones):
+#				   if parent == bone.parent:
+#					   break
+#				   elif parnum == (len(modi.object.data.bones)-1):
+#					   parnum = -1
+				
+#			   file.write("\t\t<name=\"%s\" bone id=\"%i\" parent=\"%i\">\n" % (bone.name, (i+1), (parnum+1)))
+#			   file.write("\t\t\t<abshead>%f %f %f</abshead>\n" % (bone.head_local.x, bone.head_local.y, bone.head_local.z))
+#			   file.write("\t\t\t<abstail>%f %f %f</abstail>\n" % (bone.tail_local.x, bone.tail_local.y, bone.tail_local.z))
+				
+#			   for n, mat in enumerate(weight_dict):
+#				   iseffected = 0
+#				   for ind in weight_dict[mat]:
+#					   for group in context.object.data.vertices[ind[0]].groups:
+#						   if context.object.vertex_groups[group.group].name == bone.name:
+#							   iseffected += 1
+					
+#				   if iseffected > 0:
+#					   file.write("\t\t\t<vertices mesh=\"%i\">" % n)
+#					   for ind in weight_dict[mat]:
+#						   for group in context.object.data.vertices[ind[0]].groups:
+#							   if context.object.vertex_groups[group.group].name == bone.name:
+#								   file.write("%i %f " % (ind[1], group.weight))
+#					   file.write("</vertices>\n")
+				
+#			   file.write("\t\t</bone>\n")
+#		   file.write("\t</armature>\n\n")
+	
+#		   print("write animations")
+#		   modi.object.data.pose_position = 'POSE'
+#		   for act in bpy.data.actions:
+#			   actinuse = 0
+				
+#			   for group in act.groups:
+#				   for bone in modi.object.data.bones:
+#					   if group.name == bone.name:
+#						   actinuse = 1
+#						   break
+#				   if actinuse == 1:
+#					   break
+#			   if not len(act.fcurves):
+#				   actinuse = 0
+				
+#			   if actinuse == 1:
+#				   keyframes = []
+#				   for group in act.groups:
+#					   for fc in group.channels:
+#						   for kf in fc.keyframe_points:
+#							   if int(kf.co[0]) not in keyframes:
+#								   keyframes.append(int(kf.co[0]))
+					
+#				   framemin, framemax = act.frame_range
+#				   start_frame = int(framemin)
+#				   end_frame = int(framemax)
+#				   scene_frames = range(start_frame, end_frame+1)
+#				   frame_count = len(scene_frames)
+#				   file.write("\t<animation name=\"%s\" duration=\"%i\">\n" % (act.name, frame_count))
+#				   for bone in modi.object.data.bones:
+#					   file.write("\t\t<bone name=\"%s\">" % bone.name)
+#					   for f in keyframes:
+#						   context.scene.frame_set(f)
+#						   file.write("%i %f %f %f %f %f %f " % (f, bone.head.x, bone.head.y, bone.head.z, bone.tail.x, bone.tail.y, bone.tail.z))
+#					   file.write("\t\t</bone>\n")
+					
+#				   file.write("\t</animation>\n")
+			
+#		   break
+			
 
-	file.write("<?xml version=\"1.0\" ?>\n")
-	file.write("<environment>\n")
 	
-	print("write materials")
-	for i, mat in enumerate(material_dict):
-		file.write("\t<material id=\"%i\">\n" % i)
-		file.write("\t\t<textures>%s</textures>\n" % mat)
-		file.write("\t</material>\n")
-	
-	file.write("\n")
-		
-	print("write mesh")
-	for i, mat in enumerate(material_dict):
-		file.write("\t<mesh id=\"%i\" material=\"%i\" texcoordcount=\"1\">\n" % (i, i))
-	
-		print("write vertices")
-		file.write("\t\t<vertexpos>")
-		for vertex in point_dict[mat]:
-			file.write("%f %f %f " % (vertex.x, vertex.z, vertex.y))
-		file.write("</vertexpos>\n")
-	
-		print("write texcoords")
-		file.write("\t\t<vertextexcoord id=\"0\">")
-		for uv in uv_dict[mat]:
-			file.write("%f %f " % (uv.uv[0], 1.0-uv.uv[1]))
-		file.write("</vertextexcoord>\n")
-	
-		print("write indices")
-		file.write("\t\t<indices>")
-		for ind in index_dict[mat]:
-			file.write("%i " % ind)
-		file.write("</indices>\n")
-		file.write("\t</mesh>\n")
-	
-	file.write("</environment>\n")
-
-	file.close()
-	print("finished export")
 
 
 #################################
@@ -239,25 +286,19 @@ class ExportSGM(bpy.types.Operator):
 		return {'FINISHED'}
 
 	def invoke(self, context, event):
-		wm = context.manager
+		wm = context.window_manager
 		wm.add_fileselect(self)
 		return {'RUNNING_MODAL'}
-
-	def poll(self, context):
-		return context.active_object != None
 
 
 def menu_func(self, context):
 	default_path = os.path.splitext(bpy.data.filepath)[0] + ".sgm"
 	self.layout.operator(ExportSGM.bl_idname, text="iSDGE model (.sgm)").filepath = default_path
 
-
 def register():
-	bpy.types.register(ExportSGM)
 	bpy.types.INFO_MT_file_export.append(menu_func)
 
 def unregister():
-	bpy.types.unregister(ExportSGM)
 	bpy.types.INFO_MT_file_export.remove(menu_func)
 
 if __name__ == "__main__":

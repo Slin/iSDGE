@@ -23,19 +23,24 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-precision highp float;
+precision mediump float;
 
 uniform sampler2D mTexture0;
-uniform lowp float mAlphaTest;
+uniform sampler2D mTexture1;
 
 varying vec2 texcoord;
-varying lowp vec3 light;
-varying lowp float height;
+varying vec3 projpos;
+varying vec3 normal_;
+varying vec4 vertpos;
 
 void main()
 {
-	if(height < 0.0)
-		discard;
-		
-    gl_FragColor = texture2D(mTexture0, texcoord)*vec4(light, 1.0);
+	float camfac = min(max(distance(vertpos.xy, vertpos.zw)-0.6, 0.0), 1.0);
+	vec3 dis = texture2D(mTexture0, texcoord.xy).rgb;
+	dis.rg = dis.rg*0.5+normal_.xy;
+	dis.b *= normal_.z*(1.0-min(abs((vertpos.y-vertpos.w)*3.0), 1.0));
+	vec2 reflcoords = projpos.xy/projpos.z+0.5;
+	vec4 color = texture2D(mTexture1, reflcoords+dis.rg)*0.5;
+	color = color*(1.0-dis.b)+vec4(dis.b);
+    gl_FragColor = mix(color, vec4(0.7333, 0.7843, 0.8549, 1.0), camfac);
 }

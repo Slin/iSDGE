@@ -108,6 +108,16 @@ sgShader *sgShader::getShader(unsigned int shad)
 			}
 			break;
 		}
+		case 4:
+		{
+			shader = (sgShader*)sgResourceManager::getResource("shader_lightmap");
+			if(shader == NULL)
+			{
+				shader = new sgShader("sgsLightmap", "sgsLightmap");
+				sgResourceManager::addResource("shader_lightmap", shader);
+			}
+			break;
+		}
 			
 		//Special shaders
 		case -1:
@@ -239,6 +249,7 @@ void sgShader::getEngineUniforms()
 	position = glGetAttribLocation(program, "vertPos");
 	normal = glGetAttribLocation(program, "vertNormal");
 	texcoord0 = glGetAttribLocation(program, "vertTexcoord0");
+	texcoord1 = glGetAttribLocation(program, "vertTexcoord1");
 	color = glGetAttribLocation(program, "vertColor");
 	
 	mambientloc = glGetUniformLocation(program, "mAmbient");
