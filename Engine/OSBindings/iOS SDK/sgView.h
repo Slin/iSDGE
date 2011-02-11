@@ -32,14 +32,13 @@
 /**
  * View class. The main class, which handles everything.
  */
-@interface sgView : UIView <UIApplicationDelegate, UIAccelerometerDelegate>
+@interface sgView : UIView <UIAccelerometerDelegate>
 {
 	@private
 		BOOL animating;
 		NSInteger animationFrameInterval;
 		id displayLink;
 		EAGLContext *context;
-		UIWindow *appwind;
 }
 
 @property (readonly, nonatomic, getter=isAnimating) BOOL animating;

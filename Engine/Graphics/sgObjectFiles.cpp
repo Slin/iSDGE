@@ -116,6 +116,7 @@ namespace sgObjectFiles
 				else if(meshes[meshes.size()-1]->vtxformat == SECONDUVCOLOR)
 					meshes[meshes.size()-1]->vertices_uvcol.push_back(*((sgVertexUVCol*)vert));
 			}
+			free(vert);
 			
 			//Texcoords
 			TBXMLElement *vuv;

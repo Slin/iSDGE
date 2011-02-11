@@ -93,6 +93,12 @@ class sgMain
 		 */
 		double timestep;
 	
+		/**
+		 *	Current frames.
+		 *	The number of frames rendered from the start of the engine.
+		 */
+		unsigned long currframes;
+	
 	private:
 		sgTimer timer;
 };

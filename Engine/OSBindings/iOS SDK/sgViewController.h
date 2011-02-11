@@ -1,9 +1,9 @@
 //
-//	Shader.vsh
+//	sgViewController.h
 //	iSDGE
 //
-//	Created by Nils Daumann on 16.04.10.
-//	Copyright (c) 2010 Nils Daumann
+//	Created by Nils Daumann on 11.02.11.
+//	Copyright (c) 2011 Nils Daumann
 
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
 //	of this software and associated documentation files (the "Software"), to deal
@@ -23,19 +23,12 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-attribute vec3 vertPos;
-attribute vec3 vertColor;
-attribute vec2 vertTexcoord0;
+#import <UIKit/UIKit.h>
 
-uniform mat4 matProjViewModel;
-uniform float Time;
 
-varying vec2 texcoord;
-
-void main()
+@interface sgViewController : UIViewController
 {
-	texcoord = vertTexcoord0;
-	vec3 vert = vertPos;
-	vert.x += sin(vert.z+Time*3.0)*vertColor.r;
-	gl_Position = matProjViewModel*vec4(vert, 1.0);
+
 }
+
+@end

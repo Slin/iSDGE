@@ -56,18 +56,10 @@ sgView *sgview;
 	return [CAEAGLLayer class];
 }
 
-- (void)applicationDidFinishLaunching:(UIApplication*)application
-{    
-	//Step 0 - Create a fullscreen window that we can use for OpenGL ES output
-	CGRect rect = [[UIScreen mainScreen] bounds];	
-	appwind = [[UIWindow alloc] initWithFrame:rect];
-	
-	if(!(self = [super initWithFrame:rect])) 
-	{
-		[self release];
-		return;
-	}
-	
+- (id)initWithFrame:(CGRect)aRect
+{
+	[super initWithFrame:aRect];
+
 	//Initialise EAGL.
 	CAEAGLLayer* eaglLayer = (CAEAGLLayer*)[self layer];	
 	[eaglLayer setDrawableProperties: [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:NO], kEAGLDrawablePropertyRetainedBacking, kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat, nil]];
@@ -113,18 +105,11 @@ sgView *sgview;
 	animationFrameInterval = 1;
 	displayLink = nil;
 	
-	//Add this view to the window.
-	[appwind addSubview: self];
-	
-	//Show the window.
-	[appwind makeKeyAndVisible];
-	
 	sgview = self;
 	
-	if(sgMain::eventhandler != NULL)
-		sgMain::eventhandler->onInit(sgmain);
-	
 	[self startAnimation];
+	
+	return self;
 }
 
 - (void)drawView:(id)sender
@@ -216,7 +201,6 @@ sgView *sgview;
 - (void)dealloc
 {
 	delete sgmain;
-	[appwind release];
 	
 	// Tear down context
 	if([EAGLContext currentContext] == context)

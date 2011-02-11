@@ -33,6 +33,8 @@ sgEvents *sgMain::eventhandler = NULL;
 sgMain::sgMain(unsigned int oglvers)
 {
 	timestep = 1.0/60.0;
+	currframes = 0;
+	
 	if(oglvers == 1)
 	{
 		renderer = new sgRendererES1;
@@ -61,6 +63,12 @@ void sgMain::drawView()
 	
 	renderer->currenttime += timestep;
 	
+	if(currframes == 1)
+	{
+		if(eventhandler != NULL)
+			eventhandler->onInit(this);
+	}
+	
 	if(eventhandler != NULL)
 		eventhandler->onDraw(timestep);
 	
@@ -84,6 +92,7 @@ void sgMain::drawView()
 	}
 	
 	renderer->render();
+	currframes += 1;
 }
 
 void sgMain::setOrientation(unsigned int interfaceOrientation)

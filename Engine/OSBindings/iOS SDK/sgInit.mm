@@ -35,7 +35,7 @@ int sgInit(int argc, char *argv[], sgEvents *event)
 {
 	sgMain::eventhandler = event;
 	NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    int retVal = UIApplicationMain(argc, argv, nil, @"sgView");
+    int retVal = UIApplicationMain(argc, argv, nil, @"sgApp");
     [pool release];
     return retVal;
 }
