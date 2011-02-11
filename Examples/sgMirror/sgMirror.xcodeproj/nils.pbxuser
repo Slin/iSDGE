@@ -57,9 +57,9 @@
 	};
 	290B48A511BFB58C00A54048 /* sgMain.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1651, 1183}}";
-			sepNavSelRange = "{2106, 0}";
-			sepNavVisRange = "{1363, 788}";
+			sepNavIntBoundsRect = "{{0, 0}, {1651, 1326}}";
+			sepNavSelRange = "{1812, 0}";
+			sepNavVisRange = "{1571, 810}";
 		};
 	};
 	290B48A611BFB58C00A54048 /* sgMain.h */ = {
@@ -137,17 +137,6 @@
 		vrLen = 1548;
 		vrLoc = 0;
 	};
-	294BC46F129325CE00BA99CF /* PlistBookmark */ = {
-		isa = PlistBookmark;
-		fRef = 295CBF8C12158A9600F1F941 /* sgMirror-Info.plist */;
-		fallbackIsa = PBXBookmark;
-		isK = 0;
-		kPath = (
-		);
-		name = "/Users/nils/Documents/X-Code Projects/iSDGE_Complete/iSDGE_GIT/Examples/sgMirror/sgMirror-Info.plist";
-		rLen = 0;
-		rLoc = 9223372036854775808;
-	};
 	294D926312456967000CDCCD /* sgMirror */ = {
 		isa = PBXExecutable;
 		activeArgIndices = (
@@ -177,6 +166,8 @@
 		showTypeColumn = 0;
 		sourceDirectories = (
 		);
+		variableFormatDictionary = {
+		};
 	};
 	294D927D12456986000CDCCD /* Source Control */ = {
 		isa = PBXSourceControlManager;
@@ -282,9 +273,9 @@
 	};
 	295CBF5A1215861700F1F941 /* Events.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1651, 1183}}";
-			sepNavSelRange = "{3154, 0}";
-			sepNavVisRange = "{1542, 1866}";
+			sepNavIntBoundsRect = "{{0, 0}, {985, 1209}}";
+			sepNavSelRange = "{3207, 0}";
+			sepNavVisRange = "{3120, 288}";
 		};
 	};
 	295CBF5B1215861700F1F941 /* main.cpp */ = {
@@ -307,6 +298,42 @@
 			sepNavSelRange = "{0, 0}";
 			sepNavVisRange = "{0, 1320}";
 		};
+	};
+	29697C571305EC11002FF0C4 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 295CBF8C12158A9600F1F941 /* sgMirror-Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			CFBundleIdentifier,
+		);
+		name = "/Users/nils/Documents/X-Code Projects/iSDGE_Complete/iSDGE_GIT/Examples/sgMirror/sgMirror-Info.plist";
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
+	29697C581305EC11002FF0C4 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 295CBF5A1215861700F1F941 /* Events.mm */;
+		name = "Events.mm: 84";
+		rLen = 0;
+		rLoc = 3207;
+		rType = 0;
+		vrLen = 1785;
+		vrLoc = 1623;
+	};
+	29697C591305EC11002FF0C4 /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 290B48A511BFB58C00A54048 /* sgMain.cpp */;
+	};
+	29697C5A1305EC11002FF0C4 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 290B48A511BFB58C00A54048 /* sgMain.cpp */;
+		name = "sgMain.cpp: 66";
+		rLen = 0;
+		rLoc = 1812;
+		rType = 0;
+		vrLen = 810;
+		vrLoc = 1571;
 	};
 	29AD37331179C3710089F607 /* sgVector4.h */ = {
 		uiCtxt = {
@@ -485,21 +512,24 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 313201896;
-			PBXWorkspaceStateSaveDate = 313201896;
+			PBXPerProjectTemplateStateSaveDate = 319154952;
+			PBXWorkspaceStateSaveDate = 319154952;
 		};
 		perUserProjectItems = {
 			29440C451257DB2E001C0888 /* PBXTextBookmark */ = 29440C451257DB2E001C0888 /* PBXTextBookmark */;
 			29440C461257DB2E001C0888 /* PBXTextBookmark */ = 29440C461257DB2E001C0888 /* PBXTextBookmark */;
 			294BAE1E12A9C28F008ED967 /* PBXTextBookmark */ = 294BAE1E12A9C28F008ED967 /* PBXTextBookmark */;
 			294BAE1F12A9C28F008ED967 /* PBXTextBookmark */ = 294BAE1F12A9C28F008ED967 /* PBXTextBookmark */;
-			294BC46F129325CE00BA99CF /* PlistBookmark */ = 294BC46F129325CE00BA99CF /* PlistBookmark */;
 			294D92BC124572A5000CDCCD /* PBXTextBookmark */ = 294D92BC124572A5000CDCCD /* PBXTextBookmark */;
 			294D92CA124573CE000CDCCD /* PBXTextBookmark */ = 294D92CA124573CE000CDCCD /* PBXTextBookmark */;
 			294D92CB124573CE000CDCCD /* PBXTextBookmark */ = 294D92CB124573CE000CDCCD /* PBXTextBookmark */;
 			294D92E312457680000CDCCD /* PBXTextBookmark */ = 294D92E312457680000CDCCD /* PBXTextBookmark */;
 			294D92E412457680000CDCCD /* PBXTextBookmark */ = 294D92E412457680000CDCCD /* PBXTextBookmark */;
 			294D92E512457680000CDCCD /* PBXTextBookmark */ = 294D92E512457680000CDCCD /* PBXTextBookmark */;
+			29697C571305EC11002FF0C4 /* PlistBookmark */ = 29697C571305EC11002FF0C4 /* PlistBookmark */;
+			29697C581305EC11002FF0C4 /* PBXTextBookmark */ = 29697C581305EC11002FF0C4 /* PBXTextBookmark */;
+			29697C591305EC11002FF0C4 /* PBXBookmark */ = 29697C591305EC11002FF0C4 /* PBXBookmark */;
+			29697C5A1305EC11002FF0C4 /* PBXTextBookmark */ = 29697C5A1305EC11002FF0C4 /* PBXTextBookmark */;
 			29CC918212460D41005AFF85 /* PBXTextBookmark */ = 29CC918212460D41005AFF85 /* PBXTextBookmark */;
 			29CC918512460D41005AFF85 /* PBXTextBookmark */ = 29CC918512460D41005AFF85 /* PBXTextBookmark */;
 			29CC918A12460D41005AFF85 /* PBXTextBookmark */ = 29CC918A12460D41005AFF85 /* PBXTextBookmark */;
@@ -515,9 +545,7 @@
 			29CC920112462832005AFF85 /* PBXTextBookmark */ = 29CC920112462832005AFF85 /* PBXTextBookmark */;
 			29CC920212462832005AFF85 /* PBXTextBookmark */ = 29CC920212462832005AFF85 /* PBXTextBookmark */;
 			29CC922E12462A33005AFF85 /* PBXTextBookmark */ = 29CC922E12462A33005AFF85 /* PBXTextBookmark */;
-			29F1820212AAFFA400B7F5F2 /* PBXTextBookmark */ = 29F1820212AAFFA400B7F5F2 /* PBXTextBookmark */;
 			29F1831E12AB157B00B7F5F2 /* PBXTextBookmark */ = 29F1831E12AB157B00B7F5F2 /* PBXTextBookmark */;
-			29F1831F12AB157B00B7F5F2 /* PlistBookmark */ = 29F1831F12AB157B00B7F5F2 /* PlistBookmark */;
 		};
 		sourceControlManager = 294D927D12456986000CDCCD /* Source Control */;
 		userBuildSettings = {
@@ -695,16 +723,6 @@
 			sepNavVisRange = "{6358, 1095}";
 		};
 	};
-	29F1820212AAFFA400B7F5F2 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 295CBF5A1215861700F1F941 /* Events.mm */;
-		name = "Events.mm: 81";
-		rLen = 0;
-		rLoc = 3154;
-		rType = 0;
-		vrLen = 1866;
-		vrLoc = 1542;
-	};
 	29F1831E12AB157B00B7F5F2 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 294BAD5B12A934D5008ED967 /* sgObjectBody.h */;
@@ -714,17 +732,5 @@
 		rType = 0;
 		vrLen = 1652;
 		vrLoc = 33;
-	};
-	29F1831F12AB157B00B7F5F2 /* PlistBookmark */ = {
-		isa = PlistBookmark;
-		fRef = 295CBF8C12158A9600F1F941 /* sgMirror-Info.plist */;
-		fallbackIsa = PBXBookmark;
-		isK = 0;
-		kPath = (
-			CFBundleIdentifier,
-		);
-		name = "/Users/nils/Documents/X-Code Projects/iSDGE_Complete/iSDGE_GIT/Examples/sgMirror/sgMirror-Info.plist";
-		rLen = 0;
-		rLoc = 9223372036854775807;
 	};
 }

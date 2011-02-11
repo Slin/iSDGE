@@ -50,8 +50,8 @@ void Water::onDraw(float timestep)
 //This method is called every frame, just before drawing for each object with this action attached
 void Water::onDrawLate(float timestep)
 {
-	ent->obj->position = camera->position;
-	ent->obj->position.y = 0.0;
+	ent->obj->position.x = camera->position.x;
+	ent->obj->position.z = camera->position.z;
 	
 	mirror->cam->position = camera->position;
 	mirror->cam->position.y = 2.0*ent->obj->position.y-mirror->cam->position.y;

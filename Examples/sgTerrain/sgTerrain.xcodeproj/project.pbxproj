@@ -52,10 +52,13 @@
 		2952F04E117A7F60006FAB6F /* sgColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2952F04D117A7F60006FAB6F /* sgColor.cpp */; };
 		295CBF5C1215861700F1F941 /* Events.mm in Sources */ = {isa = PBXBuildFile; fileRef = 295CBF5A1215861700F1F941 /* Events.mm */; };
 		295CBF5D1215861700F1F941 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295CBF5B1215861700F1F941 /* main.cpp */; };
-		295CBF69121587B300F1F941 /* Water.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295CBF67121587B300F1F941 /* Water.cpp */; };
 		295EDDD911AACF840065C43C /* sgMatrix4x4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295EDDD811AACF840065C43C /* sgMatrix4x4.cpp */; };
 		29697B9E1305E14B002FF0C4 /* sgViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 29697B9A1305E14B002FF0C4 /* sgViewController.mm */; };
 		29697B9F1305E14B002FF0C4 /* sgApp.mm in Sources */ = {isa = PBXBuildFile; fileRef = 29697B9B1305E14B002FF0C4 /* sgApp.mm */; };
+		29697BA41305E4A7002FF0C4 /* sgPlane.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29697BA21305E4A7002FF0C4 /* sgPlane.cpp */; };
+		29697BAD1305E505002FF0C4 /* Water.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29697BAB1305E505002FF0C4 /* Water.cpp */; };
+		29697BB01305E512002FF0C4 /* Water.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 29697BAE1305E512002FF0C4 /* Water.fsh */; };
+		29697BB11305E512002FF0C4 /* Water.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 29697BAF1305E512002FF0C4 /* Water.vsh */; };
 		297A217611DCBC3A00F0C8E5 /* sgInit.mm in Sources */ = {isa = PBXBuildFile; fileRef = 297A217511DCBC3A00F0C8E5 /* sgInit.mm */; };
 		29A42EDA118346DA0080394F /* sgsTexture.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 29A42ED8118346DA0080394F /* sgsTexture.fsh */; };
 		29A42EDB118346DA0080394F /* sgsTexture.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 29A42ED9118346DA0080394F /* sgsTexture.vsh */; };
@@ -81,8 +84,6 @@
 		29BAC01E12886A9000FCDE9F /* sgsTextureDiscard.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 29BAC01D12886A9000FCDE9F /* sgsTextureDiscard.fsh */; };
 		29BAC02112886B5500FCDE9F /* sgsSun.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 29BAC01F12886B5500FCDE9F /* sgsSun.vsh */; };
 		29BAC02212886B5500FCDE9F /* sgsSun.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 29BAC02012886B5500FCDE9F /* sgsSun.fsh */; };
-		29C8F83C129ACC3B003DB20D /* Water.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 29C8F83A129ACC3B003DB20D /* Water.vsh */; };
-		29C8F83D129ACC3B003DB20D /* Water.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 29C8F83B129ACC3B003DB20D /* Water.fsh */; };
 		29C8F840129ACDC4003DB20D /* sky.png in Resources */ = {isa = PBXBuildFile; fileRef = 29C8F83E129ACDC4003DB20D /* sky.png */; };
 		29C8F841129ACDC4003DB20D /* waterbump.png in Resources */ = {isa = PBXBuildFile; fileRef = 29C8F83F129ACDC4003DB20D /* waterbump.png */; };
 		29D7EA86117CA95D0091D933 /* sgLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29D7EA85117CA95D0091D933 /* sgLight.cpp */; };
@@ -168,8 +169,6 @@
 		295CBF591215861700F1F941 /* Events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Events.h; sourceTree = "<group>"; };
 		295CBF5A1215861700F1F941 /* Events.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Events.mm; sourceTree = "<group>"; };
 		295CBF5B1215861700F1F941 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		295CBF67121587B300F1F941 /* Water.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Water.cpp; sourceTree = "<group>"; };
-		295CBF68121587B300F1F941 /* Water.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Water.h; sourceTree = "<group>"; };
 		295CBF8C12158A9600F1F941 /* sgTerrain-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "sgTerrain-Info.plist"; sourceTree = "<group>"; };
 		295EDDD711AACF840065C43C /* sgMatrix4x4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgMatrix4x4.h; sourceTree = "<group>"; };
 		295EDDD811AACF840065C43C /* sgMatrix4x4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgMatrix4x4.cpp; sourceTree = "<group>"; };
@@ -177,6 +176,12 @@
 		29697B9B1305E14B002FF0C4 /* sgApp.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = sgApp.mm; sourceTree = "<group>"; };
 		29697B9C1305E14B002FF0C4 /* sgViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgViewController.h; sourceTree = "<group>"; };
 		29697B9D1305E14B002FF0C4 /* sgApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgApp.h; sourceTree = "<group>"; };
+		29697BA21305E4A7002FF0C4 /* sgPlane.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgPlane.cpp; sourceTree = "<group>"; };
+		29697BA31305E4A7002FF0C4 /* sgPlane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgPlane.h; sourceTree = "<group>"; };
+		29697BAB1305E505002FF0C4 /* Water.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Water.cpp; sourceTree = "<group>"; };
+		29697BAC1305E505002FF0C4 /* Water.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Water.h; sourceTree = "<group>"; };
+		29697BAE1305E512002FF0C4 /* Water.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Water.fsh; sourceTree = "<group>"; };
+		29697BAF1305E512002FF0C4 /* Water.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Water.vsh; sourceTree = "<group>"; };
 		297A217411DCBC3A00F0C8E5 /* sgInit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgInit.h; sourceTree = "<group>"; };
 		297A217511DCBC3A00F0C8E5 /* sgInit.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = sgInit.mm; sourceTree = "<group>"; };
 		29A42ED8118346DA0080394F /* sgsTexture.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsTexture.fsh; sourceTree = "<group>"; };
@@ -216,8 +221,6 @@
 		29BAC01D12886A9000FCDE9F /* sgsTextureDiscard.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsTextureDiscard.fsh; sourceTree = "<group>"; };
 		29BAC01F12886B5500FCDE9F /* sgsSun.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsSun.vsh; sourceTree = "<group>"; };
 		29BAC02012886B5500FCDE9F /* sgsSun.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsSun.fsh; sourceTree = "<group>"; };
-		29C8F83A129ACC3B003DB20D /* Water.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Water.vsh; sourceTree = "<group>"; };
-		29C8F83B129ACC3B003DB20D /* Water.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Water.fsh; sourceTree = "<group>"; };
 		29C8F83E129ACDC4003DB20D /* sky.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sky.png; sourceTree = "<group>"; };
 		29C8F83F129ACDC4003DB20D /* waterbump.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = waterbump.png; sourceTree = "<group>"; };
 		29D7EA84117CA95D0091D933 /* sgLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgLight.h; sourceTree = "<group>"; };
@@ -356,6 +359,8 @@
 		290B12001179492700AC324E /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				29697BA21305E4A7002FF0C4 /* sgPlane.cpp */,
+				29697BA31305E4A7002FF0C4 /* sgPlane.h */,
 				2926DF3512AADEFF00B52DD5 /* sgRenderEvent.h */,
 				2926DF3612AADEFF00B52DD5 /* sgRenderEvent.cpp */,
 				2936A2F411C06569008EAD35 /* sgXML.h */,
@@ -444,6 +449,8 @@
 		2941E31111C1113C00B6EC59 /* Templates */ = {
 			isa = PBXGroup;
 			children = (
+				29697BAB1305E505002FF0C4 /* Water.cpp */,
+				29697BAC1305E505002FF0C4 /* Water.h */,
 				29AC5B1111DE75FA009F1A01 /* Shaders */,
 				2941E31211C1113C00B6EC59 /* CameraFree.cpp */,
 				2941E31311C1113C00B6EC59 /* CameraFree.h */,
@@ -458,8 +465,6 @@
 			children = (
 				294BADBB12A94169008ED967 /* TerrCl.vsh */,
 				294BADBC12A94169008ED967 /* TerrCl.fsh */,
-				29C8F83A129ACC3B003DB20D /* Water.vsh */,
-				29C8F83B129ACC3B003DB20D /* Water.fsh */,
 				294BC4441293245000BA99CF /* TerrDetail.fsh */,
 				294BC4451293245000BA99CF /* TerrDetail.vsh */,
 			);
@@ -490,8 +495,6 @@
 		295CBF66121587B300F1F941 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
-				295CBF67121587B300F1F941 /* Water.cpp */,
-				295CBF68121587B300F1F941 /* Water.h */,
 			);
 			path = Objects;
 			sourceTree = "<group>";
@@ -518,6 +521,8 @@
 		29AC5B1111DE75FA009F1A01 /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
+				29697BAE1305E512002FF0C4 /* Water.fsh */,
+				29697BAF1305E512002FF0C4 /* Water.vsh */,
 				29AC5B1211DE75FA009F1A01 /* RedCyanStereo.fsh */,
 			);
 			path = Shaders;
@@ -637,10 +642,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29697BB01305E512002FF0C4 /* Water.fsh in Resources */,
+				29697BB11305E512002FF0C4 /* Water.vsh in Resources */,
 				294BADBD12A94169008ED967 /* TerrCl.vsh in Resources */,
 				294BADBE12A94169008ED967 /* TerrCl.fsh in Resources */,
-				29C8F83C129ACC3B003DB20D /* Water.vsh in Resources */,
-				29C8F83D129ACC3B003DB20D /* Water.fsh in Resources */,
 				294BC44B1293245000BA99CF /* TerrDetail.fsh in Resources */,
 				294BC44C1293245000BA99CF /* TerrDetail.vsh in Resources */,
 				29BAC01E12886A9000FCDE9F /* sgsTextureDiscard.fsh in Resources */,
@@ -727,12 +732,13 @@
 				29ECE04A1213086D00385A1E /* sgShadowVolume.cpp in Sources */,
 				295CBF5C1215861700F1F941 /* Events.mm in Sources */,
 				295CBF5D1215861700F1F941 /* main.cpp in Sources */,
-				295CBF69121587B300F1F941 /* Water.cpp in Sources */,
 				2943A9C0129D6F7000234E77 /* sgObjectBody.cpp in Sources */,
 				2926DF3712AADEFF00B52DD5 /* sgRenderEvent.cpp in Sources */,
 				2926DF3A12AADF3100B52DD5 /* RenderEvent.cpp in Sources */,
 				29697B9E1305E14B002FF0C4 /* sgViewController.mm in Sources */,
 				29697B9F1305E14B002FF0C4 /* sgApp.mm in Sources */,
+				29697BA41305E4A7002FF0C4 /* sgPlane.cpp in Sources */,
+				29697BAD1305E505002FF0C4 /* Water.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

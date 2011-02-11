@@ -58,10 +58,8 @@ void Events::onInit(sgMain *m)
 	terr->obj->body->materials[0]->setTexture2D(-1, "czTerrDet.png");
 	
 	//Create water entity
-	sgEntity *water = sgmain->first_ent->createTerrainEntity(NULL, 2, 2, 0, 0, 0, sgVector4(0.0, 0.0, 0.0, 0.0), (sgAction*)new Water);
-	water->cam = cam->cam;
-	water->obj->position.y = 23.0;
-	water->obj->scale *= 1000.0;
+	Water *water = new Water(m, "waterbump.png", cam->cam);
+	water->ent->obj->position.y = 23.0;
 	
 	//Set render event
 	sgmain->renderer->event = (sgRenderEvent*)new RenderEvent(terr, "TerrDetail", "TerrCl");

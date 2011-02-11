@@ -63,7 +63,7 @@ void sgMain::drawView()
 	
 	renderer->currenttime += timestep;
 	
-	if(currframes == 1)
+	if(currframes == 0)
 	{
 		if(eventhandler != NULL)
 			eventhandler->onInit(this);
