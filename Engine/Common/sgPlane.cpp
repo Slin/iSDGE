@@ -24,6 +24,7 @@
 //	THE SOFTWARE.
 
 #include "sgPlane.h"
+#include "sgDebug.h"
 
 sgPlane::sgPlane(sgVector3 pos, sgVector3 norm)
 {
@@ -48,7 +49,7 @@ void sgPlane::setPlane(sgVector3 pos1, sgVector3 pos2, sgVector3 pos3)
 	position = pos1;
 	pos2 = pos2-pos1;
 	pos3 = pos3-pos1;
-	normal = pos2.cross(pos2);
+	normal = pos2.cross(pos3);
 	normal.normalize();
 	calcD();
 }

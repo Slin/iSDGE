@@ -415,8 +415,8 @@ void sgMesh::calcCullSphere()
 	center *= 0.5;
 	
 	//Find the radius
-	float radius = 0;
-	float temp;
+	float radius = center.dist(vmax);
+/*	float temp;
 	sgVector3 diff;
 	for(int i = 0; i < vertexnum; i++)
 	{
@@ -439,6 +439,6 @@ void sgMesh::calcCullSphere()
 		if(radius < temp)
 			radius = temp;
 		
-	}
+	}*/
 	cullsphere = sgVector4(center.x, center.y, center.z, radius);
 }

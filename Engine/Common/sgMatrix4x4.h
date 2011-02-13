@@ -142,6 +142,16 @@ class sgMatrix4x4
 		void makeProjectionPersp(float arc, float aspect, float clipnear, float clipfar);
 	
 		/**
+		 *	Make inverse perspective projection matrix.
+		 *	Sets the matrix to the perspective projection matrix defined by the parameters.
+		 * @param arc the horizontal opening angle of the camera
+		 * @param aspect the aspect ratio
+		 * @param clipnear the near clipping plane
+		 * @param clipfar the far clipping plane
+		 */
+		void makeInvProjectionPersp(float arc, float aspect, float clipnear, float clipfar);
+	
+		/**
 		 *	Make translation matrix.
 		 *	Sets the matrix to the translation defined by the parameter.
 		 * @param trans the translation to create a transformation matrix for

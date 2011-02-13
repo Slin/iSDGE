@@ -50,14 +50,15 @@ void Events::onInit(sgMain *m)
 	
 	//Create the camera
 	sgEntity *cam = sgmain->first_ent->createCamEntity((sgAction*)new CameraFree);
-	cam->cam->position = sgVector3(0.0f, 5.0f, 5.0f);
-	cam->cam->rotation = sgVector3(0.0f, 0.0f, -45.0f);
+	cam->cam->position = sgVector3(0.0f, 10.0f, 0.0f);
+	cam->cam->rotation = sgVector3(0.0f, 0.0f, -90.0f);
 	
 	//Create skycube
 	sgmain->first_ent->createSkyCubeEntity("sky_right.png", "sky_back.png", "sky_left.png", "sky_front.png", "sky_down.png", "sky_up.png");
 	
 	//Create a rotating space ship
 	sgEntity *ent = sgmain->first_ent->createObjEntity("spacecraft.sgm", (sgAction*)new Rotate);
+	ent->obj->position.z = 0.0;
 	ent->obj->scale *= 4;
 }
 

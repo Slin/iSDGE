@@ -197,31 +197,22 @@ void sgRenderer::chooseMeshLOD(sgObject *obj, unsigned int mesh, float dist)
 	}
 }
 
-bool sgRenderer::cullSphere(sgVector4 worldsphere, sgCamera *cam)
-{
-	return true;
-}
-
 void sgRenderer::culling(sgCamera *cam, sgObject *first)
 {
-	cam->updateFrustum();
-	
-	sgMatrix4x4 projview = cam->matproj*cam->matview;
-	
-	sgMatrix4x4 projviewmodel;
-	sgVector4 pos;
+	sgVector3 pos;
 	float dist;
 	float radius;
 	
+	cam->updateFrustum();
+	
 	for(sgObject *obj = first->next; obj != NULL; obj = obj->next)
 	{
+		obj->updateModel();
 		pos = obj->cullsphere;
-		pos.w = 1.0;
 		pos = obj->matmodel*pos;
+		radius = abs(obj->cullsphere.w)*fmax(obj->scale.x, fmax(obj->scale.y, obj->scale.z));
 		
-		radius = obj->cullsphere.w;
-		
-		if(1)
+		if(cam->inFrustum(pos, radius))
 		{
 			obj->culled = false;
 			
@@ -237,12 +228,11 @@ void sgRenderer::culling(sgCamera *cam, sgObject *first)
 				for(int i = 0; i < obj->body->meshs.size(); i++)
 				{
 					pos = obj->body->meshs[i]->cullsphere;
-					pos.w = 1.0;
 					pos = obj->matmodel*pos;
 					
-					radius = -obj->body->meshs[i]->cullsphere.w;
+					radius = obj->body->meshs[i]->cullsphere.w*fmax(obj->scale.x, fmax(obj->scale.y, obj->scale.z));
 					
-					if(1)
+					if(cam->inFrustum(pos, radius))
 					{
 						obj->body->meshs[i]->culled = false;
 						

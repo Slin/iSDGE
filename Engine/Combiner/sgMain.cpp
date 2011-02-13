@@ -63,13 +63,13 @@ void sgMain::drawView()
 	
 	renderer->currenttime += timestep;
 	
-	if(currframes == 0)
+	if(currframes == 1)
 	{
 		if(eventhandler != NULL)
 			eventhandler->onInit(this);
 	}
 	
-	if(eventhandler != NULL)
+	if(eventhandler != NULL && currframes > 0)
 		eventhandler->onDraw(timestep);
 	
 	for(sgEntity *it = first_ent->next; it != NULL; it = it->next)
@@ -92,6 +92,7 @@ void sgMain::drawView()
 	}
 	
 	renderer->render();
+	
 	currframes += 1;
 }
 

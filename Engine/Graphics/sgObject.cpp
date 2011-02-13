@@ -82,6 +82,7 @@ sgObject *sgObject::createObject(const char *name)
 	next->body = new sgObjectBody;
 	next->body->makeObject(name);
 	next->currbody = next->body;
+	next->calcCullSphere();
 	return next;
 }
 
@@ -205,8 +206,6 @@ void sgObject::calcCullSphere()
 	sgVector3 center;
 	for(int m = 0; m < body->meshs.size(); m++)
 	{
-		center += sgVector3(body->meshs[m]->cullsphere);
-		
 		if(body->meshs[m]->cullsphere.x > vmax.x)
 			vmax.x = body->meshs[m]->cullsphere.x;
 		if(body->meshs[m]->cullsphere.y > vmax.y)
@@ -223,10 +222,10 @@ void sgObject::calcCullSphere()
 	}
 	center = vmin+vmax;
 	center *= 0.5f;
-	cullsphere = center;
+	cullsphere = sgVector4(center.x, center.y, center.z);
 	
 	//Find radius
-	float radius = 0;
+	float radius = 0.0;
 	float temp;
 	float fac = 1.0;
 	sgVector3 diff;
@@ -243,6 +242,7 @@ void sgObject::calcCullSphere()
 		if(temp > radius)
 			radius = temp;
 	}
+	
 	cullsphere.w = radius*fac;
 }
 

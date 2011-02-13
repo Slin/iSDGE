@@ -185,6 +185,21 @@ void sgMatrix4x4::makeProjectionPersp(float arc, float aspect, float clipnear, f
 	mat[14] = -(2*clipfar*clipnear)/(clipfar-clipnear);
 }
 
+void sgMatrix4x4::makeInvProjectionPersp(float arc, float aspect, float clipnear, float clipfar)
+{
+	memset(mat, 0, sizeof(float)*16);
+	float xFac, yFac;
+	yFac = tanf(arc * 3.14f/360);
+	xFac = yFac*aspect;
+	
+	//Thanks to Superku!!!!!!
+	mat[0] = xFac;
+	mat[5] = yFac;
+	mat[11] = -(clipfar-clipnear)/(2*clipfar*clipnear);
+	mat[14] = -1;
+	mat[15] = (clipfar+clipnear)/(2*clipfar*clipnear);
+}
+
 void sgMatrix4x4::makeTranslate(const sgVector4 &trans)
 {
 	makeIdentity();	

@@ -54,11 +54,11 @@ void Events::onInit(sgMain *m)
 	cam->cam->rotation = sgVector3(0.0f, 0.0f, -45.0f);
 	
 	//Create skycube
-	sgmain->first_ent->createSkyCubeEntity("sky_right.png", "sky_back.png", "sky_left.png", "sky_front.png", "sky_down.png", "sky_up.png");
+//	sgmain->first_ent->createSkyCubeEntity("sky_right.png", "sky_back.png", "sky_left.png", "sky_front.png", "sky_down.png", "sky_up.png");
 	
 	//Create a rotating space ship
-	sgEntity *ent = sgmain->first_ent->createObjEntity("spacecraft.sgm", (sgAction*)new Rotate);
-	ent->obj->scale *= 4;
+//	sgEntity *ent = sgmain->first_ent->createObjEntity("spacecraft.sgm", (sgAction*)new Rotate);
+//	ent->obj->scale *= 4;
 }
 
 //Called every frame, just before drawing

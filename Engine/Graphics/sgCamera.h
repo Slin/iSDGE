@@ -27,6 +27,7 @@
 #define __SGCAMERA_H__
 
 #include "sgMatrix4x4.h"
+#include "sgVector4.h"
 #include "sgVector3.h"
 #include "sgVector2.h"
 #include "sgQuaternion.h"
@@ -54,14 +55,6 @@ class sgCamera
 		 * @return pointer to the new camera
 		 */
 		sgCamera *createCamera();
-	
-		/**
-		 *	Project proj to view.
-		 *	Transforms the vector with the cameras projection matrix to viewspace.
-		 * @param dir the vector to transform.
-		 * @return the transformed vector.
-		 */
-		sgVector3 camToView(sgVector3 dir);
 	
 		/**
 		 *	Project proj to world.
@@ -100,6 +93,12 @@ class sgCamera
 		 *	Updates this cameras view frustum planes. This function is called automatically before view frustum culling.
 		 */
 		void updateFrustum();
+	
+		/**
+		 *	Check visibility.
+		 *	Checks if the given sphere is within the view frustum.
+		 */
+		bool inFrustum(sgVector3 center, float radius);
 	
 		/**
 		 *	Rendertarget.
@@ -172,6 +171,12 @@ class sgCamera
 		 *	The transformation matrix for this cameras projection.
 		 */
 		sgMatrix4x4 matproj;
+	
+		/**
+		 *	Inverse projection matrix.
+		 *	The inverse transformation matrix for this cameras projection.
+		 */
+		sgMatrix4x4 matinvproj;
 		
 		/**
 		 *	View matrix.
@@ -180,7 +185,7 @@ class sgCamera
 		sgMatrix4x4 matview;
 	
 		/**
-		 *	Inverse view matrix.
+		 *	Inverse view projection matrix.
 		 *	The inverse transformation matrix of this camera.
 		 */
 		sgMatrix4x4 matinvview;
@@ -193,6 +198,18 @@ class sgCamera
 		sgPlane plright;
 		sgPlane pltop;
 		sgPlane pldown;
+	
+		/**
+		 *	View frustum sphere center.
+		 *	The view frustums spheres center.
+		 */
+		sgVector3 frustumcenter;
+	
+		/**
+		 *	View frustum sphere radius.
+		 *	The view frustums spheres radius.
+		 */
+		float frustumradius;
 	
 		/**
 		 *	Previous.

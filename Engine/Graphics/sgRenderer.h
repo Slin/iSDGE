@@ -208,7 +208,6 @@ class sgRenderer
 	
 		void chooseObjLOD(sgObject *obj, float dist);
 		void chooseMeshLOD(sgObject *obj, unsigned int mesh, float dist);
-		bool cullSphere(sgVector4 worldsphere, sgCamera *cam);
 	
 		void culling(sgCamera *cam, sgObject *first);
 		void sorting();

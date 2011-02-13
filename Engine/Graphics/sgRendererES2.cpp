@@ -463,7 +463,6 @@ void sgRendererES2::renderObjects(sgCamera *cam, sgObject *first)
 		if((curr->tag == cam->tag && cam->tag != 0) || curr->culled)
 			continue;
 		
-		curr->updateModel();
 		currbod = curr->currbody;
 		
 		for(i = 0; i < currbod->meshs.size(); i++)
@@ -973,6 +972,7 @@ void sgRendererES2::render()
 		//Update camera
 		cam->updateView();
 		cam->matview = matglobal3d*cam->matview;
+		cam->matinvview = cam->matinvview*matglobal3d;
 		
 		if(event != NULL)
 			event->onDrawCam(cam, this);
