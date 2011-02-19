@@ -131,6 +131,18 @@ class sgCamera
 		float clipfar;
 	
 		/**
+		 *	Fog color.
+		 *	The fogcolor passed to shaders implementing fog.
+		 */
+		sgVector4 fogcolor;
+	
+		/**
+		 *	Fog start and end.
+		 *	The distance to the camera between the fog fades from zero to fully visible. Set fogstartend.y = -1 to deactivate fog!.
+		 */
+		sgVector2 fogstartend;
+	
+		/**
 		 * Ignore tag.
 		 * Doesn´t render objects with the same tag.
 		 **/

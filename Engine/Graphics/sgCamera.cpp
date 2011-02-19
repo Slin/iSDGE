@@ -43,6 +43,9 @@ sgCamera::sgCamera(sgCamera *p, sgCamera *n)
 	tag = 0;
 	lodshift = 0.0;
 	
+	fogcolor = 1.0;
+	fogstartend = 0.75; //deactivate fog
+	
 	prev = p;
 	next = n;
 }

@@ -140,6 +140,16 @@ sgShader *sgShader::getShader(unsigned int shad)
 			}
 			break;
 		}
+		case -3:
+		{
+			shader = (sgShader*)sgResourceManager::getResource("shader_particle");
+			if(shader == NULL)
+			{
+				shader = new sgShader("sgsParticle", "sgsParticle");
+				sgResourceManager::addResource("shader_particle", shader);
+			}
+			break;
+		}
 			
 		default:
 		{
@@ -258,6 +268,9 @@ void sgShader::getEngineUniforms()
 	mshininessloc = glGetUniformLocation(program, "mShininess");
 	memissiveloc = glGetUniformLocation(program, "mEmissive");
 	malphatestvalue = glGetUniformLocation(program, "mAlphaTest");
+	
+	fcolor = glGetUniformLocation(program, "fColor");
+	fstartend = glGetUniformLocation(program, "fStartEnd");
 	
 	lambientloc = glGetUniformLocation(program, "lAmbient");
 	ldiffuseloc = glGetUniformLocation(program, "lDiffuse");

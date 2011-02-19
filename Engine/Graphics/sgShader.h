@@ -117,6 +117,9 @@ class sgShader : public sgBase
 		unsigned int memissiveloc;
 		unsigned int malphatestvalue;
 	
+		unsigned int fcolor;
+		unsigned int fstartend;
+	
 		unsigned int lambientloc;
 		unsigned int ldiffuseloc;
 		unsigned int lspecularloc;

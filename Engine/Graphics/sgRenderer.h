@@ -37,6 +37,7 @@
 #include "sgPanel.h"
 #include "sgLight.h"
 #include "sgCamera.h"
+#include "sgParticleEmitter.h"
 
 #include "sgTexture.h"
 #include "sgShader.h"
@@ -132,6 +133,12 @@ class sgRenderer
 		double currenttime;
 	
 		/**
+		 * Time step.
+		 * The time in seconds, passed during the previous frame.
+		 */
+		double timestep;
+	
+		/**
 		 * Renderer event class.
 		 * Class used for renderer events. NULL to just ignore them. It will be freed automatically if set.
 		 */
@@ -166,6 +173,12 @@ class sgRenderer
 		 * Pointer to a first panel, which is empty, but meant to be used to create new panels from.
 		 */
 		sgPanel *first_panel;
+	
+		/**
+		 * First particle emitter.
+		 * Pointer to the first particle emitter, which is empty, but meant to be used to create new particle emitters from.
+		 */
+		sgParticleEmitter *first_partemitter;
 	
 		/**
 		 * Clear color.

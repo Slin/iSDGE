@@ -1,9 +1,9 @@
 //
-//	sgRendererES2.h
+//	sgParticle.cpp
 //	iSDGE
 //
-//	Created by Nils Daumann on 17.04.10.
-//	Copyright (c) 2010 Nils Daumann
+//	Created by Nils Daumann on 13.02.11.
+//	Copyright (c) 2011 Nils Daumann
 
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
 //	of this software and associated documentation files (the "Software"), to deal
@@ -23,34 +23,33 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-#ifndef __SGRENDERERES2_H__
-#define __SGRENDERERES2_H__
+#include "sgParticle.h"
 
+#include "sgResourceManager.h"
+#include "sgObjectFiles.h"
+#include "sgMaterial.h"
+#include "sgMesh.h"
+#include "sgLight.h"
+#include "sgShadowVolume.h"
 #include "sgRenderer.h"
+#include "sgDebug.h"
 
-/**
- * OpenGL ES 2.0 renderer class. This is the renderer class which will render the scene if only OpenGL ES 2.0 is supported. Don´t touch this and use sgRenderer instead.
- */
-class sgRendererES2 : public sgRenderer
+#include <stdlib.h>
+#include <math.h>s
+
+sgParticle::sgParticle()
 {
-	public:
-		sgRendererES2();
-		~sgRendererES2();
-	
-		void render();
-		bool resizeBuffers();
-		void setMultisampling(unsigned short samples);
-	
-		void setMaterial(sgMaterial *mat);
-		void renderObjects(sgCamera *cam, sgObject *first);
-		void renderShadowVolumes(sgCamera *cam, sgObject *first);
-		void renderShadows(sgCamera *cam, sgObject *first);
-		void updateShadows(sgObject *first);
-		void renderPanels(sgPanel *first);
-		void renderParticles(sgCamera *cam, sgParticleEmitter *first);
-	
-		sgMaterial *shadowvolume;
-		sgMaterial *shadowquad;
-};
+	color = 1.0;
+	scale = 1.0;
+	destroy = false;
+}
 
-#endif
+sgParticle::~sgParticle()
+{
+	
+}
+
+void sgParticle::onDraw(float timestep)
+{
+	
+}

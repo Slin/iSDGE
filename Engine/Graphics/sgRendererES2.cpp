@@ -493,6 +493,17 @@ void sgRendererES2::renderObjects(sgCamera *cam, sgObject *first)
 			{
 				glUniform3fv(currbod->materials[i]->shader->vposition, 1, &cam->position.x);
 			}
+			if(cam->fogstartend.y >= 0.0)
+			{
+				if(currbod->materials[i]->shader->fcolor != -1)
+				{
+					glUniform4fv(currbod->materials[i]->shader->fcolor, 1, &cam->fogcolor.x);
+				}
+				if(currbod->materials[i]->shader->fstartend != -1)
+				{
+					glUniform2fv(currbod->materials[i]->shader->fstartend, 1, &cam->fogstartend.x);
+				}
+			}
 			if(currbod->materials[i]->shader->matmodel != -1)
 			{
 				glUniformMatrix4fv(currbod->materials[i]->shader->matmodel, 1, GL_FALSE, curr->matmodel.mat);
@@ -913,6 +924,77 @@ void sgRendererES2::updateShadows(sgObject *first)
 	}
 }
 
+void sgRendererES2::renderParticles(sgCamera *cam, sgParticleEmitter *first)
+{
+	sgMatrix4x4 matprojview;
+	sgParticleEmitter *curr;
+	for(curr = first->next; curr != NULL; curr = curr->next)
+	{
+		if((curr->tag == cam->tag && cam->tag != 0))
+			continue;
+		
+		curr->updateMesh(cam, timestep);
+			
+		// Use shader program
+		glUseProgram(curr->material->shader->program);
+		
+		// Set shader matrices
+		if(curr->material->shader->matproj != -1)
+		{
+			glUniformMatrix4fv(curr->material->shader->matproj, 1, GL_FALSE, cam->matproj.mat);
+		}
+		if(curr->material->shader->matview != -1)
+		{
+			glUniformMatrix4fv(curr->material->shader->matview, 1, GL_FALSE, cam->matview.mat);
+		}
+		if(curr->material->shader->time != -1)
+		{
+			glUniform1f(curr->material->shader->time, (float)currenttime);
+		}
+		if(curr->material->shader->vposition != -1)
+		{
+			glUniform3fv(curr->material->shader->vposition, 1, &cam->position.x);
+		}
+		if(cam->fogstartend.y >= 0.0)
+		{
+			if(curr->material->shader->fcolor != -1)
+			{
+				glUniform4fv(curr->material->shader->fcolor, 1, &cam->fogcolor.x);
+			}
+			if(curr->material->shader->fstartend != -1)
+			{
+				glUniform2fv(curr->material->shader->fstartend, 1, &cam->fogstartend.x);
+			}
+		}
+		if(curr->material->shader->matprojviewmodel != -1)
+		{
+			matprojview = cam->matproj*cam->matview;
+			glUniformMatrix4fv(curr->material->shader->matprojviewmodel, 1, GL_FALSE, matprojview.mat);
+		}
+		
+		setMaterial(curr->material);
+		
+		if(curr->material->shader->position != -1)
+		{
+			glVertexAttribPointer(curr->material->shader->position, 3, GL_FLOAT, 0, 36, &curr->vertices[0]);
+			glEnableVertexAttribArray(curr->material->shader->position);
+		}
+		if(curr->material->shader->color != -1)
+		{
+			glVertexAttribPointer(curr->material->shader->color, 4, GL_FLOAT, 0, 36, &curr->vertices[3]);
+			glEnableVertexAttribArray(curr->material->shader->color);
+		}
+		if(curr->material->shader->texcoord0 != -1)
+		{
+			glVertexAttribPointer(curr->material->shader->texcoord0, 2, GL_FLOAT, 0, 36, &curr->vertices[7]);
+			glEnableVertexAttribArray(curr->material->shader->texcoord0);
+		}
+		
+		glDrawElements(GL_TRIANGLES, curr->indexnum, GL_UNSIGNED_SHORT, curr->indices);
+	}
+}
+
+
 void sgRendererES2::render()
 {
 	//Clear color buffer
@@ -984,7 +1066,8 @@ void sgRendererES2::render()
 		glViewport(cam->screenpos.x, cam->screenpos.y, cam->size.x, cam->size.y);
 		renderObjects(cam, first_sky);
 		renderObjects(cam, first_solid);
-		renderShadows(cam, first_solid);
+//		renderShadows(cam, first_solid);
+		renderParticles(cam, first_partemitter);
 	}
 	
 	//Draw panels

@@ -1,9 +1,9 @@
 //
-//	sgRendererES2.h
+//	sgsParticle.vsh
 //	iSDGE
 //
-//	Created by Nils Daumann on 17.04.10.
-//	Copyright (c) 2010 Nils Daumann
+//	Created by Nils Daumann on 19.02.11.
+//	Copyright (c) 2011 Nils Daumann
 
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
 //	of this software and associated documentation files (the "Software"), to deal
@@ -23,34 +23,19 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-#ifndef __SGRENDERERES2_H__
-#define __SGRENDERERES2_H__
+attribute vec3 vertPos;
+attribute vec4 vertColor;
+attribute vec2 vertTexcoord0;
 
-#include "sgRenderer.h"
+uniform mat4 matProjViewModel;
+uniform mat4 matTex;
 
-/**
- * OpenGL ES 2.0 renderer class. This is the renderer class which will render the scene if only OpenGL ES 2.0 is supported. Don´t touch this and use sgRenderer instead.
- */
-class sgRendererES2 : public sgRenderer
+varying vec2 texcoord;
+varying vec4 color;
+
+void main()
 {
-	public:
-		sgRendererES2();
-		~sgRendererES2();
-	
-		void render();
-		bool resizeBuffers();
-		void setMultisampling(unsigned short samples);
-	
-		void setMaterial(sgMaterial *mat);
-		void renderObjects(sgCamera *cam, sgObject *first);
-		void renderShadowVolumes(sgCamera *cam, sgObject *first);
-		void renderShadows(sgCamera *cam, sgObject *first);
-		void updateShadows(sgObject *first);
-		void renderPanels(sgPanel *first);
-		void renderParticles(sgCamera *cam, sgParticleEmitter *first);
-	
-		sgMaterial *shadowvolume;
-		sgMaterial *shadowquad;
-};
-
-#endif
+	texcoord = vertTexcoord0;
+	color = vertColor;
+	gl_Position = matProjViewModel*vec4(vertPos, 1.0);
+}

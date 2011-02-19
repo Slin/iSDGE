@@ -41,6 +41,7 @@ int sgRenderer::backingHeight = 480;
 sgRenderer::sgRenderer()
 {
 	currenttime = 0.0;
+	timestep = 0.0;
 	
 	supportmultisampling = checkForExtension((char*)"APPLE_framebuffer_multisample");
 	supportdiscard = true;//checkForExtension((char*)"EXT_discard_framebuffer");
@@ -59,6 +60,7 @@ sgRenderer::sgRenderer()
 	first_cam = new sgCamera(NULL, NULL);
 	first_light = new sgLight(NULL, NULL);
 	first_panel = new sgPanel(NULL, NULL);
+	first_partemitter = new sgParticleEmitter(NULL, NULL);
 	
 	first_optimized = NULL;
 	
@@ -92,6 +94,7 @@ sgRenderer::~sgRenderer()
 	first_cam->destroyAll();
 	first_light->destroyAll();
 	first_panel->destroyAll();
+	first_partemitter->destroyAll();
 	sgResourceManager::destroyAll();
 	
 	sgOptimizedMesh *mt = NULL;
@@ -254,121 +257,6 @@ void sgRenderer::culling(sgCamera *cam, sgObject *first)
 		}
 	}
 }
-
-
-/*void sgRenderer::culling(sgCamera *cam, sgObject *first)
-{
-	sgMatrix4x4 projview = cam->matproj*cam->matview;
-	
-	sgMatrix4x4 projviewmodel;
-	sgVector4 pos;
-	sgVector4 temp;
-	sgVector2 radius;
-	float realrad;
-	for(sgObject *obj = first->next; obj != NULL; obj = obj->next)
-	{
-		if(obj->cullsphere.w >= 0)
-		{
-			pos = obj->cullsphere;
-			projviewmodel = projview*obj->matmodel;
-			pos.w = 1.0;
-			pos = projviewmodel*pos;
-			pos.x /= pos.w;
-			pos.y /= pos.w;
-			
-			realrad = obj->scale.x;
-			if(realrad < obj->scale.y)
-				realrad = obj->scale.y;
-			if(realrad < obj->scale.z)
-				realrad = obj->scale.z;
-			realrad *= obj->cullsphere.w;
-			
-			temp = sgVector4(realrad, 0.0, pos.w, 1.0);
-			temp = cam->matproj*temp;
-			radius.x = temp.x/temp.w*1.1;
-			temp = sgVector4(0.0, realrad, pos.w, 1.0);
-			temp = cam->matproj*temp;
-			radius.y = temp.y/temp.w*1.1;
-			
-			if(radius.x < 0)
-				radius.x *= -1;
-			if(radius.y < 0)
-				radius.y *= -1;
-			
-			if((pos.x < 1.0+radius.x && pos.x > -1.0-radius.x && pos.y < 1.0+radius.y && pos.y > -1.0-radius.y && pos.w > 0) || (((pos.w < 0)?(-pos.w):(pos.w)) <= realrad))
-				obj->culled = false;
-			else
-				obj->culled = true;
-		}else
-		{
-			obj->culled = false;
-			sgObjectBody *bod = obj->currbody;
-			sgObjectBody *lod = obj->body;
-			float meshdist = 0.0;
-			
-			if(obj->body->nextbody != NULL)
-			{
-				bod->meshs.clear();
-				bod->materials.clear();
-				for(int i = 0; i < obj->body->meshs.size(); i++)
-				{
-					pos = obj->body->meshs[i]->cullsphere;
-					pos.w = 1.0;
-					pos = obj->matmodel*pos;
-					sgVector3 p = pos;
-					meshdist = cam->position.dist(p)+cam->lodshift;
-					
-					lod = obj->body;
-					while(meshdist > lod->loddist && lod->nextbody != NULL)
-					{
-						lod = lod->nextbody;
-					}
-					
-					bod->meshs.push_back(lod->meshs[i]);
-					bod->materials.push_back(lod->materials[i]);
-				}
-			}
-			
-			for(int i = 0; i < bod->meshs.size(); i++)
-			{
-				pos = bod->meshs[i]->cullsphere;
-				projviewmodel = projview*obj->matmodel;
-				pos.w = 1.0;
-				pos = projviewmodel*pos;
-				pos.x /= pos.w;
-				pos.y /= pos.w;
-				
-				realrad = obj->scale.x;
-				if(realrad < obj->scale.y)
-					realrad = obj->scale.y;
-				if(realrad < obj->scale.y)
-					realrad = obj->scale.y;
-				realrad *= bod->meshs[i]->cullsphere.w;
-				
-				temp = sgVector4(realrad, 0.0, pos.w, 1.0);
-				temp = cam->matproj*temp;
-				radius.x = temp.x/temp.w*1.1;
-				temp = sgVector4(0.0, realrad, pos.w, 1.0);
-				temp = cam->matproj*temp;
-				radius.y = temp.y/temp.w*1.1;
-				
-				if(radius.x < 0)
-					radius.x *= -1;
-				if(radius.y < 0)
-					radius.y *= -1;
-				
-				if((pos.x < 1.0+radius.x && pos.x > -1.0-radius.x && pos.y < 1.0+radius.y && pos.y > -1.0-radius.y && pos.w > 0) || (((pos.w < 0)?(-pos.w):(pos.w)) <= realrad))
-				{
-					bod->meshs[i]->culled = false;
-				}
-				else
-				{
-					bod->meshs[i]->culled = true;
-				}
-			}
-		}
-	}
-}*/
 
 void sgRenderer::sorting()
 {

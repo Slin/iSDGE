@@ -1,0 +1,49 @@
+This is a list of the predefined attributes and uniforms you can use within your shader.
+
+Attributes (set depending on the used vertex format):
+- vertPos (vec3)
+- vertNormal (vec3)
+- vertTexcoord0 (vec2)
+- vertTexcoord1 (vec2)
+- vertColor (vec4)
+
+
+Uniforms:
+Textures:
+- mTextureN (sampler2D, N starts with 0)
+
+Transformations:
+- matProj (mat4)
+- matView (mat4)
+- matModel (mat4)
+- matProjViewModel (mat4)
+- matNormal (mat4)
+- matTex (mat4)
+
+Material:
+- mAmbient (vec4)
+- mDiffuse (vec4)
+- mSpecular (vec4)
+- mShininess (float)
+- mEmissive (vec4)
+- mAlphaTest (float)
+
+Fog:
+- fColor (vec4)
+- fStartEnd (vec2)
+
+Lights (Arrays, with maxlights as size):
+- lAmbient (vec4)
+- lDiffuse (vec4)
+- lSpecular (vec4)
+- lPosition (vec4)
+- lAttenuation (float)
+
+Camera:
+- vPosition (vec4)
+
+Other:
+- Time (float)
+
+
+Besides this you can of course easily register custom variables for each of your materials!

@@ -40,6 +40,7 @@ sgEntity::sgEntity(sgEntity* p, sgEntity *n, sgMain *m)
 	light = NULL;
 	act = NULL;
 	pan = NULL;
+	emitt = NULL;
 }
 
 sgEntity *sgEntity::createEmptyEntity(sgAction *a)
@@ -158,6 +159,17 @@ sgEntity *sgEntity::createPanEntity(sgAction *a)
 	return next;
 }
 
+sgEntity *sgEntity::createEmitterEntity(const char *texfile, sgAction *a)
+{
+	next = new sgEntity(this, next, sgmain);
+	next->emitt = sgmain->renderer->first_partemitter->createEmitter(texfile);
+	next->emitt->material->lighting = false;
+	next->act = a;
+	if(next->act)
+		next->act->onInit(next);
+	return next;
+}
+
 void sgEntity::destroy()
 {
 	if(act != NULL)
@@ -175,11 +187,15 @@ void sgEntity::destroy()
 	if(pan != NULL)
 		pan->destroy();
 	
+	if(emitt != NULL)
+		emitt->destroy();
+	
 	act = NULL;
 	obj = NULL;
 	cam = NULL;
 	light = NULL;
 	pan = NULL;
+	emitt = NULL;
 	
 	if(prev)
 		prev->next = next;

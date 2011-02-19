@@ -1,9 +1,9 @@
 //
-//	sgRendererES2.h
+//	sgsParticle.fsh
 //	iSDGE
 //
-//	Created by Nils Daumann on 17.04.10.
-//	Copyright (c) 2010 Nils Daumann
+//	Created by Nils Daumann on 19.02.11.
+//	Copyright (c) 2011 Nils Daumann
 
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
 //	of this software and associated documentation files (the "Software"), to deal
@@ -23,34 +23,13 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-#ifndef __SGRENDERERES2_H__
-#define __SGRENDERERES2_H__
+precision lowp float;
 
-#include "sgRenderer.h"
+uniform sampler2D mTexture0;
+varying mediump vec2 texcoord;
+varying vec4 color;
 
-/**
- * OpenGL ES 2.0 renderer class. This is the renderer class which will render the scene if only OpenGL ES 2.0 is supported. Don´t touch this and use sgRenderer instead.
- */
-class sgRendererES2 : public sgRenderer
+void main()
 {
-	public:
-		sgRendererES2();
-		~sgRendererES2();
-	
-		void render();
-		bool resizeBuffers();
-		void setMultisampling(unsigned short samples);
-	
-		void setMaterial(sgMaterial *mat);
-		void renderObjects(sgCamera *cam, sgObject *first);
-		void renderShadowVolumes(sgCamera *cam, sgObject *first);
-		void renderShadows(sgCamera *cam, sgObject *first);
-		void updateShadows(sgObject *first);
-		void renderPanels(sgPanel *first);
-		void renderParticles(sgCamera *cam, sgParticleEmitter *first);
-	
-		sgMaterial *shadowvolume;
-		sgMaterial *shadowquad;
-};
-
-#endif
+	gl_FragColor = texture2D(mTexture0, texcoord)*color;
+}

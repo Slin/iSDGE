@@ -31,6 +31,7 @@
 #include "sgCamera.h"
 #include "sgLight.h"
 #include "sgPanel.h"
+#include "sgParticleEmitter.h"
 #include "sgVector4.h"
 
 class sgAction;
@@ -127,6 +128,15 @@ class sgEntity
 		 * @return pointer to the new entity
 		 */
 		sgEntity *createPanEntity(sgAction *a = NULL);
+	
+		/**
+		 *	Create particle emitter entity.
+		 *	Creates a new entity consisting of a particle emitter and makes it next of this.
+		 * @param texfile filename of the texture to use for this emitters particles.
+		 * @param a pointer to the action which will be assigned to the new entity.
+		 * @return pointer to the new entity
+		 */
+		sgEntity *createEmitterEntity(const char *texfile, sgAction *a = NULL);
 		
 		/**
 		 *	Destroy.
@@ -163,6 +173,12 @@ class sgEntity
 		 *	Pointer to the panel handled by this entity or NULL if there is none.
 		 */
 		sgPanel *pan;
+	
+		/**
+		 *	Particle emitter.
+		 *	Pointer to the particle emitter handled by this entity or NULL if there is none.
+		 */
+		sgParticleEmitter *emitt;
 	
 		/**
 		 *	Action.

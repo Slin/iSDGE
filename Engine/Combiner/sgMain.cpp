@@ -62,6 +62,7 @@ void sgMain::drawView()
 	timer.start();
 	
 	renderer->currenttime += timestep;
+	renderer->timestep = timestep;
 	
 	if(currframes == 1)
 	{

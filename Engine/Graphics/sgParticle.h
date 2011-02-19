@@ -1,9 +1,9 @@
 //
-//	sgRendererES2.h
+//	sgParticle.h
 //	iSDGE
 //
-//	Created by Nils Daumann on 17.04.10.
-//	Copyright (c) 2010 Nils Daumann
+//	Created by Nils Daumann on 13.02.11.
+//	Copyright (c) 2011 Nils Daumann
 
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
 //	of this software and associated documentation files (the "Software"), to deal
@@ -23,34 +23,64 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-#ifndef __SGRENDERERES2_H__
-#define __SGRENDERERES2_H__
+#ifndef __SGPARTICLE_H__
+#define __SGPARTICLE_H__
 
-#include "sgRenderer.h"
+#include <vector>
+#include <string>
+
+#include "sgVector4.h"
+#include "sgVector3.h"
+
 
 /**
- * OpenGL ES 2.0 renderer class. This is the renderer class which will render the scene if only OpenGL ES 2.0 is supported. Don´t touch this and use sgRenderer instead.
+ * Particle class. Represents a particle.
  */
-class sgRendererES2 : public sgRenderer
+class sgParticle
 {
 	public:
-		sgRendererES2();
-		~sgRendererES2();
+		/**
+		 *	Constructor.
+		 *	Creates a particle.
+		 */
+		sgParticle();
 	
-		void render();
-		bool resizeBuffers();
-		void setMultisampling(unsigned short samples);
+		/**
+		 *	Deconstructor.
+		 *	Frees the particle.
+		 */
+		~sgParticle();
 	
-		void setMaterial(sgMaterial *mat);
-		void renderObjects(sgCamera *cam, sgObject *first);
-		void renderShadowVolumes(sgCamera *cam, sgObject *first);
-		void renderShadows(sgCamera *cam, sgObject *first);
-		void updateShadows(sgObject *first);
-		void renderPanels(sgPanel *first);
-		void renderParticles(sgCamera *cam, sgParticleEmitter *first);
+		/**
+		 *	On draw.
+		 *	Will be called each frame and is meant to be used to controll the particles behaviour.
+		 *	@param timestep time in seconds of the previous frame.
+		 */
+		virtual void onDraw(float timestep);
 	
-		sgMaterial *shadowvolume;
-		sgMaterial *shadowquad;
+		/**
+		 *	Position.
+		 *	The position of this particle.
+		 */
+		sgVector3 position;
+	
+		/**
+		 *	Scale.
+		 *	The scale of this particle.
+		 */
+		float scale;
+	
+		/**
+		 *	Color
+		 *	The particles color including transparency.
+		 */
+		sgVector4 color;
+		
+		/**
+		 *	Destroy
+		 *	If this is set to true, the particle will be destroyed within the same frame.
+		 */
+		bool destroy;
 };
 
 #endif
