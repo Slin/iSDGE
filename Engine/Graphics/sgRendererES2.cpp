@@ -365,6 +365,23 @@ void sgRendererES2::setMaterial(sgMaterial *mat)
 		glDisable(GL_DEPTH_TEST);
 	}
 	
+	if(mat->depthtest)
+	{
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(mat->depthtestmode);
+	}else
+	{
+		glDisable(GL_DEPTH_TEST);
+	}
+	
+	if(mat->depthwrite)
+	{
+		glDepthMask(GL_TRUE);
+	}else
+	{
+		glDepthMask(GL_FALSE);
+	}
+	
 	for(n = 0; n < mat->parameters.size(); n++)
 	{
 		if(mat->parameters[n].location != -1)
@@ -935,7 +952,7 @@ void sgRendererES2::renderParticles(sgCamera *cam, sgParticleEmitter *first)
 			continue;
 		
 		curr->updateMesh(cam, timestep);
-			
+		
 		// Use shader program
 		glUseProgram(curr->material->shader->program);
 		
@@ -1083,6 +1100,7 @@ void sgRendererES2::render()
 	if(msaasamples > 0)
 	{
 		//Resolve from msaaFramebuffer to resolveFramebuffer (scissortest has to be turned off for this to work)
+		glDisable(GL_SCISSOR_TEST);
 		glBindFramebuffer(GL_READ_FRAMEBUFFER_APPLE, msaaFramebuffer);
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER_APPLE, mainFramebuffer);
 		glResolveMultisampleFramebufferAPPLE();

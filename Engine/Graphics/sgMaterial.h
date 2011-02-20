@@ -385,6 +385,12 @@ class sgMaterial : public sgBase
 		bool depthtest;
 	
 		/**
+		 *	Depthwrite.
+		 *	True to activate depth writing (default), false otherwise.
+		 */
+		bool depthwrite;
+	
+		/**
 		 *	Depthtest mode.
 		 *	Default is GL_LEQUAL, to only draw pixels, not covered by others.
 		 */

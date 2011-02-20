@@ -201,6 +201,7 @@ void sgMaterial::setDefault()
 	
 	depthtest = true;
 	depthtestmode = GL_LEQUAL;
+	depthwrite = true;
 	
 	mattex.makeIdentity();
 	

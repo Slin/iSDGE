@@ -56,7 +56,9 @@ void Events::onInit(sgMain *m)
 	//Create skycube
 	sgmain->first_ent->createSkyCubeEntity("sky_right.png", "sky_back.png", "sky_left.png", "sky_front.png", "sky_down.png", "sky_up.png");
 	
-	//Create a rotating space ship
+	sgmain->first_ent->createObjEntity("jeep2.sgm");
+	
+	//Create a particle emitter
 	sgmain->first_ent->createEmitterEntity("testpart.png", (sgAction*)new SpawnParts);
 }
 

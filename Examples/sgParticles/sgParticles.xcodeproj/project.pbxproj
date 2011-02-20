@@ -92,6 +92,8 @@
 		295CBF5C1215861700F1F941 /* Events.mm in Sources */ = {isa = PBXBuildFile; fileRef = 295CBF5A1215861700F1F941 /* Events.mm */; };
 		295CBF5D1215861700F1F941 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295CBF5B1215861700F1F941 /* main.cpp */; };
 		295CBF69121587B300F1F941 /* TestPart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295CBF67121587B300F1F941 /* TestPart.cpp */; };
+		297C8ED31310A09100AC1D24 /* jeep2.png in Resources */ = {isa = PBXBuildFile; fileRef = 297C8EA51310A09100AC1D24 /* jeep2.png */; };
+		297C8ED41310A09100AC1D24 /* jeep2.sgm in Resources */ = {isa = PBXBuildFile; fileRef = 297C8EA61310A09100AC1D24 /* jeep2.sgm */; };
 		29BF504613106CC600C746D7 /* sgsParticle.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 29BF504413106CC600C746D7 /* sgsParticle.fsh */; };
 		29BF504713106CC600C746D7 /* sgsParticle.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 29BF504513106CC600C746D7 /* sgsParticle.vsh */; };
 		29D7EB5B117CFABF0091D933 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29D7EB5A117CFABF0091D933 /* Entitlements.plist */; };
@@ -232,6 +234,8 @@
 		295CBF67121587B300F1F941 /* TestPart.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TestPart.cpp; sourceTree = "<group>"; };
 		295CBF68121587B300F1F941 /* TestPart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestPart.h; sourceTree = "<group>"; };
 		295CBF8C12158A9600F1F941 /* sgParticles-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "sgParticles-Info.plist"; sourceTree = "<group>"; };
+		297C8EA51310A09100AC1D24 /* jeep2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jeep2.png; sourceTree = "<group>"; };
+		297C8EA61310A09100AC1D24 /* jeep2.sgm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = jeep2.sgm; sourceTree = "<group>"; };
 		29BF504413106CC600C746D7 /* sgsParticle.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsParticle.fsh; sourceTree = "<group>"; };
 		29BF504513106CC600C746D7 /* sgsParticle.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = sgsParticle.vsh; sourceTree = "<group>"; };
 		29D7EB5A117CFABF0091D933 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
@@ -474,6 +478,7 @@
 		291D8A6913085E3F00935F3B /* Media */ = {
 			isa = PBXGroup;
 			children = (
+				297C8E701310A09000AC1D24 /* Models */,
 				291D8A6A13085E3F00935F3B /* Device */,
 				291D8ACC13085E4000935F3B /* Textures */,
 			);
@@ -539,6 +544,31 @@
 				290CE854130B3185005F3318 /* SpawnParts.cpp */,
 			);
 			path = Objects;
+			sourceTree = "<group>";
+		};
+		297C8E701310A09000AC1D24 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				297C8E9B1310A09100AC1D24 /* psionic */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		297C8E9B1310A09100AC1D24 /* psionic */ = {
+			isa = PBXGroup;
+			children = (
+				297C8EA31310A09100AC1D24 /* jeep */,
+			);
+			path = psionic;
+			sourceTree = "<group>";
+		};
+		297C8EA31310A09100AC1D24 /* jeep */ = {
+			isa = PBXGroup;
+			children = (
+				297C8EA51310A09100AC1D24 /* jeep2.png */,
+				297C8EA61310A09100AC1D24 /* jeep2.sgm */,
+			);
+			path = jeep;
 			sourceTree = "<group>";
 		};
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
@@ -663,6 +693,8 @@
 				291D8B4913085E4000935F3B /* sky_right.png in Resources */,
 				291D8B4A13085E4000935F3B /* sky_up.png in Resources */,
 				290CE82D130B2D21005F3318 /* testpart.png in Resources */,
+				297C8ED31310A09100AC1D24 /* jeep2.png in Resources */,
+				297C8ED41310A09100AC1D24 /* jeep2.sgm in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -57,7 +57,7 @@ sgParticleEmitter *sgParticleEmitter::createEmitter(const char *texfile)
 	next = new sgParticleEmitter(this, next);
 	next->material = sgMaterial::getMaterial(texfile, true, -3);
 	next->material->blending = true;
-	next->material->depthtest = false;
+	next->material->depthwrite = false;
 	return next;
 }
 
