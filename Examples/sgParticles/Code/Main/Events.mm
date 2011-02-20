@@ -56,10 +56,11 @@ void Events::onInit(sgMain *m)
 	//Create skycube
 	sgmain->first_ent->createSkyCubeEntity("sky_right.png", "sky_back.png", "sky_left.png", "sky_front.png", "sky_down.png", "sky_up.png");
 	
-	sgmain->first_ent->createObjEntity("jeep2.sgm");
-	
 	//Create a particle emitter
-	sgmain->first_ent->createEmitterEntity("testpart.png", (sgAction*)new SpawnParts);
+	sgEntity *emitter = sgmain->first_ent->createEmitterEntity("testpart.png", (sgAction*)new SpawnParts);
+	
+	//Add an object to it
+	emitter->createObj("jeep2.sgm");
 }
 
 //Called every frame, just before drawing

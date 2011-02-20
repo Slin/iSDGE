@@ -46,29 +46,23 @@ sgEntity::sgEntity(sgEntity* p, sgEntity *n, sgMain *m)
 sgEntity *sgEntity::createEmptyEntity(sgAction *a)
 {
 	next = new sgEntity(this, next, sgmain);
-	next->act = a;
-	if(next->act)
-		next->act->onInit(next);
+	next->createAction(a);
 	return next;
 }
 
 sgEntity *sgEntity::createEmptyObjEntity(sgAction *a)
 {
 	next = new sgEntity(this, next, sgmain);
-	next->obj = sgmain->renderer->first_solid->createObject();
-	next->act = a;
-	if(next->act)
-		next->act->onInit(next);
+	next->createEmptyObj();
+	next->createAction(a);
 	return next;
 }
 
 sgEntity *sgEntity::createObjEntity(const char *name, sgAction *a)
 {
 	next = new sgEntity(this, next, sgmain);
-	next->obj = sgmain->renderer->first_solid->createObject(name);
-	next->act = a;
-	if(next->act)
-		next->act->onInit(next);
+	next->createObj(name);
+	next->createAction(a);
 	return next;
 }
 
@@ -78,96 +72,156 @@ sgEntity *sgEntity::createTerrainEntity(const char *hmp, unsigned int xverts, un
 		return NULL;
 	
 	next = new sgEntity(this, next, sgmain);
-	next->obj = sgmain->renderer->first_solid->createTerrain(xverts, zverts, xchunks, zchunks, lodsteps, hmp, hmpscale);
-	
-	next->act = a;
-	if(next->act)
-		next->act->onInit(next);
+	next->createTerrain(hmp, xverts, zverts, xchunks, zchunks, lodsteps, hmpscale);
+	next->createAction(a);
 	return next;
 }
 
 sgEntity *sgEntity::createSkyCubeEntity(const char *right, const char *back, const char *left, const char *front, const char *down, const char *up, sgAction *a)
 {
 	next = new sgEntity(this, next, sgmain);
-	next->obj = sgmain->renderer->first_sky->createObject("skycube");
-	next->act = a;
-	if(next->act)
-		next->act->onInit(next);
-	
-	next->obj->body->materials[0]->setTexture2D(-1, right, false);
-	next->obj->body->materials[0]->depthtest = false;
-	next->obj->body->materials[0]->textures[0]->setParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	next->obj->body->materials[0]->textures[0]->setParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	next->obj->body->materials[1]->setTexture2D(-1, back, false);
-	next->obj->body->materials[1]->depthtest = false;
-	next->obj->body->materials[1]->textures[0]->setParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	next->obj->body->materials[1]->textures[0]->setParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	next->obj->body->materials[2]->setTexture2D(-1, left, false);
-	next->obj->body->materials[2]->textures[0]->setParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	next->obj->body->materials[2]->textures[0]->setParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	next->obj->body->materials[2]->depthtest = false;
-	next->obj->body->materials[3]->setTexture2D(-1, front, false);
-	next->obj->body->materials[3]->textures[0]->setParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	next->obj->body->materials[3]->textures[0]->setParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	next->obj->body->materials[3]->depthtest = false;
-	next->obj->body->materials[4]->setTexture2D(-1, down, false);
-	next->obj->body->materials[4]->textures[0]->setParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	next->obj->body->materials[4]->textures[0]->setParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	next->obj->body->materials[4]->depthtest = false;
-	next->obj->body->materials[5]->setTexture2D(-1, up, false);
-	next->obj->body->materials[5]->textures[0]->setParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	next->obj->body->materials[5]->textures[0]->setParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	next->obj->body->materials[5]->depthtest = false;
-	next->obj->sky = true;
-	
+	next->createSkyCube(right, back, left, front, down, up);
+	next->createAction(a);
 	return next;
 }
 
 sgEntity *sgEntity::createCamEntity(sgAction *a)
 {
 	next = new sgEntity(this, next, sgmain);
-	next->cam = sgmain->renderer->first_cam->createCamera();
-	
-	next->cam->size = sgVector2(sgRenderer::backingWidth, sgRenderer::backingHeight);
-	next->cam->aspect = next->cam->size.x/next->cam->size.y;
-	next->cam->updateProj();
-	
-	next->act = a;
-	if(next->act)
-		next->act->onInit(next);
+	next->createCam();
+	next->createAction(a);
 	return next;
 }
 
 sgEntity *sgEntity::createLightEntity(sgAction *a)
 {
 	next = new sgEntity(this, next, sgmain);
-	next->light = sgmain->renderer->first_light->createLight();
-	
-	next->act = a;
-	if(next->act)
-		next->act->onInit(next);
+	next->createLight();
+	next->createAction(a);
 	return next;
 }
 
 sgEntity *sgEntity::createPanEntity(sgAction *a)
 {
 	next = new sgEntity(this, next, sgmain);
-	next->pan = sgmain->renderer->first_panel->createPanel();
-	next->act = a;
-	if(next->act)
-		next->act->onInit(next);
+	next->createPan();
+	next->createAction(a);
 	return next;
 }
 
 sgEntity *sgEntity::createEmitterEntity(const char *texfile, sgAction *a)
 {
 	next = new sgEntity(this, next, sgmain);
-	next->emitt = sgmain->renderer->first_partemitter->createEmitter(texfile);
-	next->emitt->material->lighting = false;
-	next->act = a;
-	if(next->act)
-		next->act->onInit(next);
+	next->createEmitter(texfile);
+	next->createAction(a);
 	return next;
+}
+
+void sgEntity::createEmptyObj()
+{
+	if(obj != NULL)
+		return;
+	
+	obj = sgmain->renderer->first_solid->createObject();
+}
+
+void sgEntity::createObj(const char *name)
+{
+	if(obj != NULL)
+		return;
+	
+	obj = sgmain->renderer->first_solid->createObject(name);
+}
+
+void sgEntity::createTerrain(const char *hmp, unsigned int xverts, unsigned int zverts, unsigned char xchunks, unsigned char zchunks, unsigned int lodsteps, sgVector4 hmpscale)
+{
+	if(obj != NULL)
+		return;
+	
+	if(xverts == 0 || zverts == 0)
+		return;
+	
+	obj = sgmain->renderer->first_solid->createTerrain(xverts, zverts, xchunks, zchunks, lodsteps, hmp, hmpscale);
+}
+
+void sgEntity::createSkyCube(const char *right, const char *back, const char *left, const char *front, const char *down, const char *up)
+{
+	if(obj != NULL)
+		return;
+	
+	obj = sgmain->renderer->first_sky->createObject("skycube");
+	
+	obj->body->materials[0]->setTexture2D(-1, right, false);
+	obj->body->materials[0]->depthtest = false;
+	obj->body->materials[0]->textures[0]->setParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	obj->body->materials[0]->textures[0]->setParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	obj->body->materials[1]->setTexture2D(-1, back, false);
+	obj->body->materials[1]->depthtest = false;
+	obj->body->materials[1]->textures[0]->setParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	obj->body->materials[1]->textures[0]->setParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	obj->body->materials[2]->setTexture2D(-1, left, false);
+	obj->body->materials[2]->textures[0]->setParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	obj->body->materials[2]->textures[0]->setParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	obj->body->materials[2]->depthtest = false;
+	obj->body->materials[3]->setTexture2D(-1, front, false);
+	obj->body->materials[3]->textures[0]->setParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	obj->body->materials[3]->textures[0]->setParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	obj->body->materials[3]->depthtest = false;
+	obj->body->materials[4]->setTexture2D(-1, down, false);
+	obj->body->materials[4]->textures[0]->setParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	obj->body->materials[4]->textures[0]->setParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	obj->body->materials[4]->depthtest = false;
+	obj->body->materials[5]->setTexture2D(-1, up, false);
+	obj->body->materials[5]->textures[0]->setParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	obj->body->materials[5]->textures[0]->setParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	obj->body->materials[5]->depthtest = false;
+	obj->sky = true;
+}
+
+void sgEntity::createCam()
+{
+	if(cam != NULL)
+		return;
+	
+	cam = sgmain->renderer->first_cam->createCamera();
+	
+	cam->size = sgVector2(sgRenderer::backingWidth, sgRenderer::backingHeight);
+	cam->aspect = cam->size.x/cam->size.y;
+	cam->updateProj();
+}
+
+void sgEntity::createLight()
+{
+	if(light != NULL)
+		return;
+	
+	light = sgmain->renderer->first_light->createLight();
+}
+
+void sgEntity::createPan()
+{
+	if(pan != NULL)
+		return;
+	
+	pan = sgmain->renderer->first_panel->createPanel();
+}
+
+void sgEntity::createEmitter(const char *texfile)
+{
+	if(emitt != NULL)
+		return;
+	
+	emitt = sgmain->renderer->first_partemitter->createEmitter(texfile);
+}
+
+void sgEntity::createAction(sgAction *a)
+{
+	if(act != NULL)
+		return;
+	
+	act = a;
+	if(act != NULL)
+		act->onInit(this);
 }
 
 void sgEntity::destroy()

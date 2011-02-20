@@ -28,12 +28,17 @@
 
 #include "sgParticle.h"
 
+class sgObject;
+
 class TestPart : public sgParticle
 {
 	public:
-		TestPart();
+		TestPart(sgObject *obj);
 	
 		void onDraw(float timestep);
+	
+	private:
+		sgObject *spawnobj;
 };
 
 #endif

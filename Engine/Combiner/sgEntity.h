@@ -65,12 +65,12 @@ class sgEntity
 		 * @param a pointer to the action which will be assigned to the new entity.
 		 * @return pointer to the new entity
 		 */
-		sgEntity *createEmptyObjEntity(sgAction *a);
-		
+		sgEntity *createEmptyObjEntity(sgAction *a = NULL);
+	
 		/**
 		 *	Create object entity.
 		 *	Creates a new entity with an object loaded from a model file or a predefined name and makes it next of this.
-		 * @param name name of the entity or the file to load it from.
+		 * @param name name of the object or the file to load it from.
 		 * @param a pointer to the action which will be assigned to the new entity.
 		 * @return pointer to the new entity
 		 */
@@ -137,6 +137,76 @@ class sgEntity
 		 * @return pointer to the new entity
 		 */
 		sgEntity *createEmitterEntity(const char *texfile, sgAction *a = NULL);
+	
+		/**
+		 *	Create empty object.
+		 *	If there isn´t already an object attached, it will create a new empty one and attach it to the entity.
+		 */
+		void createEmptyObj();
+		
+		/**
+		 *	Create object.
+		 *	If there isn´t already an object attached, it will create a new one and attach it to the entity.
+		 * @param name name of the object or the file to load it from.
+		 */
+		void createObj(const char *name);
+		
+		/**
+		 *	Create terrain.
+		 *	If there isn´t already an object attached, it will create a new terrain object from a heightmap image with the given number of vertices in x and z direction splitted into several meshes (chunks). The distance of vertices along an axis is 1 unit by default.
+		 * @param hmp name of the heightmap image, or NULL for a flat terrain.
+		 * @param xverts number of vertices along the x axis. POT recommended.
+		 * @param zverts number of vertices along the z axis. POT recommended.
+		 * @param xchunks number of chunks along the x axis. xverts/xchunks should be a clean division.
+		 * @param zchunks number of chunks along the z axis. zverts/zchunks should be a clean division.
+		 * @param lodsteps number of lod steps to create for this terrain.
+		 * @param hmpscale vector defining how much each heightmap color channel effects the terrains height.
+		 */
+		void createTerrain(const char *hmp, unsigned int xverts = 10, unsigned int zverts = 10, unsigned char xchunks = 1, unsigned char zchunks = 1, unsigned int lodsteps = 3, sgVector4 hmpscale = sgVector4(0.01, 0, 0, 0));
+		
+		/**
+		 *	Create skycube.
+		 *	If there isn´t already an object attached, it will create a new skycube and attach it the entity, textured with the given textures.
+		 * @param right filename of the texture of the right face
+		 * @param back filename of the texture of the right face
+		 * @param left filename of the texture of the right face
+		 * @param front filename of the texture of the right face
+		 * @param down filename of the texture of the right face
+		 * @param up filename of the texture of the right face
+		 */
+		void createSkyCube(const char *right, const char *back, const char *left, const char *front, const char *down, const char *up);
+		
+		/**
+		 *	Create camera.
+		 *	If there isn´t already a camera attached, it will create a new camera and attach it to the entity.
+		 */
+		void createCam();
+		
+		/**
+		 *	Create light.
+		 *	If there isn´t already a light attached, it will create a new light and attach it to the entity.
+		 */
+		void createLight();
+		
+		/**
+		 *	Create panel.
+		 *	If there isn´t already a panel attached, it will create a new panel and attach it to the entity.
+		 */
+		void createPan();
+		
+		/**
+		 *	Create particle emitter.
+		 *	If there isn´t already a particle emitter attached, it will create a new one and attach it to the entity.
+		 * @param texfile filename of the texture to use for this emitters particles.
+		 */
+		void createEmitter(const char *texfile);
+	
+		/**
+		 *	Create action.
+		 *	Assigns the given action to the entity and calls its init method.
+		 * @param a pointer to the action which will be assigned to the entity.
+		 */
+		void createAction(sgAction *a = NULL);
 		
 		/**
 		 *	Destroy.

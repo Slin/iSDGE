@@ -25,9 +25,14 @@
 
 #include "TestPart.h"
 #include "sgVector3.h"
+#include "sgObject.h"
 
-TestPart::TestPart()
+#include "stdlib.h"
+
+TestPart::TestPart(sgObject *obj)
 {
+	spawnobj = obj;
+	position = spawnobj->position+sgVector3((rand()%150)*0.01-0.75, 0.3, (rand()%150)*0.01-0.75);
 	scale = 0.0;
 }
 
