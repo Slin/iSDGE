@@ -213,7 +213,7 @@ void sgRenderer::culling(sgCamera *cam, sgObject *first)
 		obj->updateModel();
 		pos = obj->cullsphere;
 		pos = obj->matmodel*pos;
-		radius = abs(obj->cullsphere.w)*fmax(obj->scale.x, fmax(obj->scale.y, obj->scale.z));
+		radius = fabs(obj->cullsphere.w)*fmax(obj->scale.x, fmax(obj->scale.y, obj->scale.z));
 		
 		if(cam->inFrustum(pos, radius))
 		{

@@ -81,7 +81,7 @@ void sgMain::drawView()
 		}
 	}
 	
-	if(eventhandler != NULL)
+	if(eventhandler != NULL && currframes > 0)
 		eventhandler->onDrawLate(timestep);
 	
 	for(sgEntity *it = first_ent->next; it != NULL; it = it->next)

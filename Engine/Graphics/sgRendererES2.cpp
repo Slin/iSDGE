@@ -900,6 +900,7 @@ void sgRendererES2::renderShadows(sgCamera *cam, sgObject *first)
 		glEnableVertexAttribArray(shadowquad->shader->position);
 	}
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	glDepthMask(GL_TRUE);
 	glDisable(GL_STENCIL_TEST);
@@ -1066,7 +1067,7 @@ void sgRendererES2::render()
 		glViewport(cam->screenpos.x, cam->screenpos.y, cam->size.x, cam->size.y);
 		renderObjects(cam, first_sky);
 		renderObjects(cam, first_solid);
-//		renderShadows(cam, first_solid);
+		renderShadows(cam, first_solid);
 		renderParticles(cam, first_partemitter);
 	}
 	
@@ -1081,8 +1082,7 @@ void sgRendererES2::render()
 	
 	if(msaasamples > 0)
 	{
-		//Resolve from msaaFramebuffer to resolveFramebuffer
-		glDisable(GL_SCISSOR_TEST);
+		//Resolve from msaaFramebuffer to resolveFramebuffer (scissortest has to be turned off for this to work)
 		glBindFramebuffer(GL_READ_FRAMEBUFFER_APPLE, msaaFramebuffer);
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER_APPLE, mainFramebuffer);
 		glResolveMultisampleFramebufferAPPLE();
