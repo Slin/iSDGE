@@ -33,6 +33,11 @@ sgEntity::sgEntity(sgEntity* p, sgEntity *n, sgMain *m)
 {
 	prev = p;
 	next = n;
+	if(next)
+	{
+		next->prev = this;
+	}
+	
 	sgmain = m;
 	
 	obj = NULL;

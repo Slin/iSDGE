@@ -36,7 +36,7 @@ sgCamera::sgCamera(sgCamera *p, sgCamera *n)
 	size = sgVector2(100, 100);
 	aspect = 1;
 	arc = 70;
-	clipnear = 0.01;
+	clipnear = 0.1;
 	clipfar = 500.0;
 	updateProj();
 	
@@ -48,6 +48,10 @@ sgCamera::sgCamera(sgCamera *p, sgCamera *n)
 	
 	prev = p;
 	next = n;
+	if(next)
+	{
+		next->prev = this;
+	}
 }
 
 sgCamera *sgCamera::createCamera()

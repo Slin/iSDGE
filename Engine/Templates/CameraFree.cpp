@@ -26,8 +26,9 @@
 #include "CameraFree.h"
 #include "sgMain.h"
 
-CameraFree::CameraFree()
+CameraFree::CameraFree(float sp)
 {
+	speed = sp;
 	stereo_cam = NULL;
 }
 
@@ -140,7 +141,7 @@ void CameraFree::onDraw(float timestep)
 	
 	sgVector3 dir(toll.x, 0.0f, -toll.y);
 	dir = ent->cam->rotation.rotate(dir);
-	ent->cam->position += dir*timestep;
+	ent->cam->position += dir*speed*timestep;
 	
 	if(stereo_cam != NULL)
 	{

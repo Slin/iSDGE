@@ -29,6 +29,10 @@ sgLight::sgLight(sgLight *p, sgLight *n)
 {
 	prev = p;
 	next = n;
+	if(next)
+	{
+		next->prev = this;
+	}
 	setDefault();
 }
 

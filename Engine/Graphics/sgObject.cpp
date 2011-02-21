@@ -41,6 +41,10 @@ sgObject::sgObject(sgObject* p, sgObject *n)
 {
 	prev = p;
 	next = n;
+	if(next)
+	{
+		next->prev = this;
+	}
 	scale.x = 1.0f;
 	scale.y = 1.0f;
 	scale.z = 1.0f;

@@ -32,6 +32,10 @@ sgParticleEmitter::sgParticleEmitter(sgParticleEmitter* p, sgParticleEmitter *n)
 {
 	prev = p;
 	next = n;
+	if(next)
+	{
+		next->prev = this;
+	}
 	tag = 0;
 	
 	material = NULL;

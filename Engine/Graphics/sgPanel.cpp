@@ -257,6 +257,10 @@ sgPanel::sgPanel(sgPanel* p, sgPanel *n)
 	rendertarget = NULL;
 	prev = p;
 	next = n;
+	if(next)
+	{
+		next->prev = this;
+	}
 }
 
 sgPanel::~sgPanel()

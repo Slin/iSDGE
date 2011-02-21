@@ -35,13 +35,14 @@
 class CameraFree : public sgAction
 {
 	public:
-		CameraFree();
+		CameraFree(float sp = 1.0);
 	
 		void makeStereo(float dist);
 		void makeAnaglyph(float dist, const char *fs);
 		void onDraw(float timestep);
 	
 	private:
+		float speed;
 		float stereodist;
 		sgCamera *stereo_cam;
 };
