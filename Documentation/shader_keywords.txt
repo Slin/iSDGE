@@ -40,7 +40,7 @@ Lights (Arrays, with maxlights as size):
 - lAttenuation (float)
 
 Camera:
-- vPosition (vec4)
+- vPosition (vec3)
 
 Other:
 - Time (float)
