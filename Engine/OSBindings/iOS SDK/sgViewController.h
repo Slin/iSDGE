@@ -26,7 +26,7 @@
 #import <UIKit/UIKit.h>
 
 
-@interface sgViewController : UIViewController
+@interface sgViewController : UIViewController <UIAccelerometerDelegate>
 {
 
 }

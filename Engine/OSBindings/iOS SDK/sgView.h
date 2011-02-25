@@ -32,7 +32,7 @@
 /**
  * View class. The main class, which handles everything.
  */
-@interface sgView : UIView <UIAccelerometerDelegate>
+@interface sgView : UIView
 {
 	@private
 		BOOL animating;
