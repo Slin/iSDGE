@@ -261,6 +261,7 @@ void sgShader::getEngineUniforms()
 	texcoord0 = glGetAttribLocation(program, "vertTexcoord0");
 	texcoord1 = glGetAttribLocation(program, "vertTexcoord1");
 	color = glGetAttribLocation(program, "vertColor");
+	tangent = glGetAttribLocation(program, "vertTangent");
 	
 	mambientloc = glGetUniformLocation(program, "mAmbient");
 	mdiffuseloc = glGetUniformLocation(program, "mDiffuse");

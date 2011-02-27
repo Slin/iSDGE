@@ -245,6 +245,14 @@ class sgVector3
 		float dot(sgVector3 &other);
 	
 		/**
+		 *	Dot product.
+		 * The dot product of the vector with the other one.
+		 * @param other another vector
+		 * @return the resulting scalar
+		 */
+		float dot(sgVector4 &other);
+	
+		/**
 		 *	Cross product.
 		 * The cross product of the vector with the other one (ignoring the fourth parameter).
 		 * @param other another vector

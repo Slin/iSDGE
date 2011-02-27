@@ -80,11 +80,11 @@ sgObject *sgObject::createObject()
 	return next;
 }
 
-sgObject *sgObject::createObject(const char *name)
+sgObject *sgObject::createObject(const char *name, unsigned long flags)
 {
 	next = new sgObject(this, next);
 	next->body = new sgObjectBody;
-	next->body->makeObject(name);
+	next->body->makeObject(name, flags);
 	next->currbody = next->body;
 	next->calcCullSphere();
 	return next;

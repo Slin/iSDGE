@@ -34,7 +34,7 @@
 
 namespace sgObjectFiles
 {
-	bool loadSGM(sgObjectContainer *obj, const char *filename)
+	bool loadSGM(sgObjectContainer *obj, const char *filename, unsigned long flags)
 	{
 		sgXML *tbxml = new sgXML(filename);
 		TBXMLElement *root = tbxml->rootXMLElement;
@@ -81,24 +81,49 @@ namespace sgObjectFiles
 				}
 			}
 			
-			meshes[meshes.size()-1]->vtxformat = BASIC;
-			if(uvcount > 1)
+			if((flags & GEN_TANGENT) > 0)
 			{
-				meshes[meshes.size()-1]->vtxformat = SECONDUV;
-				if(datacount == 4)
+				meshes[meshes.size()-1]->vtxformat = TANGENT;
+				meshes[meshes.size()-1]->vtxsize = SZ_TANGENT;
+				if(uvcount > 1)
 				{
-					meshes[meshes.size()-1]->vtxformat = SECONDUVCOLOR;
+					meshes[meshes.size()-1]->vtxformat = TANGENTSECONDUV;
+					meshes[meshes.size()-1]->vtxsize = SZ_TANGENTSECONDUV;
+					if(datacount == 4)
+					{
+						meshes[meshes.size()-1]->vtxformat = TANGENTSECONDUVCOLOR;
+						meshes[meshes.size()-1]->vtxsize = SZ_TANGENTSECONDUVCOLOR;
+					}
+				}else if(datacount == 4)
+				{
+					meshes[meshes.size()-1]->vtxformat = TANGENTCOLOR;
+					meshes[meshes.size()-1]->vtxsize = SZ_TANGENTCOLOR;
 				}
-			}else if(datacount == 4)
+			}else
 			{
-				meshes[meshes.size()-1]->vtxformat = COLOR;
+				meshes[meshes.size()-1]->vtxformat = BASIC;
+				meshes[meshes.size()-1]->vtxsize = SZ_BASIC;
+				if(uvcount > 1)
+				{
+					meshes[meshes.size()-1]->vtxformat = SECONDUV;
+					meshes[meshes.size()-1]->vtxsize = SZ_SECONDUV;
+					if(datacount == 4)
+					{
+						meshes[meshes.size()-1]->vtxformat = SECONDUVCOLOR;
+						meshes[meshes.size()-1]->vtxsize = SZ_SECONDUVCOLOR;
+					}
+				}else if(datacount == 4)
+				{
+					meshes[meshes.size()-1]->vtxformat = COLOR;
+					meshes[meshes.size()-1]->vtxsize = SZ_COLOR;
+				}				
 			}
 			
 			//Positions
 			TBXMLElement *vpos = sgXML::childElement("vertexpos", meshs);
 			char *vposstr = (char*)sgXML::textForElement(vpos);
 			char *vposlist = strtok(vposstr, " ");
-			sgVertex *vert = (sgVertex*)malloc(meshes[meshes.size()-1]->vtxformat);
+			sgVertex *vert = (sgVertex*)malloc(meshes[meshes.size()-1]->vtxsize);
 			while(vposlist != NULL)
 			{
 				vert->position.x = atof(vposlist);
@@ -115,6 +140,14 @@ namespace sgObjectFiles
 					meshes[meshes.size()-1]->vertices_col.push_back(*((sgVertexCol*)vert));
 				else if(meshes[meshes.size()-1]->vtxformat == SECONDUVCOLOR)
 					meshes[meshes.size()-1]->vertices_uvcol.push_back(*((sgVertexUVCol*)vert));
+				else if(meshes[meshes.size()-1]->vtxformat == TANGENT)
+					meshes[meshes.size()-1]->vertices_tan.push_back(*((sgVertexTan*)vert));
+				else if(meshes[meshes.size()-1]->vtxformat == TANGENTSECONDUV)
+					meshes[meshes.size()-1]->vertices_tanuv.push_back(*((sgVertexTanUV*)vert));
+				else if(meshes[meshes.size()-1]->vtxformat == TANGENTCOLOR)
+					meshes[meshes.size()-1]->vertices_tancol.push_back(*((sgVertexTanCol*)vert));
+				else if(meshes[meshes.size()-1]->vtxformat == TANGENTSECONDUVCOLOR)
+					meshes[meshes.size()-1]->vertices_tanuvcol.push_back(*((sgVertexTanUVCol*)vert));
 			}
 			free(vert);
 			
@@ -187,6 +220,66 @@ namespace sgObjectFiles
 							vuvlist = strtok(NULL, " ");
 						}
 					}
+				}else if(meshes[meshes.size()-1]->vtxformat == TANGENT)
+				{
+					for(int i = 0; i < meshes[meshes.size()-1]->vertices_tan.size(); i++)
+					{
+						meshes[meshes.size()-1]->vertices_tan[i].uv.x = atof(vuvlist);
+						vuvlist = strtok(NULL, " ");
+						meshes[meshes.size()-1]->vertices_tan[i].uv.y = atof(vuvlist);
+						vuvlist = strtok(NULL, " ");
+					}
+				}else if(meshes[meshes.size()-1]->vtxformat == TANGENTSECONDUV)
+				{
+					if(uvset == 0)
+					{
+						for(int i = 0; i < meshes[meshes.size()-1]->vertices_tanuv.size(); i++)
+						{
+							meshes[meshes.size()-1]->vertices_tanuv[i].uv.x = atof(vuvlist);
+							vuvlist = strtok(NULL, " ");
+							meshes[meshes.size()-1]->vertices_tanuv[i].uv.y = atof(vuvlist);
+							vuvlist = strtok(NULL, " ");
+						}
+					}else if(uvset == 1)
+					{
+						for(int i = 0; i < meshes[meshes.size()-1]->vertices_tanuv.size(); i++)
+						{
+							meshes[meshes.size()-1]->vertices_tanuv[i].uv2.x = atof(vuvlist);
+							vuvlist = strtok(NULL, " ");
+							meshes[meshes.size()-1]->vertices_tanuv[i].uv2.y = atof(vuvlist);
+							vuvlist = strtok(NULL, " ");
+						}
+					}
+				}else if(meshes[meshes.size()-1]->vtxformat == TANGENTCOLOR)
+				{
+					for(int i = 0; i < meshes[meshes.size()-1]->vertices_tancol.size(); i++)
+					{
+						meshes[meshes.size()-1]->vertices_tancol[i].uv.x = atof(vuvlist);
+						vuvlist = strtok(NULL, " ");
+						meshes[meshes.size()-1]->vertices_tancol[i].uv.y = atof(vuvlist);
+						vuvlist = strtok(NULL, " ");
+					}
+				}else if(meshes[meshes.size()-1]->vtxformat == TANGENTSECONDUVCOLOR)
+				{
+					if(uvset == 0)
+					{
+						for(int i = 0; i < meshes[meshes.size()-1]->vertices_tanuvcol.size(); i++)
+						{
+							meshes[meshes.size()-1]->vertices_tanuvcol[i].uv.x = atof(vuvlist);
+							vuvlist = strtok(NULL, " ");
+							meshes[meshes.size()-1]->vertices_tanuvcol[i].uv.y = atof(vuvlist);
+							vuvlist = strtok(NULL, " ");
+						}
+					}else if(uvset == 1)
+					{
+						for(int i = 0; i < meshes[meshes.size()-1]->vertices_tanuvcol.size(); i++)
+						{
+							meshes[meshes.size()-1]->vertices_tanuvcol[i].uv2.x = atof(vuvlist);
+							vuvlist = strtok(NULL, " ");
+							meshes[meshes.size()-1]->vertices_tanuvcol[i].uv2.y = atof(vuvlist);
+							vuvlist = strtok(NULL, " ");
+						}
+					}
 				}
 				vuv = sgXML::nextSibling("vertextexcoord", vuv);
 			}
@@ -210,10 +303,9 @@ namespace sgObjectFiles
 						meshes[meshes.size()-1]->vertices_col[i].color.w = atof(vcollist);
 						vcollist = strtok(NULL, " ");
 					}
-				}
-				if(meshes[meshes.size()-1]->vtxformat == SECONDUVCOLOR)
+				}else if(meshes[meshes.size()-1]->vtxformat == SECONDUVCOLOR)
 				{
-					for(int i = 0; i < meshes[meshes.size()-1]->vertices_col.size(); i++)
+					for(int i = 0; i < meshes[meshes.size()-1]->vertices_uvcol.size(); i++)
 					{
 						meshes[meshes.size()-1]->vertices_uvcol[i].color.x = atof(vcollist);
 						vcollist = strtok(NULL, " ");
@@ -222,6 +314,32 @@ namespace sgObjectFiles
 						meshes[meshes.size()-1]->vertices_uvcol[i].color.z = atof(vcollist);
 						vcollist = strtok(NULL, " ");
 						meshes[meshes.size()-1]->vertices_uvcol[i].color.w = atof(vcollist);
+						vcollist = strtok(NULL, " ");
+					}
+				}else if(meshes[meshes.size()-1]->vtxformat == TANGENTCOLOR)
+				{
+					for(int i = 0; i < meshes[meshes.size()-1]->vertices_tancol.size(); i++)
+					{
+						meshes[meshes.size()-1]->vertices_tancol[i].color.x = atof(vcollist);
+						vcollist = strtok(NULL, " ");
+						meshes[meshes.size()-1]->vertices_tancol[i].color.y = atof(vcollist);
+						vcollist = strtok(NULL, " ");
+						meshes[meshes.size()-1]->vertices_tancol[i].color.z = atof(vcollist);
+						vcollist = strtok(NULL, " ");
+						meshes[meshes.size()-1]->vertices_tancol[i].color.w = atof(vcollist);
+						vcollist = strtok(NULL, " ");
+					}
+				}else if(meshes[meshes.size()-1]->vtxformat == TANGENTSECONDUVCOLOR)
+				{
+					for(int i = 0; i < meshes[meshes.size()-1]->vertices_tanuvcol.size(); i++)
+					{
+						meshes[meshes.size()-1]->vertices_tanuvcol[i].color.x = atof(vcollist);
+						vcollist = strtok(NULL, " ");
+						meshes[meshes.size()-1]->vertices_tanuvcol[i].color.y = atof(vcollist);
+						vcollist = strtok(NULL, " ");
+						meshes[meshes.size()-1]->vertices_tanuvcol[i].color.z = atof(vcollist);
+						vcollist = strtok(NULL, " ");
+						meshes[meshes.size()-1]->vertices_tanuvcol[i].color.w = atof(vcollist);
 						vcollist = strtok(NULL, " ");
 					}
 				}
@@ -247,32 +365,55 @@ namespace sgObjectFiles
 			sgMesh *mesh_ = new sgMesh;
 			
 			mesh_->vtxform = meshes[meshnum]->vtxformat;
+			mesh_->vtxsize = meshes[meshnum]->vtxsize;
 			if(meshes[meshes.size()-1]->vtxformat == BASIC)
 			{
 				mesh_->vertexnum = meshes[meshnum]->vertices_.size();
 				mesh_->vertices = new sgVertex[mesh_->vertexnum];
-				memcpy(mesh_->vertices, &meshes[meshnum]->vertices_[0], mesh_->vertexnum*BASIC);
+				memcpy(mesh_->vertices, &meshes[meshnum]->vertices_[0], mesh_->vertexnum*mesh_->vtxsize);
 			}else if(meshes[meshes.size()-1]->vtxformat == SECONDUV)
 			{
 				mesh_->vertexnum = meshes[meshnum]->vertices_uv.size();
 				mesh_->vertices = (sgVertex*)new sgVertexUV[mesh_->vertexnum];
-				memcpy(mesh_->vertices, &meshes[meshnum]->vertices_uv[0], mesh_->vertexnum*SECONDUV);
+				memcpy(mesh_->vertices, &meshes[meshnum]->vertices_uv[0], mesh_->vertexnum*mesh_->vtxsize);
 			}else if(meshes[meshes.size()-1]->vtxformat == COLOR)
 			{
 				mesh_->vertexnum = meshes[meshnum]->vertices_col.size();
 				mesh_->vertices = (sgVertex*)new sgVertexCol[mesh_->vertexnum];
-				memcpy(mesh_->vertices, &meshes[meshnum]->vertices_col[0], mesh_->vertexnum*COLOR);
+				memcpy(mesh_->vertices, &meshes[meshnum]->vertices_col[0], mesh_->vertexnum*mesh_->vtxsize);
 			}else if(meshes[meshes.size()-1]->vtxformat == SECONDUVCOLOR)
 			{
 				mesh_->vertexnum = meshes[meshnum]->vertices_uvcol.size();
 				mesh_->vertices = (sgVertex*)new sgVertexUVCol[mesh_->vertexnum];
-				memcpy(mesh_->vertices, &meshes[meshnum]->vertices_uvcol[0], mesh_->vertexnum*SECONDUVCOLOR);
+				memcpy(mesh_->vertices, &meshes[meshnum]->vertices_uvcol[0], mesh_->vertexnum*mesh_->vtxsize);
+			}else if(meshes[meshes.size()-1]->vtxformat == TANGENT)
+			{
+				mesh_->vertexnum = meshes[meshnum]->vertices_tan.size();
+				mesh_->vertices = (sgVertex*)new sgVertexTan[mesh_->vertexnum];
+				memcpy(mesh_->vertices, &meshes[meshnum]->vertices_tan[0], mesh_->vertexnum*mesh_->vtxsize);
+			}else if(meshes[meshes.size()-1]->vtxformat == TANGENTSECONDUV)
+			{
+				mesh_->vertexnum = meshes[meshnum]->vertices_tanuv.size();
+				mesh_->vertices = (sgVertex*)new sgVertexTanUV[mesh_->vertexnum];
+				memcpy(mesh_->vertices, &meshes[meshnum]->vertices_tanuv[0], mesh_->vertexnum*mesh_->vtxsize);
+			}else if(meshes[meshes.size()-1]->vtxformat == TANGENTCOLOR)
+			{
+				mesh_->vertexnum = meshes[meshnum]->vertices_tancol.size();
+				mesh_->vertices = (sgVertex*)new sgVertexTanCol[mesh_->vertexnum];
+				memcpy(mesh_->vertices, &meshes[meshnum]->vertices_tancol[0], mesh_->vertexnum*mesh_->vtxsize);
+			}else if(meshes[meshes.size()-1]->vtxformat == TANGENTSECONDUVCOLOR)
+			{
+				mesh_->vertexnum = meshes[meshnum]->vertices_tanuvcol.size();
+				mesh_->vertices = (sgVertex*)new sgVertexTanUVCol[mesh_->vertexnum];
+				memcpy(mesh_->vertices, &meshes[meshnum]->vertices_tanuvcol[0], mesh_->vertexnum*mesh_->vtxsize);
 			}
 			mesh_->indexnum = meshes[meshnum]->indices.size();
 			mesh_->indices = new unsigned short[mesh_->indexnum];
 			memcpy(mesh_->indices, &meshes[meshnum]->indices[0], mesh_->indexnum*sizeof(unsigned short));
 
 			mesh_->calculateNormals();
+			if((flags & GEN_TANGENT) > 0)
+				mesh_->calculateTangents();
 			mesh_->generateVBO();
 			obj->meshs.push_back(mesh_);
 			

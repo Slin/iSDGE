@@ -30,12 +30,28 @@
 #include "sgVector3.h"
 #include "sgVector2.h"
 
-enum vertexformat
+enum VERTEXFORMAT
 {
-	BASIC = 32,
-	SECONDUV = 40,
-	COLOR = 48,
-	SECONDUVCOLOR = 56
+	BASIC = 0,
+	SECONDUV = 1,
+	COLOR = 2,
+	SECONDUVCOLOR = 3,
+	TANGENT = 4,
+	TANGENTSECONDUV = 5,
+	TANGENTCOLOR = 6,
+	TANGENTSECONDUVCOLOR = 7
+};
+
+enum VERTEXSIZE
+{
+	SZ_BASIC = 32,
+	SZ_SECONDUV = 40,
+	SZ_COLOR = 48,
+	SZ_SECONDUVCOLOR = 56,
+	SZ_TANGENT = 48,
+	SZ_TANGENTSECONDUV = 56,
+	SZ_TANGENTCOLOR = 64,
+	SZ_TANGENTSECONDUVCOLOR = 72
 };
 
 /**
@@ -83,6 +99,46 @@ class sgVertexUVCol
 		sgVector2 uv;
 		sgVector2 uv2;
 		sgVector4 color;
+};
+
+class sgVertexTan
+{
+public:
+	sgVector3 position;
+	sgVector3 normal;
+	sgVector2 uv;
+	sgVector4 tangent;
+};
+
+class sgVertexTanUV
+{
+public:
+	sgVector3 position;
+	sgVector3 normal;
+	sgVector2 uv;
+	sgVector4 tangent;
+	sgVector2 uv2;
+};
+
+class sgVertexTanCol
+{
+public:
+	sgVector3 position;
+	sgVector3 normal;
+	sgVector2 uv;
+	sgVector4 tangent;
+	sgVector4 color;
+};
+
+class sgVertexTanUVCol
+{
+public:
+	sgVector3 position;
+	sgVector3 normal;
+	sgVector2 uv;
+	sgVector4 tangent;
+	sgVector2 uv2;
+	sgVector4 color;
 };
 
 #endif

@@ -28,6 +28,7 @@
 
 class sgMatrix4x4;
 class sgQuaternion;
+class sgVector3;
 
 /**
  * 4D vector class. Stores a vector with four elements and provides functionality for it.
@@ -76,6 +77,12 @@ class sgVector4
 		 *	Copy the values of one instance to the other.
 		 */
 		sgVector4 &operator= (const sgVector4 &other);
+	
+		/**
+		 *	Copy.
+		 *	Copy the values of one instance to the other.
+		 */
+		sgVector4 &operator= (const sgVector3 &other);
 	
 		/**
 		 *	Copy.

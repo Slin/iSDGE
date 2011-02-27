@@ -76,9 +76,10 @@ class sgObject
 		 *	Create object.
 		 *	Creates a new object loaded from a model file or a predefined name and makes it next of this.
 		 * @param name name of the object or the file to load it from.
+		 * @param flags flags to use while loading the object.
 		 * @return pointer to the new object.
 		 */
-		sgObject *createObject(const char *name);
+		sgObject *createObject(const char *name, unsigned long flags = 0);
 		
 		/**
 		 *	Create terrain.

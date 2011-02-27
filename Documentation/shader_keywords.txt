@@ -6,6 +6,7 @@ Attributes (set depending on the used vertex format):
 - vertTexcoord0 (vec2)
 - vertTexcoord1 (vec2)
 - vertColor (vec4)
+- vertTangent (vec4, xyz = tangent, w = "binormal" direction)
 
 
 Uniforms:

@@ -43,7 +43,7 @@ sgObjectBody::~sgObjectBody()
 	
 }
 
-sgObjectBody *sgObjectBody::makeObject(const char *name)
+sgObjectBody *sgObjectBody::makeObject(const char *name, unsigned long flags)
 {
 	sgObjectContainer *cont = (sgObjectContainer*)sgResourceManager::getResource(name);
 	if(cont != NULL)
@@ -63,6 +63,7 @@ sgObjectBody *sgObjectBody::makeObject(const char *name)
 		sgMesh *mesh = new sgMesh;
 		
 		mesh->vtxform = BASIC;
+		mesh->vtxsize = SZ_BASIC;
 		mesh->vertexnum = 36;
 		mesh->indexnum = 36;
 		
@@ -321,6 +322,7 @@ sgObjectBody *sgObjectBody::makeObject(const char *name)
 		float heightoff = 0;
 		
 		mesh->vtxform = BASIC;
+		mesh->vtxsize = SZ_BASIC;
 		mesh->vertexnum = 6;
 		mesh->indexnum = 6;
 		
@@ -375,6 +377,7 @@ sgObjectBody *sgObjectBody::makeObject(const char *name)
 		mesh = new sgMesh;
 		
 		mesh->vtxform = BASIC;
+		mesh->vtxsize = SZ_BASIC;
 		mesh->vertexnum = 6;
 		mesh->indexnum = 6;
 		
@@ -429,6 +432,7 @@ sgObjectBody *sgObjectBody::makeObject(const char *name)
 		mesh = new sgMesh;
 		
 		mesh->vtxform = BASIC;
+		mesh->vtxsize = SZ_BASIC;
 		mesh->vertexnum = 6;
 		mesh->indexnum = 6;
 		
@@ -483,6 +487,7 @@ sgObjectBody *sgObjectBody::makeObject(const char *name)
 		mesh = new sgMesh;
 		
 		mesh->vtxform = BASIC;
+		mesh->vtxsize = SZ_BASIC;
 		mesh->vertexnum = 6;
 		mesh->indexnum = 6;
 		
@@ -537,6 +542,7 @@ sgObjectBody *sgObjectBody::makeObject(const char *name)
 		mesh = new sgMesh;
 		
 		mesh->vtxform = BASIC;
+		mesh->vtxsize = SZ_BASIC;
 		mesh->vertexnum = 6;
 		mesh->indexnum = 6;
 		
@@ -591,6 +597,7 @@ sgObjectBody *sgObjectBody::makeObject(const char *name)
 		mesh = new sgMesh;
 		
 		mesh->vtxform = BASIC;
+		mesh->vtxsize = SZ_BASIC;
 		mesh->vertexnum = 6;
 		mesh->indexnum = 6;
 		
@@ -649,7 +656,7 @@ sgObjectBody *sgObjectBody::makeObject(const char *name)
 		found = filename.rfind(".sgm");
 		if(found != std::string::npos)
 		{
-			if(!sgObjectFiles::loadSGM(cont, filename.c_str()))
+			if(!sgObjectFiles::loadSGM(cont, filename.c_str(), flags))
 			{
 				delete cont;
 				return NULL;
@@ -673,6 +680,7 @@ void sgObjectBody::addTerrainPlane(unsigned int xverts, unsigned int zverts, sgV
 	sgMesh *mesh = new sgMesh;
 	
 	mesh->vtxform = BASIC;
+	mesh->vtxsize = SZ_BASIC;
 	mesh->vertexnum = xverts*zverts;
 	mesh->indexnum = 3*2*(xverts-1)*(zverts-1);
 	if(addborder)

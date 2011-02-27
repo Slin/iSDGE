@@ -37,6 +37,12 @@ class sgObjectContainer;
  */
 namespace sgObjectFiles
 {
+	enum LOAD_FLAGS
+	{
+		NONE = 0x00,
+		GEN_TANGENT = 0x01
+	};
+	
 	/**
 	 * Material. Used to load the objects material information into.
 	 */
@@ -53,11 +59,16 @@ namespace sgObjectFiles
 	{
 		unsigned int id_;
 		sgSGMMaterial *material;
-		vertexformat vtxformat;
+		VERTEXFORMAT vtxformat;
+		VERTEXSIZE vtxsize;
 		std::vector<sgVertex> vertices_;
 		std::vector<sgVertexUV> vertices_uv;
 		std::vector<sgVertexCol> vertices_col;
 		std::vector<sgVertexUVCol> vertices_uvcol;
+		std::vector<sgVertexTan> vertices_tan;
+		std::vector<sgVertexTanUV> vertices_tanuv;
+		std::vector<sgVertexTanCol> vertices_tancol;
+		std::vector<sgVertexTanUVCol> vertices_tanuvcol;
 		std::vector<unsigned short> indices;
 	};
 
@@ -69,7 +80,7 @@ namespace sgObjectFiles
 	 * @param filename the name of the file to load the object from, without the type specifier
 	 * @return TRUE if it was successfull, FALSE otherwise
 	 */
-	bool loadSGM(sgObjectContainer *obj, const char *filename);
+	bool loadSGM(sgObjectContainer *obj, const char *filename, unsigned long flags = NONE);
 }
 
 #endif

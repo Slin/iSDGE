@@ -63,10 +63,10 @@ sgEntity *sgEntity::createEmptyObjEntity(sgAction *a)
 	return next;
 }
 
-sgEntity *sgEntity::createObjEntity(const char *name, sgAction *a)
+sgEntity *sgEntity::createObjEntity(const char *name, unsigned long flags, sgAction *a)
 {
 	next = new sgEntity(this, next, sgmain);
-	next->createObj(name);
+	next->createObj(name, flags);
 	next->createAction(a);
 	return next;
 }
@@ -130,12 +130,12 @@ void sgEntity::createEmptyObj()
 	obj = sgmain->renderer->first_solid->createObject();
 }
 
-void sgEntity::createObj(const char *name)
+void sgEntity::createObj(const char *name, unsigned long flags)
 {
 	if(obj != NULL)
 		return;
 	
-	obj = sgmain->renderer->first_solid->createObject(name);
+	obj = sgmain->renderer->first_solid->createObject(name, flags);
 }
 
 void sgEntity::createTerrain(const char *hmp, unsigned int xverts, unsigned int zverts, unsigned char xchunks, unsigned char zchunks, unsigned int lodsteps, sgVector4 hmpscale)

@@ -73,9 +73,10 @@ class sgObjectBody
 		 *	Make object.
 		 *	Creates a new object body loaded from a model file or a predefined name.
 		 * @param name name of the object or the file to load it from.
+		 * @param flags flags to use while loading the object.
 		 * @return pointer to the new object body.
 		 */
-		sgObjectBody *makeObject(const char *name);
+		sgObjectBody *makeObject(const char *name, unsigned long flags = 0);
 		
 		/**
 		 *	Add terrain plane.

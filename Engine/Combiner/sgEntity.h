@@ -71,10 +71,11 @@ class sgEntity
 		 *	Create object entity.
 		 *	Creates a new entity with an object loaded from a model file or a predefined name and makes it next of this.
 		 * @param name name of the object or the file to load it from.
+		 * @param flags flags to use while loading the object.
 		 * @param a pointer to the action which will be assigned to the new entity.
 		 * @return pointer to the new entity
 		 */
-		sgEntity *createObjEntity(const char *name, sgAction *a = NULL);
+		sgEntity *createObjEntity(const char *name, unsigned long flags = 0, sgAction *a = NULL);
 	
 		/**
 		 *	Create terrain entity.
@@ -148,8 +149,9 @@ class sgEntity
 		 *	Create object.
 		 *	If there isn´t already an object attached, it will create a new one and attach it to the entity.
 		 * @param name name of the object or the file to load it from.
+		 * @param flags flags to use while loading the object.
 		 */
-		void createObj(const char *name);
+		void createObj(const char *name, unsigned long flags = 0);
 		
 		/**
 		 *	Create terrain.

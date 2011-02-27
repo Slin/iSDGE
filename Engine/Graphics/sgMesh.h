@@ -68,15 +68,30 @@ class sgMesh : public sgBase
 		 *	Calculates new normals for the mesh, which is needed for correct shading after the mesh was manipulated.
 		 */
 		void calculateNormals();
+	
+		/**
+		 *	Calculate tangents.
+		 *	Calculates new tangents for the mesh, which is needed for correct rendering after the mesh was manipulated.
+		 */
+		void calculateTangents();
 		
 		/**
 		 *	Calculate face normal.
-		 *	Calculates the normal of a layer, streched between the three given vertices.
+		 *	Calculates the normal of the layer, streched between the three given vertices.
 		 * @param vertex a first vertex
 		 * @param neighbour_a a second vertex
 		 * @param neighbour_b a third vertex
 		 */
 		void calculateFaceNormal(sgVertex *vertex, sgVertex *neighbour_a, sgVertex *neighbour_b);
+	
+		/**
+		 *	Calculate face tangent.
+		 *	Calculates the tangent of the layer, streched between the three given vertices.
+		 * @param vertex a first vertex
+		 * @param neighbour_a a second vertex
+		 * @param neighbour_b a third vertex
+		 */
+		void calculateFaceTangent(sgVertexTan *vertex, sgVertexTan *neighbour_a, sgVertexTan *neighbour_b, sgVector3 *bitangent0, sgVector3 *bitangent1, sgVector3 *bitangent2);
 	
 		/**
 		 *	Invert texcoords X.
@@ -100,7 +115,13 @@ class sgMesh : public sgBase
 		 *	Vertex format.
 		 *	The format of the vertices of this mesh.
 		 */
-		vertexformat vtxform;
+		VERTEXFORMAT vtxform;
+	
+		/**
+		 *	Vertex size.
+		 *	The size of a vertex of this mesh.
+		 */
+		VERTEXSIZE vtxsize;
 	
 		/**
 		 *	Vertex number.
