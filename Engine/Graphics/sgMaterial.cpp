@@ -173,7 +173,7 @@ void sgMaterial::setDefault()
 	cullmode = GL_CCW;
 	
 	blending = false;
-	blendsource = GL_SRC_ALPHA;
+	blendsource = GL_ONE;
 	blenddestination = GL_ONE_MINUS_SRC_ALPHA;
 	
 	lighting = true;

@@ -37,5 +37,6 @@ void main()
 {
 	texcoord = vertTexcoord0;
 	color = vertColor;
+	color.rgb *= vertColor.a;
 	gl_Position = matProjViewModel*vec4(vertPos, 1.0);
 }

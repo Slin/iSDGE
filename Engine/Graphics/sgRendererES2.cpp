@@ -255,7 +255,6 @@ void sgRendererES2::setMaterial(sgMaterial *mat)
 		glBindTexture(GL_TEXTURE_2D, mat->textures[n]->texid);
 		glUniform1i(mat->texlocation[n], n);
 	}
-	
 	// Set material specific stuff
 	if(mat->culling)
 	{
@@ -354,15 +353,6 @@ void sgRendererES2::setMaterial(sgMaterial *mat)
 		{
 			glUniform1f(mat->shader->malphatestvalue, 0.0f);
 		}
-	}
-	
-	if(mat->depthtest)
-	{
-		glEnable(GL_DEPTH_TEST);
-		glDepthFunc(mat->depthtestmode);
-	}else
-	{
-		glDisable(GL_DEPTH_TEST);
 	}
 	
 	if(mat->depthtest)
@@ -1137,6 +1127,7 @@ void sgRendererES2::render()
 		}
 		
 		//Clear depth and stencil buffer
+		glDepthMask(GL_TRUE);
 		glClearStencil(0);
 		glClearDepthf(1.0f);
 		glClear(GL_STENCIL_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);

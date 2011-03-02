@@ -118,20 +118,40 @@ namespace sgTools
 	{
 		sgVertex point;
 		std::vector<sgVertex> points;
-		for(int i = 0; i < mesh->indexnum; i += 3)
+		if(mesh->vtxform == BASIC)
 		{
-			if(traceRayTriangle(from, to, mesh->vertices[mesh->indices[i+0]].position, mesh->vertices[mesh->indices[i+1]].position, mesh->vertices[mesh->indices[i+2]].position, &point) == 1)
-				points.push_back(point);
+			for(int i = 0; i < mesh->indexnum; i += 3)
+			{
+				if(traceRayTriangle(from, to, mesh->vertices[mesh->indices[i+0]].position, mesh->vertices[mesh->indices[i+1]].position, mesh->vertices[mesh->indices[i+2]].position, &point) == 1)
+					points.push_back(point);
+			}
+		}else if(mesh->vtxform == SECONDUV)
+		{
+			for(int i = 0; i < mesh->indexnum; i += 3)
+			{
+				if(traceRayTriangle(from, to, ((sgVertexUV*)mesh->vertices)[mesh->indices[i+0]].position, ((sgVertexUV*)mesh->vertices)[mesh->indices[i+1]].position, ((sgVertexUV*)mesh->vertices)[mesh->indices[i+2]].position, &point) == 1)
+					points.push_back(point);
+			}
+		}else if(mesh->vtxform == COLOR)
+		{
+			for(int i = 0; i < mesh->indexnum; i += 3)
+			{
+				if(traceRayTriangle(from, to, ((sgVertexCol*)mesh->vertices)[mesh->indices[i+0]].position, ((sgVertexCol*)mesh->vertices)[mesh->indices[i+1]].position, ((sgVertexCol*)mesh->vertices)[mesh->indices[i+2]].position, &point) == 1)
+					points.push_back(point);
+			}
 		}
 		
-		float dist = from.dist(to);
-		float ndist;
+		float dist;
+		float ndist = from.dist(to);
 		for(int i = 0; i < points.size(); i++)
 		{
-			if(from.dist(points[i].position) < dist)
+			dist = from.dist(points[i].position);
+			if(dist < ndist)
 			{
 				ndist = dist;
 				*I = points[i];
+				I->position = points[i].position;
+				I->normal = points[i].normal;
 			}
 		}
 	}
