@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CounterpartTemplateFile</key>
+	<string>file.h</string>
+	<key>Description</key>
+	<string>An iSDGE particle class, representing and controlling a particle.</string>
+	<key>MainTemplateFile</key>
+	<string>file.cpp</string>
+</dict>
+</plist>
