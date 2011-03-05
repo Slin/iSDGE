@@ -55,10 +55,10 @@ namespace sgResourceManager
 		res += std::string(type);
 		
 		delete[] ptr;
-		ptr = new char[res.length()];
+		ptr = new char[res.length()+1];
 		strcpy(ptr, res.c_str());
 
-		return ptr;
+		return (const char*)ptr;
 	}
 	
 	const char *getPath(const char *filename)
@@ -80,15 +80,15 @@ namespace sgResourceManager
 			res += std::string(filename);
 			
 			delete[] ptr;
-			ptr = new char[res.length()];
+			ptr = new char[res.length()+1];
 			strcpy(ptr, res.c_str());
 		}else
 		{
-			ptr = new char[fnm.length()];
+			ptr = new char[fnm.length()+1];
 			strcpy(ptr, fnm.c_str());
 		}
 		
-		return ptr;
+		return (const char*)ptr;
 	}
 	
 	const char *getFileAsString(const char *filepath)
@@ -106,7 +106,7 @@ namespace sgResourceManager
 		char *ptr = new char[buf.length()];
 		strcpy(ptr, buf.c_str());
 		
-		return ptr;
+		return (const char*)ptr;
 	}
 	
 	sgBase *getResource(const char *name)
