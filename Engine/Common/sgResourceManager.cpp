@@ -63,21 +63,30 @@ namespace sgResourceManager
 	
 	const char *getPath(const char *filename)
 	{
-		CFBundleRef mainBundle = CFBundleGetMainBundle();
-		CFURLRef resourcesURL = CFBundleCopyBundleURL(mainBundle);
-		CFStringRef str = CFURLCopyFileSystemPath(resourcesURL, kCFURLPOSIXPathStyle);
-		CFRelease(resourcesURL);
-		char *ptr = new char[CFStringGetLength(str)+1];
-		CFStringGetCString(str, ptr, FILENAME_MAX, kCFStringEncodingASCII);
-		CFRelease(str);
-		
-		std::string res(ptr);
-		res += std::string("/");
-		res += std::string(filename);
-		
-		delete[] ptr;
-		ptr = new char[res.length()];
-		strcpy(ptr, res.c_str());
+		char *ptr;
+		std::string fnm(filename);
+		if(fnm.find("/") == fnm.npos)
+		{
+			CFBundleRef mainBundle = CFBundleGetMainBundle();
+			CFURLRef resourcesURL = CFBundleCopyBundleURL(mainBundle);
+			CFStringRef str = CFURLCopyFileSystemPath(resourcesURL, kCFURLPOSIXPathStyle);
+			CFRelease(resourcesURL);
+			ptr = new char[CFStringGetLength(str)+1];
+			CFStringGetCString(str, ptr, FILENAME_MAX, kCFStringEncodingASCII);
+			CFRelease(str);
+			
+			std::string res(ptr);
+			res += std::string("/");
+			res += std::string(filename);
+			
+			delete[] ptr;
+			ptr = new char[res.length()];
+			strcpy(ptr, res.c_str());
+		}else
+		{
+			ptr = new char[fnm.length()];
+			strcpy(ptr, fnm.c_str());
+		}
 		
 		return ptr;
 	}

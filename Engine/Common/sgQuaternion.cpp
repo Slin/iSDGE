@@ -104,19 +104,21 @@ sgQuaternion &sgQuaternion::operator-=  (const sgQuaternion  &other)
 
 sgQuaternion &sgQuaternion::operator*= (const sgQuaternion &other)
 {
-    w = w*other.w - x*other.x - y*other.y - z*other.z;
-    x = w*other.z + x*other.w + y*other.z - z*other.y;
-    y = w*other.y + y*other.w + z*other.x - x*other.z;
-    z = w*other.z + z*other.w + x*other.y - y*other.x;
+	sgQuaternion temp(*this);
+	w = -temp.x * other.x-temp.y*other.y-temp.z*other.z+temp.w*other.w;
+	x =  temp.x * other.w+temp.y*other.z-temp.z*other.y+temp.w*other.x;
+    y = -temp.x * other.z+temp.y*other.w+temp.z*other.x+temp.w*other.y;
+    z =  temp.x * other.y-temp.y*other.x+temp.z*other.w+temp.w*other.z;
     return *this;
 }
 
 sgQuaternion &sgQuaternion::operator/=  (const sgQuaternion &other)
 {
-    w = (w*other.w + x*other.x + y*other.y + z*other.z) / (other.w*other.w + other.x*other.x + other.y*other.y + other.z*other.z);
-    x = (x*other.w - w*other.x - z*other.y + y*other.z) / (other.w*other.w +  other.x*other.x + other.y*other.y + other.z*other.z);
-    y = (y*other.w + z*other.x - w*other.y - x*other.z) / (other.w*other.w +  other.x*other.x + other.y*other.y + other.z*other.z);
-    z = (z*other.w - y*other.x + x*other.y - w*other.z) / (other.w*other.w +  other.x*other.x + other.y*other.y + other.z*other.z);
+	sgQuaternion temp(*this);
+    w = (temp.w*other.w + temp.x*other.x + temp.y*other.y + temp.z*other.z) / (other.w*other.w + other.x*other.x + other.y*other.y + other.z*other.z);
+    x = (temp.x*other.w - temp.w*other.x - temp.z*other.y + temp.y*other.z) / (other.w*other.w +  other.x*other.x + other.y*other.y + other.z*other.z);
+    y = (temp.y*other.w + temp.z*other.x - temp.w*other.y - temp.x*other.z) / (other.w*other.w +  other.x*other.x + other.y*other.y + other.z*other.z);
+    z = (temp.z*other.w - temp.y*other.x + temp.x*other.y - temp.w*other.z) / (other.w*other.w +  other.x*other.x + other.y*other.y + other.z*other.z);
     return *this;
 }
 
@@ -260,15 +262,20 @@ void sgQuaternion::makeAxisAngle(const sgVector4 &axis)
 void sgQuaternion::makeLookAt(sgVector3 dir, sgVector3 up)
 {
 	//Setup basis vectors describing the rotation given the input vector
+	dir.normalize();
 	sgVector3 right = up.cross(dir);    // The perpendicular vector to Up and Direction
+	right.normalize();
 	up = dir.cross(right);            // The actual up vector given the direction and the right vector
+	up.normalize();
 	
-	//Build a quaternion from the matrix
-	w = (float)sqrt(1.0f + right.x + up.y + dir.z) / 2.0f;
-	double dfwscale = w * 4.0;
-	x = (float)((dir.y - up.z) / dfwscale);
-	y = (float)((right.z - dir.x) / dfwscale);
-	z = (float)((up.x - right.y) / dfwscale);
+	w = sqrt(fmax(0.0, 1.0+right.x+up.y+dir.z))/2.0;
+	x = sqrt(fmax(0.0, 1.0+right.x-up.y-dir.z))/2.0;
+	y = sqrt(fmax(0.0, 1.0-right.x+up.y-dir.z))/2.0;
+	z = sqrt(fmax(0.0, 1.0-right.x-up.y+dir.z))/2.0;
+	x =	copysign(x, up.z-dir.y);
+	y =	copysign(y, dir.x-right.z);
+	z =	copysign(z, right.y-up.x);
+	
 	normalize();
 }
 
