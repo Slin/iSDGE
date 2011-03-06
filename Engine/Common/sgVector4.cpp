@@ -46,6 +46,14 @@ sgVector4::sgVector4(const sgVector4 &other)
 	w = other.w;
 }
 
+sgVector4::sgVector4(const sgVector3 &other, float w_)
+{
+	x = other.x;
+	y = other.y;
+	z = other.z;
+	w = w_;
+}
+
 sgVector4::sgVector4(const sgQuaternion &other)
 {
 	sgQuaternion q(other);

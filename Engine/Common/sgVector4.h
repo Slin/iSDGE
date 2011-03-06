@@ -55,6 +55,14 @@ class sgVector4
 	
 		/**
 		 *	Constructor.
+		 *	Initializes a new instance.
+		 * @param other vector to copy the values from
+		 * @param w_ float to copy the w value from
+		 */
+		sgVector4(const sgVector3 &other, float w_);
+
+		/**
+		 *	Constructor.
 		 *	Initializes a new instance from a quaternion.
 		 * @param other quaternion to to get the axis-angle components from
 		 */

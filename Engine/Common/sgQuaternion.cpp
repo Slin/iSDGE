@@ -149,6 +149,34 @@ sgQuaternion sgQuaternion::operator/ (const  sgQuaternion &other)
     return res;
 }
 
+sgQuaternion &sgQuaternion::operator*= (const sgVector4 &other)
+{
+	sgQuaternion axang(other);
+	*this *= axang;
+	return *this;
+}
+
+sgQuaternion &sgQuaternion::operator/= (const sgVector4 &other)
+{
+	sgQuaternion axang(other);
+	*this /= axang;
+	return *this;
+}
+
+sgQuaternion sgQuaternion::operator* (const sgVector4 &other)
+{
+	sgQuaternion res(*this);
+	res *= other;
+	return res;
+}
+
+sgQuaternion sgQuaternion::operator/ (const sgVector4 &other)
+{
+	sgQuaternion res(*this);
+	res /= other;
+	return res;
+}
+
 sgQuaternion &sgQuaternion::operator+= (const sgVector3 &other)
 {
 	sgVector3 euler = *this;

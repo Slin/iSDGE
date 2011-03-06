@@ -177,12 +177,6 @@ class sgCamera
 		 *	The position the cameras window is rendered at.
 		 */
 		sgVector2 screenpos;
-	
-		/**
-		 *	Ato size and aspect
-		 *	Automatically aligns the size and aspect of the camera to the full screen.
-		 */
-		bool autosizeaspect;
 		
 		/**
 		 *	Projection matrix.

@@ -147,6 +147,30 @@ class sgQuaternion
 	
 		/**
 		 *	Add.
+		 *	Add the axis angle rotation in the vector to the rotation of the quaternion.
+		 */
+		sgQuaternion &operator*= (const sgVector4 &other);
+	
+		/**
+		 *	Substract.
+		 *	Substract the axis angle rotation in the vector from the rotation of the quaternion.
+		 */
+		sgQuaternion &operator/= (const sgVector4 &other);
+	
+		/**
+		 *	Add.
+		 *	Add the axis angle rotation in the vector to the rotation of the quaternion.
+		 */
+		sgQuaternion operator* (const sgVector4 &other);
+		
+		/**
+		 *	Substract.
+		 *	Substract the axis angle rotation in the vector from the rotation of the quaternion.
+		 */
+		sgQuaternion operator/ (const sgVector4 &other);
+	
+		/**
+		 *	Add.
 		 *	Add the euler angles in the vector to the rotation of the quaternion.
 		 */
 		sgQuaternion &operator+= (const sgVector3 &other);
