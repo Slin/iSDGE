@@ -28,6 +28,13 @@
 #include "sgMaterial.h"
 #include "sgCamera.h"
 
+#include <algorithm>
+
+bool sgParticleCompare::operator()(sgParticle *p1, sgParticle *p2)
+{
+	return (p1->camdist < p2->camdist);
+}
+
 sgParticleEmitter::sgParticleEmitter(sgParticleEmitter* p, sgParticleEmitter *n)
 {
 	prev = p;
@@ -37,6 +44,7 @@ sgParticleEmitter::sgParticleEmitter(sgParticleEmitter* p, sgParticleEmitter *n)
 		next->prev = this;
 	}
 	tag = 0;
+	sorted = false;
 	
 	material = NULL;
 	vertices = NULL;
@@ -82,6 +90,16 @@ void sgParticleEmitter::updateMesh(sgCamera *cam, float timestep)
 			delete particles[i];
 			particles.erase(particles.begin()+i);
 		}
+	}
+	
+	if(sorted)
+	{
+		for(int i = 0; i < particles.size(); i++)
+		{
+			particles[i]->camdist = particles[i]->position.dist(cam->position);
+		}
+		sgParticleCompare compobj;
+		std::sort(particles.begin(), particles.end(), compobj);
 	}
 	
 	if(indexnum != particles.size()*6)

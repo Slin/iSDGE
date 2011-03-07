@@ -40,7 +40,7 @@ void Events::onInit(sgMain *m)
 	sgmain->setOrientation(2);
 	
 	//Activate multisampling
-//	sgmain->renderer->setMultisampling(4);
+	sgmain->renderer->setMultisampling(4);
 	
 	//Create sun at default position
 //	sgmain->renderer->first_light->createLight();
@@ -58,6 +58,7 @@ void Events::onInit(sgMain *m)
 	
 	//Create a particle emitter
 	sgEntity *emitter = sgmain->first_ent->createEmitterEntity("testpart.png", (sgAction*)new SpawnParts);
+	emitter->emitt->sorted = true;
 	
 	//Add an object to it
 	emitter->createObj("jeep2.sgm");

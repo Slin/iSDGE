@@ -34,7 +34,20 @@ class sgMaterial;
 class sgCamera;
 
 /**
- * Object class. Responsible for object handling.
+ * Particle compare class. Needed to sort particles.
+ */
+class sgParticleCompare
+{
+	public:
+		/**
+		 *	Particle compare.
+		 *	Needed to sort particles.
+		 **/
+		bool operator()(sgParticle *p1, sgParticle *p2);
+};
+
+/**
+ * Particle emitter class. Responsible for creating particle meshs and updating particles.
  */
 class sgParticleEmitter
 {
@@ -89,6 +102,12 @@ class sgParticleEmitter
 		void updateMesh(sgCamera *cam, float timestep);
 		
 		/**
+		 * Sorted
+		 * If set, the particles will be sorted from front to back before rendering.
+		 **/
+		bool sorted;
+	
+		/**
 		 * Tag.
 		 * Allows to ignore this object for rendering or whereever one can specify it.
 		 **/
@@ -131,6 +150,7 @@ class sgParticleEmitter
 		sgParticleEmitter *prev;
 	
 	private:
+	
 		/**
 		 *	Particles.
 		 *	List of the particles handled by this emitter.

@@ -81,6 +81,12 @@ class sgParticle
 		 *	If this is set to true, the particle will be destroyed within the same frame.
 		 */
 		bool destroy;
+	
+		/**
+		 * Camdist
+		 * Distance to the camera, needed for sorting. This variable is automatically updated, if the emitter sorts its particles.
+		 **/
+		float camdist;
 };
 
 #endif
