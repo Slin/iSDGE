@@ -24,11 +24,12 @@
 //	THE SOFTWARE.
 
 #include <cmath>
+#include "sgDebug.h"
 #include "sgVector3.h"
 #include "sgVector4.h"
 #include "sgMatrix4x4.h"
 
-#import "sgQuaternion.h"
+#include "sgQuaternion.h"
 
 sgQuaternion::sgQuaternion(const sgQuaternion &quat)
 {
@@ -296,13 +297,67 @@ void sgQuaternion::makeLookAt(sgVector3 dir, sgVector3 up)
 	up = dir.cross(right);            // The actual up vector given the direction and the right vector
 	up.normalize();
 	
-	w = sqrt(fmax(0.0, 1.0+right.x+up.y+dir.z))/2.0;
+/*	w = sqrt(fmax(0.0, 1.0+right.x+up.y+dir.z))/2.0;
 	x = sqrt(fmax(0.0, 1.0+right.x-up.y-dir.z))/2.0;
 	y = sqrt(fmax(0.0, 1.0-right.x+up.y-dir.z))/2.0;
 	z = sqrt(fmax(0.0, 1.0-right.x-up.y+dir.z))/2.0;
 	x =	copysign(x, up.z-dir.y);
 	y =	copysign(y, dir.x-right.z);
-	z =	copysign(z, right.y-up.x);
+	z =	copysign(z, right.y-up.x);*/
+	
+	// Algorithm in Ken Shoemake's article in 1987 SIGGRAPH course notes
+	// article "Quaternion Calculus and Fast Animation".
+	// Implementation taken from Ogre3D.
+
+	float kRot[3][3];
+	kRot[0][0] = right.x;
+	kRot[1][0] = right.y;
+	kRot[2][0] = right.z;
+	kRot[0][1] = up.x;
+	kRot[1][1] = up.y;
+	kRot[2][1] = up.z;
+	kRot[0][2] = dir.x;
+	kRot[1][2] = dir.y;
+	kRot[2][2] = dir.z;
+	
+	float fTrace = kRot[0][0]+kRot[1][1]+kRot[2][2];
+	float fRoot;
+
+	if ( fTrace > 0.0 )
+	{
+		// |w| > 1/2, may as well choose w > 1/2
+		fRoot = sqrt(fTrace + 1.0f);  // 2w
+		w = 0.5f*fRoot;
+		fRoot = 0.5f/fRoot;  // 1/(4w)
+		x = (kRot[2][1]-kRot[1][2])*fRoot;
+		y = (kRot[0][2]-kRot[2][0])*fRoot;
+		z = (kRot[1][0]-kRot[0][1])*fRoot;
+	}else
+	{
+		// |w| <= 1/2
+		static size_t s_iNext[3] = { 1, 2, 0 };
+		size_t i = 0;
+		if ( kRot[1][1] > kRot[0][0] )
+			i = 1;
+		if ( kRot[2][2] > kRot[i][i] )
+			i = 2;
+		size_t j = s_iNext[i];
+		size_t k = s_iNext[j];
+
+		fRoot = sqrt(kRot[i][i]-kRot[j][j]-kRot[k][k] + 1.0f);
+		float* apkQuat[3] = { &x, &y, &z };
+		*apkQuat[i] = 0.5f*fRoot;
+		fRoot = 0.5f/fRoot;
+		w = (kRot[k][j]-kRot[j][k])*fRoot;
+		*apkQuat[j] = (kRot[j][i]+kRot[i][j])*fRoot;
+		*apkQuat[k] = (kRot[k][i]+kRot[i][k])*fRoot;
+	}
+	
+	
+/*	float tx = up.z-dir.y;
+	float ty = dir.x-right.z;
+	float tz = right.y-up.x;
+	sgLog("%f %f %f, %f %f %f", tx, ty, tz, x, y, z);*/
 	
 	normalize();
 }
