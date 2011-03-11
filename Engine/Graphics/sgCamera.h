@@ -65,6 +65,14 @@ class sgCamera
 		sgVector3 camToWorld(sgVector3 dir);
 	
 		/**
+		 *	Project world to screen.
+		 *	Transforms the vector with the cameras projection and view matrices to screenspace.
+		 * @param dir the vector to transform.
+		 * @return the transformed vector.
+		 */
+		sgVector3 worldToCam(sgVector3 dir);
+	
+		/**
 		 *	Destroy.
 		 *	Destroys this camera.
 		 */

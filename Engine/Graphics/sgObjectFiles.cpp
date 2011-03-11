@@ -119,6 +119,18 @@ namespace sgObjectFiles
 				}				
 			}
 			
+			//Vertexdata
+/*			TBXMLElement *vdata = sgXML::childElement("vertexdata", meshs);
+			unsigned int vertnum = atoi(sgXML::valueOfAttribute("vertnum", vdata));
+			
+			meshes[meshes.size()-1]->vertices = (sgVertex*)malloc(meshes[meshes.size()-1]->vtxsize*vertnum);
+			unsigned char *vertdatatarget = meshes[meshes.size()-1]->vertices;
+			for(int i = 0; i < vertnum; i++)
+			{
+				vertdatatarget[]
+			}*/
+			
+			
 			//Positions
 			TBXMLElement *vpos = sgXML::childElement("vertexpos", meshs);
 			char *vposstr = (char*)sgXML::textForElement(vpos);

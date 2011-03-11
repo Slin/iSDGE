@@ -61,6 +61,10 @@ namespace sgObjectFiles
 		sgSGMMaterial *material;
 		VERTEXFORMAT vtxformat;
 		VERTEXSIZE vtxsize;
+		
+/*		sgVertex *vertices;
+		unsigned short *indices;*/
+		
 		std::vector<sgVertex> vertices_;
 		std::vector<sgVertexUV> vertices_uv;
 		std::vector<sgVertexCol> vertices_col;

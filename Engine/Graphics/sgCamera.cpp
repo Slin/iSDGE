@@ -71,6 +71,19 @@ sgVector3 sgCamera::camToWorld(sgVector3 dir)
 	return temp;
 }
 
+sgVector3 sgCamera::worldToCam(sgVector3 dir)
+{
+	sgMatrix4x4 tempmat = matproj*matview;
+	sgVector4 vec(dir.x, dir.y, dir.z, 1.0);
+	vec = tempmat*vec;
+	
+	if(vec.w != 0)
+		vec /= vec.w;
+	
+	sgVector3 temp = vec;
+	return temp;
+}
+
 void sgCamera::updateProj()
 {
 	matproj.makeProjectionPersp(arc, aspect, clipnear, clipfar);
