@@ -62,7 +62,9 @@ namespace sgObjectFiles
 		VERTEXFORMAT vtxformat;
 		VERTEXSIZE vtxsize;
 		
-/*		sgVertex *vertices;
+/*		unsigned int vertexnum;
+		unsigned int indexnum;
+		sgVertex *vertices;
 		unsigned short *indices;*/
 		
 		std::vector<sgVertex> vertices_;

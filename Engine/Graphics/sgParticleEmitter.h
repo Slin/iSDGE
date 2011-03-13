@@ -72,7 +72,7 @@ class sgParticleEmitter
 		 *	@param texfile name of the texture file to use.
 		 * @return pointer to the new object.
 		 */
-		sgParticleEmitter *createEmitter(const char* texfile);
+		sgParticleEmitter *createEmitter(const char* texfile = NULL);
 	
 		/**
 		 *	Emit particle.

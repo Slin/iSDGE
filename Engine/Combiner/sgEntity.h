@@ -137,7 +137,7 @@ class sgEntity
 		 * @param a pointer to the action which will be assigned to the new entity.
 		 * @return pointer to the new entity
 		 */
-		sgEntity *createEmitterEntity(const char *texfile, sgAction *a = NULL);
+		sgEntity *createEmitterEntity(const char *texfile = NULL, sgAction *a = NULL);
 	
 		/**
 		 *	Create empty object.
@@ -201,7 +201,7 @@ class sgEntity
 		 *	If there isn´t already a particle emitter attached, it will create a new one and attach it to the entity.
 		 * @param texfile filename of the texture to use for this emitters particles.
 		 */
-		void createEmitter(const char *texfile);
+		void createEmitter(const char *texfile = NULL);
 	
 		/**
 		 *	Create action.

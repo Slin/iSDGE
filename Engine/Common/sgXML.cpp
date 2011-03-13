@@ -32,6 +32,7 @@
 
 #include "sgXML.h"
 #include "sgResourceManager.h"
+#include "sgDebug.h"
 
 
 // ================================================================================================
@@ -53,27 +54,6 @@ sgXML::sgXML(const char *aXMLFile)
 	
 	initWithXMLFile(aXMLFile);
 }
-
-/*
-void initWithXMLString(NSString *aXMLString)
-{
-	// copy string to byte array
-	bytesLength = [aXMLString lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
-	bytes = malloc(bytesLength+1);
-	[aXMLString getBytes:bytes maxLength:bytesLength usedLength:0 encoding:NSUTF8StringEncoding options:NSStringEncodingConversionAllowLossy range:NSMakeRange(0, bytesLength) remainingRange:NULL];
-	
-	// set null terminator at end of byte array
-	bytes[bytesLength] = 0;
-	
-	// decode xml data
-	[self decodeBytes];
-}
-
-void initWithXMLData(NSData *aData)
-{
-	// decode aData
-	[self decodeData:aData];
-}*/
 
 void sgXML::initWithXMLFile(const char *aXMLFile)
 {
@@ -195,7 +175,6 @@ void sgXML::decodeBytes()
 		
 		// if cdata section found, skip data within cdata section and remove cdata tags
 		if (isCDATA==0) {
-			
 			// find end of cdata section
 			char * CDATAEnd = strstr(elementStart,"]]>");
 			
