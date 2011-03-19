@@ -4,9 +4,9 @@
 bl_addon_info = {
 	'name': 'Export: iSDGE model format',
 	'author': 'Nils Daumann',
-	'version': '0.2 2011/01/25',
+	'version': '0 2011/03/19',
 	'blender': (2, 5, 3),
-	'category': 'Import/Export',
+	'category': 'Import-Export',
 	'location': 'File > Export'}
 
 
@@ -15,16 +15,18 @@ bl_addon_info = {
 #################################
 import os
 import bpy
+import struct
 
 
 #Container classes for a better overview
 class c_vertex(object):
-	__slots__ = 'blendindex', 'position', 'uvs', 'color'
-	def __init__(self, blendindex, position = (0,0,0), uvs = [], color = None):
+	__slots__ = 'blendindex', 'position', 'uvs', 'color', 'normal'
+	def __init__(self, blendindex, position = (0,0,0), uvs = [], color = None, normal = (0, 0, 0)):
 		self.blendindex = blendindex	#index within the blender mesh
 		self.position = position
 		self.uvs = uvs
 		self.color = color
+		self.normal = normal
 
 class c_triangle(object):
 	__slots__ = 'vertices', 'images', 'newindices'
@@ -35,11 +37,13 @@ class c_triangle(object):
 		
 class c_mesh(object):
 	__slots__ = 'triangles', 'images', 'vertices', 'indices'
-	def __init__(self, images = [], triangles = [], vertices = [], indices = []):
-		self.vertices = vertices
-		self.triangles = triangles
+	def __init__(self, images = [], tri = None):
+		self.vertices = []
+		self.triangles = []
+		if tri != None:
+			self.triangles.append(tri)
 		self.images = images
-		self.indices = indices
+		self.indices = []
 	
 	#doublicates face vertices with different uv coords and sets the new index
 	def uvsplit(self):
@@ -59,7 +63,6 @@ class c_mesh(object):
 			self.indices.append(ind[0])
 			self.indices.append(ind[1])
 			self.indices.append(ind[2])
-			
 
 
 class c_object(object):
@@ -73,7 +76,7 @@ class c_object(object):
 			for tex in obj.uv_textures:
 				imgpath = tex.data[i].image.filepath
 				img = imgpath.split('/')
-				images.append(img[len(img)-1])
+				images.append((tex.data[i].image.name, img[len(img)-1]))
 			
 			verts = []
 			for n, vertind in enumerate(face.vertices):
@@ -93,7 +96,7 @@ class c_object(object):
 						color = (obj.vertex_colors[0].data[i].color3[0], obj.vertex_colors[0].data[i].color3[1], obj.vertex_colors[0].data[i].color3[2], alpha)
 					if n == 3:
 						color = (obj.vertex_colors[0].data[i].color4[0], obj.vertex_colors[0].data[i].color4[1], obj.vertex_colors[0].data[i].color4[2], alpha)
-				verts.append(c_vertex(vertind, obj.vertices[vertind].co, uvs, color))
+				verts.append(c_vertex(vertind, obj.vertices[vertind].co, uvs, color, obj.vertices[vertind].normal))
 			
 			if len(face.vertices) == 3:
 				triangles.append(c_triangle(verts, images))
@@ -105,7 +108,8 @@ class c_object(object):
 		
 		#generate meshs
 		self.meshs = []
-		self.meshs.append(c_mesh(triangles[0].images))
+		m = c_mesh(triangles[0].images)
+		self.meshs.append(m)
 		for tri in triangles:
 			check = 0
 			for mesh in self.meshs:
@@ -114,70 +118,72 @@ class c_object(object):
 					check = 1
 					break
 			if check == 0:
-				self.meshs.append(c_mesh(tri.images, [tri]))
+				m = c_mesh(tri.images, tri)
+				self.meshs.append(m)
 		
 		for mesh in self.meshs:
 			mesh.uvsplit()
 	
 	
-	
-	def write(self, filename):
+	def write(self, filename, exptextures):
 		print("open or create file")
-		file = open( filename, 'w' )
-	
-		file.write("<?xml version=\"1.0\" ?>\n")
-		file.write("<environment>\n")
+		file = open(filename, 'wb')
+
+		print("write file format version number: 0")
+		file.write(struct.pack('<B', 0))
 		
 		print("write materials")
+		file.write(struct.pack('<B', len(self.meshs)))	#number of materials
 		for i, mesh in enumerate(self.meshs):
-			file.write("\t<material id=\"%i\">\n" % i)
-			file.write("\t\t<textures>")
-			for img in mesh.images:
-				file.write("%s " % img)
-			file.write("</textures>\n")
-			file.write("\t</material>\n")
-		
-		file.write("\n")
+			file.write(struct.pack('<B', i))			#material id
+			texcount = len(mesh.images)
+			if exptextures != True:
+				texcount = 0
+			file.write(struct.pack('<B', texcount))	#number of textures
+			if texcount > 0:
+				for img in mesh.images:
+					file.write(struct.pack('<H', len(img[1])+1))
+					file.write(struct.pack('<%is'%(len(img[1])+1), img[1]))
 		
 		print("write meshs")
+		file.write(struct.pack('<B', len(self.meshs)))
 		for i, mesh in enumerate(self.meshs):
-			datachennels = 0
+			datachannels = 0
 			if mesh.vertices[0].color != None:
 				datachannels = 4
-			file.write("\t<mesh id=\"%i\" material=\"%i\" texcoordcount=\"%i\" datachannels=\"%i\">\n" % (i, i, len(mesh.images), datachannels))
-		
-			print("write vertices")
-			file.write("\t\t<vertexpos>")
-			for vertex in mesh.vertices:
-				file.write("%f %f %f " % (-vertex.position.x, vertex.position.z, vertex.position.y))
-			file.write("</vertexpos>\n")
-		
-			print("write texcoords")
-			set = 0
-			while set < len(mesh.images):
-				file.write("\t\t<vertextexcoord id=\"%i\">" % set)
-				for vertex in mesh.vertices:
-					file.write("%f %f " % (vertex.uvs[set][0], 1.0-vertex.uvs[set][1]))
-				file.write("</vertextexcoord>\n")
-				set += 1
 				
-			if mesh.vertices[0].color != None:
-				print("write colors")
-				file.write("\t\t<vertexdata>")
-				for vertex in mesh.vertices:
-					file.write("%f %f %f %f " % (vertex.color[0], vertex.color[1], vertex.color[2], vertex.color[3]))
-				file.write("</vertexdata>\n")
+			file.write(struct.pack('<B', i))	#mesh id
+			file.write(struct.pack('<B', i))	#material id
+			file.write(struct.pack('<H', len(mesh.vertices)))   #vertexnum
+			file.write(struct.pack('<B', len(mesh.images))) #texcoord count
+			file.write(struct.pack('<B', datachannels)) #texdata count
 		
-			print("write indices")
-			file.write("\t\t<indices>")
-			for ind in mesh.indices:
-				file.write("%i " % ind)
-			file.write("</indices>\n")
-			file.write("\t</mesh>\n")
+			print("write interleaved vertex data")
 			
-		file.write("\n")
-		
-		file.write("</environment>\n")
+			for vertex in mesh.vertices:
+				bindata = struct.pack('<fff', -vertex.position.x, vertex.position.z, vertex.position.y)
+				file.write(bindata)
+				
+				bindata = struct.pack('<fff', -vertex.normal.x, vertex.normal.z, vertex.normal.y)
+				file.write(bindata)
+
+				set = 0
+				while set < len(mesh.images):
+					bindata = struct.pack('<ff', vertex.uvs[set][0], 1.0-vertex.uvs[set][1])
+					file.write(bindata)
+					set += 1
+				
+				if mesh.vertices[0].color != None:
+					bindata = struct.pack('<ffff', vertex.color[0], vertex.color[1], vertex.color[2], vertex.color[3])
+					file.write(bindata)
+					
+			print("finished writing interleaved vertex data")
+			
+			print("write indices")
+			file.write(struct.pack('<H', len(mesh.indices)))
+			for ind in mesh.indices:
+				bindata = struct.pack('<H', ind)
+				file.write(bindata)
 	
 		file.close()
 		print("finished export")
@@ -186,87 +192,87 @@ class c_object(object):
 #################################
 #Writing the file
 #################################
-def exportobject(filename, context):
+#def exportobject(filename, context):
 	
-	bpy.ops.object.mode_set(mode='OBJECT')
-	obj = c_object(context.object.data)
-	obj.write(filename)
+#	bpy.ops.object.mode_set(mode='OBJECT')
+#	obj = c_object(context.object.data)
+#	obj.write(filename)
 	
 	
 #   for i, modi in enumerate(context.object.modifiers):
-#	  if modi.type == 'ARMATURE':
-#		  print("write armature")
+#   if modi.type == 'ARMATURE':
+#	print("write armature")
 			
-#		  modi.object.data.pose_position = 'REST'
-#		  file.write("\t<armature name=\"%s\">\n" % modi.object.data.name)
-#		  for i, bone in enumerate(modi.object.data.bones):
-#			  for parnum, parent in enumerate(modi.object.data.bones):
-#				  if parent == bone.parent:
-#					  break
-#				  elif parnum == (len(modi.object.data.bones)-1):
-#					  parnum = -1
+#	modi.object.data.pose_position = 'REST'
+#	file.write("\t<armature name=\"%s\">\n" % modi.object.data.name)
+#	for i, bone in enumerate(modi.object.data.bones):
+#		for parnum, parent in enumerate(modi.object.data.bones):
+#			if parent == bone.parent:
+#				break
+#			elif parnum == (len(modi.object.data.bones)-1):
+#				parnum = -1
 				
-#			  file.write("\t\t<name=\"%s\" bone id=\"%i\" parent=\"%i\">\n" % (bone.name, (i+1), (parnum+1)))
-#			  file.write("\t\t\t<abshead>%f %f %f</abshead>\n" % (bone.head_local.x, bone.head_local.y, bone.head_local.z))
-#			  file.write("\t\t\t<abstail>%f %f %f</abstail>\n" % (bone.tail_local.x, bone.tail_local.y, bone.tail_local.z))
+#		file.write("\t\t<name=\"%s\" bone id=\"%i\" parent=\"%i\">\n" % (bone.name, (i+1), (parnum+1)))
+#		file.write("\t\t\t<abshead>%f %f %f</abshead>\n" % (bone.head_local.x, bone.head_local.y, bone.head_local.z))
+#		file.write("\t\t\t<abstail>%f %f %f</abstail>\n" % (bone.tail_local.x, bone.tail_local.y, bone.tail_local.z))
 				
-#			  for n, mat in enumerate(weight_dict):
-#				  iseffected = 0
-#				  for ind in weight_dict[mat]:
-#					  for group in context.object.data.vertices[ind[0]].groups:
-#						  if context.object.vertex_groups[group.group].name == bone.name:
-#							  iseffected += 1
+#		for n, mat in enumerate(weight_dict):
+#			iseffected = 0
+#			for ind in weight_dict[mat]:
+#				for group in context.object.data.vertices[ind[0]].groups:
+#					if context.object.vertex_groups[group.group].name == bone.name:
+#						iseffected += 1
 					
-#				  if iseffected > 0:
-#					  file.write("\t\t\t<vertices mesh=\"%i\">" % n)
-#					  for ind in weight_dict[mat]:
-#						  for group in context.object.data.vertices[ind[0]].groups:
-#							  if context.object.vertex_groups[group.group].name == bone.name:
-#								  file.write("%i %f " % (ind[1], group.weight))
-#					  file.write("</vertices>\n")
+#			if iseffected > 0:
+#				file.write("\t\t\t<vertices mesh=\"%i\">" % n)
+#				for ind in weight_dict[mat]:
+#					for group in context.object.data.vertices[ind[0]].groups:
+#						if context.object.vertex_groups[group.group].name == bone.name:
+#							file.write("%i %f " % (ind[1], group.weight))
+#				file.write("</vertices>\n")
 				
-#			  file.write("\t\t</bone>\n")
-#		  file.write("\t</armature>\n\n")
+#		file.write("\t\t</bone>\n")
+#	file.write("\t</armature>\n\n")
 	
-#		  print("write animations")
-#		  modi.object.data.pose_position = 'POSE'
-#		  for act in bpy.data.actions:
-#			  actinuse = 0
+#	print("write animations")
+#	modi.object.data.pose_position = 'POSE'
+#	for act in bpy.data.actions:
+#		actinuse = 0
 				
-#			  for group in act.groups:
-#				  for bone in modi.object.data.bones:
-#					  if group.name == bone.name:
-#						  actinuse = 1
-#						  break
-#				  if actinuse == 1:
-#					  break
-#			  if not len(act.fcurves):
-#				  actinuse = 0
+#		for group in act.groups:
+#			for bone in modi.object.data.bones:
+#				if group.name == bone.name:
+#					actinuse = 1
+#					break
+#			if actinuse == 1:
+#				break
+#		if not len(act.fcurves):
+#			actinuse = 0
 				
-#			  if actinuse == 1:
-#				  keyframes = []
-#				  for group in act.groups:
-#					  for fc in group.channels:
-#						  for kf in fc.keyframe_points:
-#							  if int(kf.co[0]) not in keyframes:
-#								  keyframes.append(int(kf.co[0]))
+#		if actinuse == 1:
+#			keyframes = []
+#			for group in act.groups:
+#				for fc in group.channels:
+#					for kf in fc.keyframe_points:
+#						if int(kf.co[0]) not in keyframes:
+#							keyframes.append(int(kf.co[0]))
 					
-#				  framemin, framemax = act.frame_range
-#				  start_frame = int(framemin)
-#				  end_frame = int(framemax)
-#				  scene_frames = range(start_frame, end_frame+1)
-#				  frame_count = len(scene_frames)
-#				  file.write("\t<animation name=\"%s\" duration=\"%i\">\n" % (act.name, frame_count))
-#				  for bone in modi.object.data.bones:
-#					  file.write("\t\t<bone name=\"%s\">" % bone.name)
-#					  for f in keyframes:
-#						  context.scene.frame_set(f)
-#						  file.write("%i %f %f %f %f %f %f " % (f, bone.head.x, bone.head.y, bone.head.z, bone.tail.x, bone.tail.y, bone.tail.z))
-#					  file.write("\t\t</bone>\n")
+#			framemin, framemax = act.frame_range
+#			start_frame = int(framemin)
+#			end_frame = int(framemax)
+#			scene_frames = range(start_frame, end_frame+1)
+#			frame_count = len(scene_frames)
+#			file.write("\t<animation name=\"%s\" duration=\"%i\">\n" % (act.name, frame_count))
+#			for bone in modi.object.data.bones:
+#				file.write("\t\t<bone name=\"%s\">" % bone.name)
+#				for f in keyframes:
+#					context.scene.frame_set(f)
+#					file.write("%i %f %f %f %f %f %f " % (f, bone.head.x, bone.head.y, bone.head.z, bone.tail.x, bone.tail.y, bone.tail.z))
+#				file.write("\t\t</bone>\n")
 					
-#				  file.write("\t</animation>\n")
+#			file.write("\t</animation>\n")
 			
-#		  break
+#	break
 			
 
 	
@@ -283,14 +289,19 @@ class ExportSGM(bpy.types.Operator):
 
 	filepath = StringProperty(name="File Path", description="Filepath used for exporting the iSDGE model file", maxlen= 1024, default= "")
 	check_existing = BoolProperty(name="Check Existing", description="Check and warn on overwriting existing files", default=True, options={'HIDDEN'})
+	
+	#properties
+	exptextures = BoolProperty(name="Export textures", description="Reference external image files to be used by the model.", default=True)
 
 	def execute(self, context):
-		exportobject(self.properties.filepath, context)
+		bpy.ops.object.mode_set(mode='OBJECT')
+		obj = c_object(context.object.data)
+		obj.write(self.properties.filepath, self.exptextures)
 		return {'FINISHED'}
 
 	def invoke(self, context, event):
 		wm = context.window_manager
-		wm.add_fileselect(self)
+		wm.fileselect_add(self)
 		return {'RUNNING_MODAL'}
 
 

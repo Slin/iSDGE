@@ -48,7 +48,7 @@ namespace sgObjectFiles
 	 */
 	struct sgSGMMaterial
 	{
-		unsigned int id_;
+		unsigned char id_;
 		std::vector<std::string> texnames;
 	};
 	
@@ -57,25 +57,15 @@ namespace sgObjectFiles
 	 */
 	struct sgSGMMesh
 	{
-		unsigned int id_;
+		unsigned char id_;
 		sgSGMMaterial *material;
 		VERTEXFORMAT vtxformat;
 		VERTEXSIZE vtxsize;
 		
-/*		unsigned int vertexnum;
-		unsigned int indexnum;
+		unsigned short vertexnum;
+		unsigned short indexnum;
 		sgVertex *vertices;
-		unsigned short *indices;*/
-		
-		std::vector<sgVertex> vertices_;
-		std::vector<sgVertexUV> vertices_uv;
-		std::vector<sgVertexCol> vertices_col;
-		std::vector<sgVertexUVCol> vertices_uvcol;
-		std::vector<sgVertexTan> vertices_tan;
-		std::vector<sgVertexTanUV> vertices_tanuv;
-		std::vector<sgVertexTanCol> vertices_tancol;
-		std::vector<sgVertexTanUVCol> vertices_tanuvcol;
-		std::vector<unsigned short> indices;
+		unsigned short *indices;
 	};
 
 

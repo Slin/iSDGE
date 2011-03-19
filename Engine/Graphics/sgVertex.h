@@ -126,8 +126,8 @@ public:
 	sgVector3 position;
 	sgVector3 normal;
 	sgVector2 uv;
-	sgVector4 tangent;
 	sgVector4 color;
+	sgVector4 tangent;
 };
 
 class sgVertexTanUVCol
@@ -137,8 +137,8 @@ public:
 	sgVector3 normal;
 	sgVector2 uv;
 	sgVector2 uv2;
-	sgVector4 tangent;
 	sgVector4 color;
+	sgVector4 tangent;
 };
 
 #endif

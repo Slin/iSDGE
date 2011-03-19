@@ -600,15 +600,15 @@ void sgRendererES2::renderObjects(sgCamera *cam, sgObject *first)
 					}
 				}else if(currbod->meshs[i]->vtxform == TANGENTCOLOR)
 				{
-					if(currbod->materials[i]->shader->tangent != -1)
-					{
-						glEnableVertexAttribArray(currbod->materials[i]->shader->tangent);
-						glVertexAttribPointer(currbod->materials[i]->shader->tangent, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, (const void*)32);
-					}
 					if(currbod->materials[i]->shader->color != -1)
 					{
 						glEnableVertexAttribArray(currbod->materials[i]->shader->color);
-						glVertexAttribPointer(currbod->materials[i]->shader->color, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, (const void*)48);
+						glVertexAttribPointer(currbod->materials[i]->shader->color, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, (const void*)32);
+					}
+					if(currbod->materials[i]->shader->tangent != -1)
+					{
+						glEnableVertexAttribArray(currbod->materials[i]->shader->tangent);
+						glVertexAttribPointer(currbod->materials[i]->shader->tangent, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, (const void*)48);
 					}
 				}else if(currbod->meshs[i]->vtxform == TANGENTSECONDUVCOLOR)
 				{
@@ -617,17 +617,15 @@ void sgRendererES2::renderObjects(sgCamera *cam, sgObject *first)
 						glEnableVertexAttribArray(currbod->materials[i]->shader->texcoord1);
 						glVertexAttribPointer(currbod->materials[i]->shader->texcoord1, 2, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, (const void*)32);
 					}
-					
-					if(currbod->materials[i]->shader->tangent != -1)
-					{
-						glEnableVertexAttribArray(currbod->materials[i]->shader->tangent);
-						glVertexAttribPointer(currbod->materials[i]->shader->tangent, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, (const void*)40);
-					}
-					
 					if(currbod->materials[i]->shader->color != -1)
 					{
 						glEnableVertexAttribArray(currbod->materials[i]->shader->color);
-						glVertexAttribPointer(currbod->materials[i]->shader->color, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, (const void*)56);
+						glVertexAttribPointer(currbod->materials[i]->shader->color, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, (const void*)40);
+					}
+					if(currbod->materials[i]->shader->tangent != -1)
+					{
+						glEnableVertexAttribArray(currbod->materials[i]->shader->tangent);
+						glVertexAttribPointer(currbod->materials[i]->shader->tangent, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, (const void*)46);
 					}
 				}
 				
