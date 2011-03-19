@@ -62,7 +62,7 @@ void Events::onInit(sgMain *m)
 	water->ent->obj->position.y = 23.0;
 	
 	//Set render event
-	sgmain->renderer->event = (sgRenderEvent*)new RenderEvent(terr, "TerrDetail", "TerrCl");
+	sgmain->renderer->event = (sgRenderEvent*)new RenderEvent(terr, "TerrDetail.vsh", "TerrDetail.fsh", "TerrCl.vsh", "TerrCl.fsh");
 }
 
 //Called every frame, just before drawing

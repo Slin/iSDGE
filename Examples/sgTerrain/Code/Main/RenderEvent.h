@@ -34,8 +34,8 @@
 class RenderEvent : sgRenderEvent
 {
 	public:
-		RenderEvent(sgEntity *terr, const char *base, const char *clip);
-		void initTerrShads(sgEntity *terr, const char *base, const char *clip);
+		RenderEvent(sgEntity *terr, const char *basevsh, const char *basefsh, const char *clipvsh, const char *clipfsh);
+		void initTerrShads(sgEntity *terr, const char *basevsh, const char *basefsh, const char *clipvsh, const char *clipfsh);
 		void onDrawCam(sgCamera *cam, sgRenderer *rend);
 	
 	private:

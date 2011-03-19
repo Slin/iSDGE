@@ -34,6 +34,19 @@
 class sgShader : public sgBase
 {
 	public:
+		enum BuiltInShaders
+		{
+			BIS_TEXTURE = 0,
+			BIS_TEXTURE_DISCARD = 1,
+			BIS_SUN = 2,
+			BIS_LIGHT = 3,
+			BIS_LIGHTMAP = 4,
+			
+			BIS_SHADOWVOLUME = -1,
+			BIS_SHADOWQUAD = -2,
+			BIS_PARTICLE = -3
+		};
+		
 		/**
 		 *	Constructor.
 		 *	Sets up an instance of this class without a shader.
@@ -66,10 +79,10 @@ class sgShader : public sgBase
 		/**
 		 *	Get shader.
 		 *	Returns the pointer to an instance of a default shader identified by the given number.
-		 * @param shad id of the default shader to return (0 for no shading, 1 for shading)
+		 * @param shad id of the default shader to return
 		 * @return pointer to the shaders instance
 		 */
-		static sgShader *getShader(unsigned int shad);
+		static sgShader *getShader(BuiltInShaders shad);
 		
 		/**
 		 *	Destroy.

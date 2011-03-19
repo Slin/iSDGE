@@ -31,8 +31,8 @@
 #include "sgBase.h"
 #include "sgColor.h"
 #include "sgMatrix4x4.h"
+#include "sgShader.h"
 
-class sgShader;
 class sgTexture;
 
 class sgMaterialParameter
@@ -80,7 +80,7 @@ class sgMaterial : public sgBase
 		 *	Initializes a default material with a default shader.
 		 * @param shad the default shader to use
 		 */
-		sgMaterial(unsigned int shad);
+	sgMaterial(sgShader::BuiltInShaders shad);
 	
 		/**
 		 *	Constructor.
@@ -97,7 +97,7 @@ class sgMaterial : public sgBase
 		 * @param mipmaps has to be set to false if you don´t want mipmaps to be created for the texture
 		 * @param shad the default shader to use
 		 */
-		sgMaterial(const char *texfile, bool mipmaps = true, unsigned int shad = 0);
+		sgMaterial(const char *texfile, bool mipmaps = true, sgShader::BuiltInShaders shad = sgShader::BIS_TEXTURE);
 	
 		/**
 		 *	Constructor.
@@ -105,7 +105,7 @@ class sgMaterial : public sgBase
 		 * @param tex pointer to the textures instance
 		 * @param shad the default shader to use
 		 */
-		sgMaterial(sgTexture *tex, unsigned int shad = 0);
+		sgMaterial(sgTexture *tex, sgShader::BuiltInShaders shad = sgShader::BIS_TEXTURE);
 	
 		/**
 		 *	Constructor.
@@ -157,7 +157,7 @@ class sgMaterial : public sgBase
 		 *	Assigns a default shader to this material.
 		 * @param shad the default shaders id
 		 */
-		void setShader(unsigned int shad);
+		void setShader(sgShader::BuiltInShaders shad);
 	
 		/**
 		 *	Set 2D texture.
@@ -218,7 +218,7 @@ class sgMaterial : public sgBase
 		 *	Creates, initializes and returns a default material with a default shader.
 		 * @param shad the default shader to use
 		 */
-		static sgMaterial *getMaterial(unsigned int shad);
+		static sgMaterial *getMaterial(sgShader::BuiltInShaders shad);
 		
 		/**
 		 *	Get material.
@@ -235,7 +235,7 @@ class sgMaterial : public sgBase
 		 * @param mipmaps has to be set to false if you don´t want mipmaps to be created for the texture
 		 * @param shad the default shader to use
 		 */
-		static sgMaterial *getMaterial(const char *texfile, bool mipmaps = true, unsigned int shad = 0);
+		static sgMaterial *getMaterial(const char *texfile, bool mipmaps = true, sgShader::BuiltInShaders shad = sgShader::BIS_TEXTURE);
 	
 		/**
 		 *	Get material.
@@ -243,7 +243,7 @@ class sgMaterial : public sgBase
 		 * @param tex pointer to the textures instance
 		 * @param shad the default shader to use
 		 */
-		static sgMaterial *getMaterial(sgTexture *tex, unsigned int shad = 0);
+		static sgMaterial *getMaterial(sgTexture *tex, sgShader::BuiltInShaders shad = sgShader::BIS_TEXTURE);
 		
 		/**
 		 *	Get material.

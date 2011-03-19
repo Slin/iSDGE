@@ -27,18 +27,18 @@
 #include "sgRenderer.h"
 #include "sgCamera.h"
 
-RenderEvent::RenderEvent(sgEntity *terr, const char *base, const char *clip)
+RenderEvent::RenderEvent(sgEntity *terr, const char *basevsh, const char *basefsh, const char *clipvsh, const char *clipfsh)
 {
-	initTerrShads(terr, base, clip);
+	initTerrShads(terr, basevsh, basefsh, clipvsh, clipfsh);
 }
 
-void RenderEvent::initTerrShads(sgEntity *terr, const char *base, const char *clip)
+void RenderEvent::initTerrShads(sgEntity *terr, const char *basevsh, const char *basefsh, const char *clipvsh, const char *clipfsh)
 {
 	terrent = terr;
-	baseshad = sgShader::getShader(base, base);
+	baseshad = sgShader::getShader(basevsh, basefsh);
 	terrent->obj->body->materials[0]->shader = baseshad;
 	terrent->obj->body->materials[0]->getUniforms();
-	clipshad = sgShader::getShader(clip, clip);
+	clipshad = sgShader::getShader(clipvsh, clipfsh);
 }
 
 void RenderEvent::onDrawCam(sgCamera *cam, sgRenderer *rend)

@@ -62,13 +62,13 @@ sgShader *sgShader::getShader(const char *vsfilename, const char *fsfilename)
 	return shader;
 }
 
-sgShader *sgShader::getShader(unsigned int shad)
+sgShader *sgShader::getShader(BuiltInShaders shad)
 {
 	sgShader *shader = NULL;
 	switch(shad)
 	{
 		//Basic shaders
-		case 0:
+		case BIS_TEXTURE:
 		{
 			shader = (sgShader*)sgResourceManager::getResource("shader_texture");
 			if(shader == NULL)
@@ -78,7 +78,7 @@ sgShader *sgShader::getShader(unsigned int shad)
 			}
 			break;
 		}
-		case 1:
+		case BIS_TEXTURE_DISCARD:
 		{
 			shader = (sgShader*)sgResourceManager::getResource("shader_texture_discard");
 			if(shader == NULL)
@@ -88,7 +88,7 @@ sgShader *sgShader::getShader(unsigned int shad)
 			}
 			break;
 		}
-		case 2:
+		case BIS_SUN:
 		{
 			shader = (sgShader*)sgResourceManager::getResource("shader_sun");
 			if(shader == NULL)
@@ -98,7 +98,7 @@ sgShader *sgShader::getShader(unsigned int shad)
 			}
 			break;
 		}
-		case 3:
+		case BIS_LIGHT:
 		{
 			shader = (sgShader*)sgResourceManager::getResource("shader_light");
 			if(shader == NULL)
@@ -108,7 +108,7 @@ sgShader *sgShader::getShader(unsigned int shad)
 			}
 			break;
 		}
-		case 4:
+		case BIS_LIGHTMAP:
 		{
 			shader = (sgShader*)sgResourceManager::getResource("shader_lightmap");
 			if(shader == NULL)
@@ -120,7 +120,7 @@ sgShader *sgShader::getShader(unsigned int shad)
 		}
 			
 		//Special shaders
-		case -1:
+		case BIS_SHADOWVOLUME:
 		{
 			shader = (sgShader*)sgResourceManager::getResource("shader_shadowvolume");
 			if(shader == NULL)
@@ -130,7 +130,7 @@ sgShader *sgShader::getShader(unsigned int shad)
 			}
 			break;
 		}
-		case -2:
+		case BIS_SHADOWQUAD:
 		{
 			shader = (sgShader*)sgResourceManager::getResource("shader_shadowquad");
 			if(shader == NULL)
@@ -140,7 +140,7 @@ sgShader *sgShader::getShader(unsigned int shad)
 			}
 			break;
 		}
-		case -3:
+		case BIS_PARTICLE:
 		{
 			shader = (sgShader*)sgResourceManager::getResource("shader_particle");
 			if(shader == NULL)

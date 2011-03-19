@@ -40,7 +40,7 @@ sgMaterial::sgMaterial()
 	setDefault();
 }
 
-sgMaterial::sgMaterial(unsigned int shad)
+sgMaterial::sgMaterial(sgShader::BuiltInShaders shad)
 {
 	if(sgRenderer::oglversion > 1)
 	{
@@ -67,7 +67,7 @@ sgMaterial::sgMaterial(const char *vsname, const char *fsname)
 	setDefault();
 }
 
-sgMaterial::sgMaterial(const char *texfile, bool mipmaps, unsigned int shad)
+sgMaterial::sgMaterial(const char *texfile, bool mipmaps, sgShader::BuiltInShaders shad)
 {
 	if(sgRenderer::oglversion > 1)
 	{
@@ -85,7 +85,7 @@ sgMaterial::sgMaterial(const char *texfile, bool mipmaps, unsigned int shad)
 	setDefault();
 }
 
-sgMaterial::sgMaterial(sgTexture *tex, unsigned int shad)
+sgMaterial::sgMaterial(sgTexture *tex, sgShader::BuiltInShaders shad)
 {
 	if(sgRenderer::oglversion > 1)
 	{
@@ -208,7 +208,7 @@ void sgMaterial::setDefault()
 	if(sgRenderer::oglversion > 1)
 	{
 		if(shader == NULL)
-			shader = sgShader::getShader(0);
+			shader = sgShader::getShader(sgShader::BIS_TEXTURE);
 		
 		getUniforms();
 	}else
@@ -227,7 +227,7 @@ void sgMaterial::setShader(const char *vsname, const char *fsname)
 	getUniforms();
 }
 
-void sgMaterial::setShader(unsigned int shad)
+void sgMaterial::setShader(sgShader::BuiltInShaders shad)
 {
 	if(sgRenderer::oglversion <= 1)
 		return;
@@ -327,7 +327,7 @@ sgMaterial *sgMaterial::getMaterial()
 	return mat;
 }
 
-sgMaterial *sgMaterial::getMaterial(unsigned int shad)
+sgMaterial *sgMaterial::getMaterial(sgShader::BuiltInShaders shad)
 {
 	sgMaterial *mat = new sgMaterial(shad);
 	sgResourceManager::addResource(mat);
@@ -341,14 +341,14 @@ sgMaterial *sgMaterial::getMaterial(const char *vsname, const char *fsname)
 	return mat;
 }
 
-sgMaterial *sgMaterial::getMaterial(const char *texfile, bool mipmaps, unsigned int shad)
+sgMaterial *sgMaterial::getMaterial(const char *texfile, bool mipmaps, sgShader::BuiltInShaders shad)
 {
 	sgMaterial *mat = new sgMaterial(texfile, mipmaps, shad);
 	sgResourceManager::addResource(mat);
 	return mat;
 }
 
-sgMaterial *sgMaterial::getMaterial(sgTexture *tex, unsigned int shad)
+sgMaterial *sgMaterial::getMaterial(sgTexture *tex, sgShader::BuiltInShaders shad)
 {
 	sgMaterial *mat = new sgMaterial(tex, shad);
 	sgResourceManager::addResource(mat);

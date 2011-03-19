@@ -311,12 +311,12 @@ sgObjectBody *sgObjectBody::makeObject(const char *name, unsigned long flags)
 	{
 		sgMesh *mesh = new sgMesh;
 		
-		cont->materials.push_back(sgMaterial::getMaterial((unsigned int)0));
-		cont->materials.push_back(sgMaterial::getMaterial((unsigned int)0));
-		cont->materials.push_back(sgMaterial::getMaterial((unsigned int)0));
-		cont->materials.push_back(sgMaterial::getMaterial((unsigned int)0));
-		cont->materials.push_back(sgMaterial::getMaterial((unsigned int)0));
-		cont->materials.push_back(sgMaterial::getMaterial((unsigned int)0));
+		cont->materials.push_back(sgMaterial::getMaterial(sgShader::BIS_TEXTURE));
+		cont->materials.push_back(sgMaterial::getMaterial(sgShader::BIS_TEXTURE));
+		cont->materials.push_back(sgMaterial::getMaterial(sgShader::BIS_TEXTURE));
+		cont->materials.push_back(sgMaterial::getMaterial(sgShader::BIS_TEXTURE));
+		cont->materials.push_back(sgMaterial::getMaterial(sgShader::BIS_TEXTURE));
+		cont->materials.push_back(sgMaterial::getMaterial(sgShader::BIS_TEXTURE));
 		
 		float widthoff = 0;
 		float heightoff = 0;

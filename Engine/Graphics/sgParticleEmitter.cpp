@@ -69,7 +69,7 @@ sgParticleEmitter *sgParticleEmitter::createEmitter(const char *texfile)
 	next = new sgParticleEmitter(this, next);
 	
 	if(texfile)
-		next->material = sgMaterial::getMaterial(texfile, true, -3);
+		next->material = sgMaterial::getMaterial(texfile, true, sgShader::BIS_PARTICLE);
 	else
 		next->material = sgMaterial::getMaterial();
 	

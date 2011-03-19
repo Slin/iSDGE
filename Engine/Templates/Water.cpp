@@ -36,7 +36,7 @@ void Water::onInit(sgEntity *e)
 	
 	ent->obj->body->materials[0]->setTexture2D(-1, bumpfile);
 	ent->obj->body->materials[0]->setTexture2D(-1, mirror->cam->rendertarget);
-	ent->obj->body->materials[0]->setShader("Water", "Water");
+	ent->obj->body->materials[0]->setShader("Water.vsh", "Water.fsh");
 	ent->obj->body->materials[0]->mattex.makeScale(sgVector3(0.1, 0.1, 1));
 	
 	ent->obj->tag = 1;

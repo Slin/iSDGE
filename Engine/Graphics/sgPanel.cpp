@@ -283,7 +283,7 @@ sgPanelElement *sgPanel::addImage(const char *imgtexfile, const sgVector2 &pos, 
 	img->type = 0;
 	
 	if(vs == NULL || fs == NULL)
-		img->mat = sgMaterial::getMaterial(imgtexfile, false, 0);
+		img->mat = sgMaterial::getMaterial(imgtexfile, false, sgShader::BIS_TEXTURE);
 	else
 		img->mat = sgMaterial::getMaterial(vs, fs, imgtexfile, false);
 	
@@ -305,7 +305,7 @@ sgPanelElement *sgPanel::addImage(sgTexture *tex, const sgVector2 &pos, const sg
 	img->type = 0;
 	
 	if(vs == NULL || fs == NULL)
-		img->mat = sgMaterial::getMaterial(tex, 0);
+		img->mat = sgMaterial::getMaterial(tex, sgShader::BIS_TEXTURE);
 	else
 		img->mat = sgMaterial::getMaterial(vs, fs, tex);
 	
@@ -348,7 +348,7 @@ sgPanelElement *sgPanel::addText(const char *str, const sgVector2 &charsize, con
 	txt->type = 1;
 	
 	if(vs == NULL || fs == NULL)
-		txt->mat = sgMaterial::getMaterial(fonttexfile, false, 0);
+		txt->mat = sgMaterial::getMaterial(fonttexfile, false, sgShader::BIS_TEXTURE);
 	else
 		txt->mat = sgMaterial::getMaterial(vs, fs, fonttexfile, false);
 	
