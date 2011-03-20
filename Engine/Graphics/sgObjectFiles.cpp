@@ -98,9 +98,11 @@ namespace sgObjectFiles
 			fread(&uvcount, 1, 1, file);
 			unsigned char datacount = 0;
 			fread(&datacount, 1, 1, file);
+			unsigned char hastangent = 0;
+			fread(&hastangent, 1, 1, file);
 			
 			unsigned short numfloats = 8;
-			if((flags & GEN_TANGENT) > 0)
+			if((flags & GEN_TANGENT) > 0 || hastangent == 1)
 			{
 				meshes[i].vtxformat = TANGENT;
 				meshes[i].vtxsize = SZ_TANGENT;
@@ -143,12 +145,14 @@ namespace sgObjectFiles
 					numfloats = 12;
 				}				
 			}
+			if(hastangent == 1)
+				numfloats += 4;
 			
 			//Vertexdata
 			meshes[i].vertexnum = numverts;
 			meshes[i].vertices = (sgVertex*)malloc(meshes[i].vtxsize*numverts);
 			
-			if(meshes[i].vtxformat == BASIC || meshes[i].vtxformat == SECONDUV || meshes[i].vtxformat == COLOR || meshes[i].vtxformat == SECONDUVCOLOR)
+			if((flags & GEN_TANGENT) == 0)
 			{
 				fread(meshes[i].vertices, 4, numfloats*numverts, file);
 			}else
