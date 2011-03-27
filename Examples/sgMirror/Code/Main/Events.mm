@@ -60,7 +60,7 @@ void Events::onInit(sgMain *m)
 	sgmain->first_ent->createSkyCubeEntity("sky_right.png", "sky_back.png", "sky_left.png", "sky_front.png", "sky_down.png", "sky_up.png");
 	
 	//Create a rotating space ship
-	sgEntity *ent = sgmain->first_ent->createObjEntity("f360r.sgm", (sgAction*)new Rotate);
+	sgEntity *ent = sgmain->first_ent->createObjEntity("f360.sgm", (sgAction*)new Rotate);
 	
 /*	ent->obj->initShadowVolume();
 	ent->obj->shadow = true;*/
@@ -74,7 +74,7 @@ void Events::onInit(sgMain *m)
 	ent->obj->body->materials[0]->setTexture2D(-1, "marble.png");
 	ent->obj->body->materials[0]->mattex.makeScale(sgVector3(10, 10, 10));
 	ent->obj->body->materials[0]->setTexture2D(-1, mirror->cam->rendertarget);
-	ent->obj->body->materials[0]->setShader("Reflect", "Reflect");
+	ent->obj->body->materials[0]->setShader("Reflect.vsh", "Reflect.fsh");
 	ent->obj->tag = 1;
 }
 

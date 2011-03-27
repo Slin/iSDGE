@@ -71,6 +71,14 @@ sgEntity *sgEntity::createObjEntity(const char *name, unsigned long flags, sgAct
 	return next;
 }
 
+sgEntity *sgEntity::createObjEntity(const char *name, sgAction *a)
+{
+	next = new sgEntity(this, next, sgmain);
+	next->createObj(name, sgObjectFiles::NONE);
+	next->createAction(a);
+	return next;
+}
+
 sgEntity *sgEntity::createTerrainEntity(const char *hmp, unsigned int xverts, unsigned int zverts, unsigned char xchunks, unsigned char zchunks, unsigned int lodsteps, sgVector4 hmpscale, sgAction *a)
 {
 	if(xverts == 0 || zverts == 0)

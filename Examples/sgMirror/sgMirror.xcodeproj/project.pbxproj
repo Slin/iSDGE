@@ -31,6 +31,8 @@
 		29360AE5117B586200EDD4F2 /* sgTouches.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29360AE4117B586200EDD4F2 /* sgTouches.cpp */; };
 		29360AEB117B589600EDD4F2 /* sgAccelerometer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29360AEA117B589600EDD4F2 /* sgAccelerometer.cpp */; };
 		2936A2F611C06569008EAD35 /* sgXML.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2936A2F511C06569008EAD35 /* sgXML.cpp */; };
+		294048D7133FBB8800B45D9D /* f360.sgm in Resources */ = {isa = PBXBuildFile; fileRef = 294048D6133FBB8800B45D9D /* f360.sgm */; };
+		294048E6133FBBE500B45D9D /* sgTextureFiles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 294048E4133FBBE500B45D9D /* sgTextureFiles.cpp */; };
 		2941E31611C1113C00B6EC59 /* CameraFree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2941E31211C1113C00B6EC59 /* CameraFree.cpp */; };
 		2941E31711C1113C00B6EC59 /* FPSDisplay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2941E31411C1113C00B6EC59 /* FPSDisplay.cpp */; };
 		294BAD5D12A934D5008ED967 /* sgObjectBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 294BAD5C12A934D5008ED967 /* sgObjectBody.cpp */; };
@@ -80,7 +82,6 @@
 		29AD38281179F83B0089F607 /* sgBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29AD38271179F83B0089F607 /* sgBase.cpp */; };
 		29AE22C61180AA8800119297 /* sgEvents.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29AE22C51180AA8800119297 /* sgEvents.cpp */; };
 		29CC91A7124618FD005AFF85 /* marble.png in Resources */ = {isa = PBXBuildFile; fileRef = 29CC91A6124618FD005AFF85 /* marble.png */; };
-		29CC91CC12461B2D005AFF85 /* f360r.sgm in Resources */ = {isa = PBXBuildFile; fileRef = 29CC91CA12461B2D005AFF85 /* f360r.sgm */; };
 		29CC91CD12461B2D005AFF85 /* fskinr.png in Resources */ = {isa = PBXBuildFile; fileRef = 29CC91CB12461B2D005AFF85 /* fskinr.png */; };
 		29D7EA86117CA95D0091D933 /* sgLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29D7EA85117CA95D0091D933 /* sgLight.cpp */; };
 		29D7EB26117CEF010091D933 /* sgObjectFiles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29D7EB25117CEF010091D933 /* sgObjectFiles.cpp */; };
@@ -136,6 +137,9 @@
 		29360AEA117B589600EDD4F2 /* sgAccelerometer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgAccelerometer.cpp; sourceTree = "<group>"; };
 		2936A2F411C06569008EAD35 /* sgXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgXML.h; sourceTree = "<group>"; };
 		2936A2F511C06569008EAD35 /* sgXML.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgXML.cpp; sourceTree = "<group>"; };
+		294048D6133FBB8800B45D9D /* f360.sgm */ = {isa = PBXFileReference; lastKnownFileType = file; path = f360.sgm; sourceTree = "<group>"; };
+		294048E4133FBBE500B45D9D /* sgTextureFiles.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgTextureFiles.cpp; sourceTree = "<group>"; };
+		294048E5133FBBE500B45D9D /* sgTextureFiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgTextureFiles.h; sourceTree = "<group>"; };
 		2941E31211C1113C00B6EC59 /* CameraFree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CameraFree.cpp; sourceTree = "<group>"; };
 		2941E31311C1113C00B6EC59 /* CameraFree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraFree.h; sourceTree = "<group>"; };
 		2941E31411C1113C00B6EC59 /* FPSDisplay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FPSDisplay.cpp; sourceTree = "<group>"; };
@@ -214,7 +218,6 @@
 		29AE22C41180AA8800119297 /* sgEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgEvents.h; sourceTree = "<group>"; };
 		29AE22C51180AA8800119297 /* sgEvents.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgEvents.cpp; sourceTree = "<group>"; };
 		29CC91A6124618FD005AFF85 /* marble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = marble.png; sourceTree = "<group>"; };
-		29CC91CA12461B2D005AFF85 /* f360r.sgm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = f360r.sgm; sourceTree = "<group>"; };
 		29CC91CB12461B2D005AFF85 /* fskinr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fskinr.png; sourceTree = "<group>"; };
 		29D7EA84117CA95D0091D933 /* sgLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgLight.h; sourceTree = "<group>"; };
 		29D7EA85117CA95D0091D933 /* sgLight.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgLight.cpp; sourceTree = "<group>"; };
@@ -301,6 +304,8 @@
 		290B10B4117905E500AC324E /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				294048E4133FBBE500B45D9D /* sgTextureFiles.cpp */,
+				294048E5133FBBE500B45D9D /* sgTextureFiles.h */,
 				29A42ED7118346DA0080394F /* Shaders */,
 				297C8CFF131083B100AC1D24 /* sgParticleEmitter.cpp */,
 				297C8D00131083B100AC1D24 /* sgParticle.cpp */,
@@ -574,7 +579,7 @@
 		29CC91B612461A2F005AFF85 /* f360 */ = {
 			isa = PBXGroup;
 			children = (
-				29CC91CA12461B2D005AFF85 /* f360r.sgm */,
+				294048D6133FBB8800B45D9D /* f360.sgm */,
 				29CC91CB12461B2D005AFF85 /* fskinr.png */,
 			);
 			name = f360;
@@ -677,7 +682,6 @@
 				294BAD7412A934E7008ED967 /* sgsShadowquad.vsh in Resources */,
 				294BAD7512A934E7008ED967 /* sgsTextureDiscard.fsh in Resources */,
 				29CC91A7124618FD005AFF85 /* marble.png in Resources */,
-				29CC91CC12461B2D005AFF85 /* f360r.sgm in Resources */,
 				29CC91CD12461B2D005AFF85 /* fskinr.png in Resources */,
 				29F1831412AB14FA00B7F5F2 /* Default.png in Resources */,
 				29F1831512AB14FA00B7F5F2 /* Default@2x.png in Resources */,
@@ -687,6 +691,7 @@
 				29F1831912AB14FA00B7F5F2 /* Icon-Small@2x.png in Resources */,
 				29F1831A12AB14FA00B7F5F2 /* Icon.png in Resources */,
 				29F1831B12AB14FA00B7F5F2 /* Icon@2x.png in Resources */,
+				294048D7133FBB8800B45D9D /* f360.sgm in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -742,6 +747,7 @@
 				297C8D05131083B100AC1D24 /* sgParticleEmitter.cpp in Sources */,
 				297C8D06131083B100AC1D24 /* sgParticle.cpp in Sources */,
 				297C8D07131083B100AC1D24 /* sgRenderEvent.cpp in Sources */,
+				294048E6133FBBE500B45D9D /* sgTextureFiles.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -788,10 +794,11 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "59BAED19-C32F-43D3-B492-61B32A30960A";
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = AdHoc;
@@ -820,9 +827,10 @@
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.1;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -835,9 +843,10 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PREBINDING = NO;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

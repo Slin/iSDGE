@@ -68,12 +68,15 @@ void sgTexture::createTexture2D(const char *filename, bool mipmaps, bool lock)
 	if(loaded)
 		return;
 	
-	sgTextureFiles::sgUncompressedTexture *tex;
+	sgTextureFiles::sgUncompressedTexture *tex = 0;
 	if(!sgTextureFiles::loadPNG(&tex, filename))
 	{
-		if(tex->bytes)
-			delete[] tex->bytes;
-		delete tex;
+		if(tex)
+		{
+			if(tex->bytes)
+				delete[] tex->bytes;
+			delete tex;
+		}
 		
 		sgLog("Can´t load texture file: %s", filename);
 		return;
@@ -140,12 +143,15 @@ void sgTexture::createPVRTexture2D(const char *filename)
 	if(loaded)
 		return;
 	
-	sgTextureFiles::sgPVRTexture *tex;
+	sgTextureFiles::sgPVRTexture *tex = 0;
 	if(!sgTextureFiles::loadPVR(&tex, filename) || tex->mipsizes.size() < 1)
 	{
-		if(tex->bytes)
-			delete[] tex->bytes;
-		delete tex;
+		if(tex)
+		{
+			if(tex->bytes)
+				delete[] tex->bytes;
+			delete tex;
+		}
 		
 		sgLog("Can´t load texture file: %s", filename);
 		return;

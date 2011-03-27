@@ -23,7 +23,6 @@
 		290B48AC11BFB5BB00A54048 /* sgTimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 290B48AA11BFB5BB00A54048 /* sgTimer.cpp */; };
 		292FFC2912159C61003564EE /* haus.sgm in Resources */ = {isa = PBXBuildFile; fileRef = 292FFC0212159C61003564EE /* haus.sgm */; };
 		292FFC2F12159C61003564EE /* f360.sgm in Resources */ = {isa = PBXBuildFile; fileRef = 292FFC0B12159C61003564EE /* f360.sgm */; };
-		292FFC3012159C61003564EE /* fsking.png in Resources */ = {isa = PBXBuildFile; fileRef = 292FFC0C12159C61003564EE /* fsking.png */; };
 		292FFC3312159C61003564EE /* jeep2.png in Resources */ = {isa = PBXBuildFile; fileRef = 292FFC1012159C61003564EE /* jeep2.png */; };
 		292FFC3412159C61003564EE /* jeep2.sgm in Resources */ = {isa = PBXBuildFile; fileRef = 292FFC1112159C61003564EE /* jeep2.sgm */; };
 		292FFC3712159C61003564EE /* font1.png in Resources */ = {isa = PBXBuildFile; fileRef = 292FFC1612159C61003564EE /* font1.png */; };
@@ -44,6 +43,8 @@
 		29360AE5117B586200EDD4F2 /* sgTouches.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29360AE4117B586200EDD4F2 /* sgTouches.cpp */; };
 		29360AEB117B589600EDD4F2 /* sgAccelerometer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29360AEA117B589600EDD4F2 /* sgAccelerometer.cpp */; };
 		2936A2F611C06569008EAD35 /* sgXML.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2936A2F511C06569008EAD35 /* sgXML.cpp */; };
+		29404825133FB8AF00B45D9D /* sgTextureFiles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29404823133FB8AF00B45D9D /* sgTextureFiles.cpp */; };
+		29404835133FB8E600B45D9D /* fskinr.png in Resources */ = {isa = PBXBuildFile; fileRef = 29404834133FB8E600B45D9D /* fskinr.png */; };
 		2941E31611C1113C00B6EC59 /* CameraFree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2941E31211C1113C00B6EC59 /* CameraFree.cpp */; };
 		2941E31711C1113C00B6EC59 /* FPSDisplay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2941E31411C1113C00B6EC59 /* FPSDisplay.cpp */; };
 		2952EE1C117A4EEC006FAB6F /* sgQuaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2952EE1B117A4EEC006FAB6F /* sgQuaternion.cpp */; };
@@ -131,7 +132,6 @@
 		290B48AB11BFB5BB00A54048 /* sgTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgTimer.h; sourceTree = "<group>"; };
 		292FFC0212159C61003564EE /* haus.sgm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = haus.sgm; sourceTree = "<group>"; };
 		292FFC0B12159C61003564EE /* f360.sgm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = f360.sgm; sourceTree = "<group>"; };
-		292FFC0C12159C61003564EE /* fsking.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fsking.png; sourceTree = "<group>"; };
 		292FFC1012159C61003564EE /* jeep2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jeep2.png; sourceTree = "<group>"; };
 		292FFC1112159C61003564EE /* jeep2.sgm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = jeep2.sgm; sourceTree = "<group>"; };
 		292FFC1612159C61003564EE /* font1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = font1.png; sourceTree = "<group>"; };
@@ -159,6 +159,9 @@
 		29360AEA117B589600EDD4F2 /* sgAccelerometer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgAccelerometer.cpp; sourceTree = "<group>"; };
 		2936A2F411C06569008EAD35 /* sgXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgXML.h; sourceTree = "<group>"; };
 		2936A2F511C06569008EAD35 /* sgXML.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgXML.cpp; sourceTree = "<group>"; };
+		29404823133FB8AF00B45D9D /* sgTextureFiles.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgTextureFiles.cpp; sourceTree = "<group>"; };
+		29404824133FB8AF00B45D9D /* sgTextureFiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgTextureFiles.h; sourceTree = "<group>"; };
+		29404834133FB8E600B45D9D /* fskinr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fskinr.png; sourceTree = "<group>"; };
 		2941E31211C1113C00B6EC59 /* CameraFree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CameraFree.cpp; sourceTree = "<group>"; };
 		2941E31311C1113C00B6EC59 /* CameraFree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraFree.h; sourceTree = "<group>"; };
 		2941E31411C1113C00B6EC59 /* FPSDisplay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FPSDisplay.cpp; sourceTree = "<group>"; };
@@ -315,6 +318,8 @@
 		290B10B4117905E500AC324E /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				29404823133FB8AF00B45D9D /* sgTextureFiles.cpp */,
+				29404824133FB8AF00B45D9D /* sgTextureFiles.h */,
 				29A42ED7118346DA0080394F /* Shaders */,
 				297C8DBB13108CFC00AC1D24 /* sgParticleEmitter.cpp */,
 				297C8DBC13108CFC00AC1D24 /* sgParticle.cpp */,
@@ -457,8 +462,8 @@
 		292FFC0912159C61003564EE /* f360 */ = {
 			isa = PBXGroup;
 			children = (
+				29404834133FB8E600B45D9D /* fskinr.png */,
 				292FFC0B12159C61003564EE /* f360.sgm */,
-				292FFC0C12159C61003564EE /* fsking.png */,
 			);
 			path = f360;
 			sourceTree = "<group>";
@@ -698,7 +703,6 @@
 				29D7EB5B117CFABF0091D933 /* Entitlements.plist in Resources */,
 				292FFC2912159C61003564EE /* haus.sgm in Resources */,
 				292FFC2F12159C61003564EE /* f360.sgm in Resources */,
-				292FFC3012159C61003564EE /* fsking.png in Resources */,
 				292FFC3312159C61003564EE /* jeep2.png in Resources */,
 				292FFC3412159C61003564EE /* jeep2.sgm in Resources */,
 				292FFC3712159C61003564EE /* font1.png in Resources */,
@@ -720,6 +724,7 @@
 				29F1841312AB1AA800B7F5F2 /* Icon-Small@2x.png in Resources */,
 				29F1841412AB1AA800B7F5F2 /* Icon.png in Resources */,
 				29F1841512AB1AA800B7F5F2 /* Icon@2x.png in Resources */,
+				29404835133FB8E600B45D9D /* fskinr.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -777,6 +782,7 @@
 				297C8DC113108CFC00AC1D24 /* sgParticleEmitter.cpp in Sources */,
 				297C8DC213108CFC00AC1D24 /* sgParticle.cpp in Sources */,
 				297C8DC313108CFC00AC1D24 /* sgRenderEvent.cpp in Sources */,
+				29404825133FB8AF00B45D9D /* sgTextureFiles.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -798,7 +804,7 @@
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				PRODUCT_NAME = sgShadows;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -813,6 +819,7 @@
 				INFOPLIST_FILE = "Shadows-Info.plist";
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				PRODUCT_NAME = sgShadows;
+				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -826,10 +833,11 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "59BAED19-C32F-43D3-B492-61B32A30960A";
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = AdHoc;
@@ -847,6 +855,7 @@
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				PRODUCT_NAME = sgShadows;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = NO;
 			};
 			name = AdHoc;
@@ -863,8 +872,9 @@
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.1;
 				PREBINDING = NO;
-				SDKROOT = iphonesimulator4.1;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -877,9 +887,10 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PREBINDING = NO;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

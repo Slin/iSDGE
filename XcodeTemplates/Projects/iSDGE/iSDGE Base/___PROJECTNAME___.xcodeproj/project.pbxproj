@@ -11,6 +11,10 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		28FD15000DC6FC520079059D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD14FF0DC6FC520079059D /* OpenGLES.framework */; };
 		28FD15080DC6FC5B0079059D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD15070DC6FC5B0079059D /* QuartzCore.framework */; };
+		2940490C133FBEC900B45D9D /* sgParticleEmitter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29404904133FBEC900B45D9D /* sgParticleEmitter.cpp */; };
+		2940490D133FBEC900B45D9D /* sgParticle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29404906133FBEC900B45D9D /* sgParticle.cpp */; };
+		2940490E133FBEC900B45D9D /* sgTextureFiles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29404907133FBEC900B45D9D /* sgTextureFiles.cpp */; };
+		2940490F133FBEC900B45D9D /* sgRenderEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2940490B133FBEC900B45D9D /* sgRenderEvent.cpp */; };
 		2952EEAE117A6F90006FAB6F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2952EEAD117A6F90006FAB6F /* CoreGraphics.framework */; };
 		295CBF5C1215861700F1F941 /* Events.mm in Sources */ = {isa = PBXBuildFile; fileRef = 295CBF5A1215861700F1F941 /* Events.mm */; };
 		295CBF5D1215861700F1F941 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295CBF5B1215861700F1F941 /* main.cpp */; };
@@ -41,7 +45,6 @@
 		29F184D212AB1D8400B7F5F2 /* sgDebug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29F1847712AB1D8400B7F5F2 /* sgDebug.cpp */; };
 		29F184D312AB1D8400B7F5F2 /* sgMatrix4x4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29F1847912AB1D8400B7F5F2 /* sgMatrix4x4.cpp */; };
 		29F184D412AB1D8400B7F5F2 /* sgQuaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29F1847B12AB1D8400B7F5F2 /* sgQuaternion.cpp */; };
-		29F184D512AB1D8400B7F5F2 /* sgRenderEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29F1847D12AB1D8400B7F5F2 /* sgRenderEvent.cpp */; };
 		29F184D612AB1D8400B7F5F2 /* sgResourceManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29F1847F12AB1D8400B7F5F2 /* sgResourceManager.cpp */; };
 		29F184D712AB1D8400B7F5F2 /* sgTimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29F1848112AB1D8400B7F5F2 /* sgTimer.cpp */; };
 		29F184D812AB1D8400B7F5F2 /* sgTools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29F1848312AB1D8400B7F5F2 /* sgTools.cpp */; };
@@ -90,6 +93,14 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		28FD14FF0DC6FC520079059D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		28FD15070DC6FC5B0079059D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		29404904133FBEC900B45D9D /* sgParticleEmitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgParticleEmitter.cpp; sourceTree = "<group>"; };
+		29404905133FBEC900B45D9D /* sgParticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgParticle.h; sourceTree = "<group>"; };
+		29404906133FBEC900B45D9D /* sgParticle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgParticle.cpp; sourceTree = "<group>"; };
+		29404907133FBEC900B45D9D /* sgTextureFiles.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgTextureFiles.cpp; sourceTree = "<group>"; };
+		29404908133FBEC900B45D9D /* sgTextureFiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgTextureFiles.h; sourceTree = "<group>"; };
+		29404909133FBEC900B45D9D /* sgParticleEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgParticleEmitter.h; sourceTree = "<group>"; };
+		2940490A133FBEC900B45D9D /* sgRenderEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgRenderEvent.h; sourceTree = "<group>"; };
+		2940490B133FBEC900B45D9D /* sgRenderEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgRenderEvent.cpp; sourceTree = "<group>"; };
 		2952EEAD117A6F90006FAB6F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		295CBF591215861700F1F941 /* Events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Events.h; sourceTree = "<group>"; };
 		295CBF5A1215861700F1F941 /* Events.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Events.mm; sourceTree = "<group>"; };
@@ -136,8 +147,6 @@
 		29F1847A12AB1D8400B7F5F2 /* sgMatrix4x4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgMatrix4x4.h; sourceTree = "<group>"; };
 		29F1847B12AB1D8400B7F5F2 /* sgQuaternion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgQuaternion.cpp; sourceTree = "<group>"; };
 		29F1847C12AB1D8400B7F5F2 /* sgQuaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgQuaternion.h; sourceTree = "<group>"; };
-		29F1847D12AB1D8400B7F5F2 /* sgRenderEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgRenderEvent.cpp; sourceTree = "<group>"; };
-		29F1847E12AB1D8400B7F5F2 /* sgRenderEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgRenderEvent.h; sourceTree = "<group>"; };
 		29F1847F12AB1D8400B7F5F2 /* sgResourceManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgResourceManager.cpp; sourceTree = "<group>"; };
 		29F1848012AB1D8400B7F5F2 /* sgResourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgResourceManager.h; sourceTree = "<group>"; };
 		29F1848112AB1D8400B7F5F2 /* sgTimer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgTimer.cpp; sourceTree = "<group>"; };
@@ -364,8 +373,6 @@
 				29F1847A12AB1D8400B7F5F2 /* sgMatrix4x4.h */,
 				29F1847B12AB1D8400B7F5F2 /* sgQuaternion.cpp */,
 				29F1847C12AB1D8400B7F5F2 /* sgQuaternion.h */,
-				29F1847D12AB1D8400B7F5F2 /* sgRenderEvent.cpp */,
-				29F1847E12AB1D8400B7F5F2 /* sgRenderEvent.h */,
 				29F1847F12AB1D8400B7F5F2 /* sgResourceManager.cpp */,
 				29F1848012AB1D8400B7F5F2 /* sgResourceManager.h */,
 				29F1848112AB1D8400B7F5F2 /* sgTimer.cpp */,
@@ -387,7 +394,12 @@
 		29F1848D12AB1D8400B7F5F2 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
-				29F184AB12AB1D8400B7F5F2 /* Shaders */,
+				29404905133FBEC900B45D9D /* sgParticle.h */,
+				29404906133FBEC900B45D9D /* sgParticle.cpp */,
+				29404904133FBEC900B45D9D /* sgParticleEmitter.cpp */,
+				29404909133FBEC900B45D9D /* sgParticleEmitter.h */,
+				2940490A133FBEC900B45D9D /* sgRenderEvent.h */,
+				2940490B133FBEC900B45D9D /* sgRenderEvent.cpp */,
 				29F1848E12AB1D8400B7F5F2 /* sgCamera.cpp */,
 				29F1848F12AB1D8400B7F5F2 /* sgCamera.h */,
 				29F1849012AB1D8400B7F5F2 /* sgLight.cpp */,
@@ -414,9 +426,12 @@
 				29F184A512AB1D8400B7F5F2 /* sgShader.h */,
 				29F184A612AB1D8400B7F5F2 /* sgShadowVolume.cpp */,
 				29F184A712AB1D8400B7F5F2 /* sgShadowVolume.h */,
+				29404907133FBEC900B45D9D /* sgTextureFiles.cpp */,
+				29404908133FBEC900B45D9D /* sgTextureFiles.h */,
 				29F184A812AB1D8400B7F5F2 /* sgTexture.cpp */,
 				29F184A912AB1D8400B7F5F2 /* sgTexture.h */,
 				29F184AA12AB1D8400B7F5F2 /* sgVertex.h */,
+				29F184AB12AB1D8400B7F5F2 /* Shaders */,
 			);
 			path = Graphics;
 			sourceTree = "<group>";
@@ -614,7 +629,6 @@
 				29F184D212AB1D8400B7F5F2 /* sgDebug.cpp in Sources */,
 				29F184D312AB1D8400B7F5F2 /* sgMatrix4x4.cpp in Sources */,
 				29F184D412AB1D8400B7F5F2 /* sgQuaternion.cpp in Sources */,
-				29F184D512AB1D8400B7F5F2 /* sgRenderEvent.cpp in Sources */,
 				29F184D612AB1D8400B7F5F2 /* sgResourceManager.cpp in Sources */,
 				29F184D712AB1D8400B7F5F2 /* sgTimer.cpp in Sources */,
 				29F184D812AB1D8400B7F5F2 /* sgTools.cpp in Sources */,
@@ -646,6 +660,10 @@
 				2999AE6713075B03004E4700 /* sgViewController.mm in Sources */,
 				2999AE6813075B03004E4700 /* sgApp.mm in Sources */,
 				2999AE6F13075B24004E4700 /* Water.cpp in Sources */,
+				2940490C133FBEC900B45D9D /* sgParticleEmitter.cpp in Sources */,
+				2940490D133FBEC900B45D9D /* sgParticle.cpp in Sources */,
+				2940490E133FBEC900B45D9D /* sgTextureFiles.cpp in Sources */,
+				2940490F133FBEC900B45D9D /* sgRenderEvent.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -692,10 +710,11 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = AdHoc;
@@ -724,9 +743,10 @@
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.1;
 				PREBINDING = NO;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -739,9 +759,10 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PREBINDING = NO;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

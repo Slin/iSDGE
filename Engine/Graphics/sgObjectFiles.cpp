@@ -41,7 +41,7 @@ namespace sgObjectFiles
 		delete[] filepath;
 		if(!file)
 		{
-			sgLog("could not open file: %s", filename);
+			sgLog("Could not open file: %s", filename);
 			return false;
 		}
 		
@@ -49,7 +49,7 @@ namespace sgObjectFiles
 		fread(&version_id, 1, 1, file);
 		if(version_id != 0)
 		{
-			sgLog("the file format is out of date or not supported: %s", filename);
+			sgLog("The file format is out of date or not supported: %s", filename);
 			return false;
 		}
 		

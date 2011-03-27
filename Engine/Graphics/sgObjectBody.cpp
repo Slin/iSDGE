@@ -658,6 +658,7 @@ sgObjectBody *sgObjectBody::makeObject(const char *name, unsigned long flags)
 		{
 			if(!sgObjectFiles::loadSGM(cont, filename.c_str(), flags))
 			{
+				sgLog("Can´t load object file: %s", filename.c_str());
 				delete cont;
 				return NULL;
 			}

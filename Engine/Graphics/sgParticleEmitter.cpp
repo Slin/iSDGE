@@ -172,17 +172,17 @@ void sgParticleEmitter::updateMesh(sgCamera *cam, float timestep)
 		vertices[i*4*9+3*9+6] = particles[i]->color.w;
 		
 		//UV
-		vertices[i*4*9+0*9+7] = 0.0;
-		vertices[i*4*9+0*9+8] = 1.0;
+		vertices[i*4*9+0*9+7] = particles[i]->texcoords.x;
+		vertices[i*4*9+0*9+8] = particles[i]->texcoords.w;
 		
-		vertices[i*4*9+1*9+7] = 0.0;
-		vertices[i*4*9+1*9+8] = 0.0;
+		vertices[i*4*9+1*9+7] = particles[i]->texcoords.x;
+		vertices[i*4*9+1*9+8] = particles[i]->texcoords.y;
 		
-		vertices[i*4*9+2*9+7] = 1.0;
-		vertices[i*4*9+2*9+8] = 1.0;
+		vertices[i*4*9+2*9+7] = particles[i]->texcoords.z;
+		vertices[i*4*9+2*9+8] = particles[i]->texcoords.w;
 		
-		vertices[i*4*9+3*9+7] = 1.0;
-		vertices[i*4*9+3*9+8] = 0.0;
+		vertices[i*4*9+3*9+7] = particles[i]->texcoords.z;
+		vertices[i*4*9+3*9+8] = particles[i]->texcoords.y;
 		
 		//indices
 		indices[i*6+0] = i*4+2;

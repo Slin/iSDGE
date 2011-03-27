@@ -75,6 +75,12 @@ class sgParticle
 		 *	The particles color including transparency.
 		 */
 		sgVector4 color;
+	
+		/**
+		 *	Texcoords
+		 *	The particles texcoords to use. Can be used to have texture atlasses for particles as well as animated particles.
+		 */
+		sgVector4 texcoords;
 		
 		/**
 		 *	Destroy

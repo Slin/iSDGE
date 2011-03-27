@@ -57,7 +57,7 @@ void Events::onInit(sgMain *m)
 	sgmain->first_ent->createSkyCubeEntity("sky_right.png", "sky_back.png", "sky_left.png", "sky_front.png", "sky_down.png", "sky_up.png");
 	
 	//Create a rotating space ship
-	sgEntity *ent = sgmain->first_ent->createObjEntity("spacecraft.sgm", (sgAction*)new Rotate);
+	sgEntity *ent = sgmain->first_ent->createObjEntity("spacecraft.sgm", sgObjectFiles::NONE, (sgAction*)new Rotate);
 	ent->obj->position.z = 0.0;
 	ent->obj->scale *= 4;
 }

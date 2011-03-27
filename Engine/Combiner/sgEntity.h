@@ -78,6 +78,15 @@ class sgEntity
 		sgEntity *createObjEntity(const char *name, unsigned long flags = 0, sgAction *a = NULL);
 	
 		/**
+		 *	Create object entity.
+		 *	Creates a new entity with an object loaded from a model file or a predefined name and makes it next of this.
+		 * @param name name of the object or the file to load it from.
+		 * @param a pointer to the action which will be assigned to the new entity.
+		 * @return pointer to the new entity
+		 */
+		sgEntity *createObjEntity(const char *name, sgAction *a);
+	
+		/**
 		 *	Create terrain entity.
 		 *	Creates a new terrain entity from a heightmap image with the given number of vertices in x and z direction splitted into several meshes (chunks). The distance of vertices along an axis is 1 unit by default.
 		 * @param hmp name of the heightmap image, or NULL for a flat terrain.

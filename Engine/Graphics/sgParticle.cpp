@@ -42,6 +42,10 @@ sgParticle::sgParticle()
 	color = 1.0;
 	scale = 1.0;
 	destroy = false;
+	texcoords.x = 0;
+	texcoords.y = 0;
+	texcoords.z = 1.0;
+	texcoords.w = 1.0;
 }
 
 sgParticle::~sgParticle()
