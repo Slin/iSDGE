@@ -55,14 +55,22 @@ namespace sgTextureFiles
 		std::vector<unsigned long> mipsizes;
 	};
 	
+	struct sgUncompressedTexture
+	{
+		unsigned long height;
+		unsigned long width;
+		unsigned long dataLength;
+		unsigned char* bytes;
+	};
+	
 	/**
 	 *	Load png.
 	 *	Loads a png texture file.
-	 * @param tex texture to load the file into
+	 * @param tex pointer to the datastructure which will contain the image information
 	 * @param filename the textures filename
 	 * @return true if it was successfull, false otherwise
 	 */
-//	bool loadPNG(sgTexture *tex, const char *filename);
+	bool loadPNG(sgUncompressedTexture **tex, const char *filename);
 	
 	/**
 	 *	Load pvr.

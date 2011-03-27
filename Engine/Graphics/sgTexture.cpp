@@ -68,20 +68,19 @@ void sgTexture::createTexture2D(const char *filename, bool mipmaps, bool lock)
 	if(loaded)
 		return;
 	
-	const char *filepath = sgResourceManager::getPath(filename);
-	CGDataProviderRef texturefiledata = CGDataProviderCreateWithFilename(filepath);
-	if(!texturefiledata)
+	sgTextureFiles::sgUncompressedTexture *tex;
+	if(!sgTextureFiles::loadPNG(&tex, filename))
 	{
+		if(tex->bytes)
+			delete[] tex->bytes;
+		delete tex;
+		
 		sgLog("Can´t load texture file: %s", filename);
 		return;
 	}
-	delete[] filepath;
-	CGImageRef textureImage = CGImageCreateWithPNGDataProvider(texturefiledata, NULL, true, kCGRenderingIntentDefault);
-	CGDataProviderRelease(texturefiledata);
-	
 
-	width = CGImageGetWidth(textureImage);     
-	height = CGImageGetHeight(textureImage);
+	width = tex->width;     
+	height = tex->height;
 
 	if(!((width != 0) && !(width & (width - 1))))
 	{
@@ -114,12 +113,8 @@ void sgTexture::createTexture2D(const char *filename, bool mipmaps, bool lock)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	}
-
 	
-	texdata = (unsigned char *)calloc(width*height*4, 1);
-	CGContextRef textureContext = CGBitmapContextCreate(texdata, width, height, 8, width*4, CGImageGetColorSpace(textureImage), kCGImageAlphaPremultipliedLast);
-	CGContextDrawImage(textureContext, CGRectMake(0.0, 0.0, (float)width, (float)height), textureImage);
-	
+	texdata = tex->bytes;
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, texdata);
 
 	if(mipmaps && sgRenderer::oglversion > 1)
@@ -129,11 +124,11 @@ void sgTexture::createTexture2D(const char *filename, bool mipmaps, bool lock)
 	
 	if(!lock)
 	{
-		free(texdata);
+		if(tex->bytes)
+			delete[] tex->bytes;
 		texdata = NULL;
 	}
-	CFRelease(textureContext);
-	CGImageRelease(textureImage);
+	delete tex;
 	
 	sgResourceManager::addResource(filename, this);
 	
@@ -269,10 +264,10 @@ sgTexture *sgTexture::getTexture2D(const char *filename, bool mipmaps, bool lock
 	
 	tex = new sgTexture();
 	std::string fnm(filename);
-	if(fnm.rfind(".png") != std::string::npos)
+	if(fnm.rfind(".png") != std::string::npos || fnm.rfind(".jpg") != std::string::npos || fnm.rfind(".PNG") != std::string::npos || fnm.rfind(".JPG") != std::string::npos)
 	{
 		tex->createTexture2D(filename, mipmaps, lock);
-	}else if(fnm.rfind(".pvr") != std::string::npos)
+	}else if(fnm.rfind(".pvr") != std::string::npos || fnm.rfind(".PVR") != std::string::npos)
 	{
 		tex->createPVRTexture2D(filename);
 	}else

@@ -44,11 +44,34 @@ namespace sgTextureFiles
 		kPVRTextureFlagTypePVRTC_4
 	};
 	
-/*	bool loadPNG(sgTexture *tex, const char *filename)
+	bool loadPNG(sgUncompressedTexture **tex, const char *filename)
 	{
+		const char *filepath = sgResourceManager::getPath(filename);
+		CGDataProviderRef texturefiledata = CGDataProviderCreateWithFilename(filepath);
+		if(!texturefiledata)
+		{
+			return false;
+		}
+		delete[] filepath;
+		CGImageRef textureImage = CGImageCreateWithPNGDataProvider(texturefiledata, NULL, true, kCGRenderingIntentDefault);
+		CGDataProviderRelease(texturefiledata);
+		
+		*tex = new sgUncompressedTexture;
+		sgUncompressedTexture *texture = *tex;
+		texture->bytes = NULL;
+		
+		texture->width = CGImageGetWidth(textureImage);     
+		texture->height = CGImageGetHeight(textureImage);
+		
+		texture->bytes = new unsigned char[texture->width*texture->height*4];
+		CGContextRef textureContext = CGBitmapContextCreate(texture->bytes, texture->width, texture->height, 8, texture->width*4, CGImageGetColorSpace(textureImage), kCGImageAlphaPremultipliedLast);
+		CGContextDrawImage(textureContext, CGRectMake(0.0, 0.0, (float)texture->width, (float)texture->height), textureImage);
+		
+		CFRelease(textureContext);
+		CGImageRelease(textureImage);
 		
 		return true;
-	}*/
+	}
 	
 	bool loadPVR(sgPVRTexture **tex, const char *filename)
 	{

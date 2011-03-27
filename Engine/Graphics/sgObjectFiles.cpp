@@ -208,7 +208,6 @@ namespace sgObjectFiles
 			mesh_->indexnum = meshes[meshnum].indexnum;
 			mesh_->indices = meshes[meshnum].indices;
 
-//			mesh_->calculateNormals();
 			if((flags & GEN_TANGENT) > 0)
 				mesh_->calculateTangents();
 			mesh_->generateVBO();
