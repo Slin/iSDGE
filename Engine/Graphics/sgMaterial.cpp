@@ -30,7 +30,6 @@
 #include <OpenGLES/ES2/gl.h>
 #include <OpenGLES/ES2/glext.h>
 #include "sgResourceManager.h"
-#include "sgTexture.h"
 #include "sgShader.h"
 #include "sgRenderer.h"
 
@@ -267,22 +266,6 @@ void sgMaterial::setTexture2D(unsigned int tex, sgTexture *texptr)
 	textures[tex] = texptr;
 	getUniforms();
 }
-
-/*void sgMaterial::setPVRTCTexture2D(unsigned int tex, const char *name, unsigned int w, unsigned int h, unsigned int type, BOOL mipmaps)
-{
-	if(tex == -1)
-	{
-		textures.push_back(sgTexture::getPVRTCTexture2D(name, w, h, type, mipmaps));
-		getUniforms();
-		return;
-	}
-	
-	if(tex > textures.size())
-		return;
-	
-	textures[tex] = sgTexture::getPVRTCTexture2D(name, w, h, type, mipmaps);
-	getUniforms();
-}*/
 
 void sgMaterial::getUniforms()
 {

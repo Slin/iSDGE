@@ -26,15 +26,11 @@
 #include "sgTexture.h"
 
 #include <string>
-#include <OpenGLES/ES1/gl.h>
-#include <OpenGLES/ES1/glext.h>
-#include <OpenGLES/ES2/gl.h>
-#include <OpenGLES/ES2/glext.h>
-#include <CoreGraphics/CoreGraphics.h>
+#include <cmath>
+#include "sgTextureFiles.h"
 #include "sgResourceManager.h"
 #include "sgRenderer.h"
 #include "sgColor.h"
-
 #include "sgDebug.h"
 
 sgTexture::sgTexture()
@@ -72,9 +68,14 @@ void sgTexture::createTexture2D(const char *filename, bool mipmaps, bool lock)
 	if(loaded)
 		return;
 	
-	filename = sgResourceManager::getPath(filename);
-	CGDataProviderRef texturefiledata = CGDataProviderCreateWithFilename(filename);
-	delete[] filename;
+	const char *filepath = sgResourceManager::getPath(filename);
+	CGDataProviderRef texturefiledata = CGDataProviderCreateWithFilename(filepath);
+	if(!texturefiledata)
+	{
+		sgLog("Can´t load texture file: %s", filename);
+		return;
+	}
+	delete[] filepath;
 	CGImageRef textureImage = CGImageCreateWithPNGDataProvider(texturefiledata, NULL, true, kCGRenderingIntentDefault);
 	CGDataProviderRelease(texturefiledata);
 	
@@ -86,7 +87,7 @@ void sgTexture::createTexture2D(const char *filename, bool mipmaps, bool lock)
 	{
 		if(!((height != 0) && !(height & (height - 1))))
 		{
-//			sgDebug::writeString2("Texture has not a power of two: ", filename);
+			sgLog("Texture resolution is not a power of two: %s", filename);
 			width = 0;
 			height = 0;
 			return;
@@ -139,20 +140,32 @@ void sgTexture::createTexture2D(const char *filename, bool mipmaps, bool lock)
 	loaded = true;
 }
 
-/*void sgTexture::createPVRTCTexture2D(const char *name, unsigned int w, unsigned int h, unsigned int type, BOOL mipmaps)
+void sgTexture::createPVRTexture2D(const char *filename)
 {
 	if(loaded)
 		return;
 	
-	width = w;     
-	height = h;
+	sgTextureFiles::sgPVRTexture *tex;
+	if(!sgTextureFiles::loadPVR(&tex, filename) || tex->mipsizes.size() < 1)
+	{
+		if(tex->bytes)
+			delete[] tex->bytes;
+		delete tex;
+		
+		sgLog("Can´t load texture file: %s", filename);
+		return;
+	}
+	
+	width = tex->width;
+	height = tex->height;
+	
+	unsigned int w = width;
+	unsigned int h = height;
 	
 	glGenTextures(1, &texid);
 	glBindTexture(GL_TEXTURE_2D, texid);
 	
-	mipmaps = FALSE;
-	
-	if(mipmaps)
+	if(tex->mipsizes.size() > 1)
 	{
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
@@ -166,30 +179,24 @@ void sgTexture::createTexture2D(const char *filename, bool mipmaps, bool lock)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	}
 	
-	const char *path = sgRessourceManager::getPath(name, "pvrtc");
-	NSData *texData = [[NSData alloc] initWithContentsOfFile:[NSString stringWithUTF8String:path]];
-	delete[] path;
-
-	// This assumes that source PVRTC image is 4 bits per pixel and RGB not RGBA
-	// If you use the default settings in texturetool, e.g.:
-	//
-	//      texturetool -e PVRTC -o texture.pvrtc texture.png
-	//
-	// then this code should work fine for you.
-	glCompressedTexImage2D(GL_TEXTURE_2D, 0, type, width, height, 0, [texData length], [texData bytes]);*/
-	
-/*	if(mipmaps && sgRenderer::oglversion > 1)
+	unsigned long offset = 0;
+	for(int i = 0; i < tex->mipsizes.size(); i++)
 	{
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}*/
+		glCompressedTexImage2D(GL_TEXTURE_2D, i, tex->glformat, w, h, 0, tex->mipsizes[i], &tex->bytes[offset]);
+		offset += tex->mipsizes[i];
+		
+		w = fmax(w >> 1, 1);
+		h = fmax(h >> 1, 1);
+	}	
 	
-/*	std::string na(name);
-	na += std::string(".pvrtc");
-	sgRessourceManager::addRessource(na.c_str(), this);
+	if(tex->bytes)
+		delete[] tex->bytes;
+	delete tex;
+	
+	sgResourceManager::addResource(filename, this);
 	
 	loaded = TRUE;
-	
-}*/
+}
 
 void sgTexture::createTexture2D(float width_, float height_)
 {
@@ -261,7 +268,18 @@ sgTexture *sgTexture::getTexture2D(const char *filename, bool mipmaps, bool lock
 		return tex;
 	
 	tex = new sgTexture();
-	tex->createTexture2D(filename, mipmaps, lock);
+	std::string fnm(filename);
+	if(fnm.rfind(".png") != std::string::npos)
+	{
+		tex->createTexture2D(filename, mipmaps, lock);
+	}else if(fnm.rfind(".pvr") != std::string::npos)
+	{
+		tex->createPVRTexture2D(filename);
+	}else
+	{
+		delete tex;
+		tex = NULL;
+	}
 	return tex;
 }
 
@@ -271,19 +289,6 @@ sgTexture *sgTexture::getTexture2D(float width_, float height_)
 	tex->createTexture2D(width_, height_);
 	return tex;
 }
-
-/*sgTexture *sgTexture::getPVRTCTexture2D(const char *name, unsigned int w, unsigned int h, unsigned int type, BOOL mipmaps)
-{
-	std::string str(name);
-	str += std::string(".pvrtc");
-	sgTexture *tex = (sgTexture*)sgRessourceManager::getRessource(str.c_str());
-	if(tex != NULL)
-		return tex;
-	
-	tex = new sgTexture();
-	tex->createPVRTCTexture2D(name, w, h, type, mipmaps);
-	return tex;
-}*/
 
 void sgTexture::lockPixels()
 {

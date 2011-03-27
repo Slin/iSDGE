@@ -28,6 +28,12 @@
 
 #include "sgBase.h"
 
+#include <OpenGLES/ES1/gl.h>
+#include <OpenGLES/ES1/glext.h>
+#include <OpenGLES/ES2/gl.h>
+#include <OpenGLES/ES2/glext.h>
+#include <CoreGraphics/CoreGraphics.h>
+
 class sgColorA;
 
 /**
@@ -66,16 +72,16 @@ class sgTexture : public sgBase
 		void createTexture2D(float width_, float height_);
 	
 		/**
-		 *	Create 2D Texture from PVRTC file.
+		 *	Create 2D Texture from PVR file.
 		 *	If there isn´t already a texture, this function loads it from a PVRTS compressed file.
-		 * @param name the name of the file to load, without the type
+		 * @param filename the name of the file to load, without the type
 		 * @param w the width of the image can´t be set automatically
 		 * @param h the height of the image can´t be set automatically
 		 * @param type the type of the texture
-		 * @param mipmaps has to be set to FALSE if you don´t want mipmaps to be created for this texture
+		 * @param mipmaps has to be set to false if you don´t want mipmaps to be created for this texture
 		 * @return pointer to the texture classes instance
 		 */
-//		void createPVRTCTexture2D(const char *name, unsigned int w, unsigned int h, unsigned int type = GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG, BOOL mipmaps = TRUE);
+		void createPVRTexture2D(const char *filename);
 	
 		/**
 		 *	Make rendertarget.
@@ -101,17 +107,6 @@ class sgTexture : public sgBase
 		 * @return pointer to the texture classes instance
 		 */
 		static sgTexture *getTexture2D(float width_, float height_);
-	
-		/**
-		 * Get Texture from PVRTC file.
-		 * Creates and returns a pointer to a texture loaded from a PVRTS compressed file.
-		 * @param name the name of the file to load, without the type
-		 * @param w the width of the image can´t be set automatically
-		 * @param h the height of the image can´t be set automatically
-		 * @param mipmaps has to be set to FALSE if you don´t want mipmaps to be created for this texture
-		 * @return pointer to the texture classes instance
-		 */
-//		static sgTexture *getPVRTCTexture2D(const char *name, unsigned int w, unsigned int h, unsigned int type = GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG, BOOL mipmaps = TRUE);
 	
 		/**
 		 * Lock pixels.

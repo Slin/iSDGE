@@ -32,8 +32,7 @@
 #include "sgColor.h"
 #include "sgMatrix4x4.h"
 #include "sgShader.h"
-
-class sgTexture;
+#include "sgTexture.h"
 
 class sgMaterialParameter
 {
@@ -176,18 +175,6 @@ class sgMaterial : public sgBase
 		 * @param mipmaps activates or deactivates mipmaps for the texture
 		 */
 		void setTexture2D(unsigned int tex, sgTexture *texptr);
-	
-		/**
-		 *	Set 2D PVRTC texture.
-		 *	Adds or replaces a texture.
-		 * @param tex index of the texture to replace, or -1 to add a new one
-		 * @param name the name of the file to load, without the type
-		 * @param w the width of the image can´t be set automatically
-		 * @param h the height of the image can´t be set automatically
-		 * @param type the type of the texture
-		 * @param mipmaps has to be set to false if you don´t want mipmaps to be created for this texture
-		 */
-//		void setPVRTCTexture2D(unsigned int tex, const char *name, unsigned int w, unsigned int h, unsigned int type = GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG, BOOL mipmaps = TRUE);
 	
 		/**
 		 *	Get uniforms.

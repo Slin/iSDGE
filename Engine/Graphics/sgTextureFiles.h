@@ -2,8 +2,8 @@
 //	sgObjectFiles.h
 //	iSDGE
 //
-//	Created by Nils Daumann on 19.04.10.
-//	Copyright (c) 2010 Nils Daumann
+//	Created by Nils Daumann on 23.03.10.
+//	Copyright (c) 2011 Nils Daumann
 
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
 //	of this software and associated documentation files (the "Software"), to deal
@@ -23,60 +23,55 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-#ifndef __SGOBJECTFILES_H__
-#define __SGOBJECTFILES_H__
+#ifndef __SGTEXTUREFILES_H__
+#define __SGTEXTUREFILES_H__
 
 #include <vector>
 #include <string>
 
-#include "sgVertex.h"
-class sgObjectContainer;
-
 /**
  * Object file namespace. Contains functionality to loat object files.
  */
-namespace sgObjectFiles
+namespace sgTextureFiles
 {
-	enum LOAD_FLAGS
+	struct sgPVRTexture
 	{
-		NONE = 0x00,
-		GEN_TANGENT = 0x01
-	};
-	
-	/**
-	 * Material. Used to load the objects material information into.
-	 */
-	struct sgSGMMaterial
-	{
-		unsigned char id_;
-		std::vector<std::string> texnames;
-	};
-	
-	/**
-	 * Mesh. Used to load the objects mesh information into.
-	 */
-	struct sgSGMMesh
-	{
-		unsigned char id_;
-		sgSGMMaterial *material;
-		VERTEXFORMAT vtxformat;
-		VERTEXSIZE vtxsize;
+		unsigned long headerLength;
+		unsigned long height;
+		unsigned long width;
+		unsigned long numMipmaps;
+		unsigned long flags;
+		unsigned long dataLength;
+		unsigned long bpp;
+		unsigned long bitmaskRed;
+		unsigned long bitmaskGreen;
+		unsigned long bitmaskBlue;
+		unsigned long bitmaskAlpha;
+		unsigned long pvrTag;
+		unsigned long numSurfs;
 		
-		unsigned short vertexnum;
-		unsigned short indexnum;
-		sgVertex *vertices;
-		unsigned short *indices;
+		unsigned long glformat;
+		unsigned char* bytes;
+		std::vector<unsigned long> mipsizes;
 	};
-
-
+	
 	/**
-	 *	Load sgm.
-	 *	Loads the information from a file into an object.
-	 * @param obj object to load the file into
-	 * @param filename the name of the file to load the object from
-	 * @return TRUE if it was successfull, FALSE otherwise
+	 *	Load png.
+	 *	Loads a png texture file.
+	 * @param tex texture to load the file into
+	 * @param filename the textures filename
+	 * @return true if it was successfull, false otherwise
 	 */
-	bool loadSGM(sgObjectContainer *obj, const char *filename, unsigned long flags = NONE);
+//	bool loadPNG(sgTexture *tex, const char *filename);
+	
+	/**
+	 *	Load pvr.
+	 *	Loads a pvr compressed texture file.
+	 * @param tex pointer to the datastructure which will contain the image information
+	 * @param filename the textures filename
+	 * @return true if it was successfull, false otherwise
+	 */
+	bool loadPVR(sgPVRTexture **tex, const char *filename);
 }
 
 #endif
