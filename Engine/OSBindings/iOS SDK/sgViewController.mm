@@ -48,16 +48,20 @@
 	 self.view = view;
 	 [view release];
  }
- 
+
+
+- (void)startAccelerometer
+{
+	//Configure and start accelerometer
+	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:(1.0/30.0f)];
+	[[UIAccelerometer sharedAccelerometer] setDelegate:self];
+}
 
 
  // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
  - (void)viewDidLoad
  {
-	 //Configure and start accelerometer
-	 [[UIAccelerometer sharedAccelerometer] setUpdateInterval:(1.0/30.0f)];
-	 [[UIAccelerometer sharedAccelerometer] setDelegate:self];
-	 
+	 [self startAccelerometer];
 	 [super viewDidLoad];
  }
  

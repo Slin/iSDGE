@@ -31,4 +31,6 @@
 
 }
 
+- (void)startAccelerometer;
+
 @end

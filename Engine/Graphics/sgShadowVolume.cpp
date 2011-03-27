@@ -88,7 +88,56 @@ sgShadowVolume::sgShadowVolume(sgObject *obj, unsigned int lod)
 	vertexnum = 0;
 	for(int i = 0; i < lodstep->meshs.size(); i++)
 	{
-		memcpy(&(vertices[vertexnum]), lodstep->meshs[i]->vertices, lodstep->meshs[i]->vertexnum*sizeof(sgVertex));
+		if(lodstep->meshs[i]->vtxform == BASIC)
+		{
+			for(int n = 0; n < lodstep->meshs[i]->vertexnum; n++)
+			{
+				memcpy(&(vertices[vertexnum+n]), &lodstep->meshs[i]->vertices[n], sizeof(sgVertex));
+			}
+		}else if(lodstep->meshs[i]->vtxform == SECONDUV)
+		{
+			for(int n = 0; n < lodstep->meshs[i]->vertexnum; n++)
+			{
+				memcpy(&(vertices[vertexnum+n]), &((sgVertexUV*)lodstep->meshs[i]->vertices)[n], sizeof(sgVertex));
+			}
+		}else if(lodstep->meshs[i]->vtxform == COLOR)
+		{
+			for(int n = 0; n < lodstep->meshs[i]->vertexnum; n++)
+			{
+				memcpy(&(vertices[vertexnum+n]), &((sgVertexCol*)lodstep->meshs[i]->vertices)[n], sizeof(sgVertex));
+			}
+		}else if(lodstep->meshs[i]->vtxform == SECONDUVCOLOR)
+		{
+			for(int n = 0; n < lodstep->meshs[i]->vertexnum; n++)
+			{
+				memcpy(&(vertices[vertexnum+n]), &((sgVertexUVCol*)lodstep->meshs[i]->vertices)[n], sizeof(sgVertex));
+			}
+		}else if(lodstep->meshs[i]->vtxform == TANGENT)
+		{
+			for(int n = 0; n < lodstep->meshs[i]->vertexnum; n++)
+			{
+				memcpy(&(vertices[vertexnum+n]), &((sgVertexTan*)lodstep->meshs[i]->vertices)[n], sizeof(sgVertex));
+			}
+		}else if(lodstep->meshs[i]->vtxform == TANGENTSECONDUV)
+		{
+			for(int n = 0; n < lodstep->meshs[i]->vertexnum; n++)
+			{
+				memcpy(&(vertices[vertexnum+n]), &((sgVertexTanUV*)lodstep->meshs[i]->vertices)[n], sizeof(sgVertex));
+			}
+		}else if(lodstep->meshs[i]->vtxform == TANGENTCOLOR)
+		{
+			for(int n = 0; n < lodstep->meshs[i]->vertexnum; n++)
+			{
+				memcpy(&(vertices[vertexnum+n]), &((sgVertexTanCol*)lodstep->meshs[i]->vertices)[n], sizeof(sgVertex));
+			}
+		}else if(lodstep->meshs[i]->vtxform == TANGENTSECONDUVCOLOR)
+		{
+			for(int n = 0; n < lodstep->meshs[i]->vertexnum; n++)
+			{
+				memcpy(&(vertices[vertexnum+n]), &((sgVertexTanUVCol*)lodstep->meshs[i]->vertices)[n], sizeof(sgVertex));
+			}
+		}
+		
 		vertexnum += lodstep->meshs[i]->vertexnum;
 	}
 	

@@ -139,6 +139,41 @@ namespace sgTools
 				if(traceRayTriangle(from, to, ((sgVertexCol*)mesh->vertices)[mesh->indices[i+0]].position, ((sgVertexCol*)mesh->vertices)[mesh->indices[i+1]].position, ((sgVertexCol*)mesh->vertices)[mesh->indices[i+2]].position, &point) == 1)
 					points.push_back(point);
 			}
+		}else if(mesh->vtxform == SECONDUVCOLOR)
+		{
+			for(int i = 0; i < mesh->indexnum; i += 3)
+			{
+				if(traceRayTriangle(from, to, ((sgVertexUVCol*)mesh->vertices)[mesh->indices[i+0]].position, ((sgVertexUVCol*)mesh->vertices)[mesh->indices[i+1]].position, ((sgVertexUVCol*)mesh->vertices)[mesh->indices[i+2]].position, &point) == 1)
+					points.push_back(point);
+			}
+		}else if(mesh->vtxform == TANGENT)
+		{
+			for(int i = 0; i < mesh->indexnum; i += 3)
+			{
+				if(traceRayTriangle(from, to, ((sgVertexTan*)mesh->vertices)[mesh->indices[i+0]].position, ((sgVertexTan*)mesh->vertices)[mesh->indices[i+1]].position, ((sgVertexTan*)mesh->vertices)[mesh->indices[i+2]].position, &point) == 1)
+					points.push_back(point);
+			}
+		}else if(mesh->vtxform == TANGENTSECONDUV)
+		{
+			for(int i = 0; i < mesh->indexnum; i += 3)
+			{
+				if(traceRayTriangle(from, to, ((sgVertexTanUV*)mesh->vertices)[mesh->indices[i+0]].position, ((sgVertexTanUV*)mesh->vertices)[mesh->indices[i+1]].position, ((sgVertexTanUV*)mesh->vertices)[mesh->indices[i+2]].position, &point) == 1)
+					points.push_back(point);
+			}
+		}else if(mesh->vtxform == TANGENTCOLOR)
+		{
+			for(int i = 0; i < mesh->indexnum; i += 3)
+			{
+				if(traceRayTriangle(from, to, ((sgVertexTanCol*)mesh->vertices)[mesh->indices[i+0]].position, ((sgVertexTanCol*)mesh->vertices)[mesh->indices[i+1]].position, ((sgVertexTanCol*)mesh->vertices)[mesh->indices[i+2]].position, &point) == 1)
+					points.push_back(point);
+			}
+		}else if(mesh->vtxform == TANGENTSECONDUVCOLOR)
+		{
+			for(int i = 0; i < mesh->indexnum; i += 3)
+			{
+				if(traceRayTriangle(from, to, ((sgVertexTanUVCol*)mesh->vertices)[mesh->indices[i+0]].position, ((sgVertexTanUVCol*)mesh->vertices)[mesh->indices[i+1]].position, ((sgVertexTanUVCol*)mesh->vertices)[mesh->indices[i+2]].position, &point) == 1)
+					points.push_back(point);
+			}
 		}
 		
 		float dist;
