@@ -61,16 +61,6 @@
 		vrLen = 1346;
 		vrLoc = 2153;
 	};
-	290CE870130B338E005F3318 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 295CBF591215861700F1F941 /* Events.h */;
-		name = "Events.h: 36";
-		rLen = 0;
-		rLoc = 1351;
-		rType = 0;
-		vrLen = 1493;
-		vrLoc = 3;
-	};
 	291D89BD13085E2900935F3B /* sgEntity.cpp */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {663, 3601}}";
@@ -498,7 +488,7 @@
 		vrLen = 1468;
 		vrLoc = 0;
 	};
-	299C3225133FB7370038152F /* PBXTextBookmark */ = {
+	29A24C7C135B306E00001E88 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 295CBF591215861700F1F941 /* Events.h */;
 		name = "Events.h: 36";
@@ -507,6 +497,43 @@
 		rType = 0;
 		vrLen = 1451;
 		vrLoc = 3;
+	};
+	29A24C7D135B306E00001E88 /* XCBuildMessageTextBookmark */ = {
+		isa = PBXTextBookmark;
+		comments = "BulletMultiThreaded/SequentialThreadSupport.h: No such file or directory";
+		fRef = 29A24C7E135B306E00001E88 /* MiniCL.cpp */;
+		fallbackIsa = XCBuildMessageTextBookmark;
+		rLen = 1;
+		rLoc = 23;
+		rType = 1;
+	};
+	29A24C7E135B306E00001E88 /* MiniCL.cpp */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.cpp.cpp;
+		name = MiniCL.cpp;
+		path = "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgParticles/../../Engine/Physics/Bullet/bullet-2.77/src/MiniCL/MiniCL.cpp";
+		sourceTree = "<absolute>";
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1713, 9386}}";
+			sepNavSelRange = "{780, 0}";
+			sepNavVisRange = "{0, 1539}";
+		};
+	};
+	29A24C7F135B306E00001E88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 29A24C80135B306E00001E88 /* MiniCL.cpp */;
+		name = "MiniCL.cpp: 12";
+		rLen = 0;
+		rLoc = 780;
+		rType = 0;
+		vrLen = 1591;
+		vrLoc = 0;
+	};
+	29A24C80135B306E00001E88 /* MiniCL.cpp */ = {
+		isa = PBXFileReference;
+		name = MiniCL.cpp;
+		path = "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgParticles/../../Engine/Physics/Bullet/bullet-2.77/src/MiniCL/MiniCL.cpp";
+		sourceTree = "<absolute>";
 	};
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
 		activeArchitecturePreference = armv7;
@@ -608,15 +635,14 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 322942584;
-			PBXWorkspaceStateSaveDate = 322942584;
+			PBXPerProjectTemplateStateSaveDate = 324742843;
+			PBXWorkspaceStateSaveDate = 324742843;
 		};
 		perUserProjectItems = {
 			290CE85F130B338E005F3318 /* PBXTextBookmark */ = 290CE85F130B338E005F3318 /* PBXTextBookmark */;
 			290CE867130B338E005F3318 /* PBXTextBookmark */ = 290CE867130B338E005F3318 /* PBXTextBookmark */;
 			290CE869130B338E005F3318 /* PBXTextBookmark */ = 290CE869130B338E005F3318 /* PBXTextBookmark */;
 			290CE86A130B338E005F3318 /* PBXTextBookmark */ = 290CE86A130B338E005F3318 /* PBXTextBookmark */;
-			290CE870130B338E005F3318 /* PBXTextBookmark */ = 290CE870130B338E005F3318 /* PBXTextBookmark */;
 			291D8B7A13089F4B00935F3B /* PBXTextBookmark */ = 291D8B7A13089F4B00935F3B /* PBXTextBookmark */;
 			29776B801334D09F0082486E /* PBXTextBookmark */ = 29776B801334D09F0082486E /* PBXTextBookmark */;
 			29776B811334D09F0082486E /* PBXTextBookmark */ = 29776B811334D09F0082486E /* PBXTextBookmark */;
@@ -626,7 +652,9 @@
 			297C8EE21310A3C400AC1D24 /* PBXTextBookmark */ = 297C8EE21310A3C400AC1D24 /* PBXTextBookmark */;
 			297C8EE71310A3C400AC1D24 /* PBXTextBookmark */ = 297C8EE71310A3C400AC1D24 /* PBXTextBookmark */;
 			299C3224133FB7370038152F /* PBXTextBookmark */ = 299C3224133FB7370038152F /* PBXTextBookmark */;
-			299C3225133FB7370038152F /* PBXTextBookmark */ = 299C3225133FB7370038152F /* PBXTextBookmark */;
+			29A24C7C135B306E00001E88 /* PBXTextBookmark */ = 29A24C7C135B306E00001E88 /* PBXTextBookmark */;
+			29A24C7D135B306E00001E88 /* XCBuildMessageTextBookmark */ = 29A24C7D135B306E00001E88 /* XCBuildMessageTextBookmark */;
+			29A24C7F135B306E00001E88 /* PBXTextBookmark */ = 29A24C7F135B306E00001E88 /* PBXTextBookmark */;
 			29BF4F671310492500C746D7 /* PBXTextBookmark */ = 29BF4F671310492500C746D7 /* PBXTextBookmark */;
 			29BF4FFF13105FC900C746D7 /* PBXTextBookmark */ = 29BF4FFF13105FC900C746D7 /* PBXTextBookmark */;
 			29BF505913106EC500C746D7 /* PBXTextBookmark */ = 29BF505913106EC500C746D7 /* PBXTextBookmark */;

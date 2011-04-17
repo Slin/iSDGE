@@ -45,13 +45,7 @@ sgRenderer::sgRenderer()
 	
 	supportmultisampling = checkForExtension((char*)"APPLE_framebuffer_multisample");
 	supportdiscard = true;//checkForExtension((char*)"EXT_discard_framebuffer");
-//	supportpackedstencil = true;//true;//false;//checkForExtension((char*)"EXT_packed_depth_stencil");
-	
-#if TARGET_IPHONE_SIMULATOR
-	supportpackedstencil = false;
-#else
-	supportpackedstencil = true;
-#endif
+	supportpackedstencil = true;//true;//false;//checkForExtension((char*)"EXT_packed_depth_stencil");
 	
 	clearcolor = sgFColorA(0.5f, 0.7f, 1.0f, 1.0f);
 	

@@ -328,7 +328,7 @@
 	};
 	295CBF68121587B300F1F941 /* Rotate.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1651, 625}}";
+			sepNavIntBoundsRect = "{{0, 0}, {1651, 620}}";
 			sepNavSelRange = "{686, 0}";
 			sepNavVisRange = "{0, 1320}";
 		};
@@ -430,6 +430,16 @@
 		rLoc = 0;
 		rType = 0;
 		vrLen = 1389;
+		vrLoc = 0;
+	};
+	29A252D7135B447A00001E88 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 295CBF68121587B300F1F941 /* Rotate.h */;
+		name = "Rotate.h: 17";
+		rLen = 0;
+		rLoc = 686;
+		rType = 0;
+		vrLen = 1320;
 		vrLoc = 0;
 	};
 	29AB96B31184F61B0071CC97 /* sgPanel.cpp */ = {
@@ -581,8 +591,8 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 322943492;
-			PBXWorkspaceStateSaveDate = 322943492;
+			PBXPerProjectTemplateStateSaveDate = 324745129;
+			PBXWorkspaceStateSaveDate = 324745129;
 		};
 		perUserProjectItems = {
 			292E24781215FD130036F672 /* PBXTextBookmark */ = 292E24781215FD130036F672 /* PBXTextBookmark */;
@@ -602,8 +612,8 @@
 			297C8D6E1310870600AC1D24 /* PBXTextBookmark */ = 297C8D6E1310870600AC1D24 /* PBXTextBookmark */;
 			297C8D6F1310870600AC1D24 /* PBXTextBookmark */ = 297C8D6F1310870600AC1D24 /* PBXTextBookmark */;
 			297C8D701310870600AC1D24 /* PBXTextBookmark */ = 297C8D701310870600AC1D24 /* PBXTextBookmark */;
+			29A252D7135B447A00001E88 /* PBXTextBookmark */ = 29A252D7135B447A00001E88 /* PBXTextBookmark */;
 			29BAC0BC1288A60C00FCDE9F /* PBXTextBookmark */ = 29BAC0BC1288A60C00FCDE9F /* PBXTextBookmark */;
-			29BAC0C11288A60C00FCDE9F /* PBXTextBookmark */ = 29BAC0C11288A60C00FCDE9F /* PBXTextBookmark */;
 			29D246801216C30B00EC3CCF /* PBXTextBookmark */ = 29D246801216C30B00EC3CCF /* PBXTextBookmark */;
 			29F183D112AB1A3800B7F5F2 /* PlistBookmark */ = 29F183D112AB1A3800B7F5F2 /* PlistBookmark */;
 			29F183D212AB1A3800B7F5F2 /* PBXTextBookmark */ = 29F183D212AB1A3800B7F5F2 /* PBXTextBookmark */;
@@ -627,16 +637,6 @@
 		rLoc = 0;
 		rType = 0;
 		vrLen = 1326;
-		vrLoc = 0;
-	};
-	29BAC0C11288A60C00FCDE9F /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 295CBF68121587B300F1F941 /* Rotate.h */;
-		name = "Rotate.h: 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 1320;
 		vrLoc = 0;
 	};
 	29D246801216C30B00EC3CCF /* PBXTextBookmark */ = {

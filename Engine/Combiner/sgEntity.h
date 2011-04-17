@@ -32,6 +32,7 @@
 #include "sgLight.h"
 #include "sgPanel.h"
 #include "sgParticleEmitter.h"
+#include "sgPhysBody.h"
 #include "sgVector4.h"
 
 class sgAction;
@@ -213,6 +214,15 @@ class sgEntity
 		void createEmitter(const char *texfile = NULL);
 	
 		/**
+		 *	Create physics body.
+		 *	If there isn´t already a physics body attached, it will create a new one and attach it to the entity.
+		 * @param shape the bodys shape.
+		 * @param mass the bodys mass.
+		 * @param size the half cube size if it is a cube shape, otherwize the radius as length or ignored
+		 */
+		void createPhysBody(sgPhysBody::eShape shape, float mass, sgVector3 size = sgVector3(1.0, 1.0, 1.0));
+	
+		/**
 		 *	Create action.
 		 *	Assigns the given action to the entity and calls its init method.
 		 * @param a pointer to the action which will be assigned to the entity.
@@ -260,6 +270,12 @@ class sgEntity
 		 *	Pointer to the particle emitter handled by this entity or NULL if there is none.
 		 */
 		sgParticleEmitter *emitt;
+	
+		/**
+		 *	Physics body.
+		 *	Pointer to the physics body handled by this entity or NULL if there is none.
+		 */
+		sgPhysBody *body;
 	
 		/**
 		 *	Action.

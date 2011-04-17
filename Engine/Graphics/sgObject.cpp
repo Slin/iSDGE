@@ -68,8 +68,8 @@ sgObject::~sgObject()
 	if(body != NULL)
 		body->destroyAll();
 	
-	if(currbody != NULL)
-		currbody->destroy();	//Probably not good...
+//	if(currbody != NULL)
+//		currbody->destroy();	//Probably not good...
 }
 
 sgObject *sgObject::createObject()

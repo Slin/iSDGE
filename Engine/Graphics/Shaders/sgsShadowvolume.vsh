@@ -34,6 +34,6 @@ uniform mat4 matNormal;
 void main()
 {
 	gl_Position = matModel*vec4(vertPos, 1.0);
-	gl_Position += vec4(vertNormal*20.0, 0.0);
+	gl_Position += vec4(vertNormal*40.0, 0.0);
 	gl_Position = matProj*matView*gl_Position;
 }

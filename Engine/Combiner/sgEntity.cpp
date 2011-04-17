@@ -46,6 +46,7 @@ sgEntity::sgEntity(sgEntity* p, sgEntity *n, sgMain *m)
 	act = NULL;
 	pan = NULL;
 	emitt = NULL;
+	body = NULL;
 }
 
 sgEntity *sgEntity::createEmptyEntity(sgAction *a)
@@ -227,6 +228,75 @@ void sgEntity::createEmitter(const char *texfile)
 	emitt = sgmain->renderer->first_partemitter->createEmitter(texfile);
 }
 
+void sgEntity::createPhysBody(sgPhysBody::eShape shape, float mass, sgVector3 size)
+{
+	if(body != NULL || obj == NULL)
+		return;
+	
+	body = sgmain->physworld->getRigidBody(shape, obj->position, obj->rotation, size);
+	
+	if(shape == sgPhysBody::ES_MESH)
+	{
+		sgMesh *mesh;
+		for(int n = 0; n < obj->body->meshs.size(); n++)
+		{
+			mesh = obj->body->meshs[n];
+		
+			if(mesh->vtxform == BASIC)
+			{
+				for(int i = 0; i < mesh->indexnum; i += 3)
+				{
+					body->addFace(mesh->vertices[mesh->indices[i+0]].position, mesh->vertices[mesh->indices[i+1]].position, mesh->vertices[mesh->indices[i+2]].position);
+				}
+			}else if(mesh->vtxform == SECONDUV)
+			{
+				for(int i = 0; i < mesh->indexnum; i += 3)
+				{
+					body->addFace(((sgVertexUV*)mesh->vertices)[mesh->indices[i+0]].position, ((sgVertexUV*)mesh->vertices)[mesh->indices[i+1]].position, ((sgVertexUV*)mesh->vertices)[mesh->indices[i+2]].position);
+				}
+			}else if(mesh->vtxform == COLOR)
+			{
+				for(int i = 0; i < mesh->indexnum; i += 3)
+				{
+					body->addFace(((sgVertexCol*)mesh->vertices)[mesh->indices[i+0]].position, ((sgVertexCol*)mesh->vertices)[mesh->indices[i+1]].position, ((sgVertexCol*)mesh->vertices)[mesh->indices[i+2]].position);
+				}
+			}else if(mesh->vtxform == SECONDUVCOLOR)
+			{
+				for(int i = 0; i < mesh->indexnum; i += 3)
+				{
+					body->addFace(((sgVertexUVCol*)mesh->vertices)[mesh->indices[i+0]].position, ((sgVertexUVCol*)mesh->vertices)[mesh->indices[i+1]].position, ((sgVertexUVCol*)mesh->vertices)[mesh->indices[i+2]].position);
+				}
+			}else if(mesh->vtxform == TANGENT)
+			{
+				for(int i = 0; i < mesh->indexnum; i += 3)
+				{
+					body->addFace(((sgVertexTan*)mesh->vertices)[mesh->indices[i+0]].position, ((sgVertexTan*)mesh->vertices)[mesh->indices[i+1]].position, ((sgVertexTan*)mesh->vertices)[mesh->indices[i+2]].position);
+				}
+			}else if(mesh->vtxform == TANGENTSECONDUV)
+			{
+				for(int i = 0; i < mesh->indexnum; i += 3)
+				{
+					body->addFace(((sgVertexTanUV*)mesh->vertices)[mesh->indices[i+0]].position, ((sgVertexTanUV*)mesh->vertices)[mesh->indices[i+1]].position, ((sgVertexTanUV*)mesh->vertices)[mesh->indices[i+2]].position);
+				}
+			}else if(mesh->vtxform == TANGENTCOLOR)
+			{
+				for(int i = 0; i < mesh->indexnum; i += 3)
+				{
+					body->addFace(((sgVertexTanCol*)mesh->vertices)[mesh->indices[i+0]].position, ((sgVertexTanCol*)mesh->vertices)[mesh->indices[i+1]].position, ((sgVertexTanCol*)mesh->vertices)[mesh->indices[i+2]].position);
+				}
+			}else if(mesh->vtxform == TANGENTSECONDUVCOLOR)
+			{
+				for(int i = 0; i < mesh->indexnum; i += 3)
+				{
+					body->addFace(((sgVertexTanUVCol*)mesh->vertices)[mesh->indices[i+0]].position, ((sgVertexTanUVCol*)mesh->vertices)[mesh->indices[i+1]].position, ((sgVertexTanUVCol*)mesh->vertices)[mesh->indices[i+2]].position);
+				}
+			}
+		}
+	}
+	
+	body->init(mass, this);
+}
+
 void sgEntity::createAction(sgAction *a)
 {
 	if(act != NULL)
@@ -257,12 +327,16 @@ void sgEntity::destroy()
 	if(emitt != NULL)
 		emitt->destroy();
 	
+	if(body != NULL)
+		body->destroy();
+	
 	act = NULL;
 	obj = NULL;
 	cam = NULL;
 	light = NULL;
 	pan = NULL;
 	emitt = NULL;
+//	body = NULL;
 	
 	if(prev)
 		prev->next = next;

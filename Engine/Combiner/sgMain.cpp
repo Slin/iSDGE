@@ -25,9 +25,6 @@
 
 #include "sgMain.h"
 
-#include "sgRendererES1.h"
-#include "sgRendererES2.h"
-
 sgEvents *sgMain::eventhandler = NULL;
 
 sgMain::sgMain(unsigned int oglvers)
@@ -43,6 +40,8 @@ sgMain::sgMain(unsigned int oglvers)
 		renderer = new sgRendererES2;
 	}
 	
+	physworld = new sgPhysWorldBullet;
+	
 	setOrientation(0);
 	first_ent = new sgEntity(NULL, NULL, this);
 	
@@ -53,6 +52,7 @@ sgMain::~sgMain()
 {
 	first_ent->destroyAll();
 	delete renderer;
+	delete physworld;
 }
 
 void sgMain::drawView()
@@ -69,6 +69,8 @@ void sgMain::drawView()
 		if(eventhandler != NULL)
 			eventhandler->onInit(this);
 	}
+	
+	physworld->update(timestep);
 	
 	if(eventhandler != NULL && currframes > 0)
 		eventhandler->onDraw(timestep);

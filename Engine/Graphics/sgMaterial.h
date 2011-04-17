@@ -79,7 +79,7 @@ class sgMaterial : public sgBase
 		 *	Initializes a default material with a default shader.
 		 * @param shad the default shader to use
 		 */
-	sgMaterial(sgShader::BuiltInShaders shad);
+		sgMaterial(sgShader::BuiltInShaders shad);
 	
 		/**
 		 *	Constructor.

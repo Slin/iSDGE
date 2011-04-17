@@ -27,12 +27,16 @@
 #define __SGMAIN_H__
 
 #include "sgRenderer.h"
+#include "sgRendererES1.h"
+#include "sgRendererES2.h"
 #include "sgTouches.h"
 #include "sgAccelerometer.h"
 #include "sgEvents.h"
 #include "sgAction.h"
 #include "sgEntity.h"
 #include "sgTimer.h"
+#include "sgPhysWorld.h"
+#include "sgPhysWorldBullet.h"
 
 class sgMain
 {
@@ -68,6 +72,12 @@ class sgMain
 		 *	Pointer to the renderer.
 		 */
 		sgRenderer *renderer;
+	
+		/**
+		 *	Physics world.
+		 *	Pointer to the physics world.
+		 */
+		sgPhysWorld *physworld;
 		
 		/**
 		 *	First entity.
