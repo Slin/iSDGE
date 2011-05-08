@@ -85,7 +85,7 @@ void sgTexture::createTexture2D(const char *filename, bool mipmaps, bool lock)
 	width = tex->width;     
 	height = tex->height;
 
-	if(!((width != 0) && !(width & (width - 1))))
+/*	if(!((width != 0) && !(width & (width - 1))))
 	{
 		if(!((height != 0) && !(height & (height - 1))))
 		{
@@ -94,7 +94,7 @@ void sgTexture::createTexture2D(const char *filename, bool mipmaps, bool lock)
 			height = 0;
 			return;
 		}
-	}
+	}*/
 
 	glGenTextures(1, &texid);
 	glBindTexture(GL_TEXTURE_2D, texid);

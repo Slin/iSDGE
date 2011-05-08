@@ -289,6 +289,9 @@ sgPanelElement *sgPanel::addImage(const char *imgtexfile, const sgVector2 &pos, 
 	
 	img->mat->lighting = false;
 	img->mat->blending = true;
+	
+	img->mat->textures[0]->setParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	img->mat->textures[0]->setParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
 	img->pos = pos;
 	img->size = size;
