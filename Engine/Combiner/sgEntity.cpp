@@ -49,6 +49,38 @@ sgEntity::sgEntity(sgEntity* p, sgEntity *n, sgMain *m)
 	body = NULL;
 }
 
+sgEntity::~sgEntity()
+{
+	if(act != NULL)
+		act->onDestroy();
+	
+	if(obj != NULL)
+		obj->destroy();
+	
+	if(cam != NULL)
+		cam->destroy();
+	
+	if(light != NULL)
+		light->destroy();
+	
+	if(pan != NULL)
+		pan->destroy();
+	
+	if(emitt != NULL)
+		emitt->destroy();
+	
+	if(body != NULL)
+		body->destroy();
+	
+	act = NULL;
+	obj = NULL;
+	cam = NULL;
+	light = NULL;
+	pan = NULL;
+	emitt = NULL;
+	//	body = NULL;
+}
+
 sgEntity *sgEntity::createEmptyEntity(sgAction *a)
 {
 	next = new sgEntity(this, next, sgmain);
@@ -309,37 +341,11 @@ void sgEntity::createAction(sgAction *a)
 
 void sgEntity::destroy()
 {
-	if(act != NULL)
-		act->onDestroy();
-	
-	if(obj != NULL)
-		obj->destroy();
-	
-	if(cam != NULL)
-		cam->destroy();
-	
-	if(light != NULL)
-		light->destroy();
-	
-	if(pan != NULL)
-		pan->destroy();
-	
-	if(emitt != NULL)
-		emitt->destroy();
-	
-	if(body != NULL)
-		body->destroy();
-	
-	act = NULL;
-	obj = NULL;
-	cam = NULL;
-	light = NULL;
-	pan = NULL;
-	emitt = NULL;
-//	body = NULL;
-	
 	if(prev)
 		prev->next = next;
+	else
+		return;
+	
 	if(next)
 		next->prev = prev;
 	
@@ -354,4 +360,6 @@ void sgEntity::destroyAll()
 		next->destroyAll();
 	if(prev)
 		prev->destroyAll();
+	else
+		next = 0;
 }

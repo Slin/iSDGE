@@ -34,6 +34,8 @@
 class sgAction
 {
 	public:
+		sgAction();
+		virtual ~sgAction();
 	
 		/**
 		 *	On init.

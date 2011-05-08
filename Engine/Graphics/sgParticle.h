@@ -49,7 +49,7 @@ class sgParticle
 		 *	Deconstructor.
 		 *	Frees the particle.
 		 */
-		~sgParticle();
+		virtual ~sgParticle();
 	
 		/**
 		 *	On draw.

@@ -53,6 +53,12 @@ class sgEntity
 		sgEntity(sgEntity *p, sgEntity *n, sgMain *v);
 	
 		/**
+		 *	Destructor
+		 *	Frees an entity
+		 */
+		~sgEntity();
+	
+		/**
 		 *	Create empty entity.
 		 *	Creates a new entity and makes it next of this.
 		 * @param a pointer to the action which will be assigned to the new entity.

@@ -25,6 +25,16 @@
 
 #include "sgAction.h"
 
+sgAction::sgAction()
+{
+	
+}
+
+sgAction::~sgAction()
+{
+	
+}
+
 void sgAction::onInit(sgEntity *e)
 {
 	ent = e;

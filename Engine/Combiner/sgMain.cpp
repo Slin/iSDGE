@@ -70,13 +70,13 @@ void sgMain::drawView()
 			eventhandler->onInit(this);
 	}
 	
-	physworld->update(timestep);
-	
 	if(eventhandler != NULL && currframes > 0)
 		eventhandler->onDraw(timestep);
 	
-	for(sgEntity *it = first_ent->next; it != NULL; it = it->next)
+	sgEntity *nextent;
+	for(sgEntity *it = first_ent->next; it != NULL; it = nextent)
 	{
+		nextent = it->next;
 		if(it->act != NULL)
 		{
 			it->act->onDraw(timestep);
@@ -86,14 +86,16 @@ void sgMain::drawView()
 	if(eventhandler != NULL && currframes > 0)
 		eventhandler->onDrawLate(timestep);
 	
-	for(sgEntity *it = first_ent->next; it != NULL; it = it->next)
+	for(sgEntity *it = first_ent->next; it != NULL; it = nextent)
 	{
+		nextent = it->next;
 		if(it->act != NULL)
 		{
 			it->act->onDrawLate(timestep);
 		}
 	}
 	
+	physworld->update(timestep);
 	renderer->render();
 	
 	currframes += 1;
