@@ -117,8 +117,9 @@ class sgTexture : public sgBase
 		/**
 		 * Update pixels.
 		 * Updates the texture from locked pixels without unlocking. Only use this if you constantly change the texture during the game. Use unlockPixels() otherwize.
+		 * @param swapped has to be true if the colors are meant to be updated as BGRA
 		 */
-		void updatePixels();
+		void updatePixels(bool swapped = false);
 	
 		/**
 		 * Unlock pixels.
@@ -134,6 +135,15 @@ class sgTexture : public sgBase
 		 * @param color new pixel color.
 		 */
 		void setPixel(int x, int y, sgColorA color);
+	
+		/**
+		 * Set pixels.
+		 * Copies pixel data from an external source into the texture between a lock and unlock call.
+		 * @param data pointer to the new data.
+		 * @param offset offset in bytes on where to put the data into the texture.
+		 * @param size number of bytes of the new data.
+		 */
+		void setPixels(unsigned char *data, unsigned int offset, unsigned int size);
 	
 		/**
 		 * Get pixel.

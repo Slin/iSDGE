@@ -47,6 +47,7 @@ sgEntity::sgEntity(sgEntity* p, sgEntity *n, sgMain *m)
 	pan = NULL;
 	emitt = NULL;
 	body = NULL;
+	sndsrc = NULL;
 }
 
 sgEntity::~sgEntity()
@@ -72,6 +73,9 @@ sgEntity::~sgEntity()
 	if(body != NULL)
 		body->destroy();
 	
+	if(sndsrc != NULL)
+		sndsrc->destroy();
+	
 	act = NULL;
 	obj = NULL;
 	cam = NULL;
@@ -79,6 +83,7 @@ sgEntity::~sgEntity()
 	pan = NULL;
 	emitt = NULL;
 	//	body = NULL;
+	sndsrc = NULL;
 }
 
 sgEntity *sgEntity::createEmptyEntity(sgAction *a)
@@ -159,6 +164,14 @@ sgEntity *sgEntity::createEmitterEntity(const char *texfile, sgAction *a)
 {
 	next = new sgEntity(this, next, sgmain);
 	next->createEmitter(texfile);
+	next->createAction(a);
+	return next;
+}
+
+sgEntity *sgEntity::createSndSourceEntity(sgAction *a)
+{
+	next = new sgEntity(this, next, sgmain);
+	next->createSndSource();
 	next->createAction(a);
 	return next;
 }
@@ -327,6 +340,14 @@ void sgEntity::createPhysBody(sgPhysBody::eShape shape, float mass, sgVector3 si
 	}
 	
 	body->init(mass, this);
+}
+
+void sgEntity::createSndSource()
+{
+	if(sndsrc != NULL)
+		return;
+	
+	sndsrc = sgmain->audioplayer->first_sndsource->createSoundSource();
 }
 
 void sgEntity::createAction(sgAction *a)

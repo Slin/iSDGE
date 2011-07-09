@@ -33,8 +33,7 @@
 @synthesize viewController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{    
-    
+{
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	viewController = [[sgViewController alloc] init];
 	

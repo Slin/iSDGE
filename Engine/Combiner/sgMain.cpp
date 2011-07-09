@@ -41,6 +41,7 @@ sgMain::sgMain(unsigned int oglvers)
 	}
 	
 	physworld = new sgPhysWorldBullet;
+	audioplayer = new sgAudioPlayer;
 	
 	setOrientation(0);
 	first_ent = new sgEntity(NULL, NULL, this);
@@ -53,6 +54,7 @@ sgMain::~sgMain()
 	first_ent->destroyAll();
 	delete renderer;
 	delete physworld;
+	delete audioplayer;
 }
 
 void sgMain::drawView()
@@ -96,6 +98,7 @@ void sgMain::drawView()
 	}
 	
 	physworld->update(timestep);
+	audioplayer->update(timestep);
 	renderer->render();
 	
 	currframes += 1;

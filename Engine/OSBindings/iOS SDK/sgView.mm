@@ -39,6 +39,7 @@
 
 sgMain *sgmain;
 sgView *sgview;
+sgViewController *sgviewcontroller;
 
 + (sgMain*)main
 {
@@ -48,6 +49,16 @@ sgView *sgview;
 + (sgView*)view
 {
 	return sgview;
+}
+
++ (sgViewController*)viewcontroller
+{
+	return sgviewcontroller;
+}
+
++ (void)setViewcontroller:(sgViewController*)controller
+{
+	sgviewcontroller = controller;
 }
 
 // You must implement this method

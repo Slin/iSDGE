@@ -30,6 +30,7 @@
 #include "sgVector3.h"
 #include "sgVertex.h"
 #include "sgMesh.h"
+#include "sgObject.h"
 
 namespace sgTools
 {
@@ -190,4 +191,30 @@ namespace sgTools
 			}
 		}
 	}
+	
+	void traceRayObject(sgObject *object, sgVector3 from, sgVector3 to, sgVertex* I)
+	{
+		sgVertex point;
+		std::vector<sgVertex> points;
+		
+		for(int i = 0; i < object->currbody->meshs.size(); i++)
+		{
+			traceRayMesh(object->currbody->meshs[i], from, to, &point);
+			points.push_back(point);
+		}
+		
+		float dist;
+		float ndist = from.dist(to);
+		for(int i = 0; i < points.size(); i++)
+		{
+			dist = from.dist(points[i].position);
+			if(dist < ndist)
+			{
+				ndist = dist;
+				*I = points[i];
+				I->position = points[i].position;
+				I->normal = points[i].normal;
+			}
+		}
+	}		
 }

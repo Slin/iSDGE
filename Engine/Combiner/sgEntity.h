@@ -33,6 +33,7 @@
 #include "sgPanel.h"
 #include "sgParticleEmitter.h"
 #include "sgPhysBody.h"
+#include "sgSoundSource.h"
 #include "sgVector4.h"
 
 class sgAction;
@@ -156,6 +157,14 @@ class sgEntity
 		sgEntity *createEmitterEntity(const char *texfile = NULL, sgAction *a = NULL);
 	
 		/**
+		 *	Create sound source entity.
+		 *	Creates a new entity consisting of a sound source and makes it next of this.
+		 * @param a pointer to the action which will be assigned to the new entity.
+		 * @return pointer to the new entity
+		 */
+		sgEntity *createSndSourceEntity(sgAction *a = NULL);
+	
+		/**
 		 *	Create empty object.
 		 *	If there isn´t already an object attached, it will create a new empty one and attach it to the entity.
 		 */
@@ -229,6 +238,12 @@ class sgEntity
 		void createPhysBody(sgPhysBody::eShape shape, float mass, sgVector3 size = sgVector3(1.0, 1.0, 1.0));
 	
 		/**
+		 *	Create sound source.
+		 *	If there isn´t already a sound source attached, it will create a new sound source and attach it to the entity.
+		 */
+		void createSndSource();
+	
+		/**
 		 *	Create action.
 		 *	Assigns the given action to the entity and calls its init method.
 		 * @param a pointer to the action which will be assigned to the entity.
@@ -282,6 +297,12 @@ class sgEntity
 		 *	Pointer to the physics body handled by this entity or NULL if there is none.
 		 */
 		sgPhysBody *body;
+	
+		/**
+		 *	Sound source.
+		 *	Pointer to the sound source handled by this entity or NULL if there is none.
+		 */
+		sgSoundSource *sndsrc;
 	
 		/**
 		 *	Action.

@@ -27,6 +27,7 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "sgMain.h"
+#import "sgViewController.h"
 
 
 /**
@@ -55,6 +56,18 @@
  *	Returns the pointer to the instance of sgView.
  */
 + (sgView*)view;
+
+/**
+ *	Get sgViewController instance.
+ *	Returns the pointer to the instance of sgViewController.
+ */
++ (sgViewController*)viewcontroller;
+
+/**
+ *	Set sgViewController instance.
+ *	Sets the pointer to the instance of sgViewController.
+ */
++ (void)setViewcontroller:(sgViewController*)controller;
 
 /**
  *	Start animation.

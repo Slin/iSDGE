@@ -26,13 +26,14 @@
 #include "CameraFree.h"
 #include "sgMain.h"
 
-CameraFree::CameraFree(float sp)
+CameraFree::CameraFree(float sp, bool acc)
 {
 	speed = sp;
 	stereo_cam = NULL;
+    acccontrol = acc;
 }
 
-void CameraFree::makeStereo(float dist)
+void CameraFree::makeStereo(float dist, float xoffset)
 {
 	stereodist = dist;
 	
@@ -42,30 +43,34 @@ void CameraFree::makeStereo(float dist)
 	{
 		case 0:
 		{
-			ent->cam->size = sgVector2(sgRenderer::backingWidth*0.5, sgRenderer::backingHeight);
+			ent->cam->size = sgVector2(sgRenderer::backingWidth*0.5+xoffset, sgRenderer::backingHeight);
+			stereo_cam->size = sgVector2(sgRenderer::backingWidth*0.5-xoffset, sgRenderer::backingHeight);
 			stereo_cam->screenpos = sgVector2(ent->cam->size.x, 0.0f);
 			break;
 		}
 		
 		case 1:
 		{
-			ent->cam->size = sgVector2(sgRenderer::backingWidth*0.5, sgRenderer::backingHeight);
-			ent->cam->screenpos = sgVector2(ent->cam->size.x, 0.0f);
+			ent->cam->size = sgVector2(sgRenderer::backingWidth*0.5+xoffset, sgRenderer::backingHeight);
+			stereo_cam->size = sgVector2(sgRenderer::backingWidth*0.5-xoffset, sgRenderer::backingHeight);
+			ent->cam->screenpos = sgVector2(stereo_cam->size.x, 0.0f);
 			stereo_cam->screenpos = sgVector2(0.0f, 0.0f);
 			break;
 		}
 		
 		case 2:
 		{
-			ent->cam->size = sgVector2(sgRenderer::backingWidth, sgRenderer::backingHeight*0.5);
+			ent->cam->size = sgVector2(sgRenderer::backingWidth, sgRenderer::backingHeight*0.5+xoffset);
+			stereo_cam->size = sgVector2(sgRenderer::backingWidth, sgRenderer::backingHeight*0.5-xoffset);
 			stereo_cam->screenpos = sgVector2(0.0f, ent->cam->size.y);
 			break;
 		}
 			
 		case 3:
 		{
-			ent->cam->size = sgVector2(sgRenderer::backingWidth, sgRenderer::backingHeight*0.5);
-			ent->cam->screenpos = sgVector2(0.0f, ent->cam->size.y);
+			ent->cam->size = sgVector2(sgRenderer::backingWidth, sgRenderer::backingHeight*0.5-xoffset);
+			stereo_cam->size = sgVector2(sgRenderer::backingWidth, sgRenderer::backingHeight*0.5+xoffset);
+			ent->cam->screenpos = sgVector2(0.0f, stereo_cam->size.y);
 			stereo_cam->screenpos = sgVector2(0.0f, 0.0f);
 			break;
 		}
@@ -74,8 +79,7 @@ void CameraFree::makeStereo(float dist)
 	ent->cam->aspect = ent->cam->size.x/ent->cam->size.y;
 	ent->cam->updateProj();
 	
-	stereo_cam->size = ent->cam->size;
-	stereo_cam->aspect = ent->cam->aspect;
+	stereo_cam->aspect = ent->cam->aspect;//stereo_cam->size.x/stereo_cam->size.y;
 	stereo_cam->updateProj();
 }
 
@@ -112,32 +116,113 @@ void CameraFree::makeAnaglyph(float dist, const char *fs)
 void CameraFree::onDraw(float timestep)
 {
 	timestep *= 16.0f;
-	
 	sgVector2 toll;
-	if(sgAccelerometer::curracc.x > 0.1f || sgAccelerometer::curracc.x < -0.1f)
-	{
-		toll.x = sgAccelerometer::curracc.x;
-	}else
-	{
-		toll.x = 0.0;
-	}
-	if(sgAccelerometer::curracc.y > 0.1f || sgAccelerometer::curracc.y < -0.1f)
-	{
-		toll.y = sgAccelerometer::curracc.y;
-	}else
-	{
-		toll.y = 0.0;
-	}
+    
+    if(acccontrol)
+    {
+        if(sgAccelerometer::curracc.x > 0.1f || sgAccelerometer::curracc.x < -0.1f)
+        {
+            toll.x = sgAccelerometer::curracc.x;
+        }else
+        {
+            toll.x = 0.0;
+        }
+        if(sgAccelerometer::curracc.y > 0.1f || sgAccelerometer::curracc.y < -0.1f)
+        {
+            toll.y = sgAccelerometer::curracc.y;
+        }else
+        {
+            toll.y = 0.0;
+        }
 
-	if(sgTouches::touches.size() == 1)
-	{
-		sgVector3 rot(sgTouches::touches[0]->direction.x, 0.0f, -sgTouches::touches[0]->direction.y);
-		ent->cam->rotation += rot;
-		sgTouches::touches[0]->direction.x = 0;
-		sgTouches::touches[0]->direction.y = 0;
-	}
-	if(sgTouches::touches.size() == 2)
-		toll.y = 1.0;
+        if(sgTouches::touches.size() == 1)
+        {
+            sgVector3 rot(sgTouches::touches[0]->direction.x, 0.0f, -sgTouches::touches[0]->direction.y);
+            ent->cam->rotation += rot;
+            sgTouches::touches[0]->direction.x = 0;
+            sgTouches::touches[0]->direction.y = 0;
+        }
+        if(sgTouches::touches.size() == 2)
+            toll.y = 1.0;
+    }else
+    {
+        if(sgTouches::touches.size() > 0)
+        {
+            if(lefttouchstart.x <= 0.1 && lefttouchstart.y <= 0.1)
+            {
+                if(sgTouches::touches[0]->position.x < ent->sgmain->renderer->backingHeight*0.5)
+                {
+                    lefttouchstart = sgTouches::touches[0]->position;
+                }else if(sgTouches::touches.size() > 1)
+                {
+                    if(sgTouches::touches[1]->position.x < ent->sgmain->renderer->backingHeight*0.5)
+                    {
+                        lefttouchstart = sgTouches::touches[1]->position;
+                    }
+                }
+            }else
+            {
+                if(sgTouches::touches[0]->position.x < ent->sgmain->renderer->backingHeight*0.5)
+                {
+                    toll = sgTouches::touches[0]->position-lefttouchstart;
+                }else if(sgTouches::touches.size() > 1)
+                {
+                    if(sgTouches::touches[1]->position.x < ent->sgmain->renderer->backingHeight*0.5)
+                    {
+                        toll = sgTouches::touches[1]->position-lefttouchstart;
+                    }else
+                    {
+                        lefttouchstart = sgVector2();
+                    }
+                }else
+                {
+                    lefttouchstart = sgVector2();
+                }
+                
+                toll *= 0.01f;
+            }
+            
+            if(righttouchstart.x <= 0.1 && righttouchstart.y <= 0.1)
+            {
+                if(sgTouches::touches[0]->position.x > ent->sgmain->renderer->backingHeight*0.5)
+                {
+                    righttouchstart = sgTouches::touches[0]->position;
+                }else if(sgTouches::touches.size() > 1)
+                {
+                    if(sgTouches::touches[1]->position.x > ent->sgmain->renderer->backingHeight*0.5)
+                    {
+                        righttouchstart = sgTouches::touches[1]->position;
+                    }
+                }
+            }else
+            {
+                sgVector2 touchdir;
+                if(sgTouches::touches[0]->position.x > ent->sgmain->renderer->backingHeight*0.5)
+                {
+                    touchdir = righttouchstart-sgTouches::touches[0]->position;
+                }else if(sgTouches::touches.size() > 1)
+                {
+                    if(sgTouches::touches[1]->position.x > ent->sgmain->renderer->backingHeight*0.5)
+                    {
+                        touchdir = righttouchstart-sgTouches::touches[1]->position;
+                    }else
+                    {
+                        righttouchstart = sgVector2();
+                    }
+                }else
+                {
+                    righttouchstart = sgVector2();
+                }
+                
+                sgVector3 rot(touchdir.x, 0.0f, -touchdir.y);
+                ent->cam->rotation += rot*0.05f*timestep;
+            }
+        }else
+        {
+            righttouchstart = sgVector2();
+            lefttouchstart = sgVector2();
+        }
+    }
 	
 	sgVector3 dir(toll.x, 0.0f, -toll.y);
 	dir = ent->cam->rotation.rotate(dir);
@@ -150,4 +235,6 @@ void CameraFree::onDraw(float timestep)
 		dir = ent->cam->rotation.rotate(sgVector3(1.0f, 0.0f, 0.0f));
 		stereo_cam->position = ent->cam->position+dir*stereodist;
 	}
+	
+	ent->sgmain->audioplayer->updateListener(ent->cam->position, ent->cam->rotation, timestep);
 }

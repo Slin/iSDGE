@@ -1,9 +1,9 @@
 //
-//	Camera.h
+//	sgCameraStream.h
 //	Engine
 //
-//	Created by Nils Daumann on 10.05.10.
-//	Copyright (c) 2010 Nils Daumann
+//	Created by Nils Daumann on 05.06.11.
+//	Copyright (c) 2011 Nils Daumann
 
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
 //	of this software and associated documentation files (the "Software"), to deal
@@ -23,31 +23,21 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-#ifndef __CAMERAFREE_H__
-#define __CAMERAFREE_H__
+#ifndef __SGCAMERASTREAM_H__
+#define __SGCAMERASTREAM_H__
 
-#include <cmath>
+#include "sgTexture.h"
 
-#include "sgAction.h"
-#include "sgTouches.h"
-#include "sgAccelerometer.h"
-
-class CameraFree : public sgAction
+/**
+ * Accelerometer namespace. Handles the accelerometer.
+ */
+namespace sgCameraStream
 {
-	public:
-		CameraFree(float sp = 1.0, bool acc = false);
-	
-		void makeStereo(float dist, float xoffset = 0.0f);
-		void makeAnaglyph(float dist, const char *fs);
-		void onDraw(float timestep);
-	
-	private:
-		float speed;
-		float stereodist;
-        bool acccontrol;
-		sgCamera *stereo_cam;
-        sgVector2 lefttouchstart;
-        sgVector2 righttouchstart;
-};
+	/**
+	 *	Current camera image.
+	 *	The latest camera image as opengl texture.
+	 */
+	extern sgTexture *currimage;
+}
 
 #endif

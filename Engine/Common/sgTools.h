@@ -31,6 +31,7 @@
 class sgVector3;
 class sgVertex;
 class sgMesh;
+class sgObject;
 
 /**
  * Tools namespace. Provides functionality for different often needed tasks.
@@ -71,6 +72,16 @@ namespace sgTools
 	 * @param I the position of the intersection
 	 */
 	void traceRayMesh(sgMesh *mesh, sgVector3 from, sgVector3 to, sgVertex* I);
+	
+	/**
+	 * Ray object intersection.
+	 * Checks if the given ray intersects the given object.
+	 * @param object the object to check intersection with
+	 * @param from the rays starting point
+	 * @param to the rays end point
+	 * @param I the position of the intersection
+	 */
+	void traceRayObject(sgObject *object, sgVector3 from, sgVector3 to, sgVertex* I);
 }
 
 #endif

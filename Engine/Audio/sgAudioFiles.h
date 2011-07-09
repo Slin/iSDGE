@@ -1,9 +1,9 @@
 //
-//	Camera.h
-//	Engine
+//	sgObjectFiles.h
+//	iSDGE
 //
-//	Created by Nils Daumann on 10.05.10.
-//	Copyright (c) 2010 Nils Daumann
+//	Created by Nils Daumann on 23.03.10.
+//	Copyright (c) 2011 Nils Daumann
 
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
 //	of this software and associated documentation files (the "Software"), to deal
@@ -23,31 +23,33 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-#ifndef __CAMERAFREE_H__
-#define __CAMERAFREE_H__
+#ifndef __SGAUDIOFILES_H__
+#define __SGAUDIOFILES_H__
 
-#include <cmath>
+#include <vector>
+#include <string>
 
-#include "sgAction.h"
-#include "sgTouches.h"
-#include "sgAccelerometer.h"
-
-class CameraFree : public sgAction
+/**
+ * Object file namespace. Contains functionality to loat object files.
+ */
+namespace sgAudioFiles
 {
-	public:
-		CameraFree(float sp = 1.0, bool acc = false);
+	struct sgUncompressedAudio
+	{
+		short int channelCount;
+		unsigned long int sampleRate;
+		unsigned long int dataLength;
+		unsigned char* bytes;
+	};
 	
-		void makeStereo(float dist, float xoffset = 0.0f);
-		void makeAnaglyph(float dist, const char *fs);
-		void onDraw(float timestep);
-	
-	private:
-		float speed;
-		float stereodist;
-        bool acccontrol;
-		sgCamera *stereo_cam;
-        sgVector2 lefttouchstart;
-        sgVector2 righttouchstart;
-};
+	/**
+	 *	Load audio.
+	 *	Loads an audio file into an uncompressed buffer.
+	 * @param audio pointer to the datastructure which will contain the audio information
+	 * @param filename the audio files filename
+	 * @return true if it was successfull, false otherwise
+	 */
+	bool loadAudio(sgUncompressedAudio **audio, const char *filename);
+}
 
 #endif

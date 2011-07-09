@@ -23,14 +23,39 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
+//#define ISDGE_CAMERA_SUPPORT
+
 #import <UIKit/UIKit.h>
 
+#if defined (ISDGE_COMPASS_SUPPORT)
+#import <CoreLocation/CoreLocation.h>
+#endif
 
-@interface sgViewController : UIViewController <UIAccelerometerDelegate>
+#if defined (ISDGE_CAMERA_SUPPORT)
+#import <AVFoundation/AVFoundation.h>
+#endif
+
+@interface sgViewController : UIViewController
+<
+	UIAccelerometerDelegate
+#if defined (ISDGE_COMPASS_SUPPORT)
+	,CLLocationManagerDelegate
+#endif
+#if defined (ISDGE_CAMERA_SUPPORT)
+	,AVCaptureVideoDataOutputSampleBufferDelegate
+#endif
+>
 {
-
+#if defined (ISDGE_COMPASS_SUPPORT)
+	CLLocationManager *locationManager;
+#endif
+#if defined (ISDGE_CAMERA_SUPPORT)
+	AVCaptureSession *captureSession;
+#endif
 }
 
+- (void)startCamera;
 - (void)startAccelerometer;
+- (void)startCompass;
 
 @end

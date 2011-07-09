@@ -301,7 +301,7 @@ void sgTexture::lockPixels()
 	for(int i = 0; i < width*height*4; i++)
 		texdata[i] = 0;
 	
-	bool newfbo = false;
+/*	bool newfbo = false;
 	if(fbo == -1)
 	{
 		newfbo = true;
@@ -339,13 +339,13 @@ void sgTexture::lockPixels()
 			glDeleteFramebuffersOES(1, &fbo);
 		}
 		fbo = -1;
-	}
+	}*/
 }
 
-void sgTexture::updatePixels()
+void sgTexture::updatePixels(bool swapped)
 {
 	glBindTexture(GL_TEXTURE_2D, texid);
-	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, texdata);
+	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, (swapped?GL_BGRA:GL_RGBA), GL_UNSIGNED_BYTE, texdata);
 }
 
 
@@ -377,6 +377,11 @@ void sgTexture::setPixel(int x, int y, sgColorA color)
 	texdata[y*width*4+x*4+1] = color.g;
 	texdata[y*width*4+x*4+2] = color.b;
 	texdata[y*width*4+x*4+3] = color.a;
+}
+
+void sgTexture::setPixels(unsigned char *data, unsigned int offset, unsigned int size)
+{
+	memcpy(texdata, data, size);
 }
 
 sgColorA sgTexture::getPixel(int x, int y)

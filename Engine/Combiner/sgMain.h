@@ -31,12 +31,14 @@
 #include "sgRendererES2.h"
 #include "sgTouches.h"
 #include "sgAccelerometer.h"
+#include "sgCameraStream.h"
 #include "sgEvents.h"
 #include "sgAction.h"
 #include "sgEntity.h"
 #include "sgTimer.h"
 #include "sgPhysWorld.h"
 #include "sgPhysWorldBullet.h"
+#include "sgAudioPlayer.h"
 
 class sgMain
 {
@@ -78,6 +80,12 @@ class sgMain
 		 *	Pointer to the physics world.
 		 */
 		sgPhysWorld *physworld;
+	
+		/**
+		 *	Audio player.
+		 *	Pointer to the audio player.
+		 */
+		sgAudioPlayer *audioplayer;
 		
 		/**
 		 *	First entity.

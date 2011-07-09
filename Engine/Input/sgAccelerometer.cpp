@@ -29,4 +29,8 @@ namespace sgAccelerometer
 {
 	sgVector3 curracc;
 	sgVector3 curraccabs;
+	sgVector3 currsmoothaccabs;
+	sgVector3 currsmoothacc;
+	
+	float currheading;
 }

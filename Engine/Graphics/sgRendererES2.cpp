@@ -372,6 +372,11 @@ void sgRendererES2::setMaterial(sgMaterial *mat)
 		glDepthMask(GL_FALSE);
 	}
 	
+	if(mat->shader->time != -1)
+	{
+		glUniform1f(mat->shader->time, (float)currenttime);
+	}
+	
 	for(n = 0; n < mat->parameters.size(); n++)
 	{
 		if(mat->parameters[n].location != -1)
@@ -491,10 +496,6 @@ void sgRendererES2::renderObjects(sgCamera *cam, sgObject *first)
 					glUniformMatrix4fv(currbod->materials[i]->shader->matview, 1, GL_FALSE, viewmat.mat);
 				else
 					glUniformMatrix4fv(currbod->materials[i]->shader->matview, 1, GL_FALSE, cam->matview.mat);
-			}
-			if(currbod->materials[i]->shader->time != -1)
-			{
-				glUniform1f(currbod->materials[i]->shader->time, (float)currenttime);
 			}
 			if(currbod->materials[i]->shader->vposition != -1)
 			{
@@ -628,10 +629,9 @@ void sgRendererES2::renderObjects(sgCamera *cam, sgObject *first)
 						glVertexAttribPointer(currbod->materials[i]->shader->tangent, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, (const void*)46);
 					}
 				}
-				
-				glBindBuffer(GL_ARRAY_BUFFER, 0);
 			}else
 			{
+				glBindBuffer(GL_ARRAY_BUFFER, 0);
 				if(currbod->materials[i]->shader->position != -1)
 				{
 					glVertexAttribPointer(currbod->materials[i]->shader->position, 3, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, &currbod->meshs[i]->vertices->position.x);
@@ -717,10 +717,86 @@ void sgRendererES2::renderObjects(sgCamera *cam, sgObject *first)
 			{
 				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, currbod->meshs[i]->ivbo);
 				glDrawElements(GL_TRIANGLES, currbod->meshs[i]->indexnum, GL_UNSIGNED_SHORT, 0);
-				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 			}else
 			{
+				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 				glDrawElements(GL_TRIANGLES, currbod->meshs[i]->indexnum, GL_UNSIGNED_SHORT, currbod->meshs[i]->indices);
+			}
+			
+			if(currbod->materials[i]->shader->position != -1)
+			{
+				glDisableVertexAttribArray(currbod->materials[i]->shader->position);
+			}
+			if(currbod->materials[i]->shader->normal != -1)
+			{
+				glDisableVertexAttribArray(currbod->materials[i]->shader->normal);
+			}
+			if(currbod->materials[i]->shader->texcoord0 != -1)
+			{
+				glDisableVertexAttribArray(currbod->materials[i]->shader->texcoord0);
+			}
+			if(currbod->meshs[i]->vtxform == SECONDUV)
+			{
+				if(currbod->materials[i]->shader->texcoord1 != -1)
+				{
+					glDisableVertexAttribArray(currbod->materials[i]->shader->texcoord1);
+				}
+			}else if(currbod->meshs[i]->vtxform == COLOR)
+			{
+				if(currbod->materials[i]->shader->color != -1)
+				{
+					glDisableVertexAttribArray(currbod->materials[i]->shader->color);
+				}
+			}else if(currbod->meshs[i]->vtxform == SECONDUVCOLOR)
+			{
+				if(currbod->materials[i]->shader->texcoord1 != -1)
+				{
+					glDisableVertexAttribArray(currbod->materials[i]->shader->texcoord1);
+				}
+				if(currbod->materials[i]->shader->color != -1)
+				{
+					glDisableVertexAttribArray(currbod->materials[i]->shader->color);
+				}
+			}else if(currbod->meshs[i]->vtxform == TANGENT)
+			{
+				if(currbod->materials[i]->shader->tangent != -1)
+				{
+					glDisableVertexAttribArray(currbod->materials[i]->shader->tangent);
+				}
+			}else if(currbod->meshs[i]->vtxform == TANGENTSECONDUV)
+			{
+				if(currbod->materials[i]->shader->texcoord1 != -1)
+				{
+					glDisableVertexAttribArray(currbod->materials[i]->shader->texcoord1);
+				}
+				if(currbod->materials[i]->shader->tangent != -1)
+				{
+					glDisableVertexAttribArray(currbod->materials[i]->shader->tangent);
+				}
+			}else if(currbod->meshs[i]->vtxform == TANGENTCOLOR)
+			{
+				if(currbod->materials[i]->shader->color != -1)
+				{
+					glDisableVertexAttribArray(currbod->materials[i]->shader->color);
+				}
+				if(currbod->materials[i]->shader->tangent != -1)
+				{
+					glDisableVertexAttribArray(currbod->materials[i]->shader->tangent);
+				}
+			}else if(currbod->meshs[i]->vtxform == TANGENTSECONDUVCOLOR)
+			{
+				if(currbod->materials[i]->shader->texcoord1 != -1)
+				{
+					glDisableVertexAttribArray(currbod->materials[i]->shader->texcoord1);
+				}
+				if(currbod->materials[i]->shader->color != -1)
+				{
+					glDisableVertexAttribArray(currbod->materials[i]->shader->color);
+				}
+				if(currbod->materials[i]->shader->tangent != -1)
+				{
+					glDisableVertexAttribArray(currbod->materials[i]->shader->tangent);
+				}
 			}
 		}
 	}
@@ -737,6 +813,7 @@ void sgRendererES2::renderPanels(sgPanel *first)
 	matproj.makeProjectionOrtho(0, backingWidth, 0, backingHeight, -1, 1);
 	
 	glBindBuffer(GL_ARRAY_BUFFER, quadvbo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	
 	sgMatrix4x4 matprojviewmodel;
 	sgImage *img;
@@ -755,6 +832,7 @@ void sgRendererES2::renderPanels(sgPanel *first)
 		if(curr->rendertarget != NULL && currfbo != curr->rendertarget->fbo)
 		{
 			glBindFramebuffer(GL_FRAMEBUFFER, curr->rendertarget->fbo);
+			glClear(GL_COLOR_BUFFER_BIT);
 			currfbo = curr->rendertarget->fbo;
 		}else
 		{
@@ -827,7 +905,6 @@ void sgRendererES2::renderPanels(sgPanel *first)
 					glVertexAttribPointer(img->mat->shader->position, 3, GL_FLOAT, 0, 20, 0);
 					glEnableVertexAttribArray(img->mat->shader->position);
 				}
-				
 				if(img->mat->shader->texcoord0 != -1)
 				{
 					glVertexAttribPointer(img->mat->shader->texcoord0, 2, GL_FLOAT, 0, 20, (const void*)12);
@@ -835,6 +912,15 @@ void sgRendererES2::renderPanels(sgPanel *first)
 				}
 
 				glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+				
+				if(img->mat->shader->position != -1)
+				{
+					glDisableVertexAttribArray(img->mat->shader->position);
+				}
+				if(img->mat->shader->texcoord0 != -1)
+				{
+					glDisableVertexAttribArray(img->mat->shader->texcoord0);
+				}
 			}else
 			{
 				//draw text elements
@@ -870,7 +956,6 @@ void sgRendererES2::renderPanels(sgPanel *first)
 						glVertexAttribPointer(txt->mat->shader->position, 3, GL_FLOAT, 0, 20, 0);
 						glEnableVertexAttribArray(txt->mat->shader->position);
 					}
-					
 					if(txt->mat->shader->texcoord0 != -1)
 					{
 						glVertexAttribPointer(txt->mat->shader->texcoord0, 2, GL_FLOAT, 0, 20, (const void*)12);
@@ -878,11 +963,19 @@ void sgRendererES2::renderPanels(sgPanel *first)
 					}
 					
 					glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+					
+					if(txt->mat->shader->position != -1)
+					{
+						glDisableVertexAttribArray(txt->mat->shader->position);
+					}
+					if(txt->mat->shader->texcoord0 != -1)
+					{
+						glDisableVertexAttribArray(txt->mat->shader->texcoord0);
+					}
 				}
 			}
 		}
 	}
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 void sgRendererES2::renderShadowVolumes(sgCamera *cam, sgObject *first)
@@ -929,9 +1022,9 @@ void sgRendererES2::renderShadowVolumes(sgCamera *cam, sgObject *first)
 				glEnableVertexAttribArray(shadowvolume->shader->normal);
 				glVertexAttribPointer(shadowvolume->shader->normal, 3, GL_FLOAT, 0, sizeof(sgVertex), (const void*)12);
 			}
-			glBindBuffer(GL_ARRAY_BUFFER, 0);
 		}else
 		{
+			glBindBuffer(GL_ARRAY_BUFFER, 0);
 			if(shadowvolume->shader->position != -1)
 			{
 				glEnableVertexAttribArray(shadowvolume->shader->position);
@@ -948,10 +1041,19 @@ void sgRendererES2::renderShadowVolumes(sgCamera *cam, sgObject *first)
 		{
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, curr->shadowvolume->mesh->ivbo);
 			glDrawElements(GL_TRIANGLES, curr->shadowvolume->mesh->indexnum, GL_UNSIGNED_SHORT, 0);
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		}else
 		{
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 			glDrawElements(GL_TRIANGLES, curr->shadowvolume->mesh->indexnum, GL_UNSIGNED_SHORT, curr->shadowvolume->mesh->indices);
+		}
+		
+		if(shadowvolume->shader->position != -1)
+		{
+			glDisableVertexAttribArray(shadowvolume->shader->position);
+		}
+		if(shadowvolume->shader->normal != -1)
+		{
+			glDisableVertexAttribArray(shadowvolume->shader->normal);
 		}
 	}
 }
@@ -985,6 +1087,7 @@ void sgRendererES2::renderShadows(sgCamera *cam, sgObject *first)
 
 	//Render fullscreen quad
 	glBindBuffer(GL_ARRAY_BUFFER, quadvbo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glUseProgram(shadowquad->shader->program);
 	if(shadowquad->shader->position != -1)
 	{
@@ -992,7 +1095,10 @@ void sgRendererES2::renderShadows(sgCamera *cam, sgObject *first)
 		glEnableVertexAttribArray(shadowquad->shader->position);
 	}
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	if(shadowquad->shader->position != -1)
+	{
+		glDisableVertexAttribArray(shadowquad->shader->position);
+	}
 
 	glDepthMask(GL_TRUE);
 	glDisable(GL_STENCIL_TEST);
@@ -1019,6 +1125,9 @@ void sgRendererES2::updateShadows(sgObject *first)
 
 void sgRendererES2::renderParticles(sgCamera *cam, sgParticleEmitter *first)
 {
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	
 	sgMatrix4x4 matprojview;
 	sgParticleEmitter *curr;
 	for(curr = first->next; curr != NULL; curr = curr->next)
@@ -1069,21 +1178,34 @@ void sgRendererES2::renderParticles(sgCamera *cam, sgParticleEmitter *first)
 		
 		if(curr->material->shader->position != -1)
 		{
-			glVertexAttribPointer(curr->material->shader->position, 3, GL_FLOAT, 0, 36, &curr->vertices[0]);
 			glEnableVertexAttribArray(curr->material->shader->position);
+			glVertexAttribPointer(curr->material->shader->position, 3, GL_FLOAT, 0, 36, &curr->vertices[0]);
 		}
 		if(curr->material->shader->color != -1)
 		{
-			glVertexAttribPointer(curr->material->shader->color, 4, GL_FLOAT, 0, 36, &curr->vertices[3]);
 			glEnableVertexAttribArray(curr->material->shader->color);
+			glVertexAttribPointer(curr->material->shader->color, 4, GL_FLOAT, 0, 36, &curr->vertices[3]);
 		}
 		if(curr->material->shader->texcoord0 != -1)
 		{
-			glVertexAttribPointer(curr->material->shader->texcoord0, 2, GL_FLOAT, 0, 36, &curr->vertices[7]);
 			glEnableVertexAttribArray(curr->material->shader->texcoord0);
+			glVertexAttribPointer(curr->material->shader->texcoord0, 2, GL_FLOAT, 0, 36, &curr->vertices[7]);
 		}
 		
 		glDrawElements(GL_TRIANGLES, curr->indexnum, GL_UNSIGNED_SHORT, curr->indices);
+		
+		if(curr->material->shader->position != -1)
+		{
+			glDisableVertexAttribArray(curr->material->shader->position);
+		}
+		if(curr->material->shader->color != -1)
+		{
+			glDisableVertexAttribArray(curr->material->shader->color);
+		}
+		if(curr->material->shader->texcoord0 != -1)
+		{
+			glDisableVertexAttribArray(curr->material->shader->texcoord0);
+		}
 	}
 }
 
@@ -1143,7 +1265,7 @@ void sgRendererES2::render()
 		glDepthMask(GL_TRUE);
 		glClearStencil(0);
 		glClearDepthf(1.0f);
-		glClear(GL_STENCIL_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT|GL_STENCIL_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 		
 		//Update camera
 		cam->updateView();

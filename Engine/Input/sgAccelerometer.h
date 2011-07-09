@@ -44,6 +44,24 @@ namespace sgAccelerometer
 	 *	The current values provided by the accelerometer.
 	 */
 	extern sgVector3 curracc;
+	
+	/**
+	 *	Current smoothed absolute acceleration.
+	 *	The current smoothed absolute values provided by the accelerometer, without device rotation. This basicly represents gravity.
+	 */
+	extern sgVector3 currsmoothaccabs;
+	
+	/**
+	 *	Current smoothed acceleration.
+	 *	The current smoothed values provided by the accelerometer. This basicly represents gravity.
+	 */
+	extern sgVector3 currsmoothacc;
+	
+	/**
+	 *	Current heading.
+	 *	The current heading in degrees given by the gyrometer.
+	 */
+	extern float currheading;
 }
 
 #endif

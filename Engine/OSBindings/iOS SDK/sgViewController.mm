@@ -26,6 +26,11 @@
 #import "sgViewController.h"
 #import "sgView.h"
 
+#if defined (ISDGE_CAMERA_SUPPORT)
+#import <CoreVideo/CoreVideo.h>
+#import <CoreMedia/CoreMedia.h>
+#import <QuartzCore/QuartzCore.h>
+#endif
 
 @implementation sgViewController
 
@@ -47,7 +52,40 @@
 	 sgView *view = [[sgView alloc] initWithFrame:[UIScreen mainScreen].applicationFrame];
 	 self.view = view;
 	 [view release];
+	 
+	 [sgView setViewcontroller:self];
  }
+
+
+- (void)startCamera
+{
+#if defined (ISDGE_CAMERA_SUPPORT)
+	if(sgCameraStream::currimage == 0)
+	{
+		sgCameraStream::currimage = sgTexture::getTexture2D(480, 360);
+		sgCameraStream::currimage->lockPixels();
+	}
+	
+	captureSession = [[AVCaptureSession alloc] init];
+	captureSession.sessionPreset = AVCaptureSessionPresetMedium;
+	
+	AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+	NSError *error = nil;
+	AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:device error:&error];
+	[captureSession addInput:input];
+	
+	AVCaptureVideoDataOutput *output = [[[AVCaptureVideoDataOutput alloc] init] autorelease];
+	[captureSession addOutput:output];
+	output.videoSettings = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey];
+//	output.minFrameDuration = CMTimeMake(1, 15);
+	
+	dispatch_queue_t queue = dispatch_queue_create("com.slindev.cameraqueue", NULL);
+	[output setSampleBufferDelegate:self queue:queue];
+	dispatch_release(queue);
+	
+	[captureSession startRunning];
+#endif
+}
 
 
 - (void)startAccelerometer
@@ -58,12 +96,26 @@
 }
 
 
- // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
- - (void)viewDidLoad
- {
-	 [self startAccelerometer];
-	 [super viewDidLoad];
- }
+- (void)startCompass
+{
+#if defined (ISDGE_COMPASS_SUPPORT)
+	locationManager = [[CLLocationManager alloc] init];
+	locationManager.delegate = self;
+	if([locationManager locationServicesEnabled] &&
+	   [locationManager headingAvailable])
+	{
+//		[locationManager startUpdatingLocation];
+		[locationManager startUpdatingHeading];
+	}
+#endif
+}
+
+
+// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+- (void)viewDidLoad
+{
+	[super viewDidLoad];
+}
  
 
 
@@ -240,6 +292,7 @@
 	temp.z = acceleration.z;
 	
 	sgAccelerometer::curraccabs = temp;
+	sgAccelerometer::currsmoothaccabs = temp*0.1f+sgAccelerometer::currsmoothaccabs*0.9f;
 	
 	switch([sgView main]->orientation)
 	{
@@ -273,9 +326,44 @@
 			sgAccelerometer::curracc.z = temp.z;
 			break;
 	}
+	
+	sgAccelerometer::currsmoothacc = sgAccelerometer::curracc*0.1f+sgAccelerometer::currsmoothacc*0.9f;
 }
 
-- (void)dealloc {
+#if defined (ISDGE_COMPASS_SUPPORT)
+- (void)locationManager:(CLLocationManager*)manager didUpdateHeading:(CLHeading*)newHeading
+{
+	// If the accuracy is valid, process the event.
+	if (newHeading.headingAccuracy > 0)
+	{
+		sgAccelerometer::currheading = newHeading.magneticHeading;
+	}
+}
+#endif
+
+#if defined (ISDGE_CAMERA_SUPPORT)
+- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
+{
+	CVImageBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+	CVPixelBufferLockBaseAddress(pixelBuffer, 0);
+	
+	int bufferHeight = CVPixelBufferGetHeight(pixelBuffer);
+	int bufferWidth = CVPixelBufferGetWidth(pixelBuffer);
+	
+	unsigned char *rowBase = (unsigned char *)CVPixelBufferGetBaseAddress(pixelBuffer);
+	
+	sgCameraStream::currimage->setPixels(rowBase, 0, bufferWidth*bufferHeight*4);
+	
+	dispatch_async(dispatch_get_main_queue(), ^{
+		sgCameraStream::currimage->updatePixels(true);
+	});
+	
+	CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);
+}
+#endif
+
+- (void)dealloc
+{
     [super dealloc];
 }
 
