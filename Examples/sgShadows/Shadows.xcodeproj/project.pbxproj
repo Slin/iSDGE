@@ -21,6 +21,13 @@
 		290B487D11BFB54E00A54048 /* sgView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 290B487C11BFB54E00A54048 /* sgView.mm */; };
 		290B48A711BFB58C00A54048 /* sgMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 290B48A511BFB58C00A54048 /* sgMain.cpp */; };
 		290B48AC11BFB5BB00A54048 /* sgTimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 290B48AA11BFB5BB00A54048 /* sgTimer.cpp */; };
+		2923F92613C9169D00228AE9 /* sgAudioFiles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2923F91E13C9169D00228AE9 /* sgAudioFiles.cpp */; };
+		2923F92713C9169D00228AE9 /* sgAudioPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2923F92013C9169D00228AE9 /* sgAudioPlayer.cpp */; };
+		2923F92813C9169D00228AE9 /* sgSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2923F92213C9169D00228AE9 /* sgSound.cpp */; };
+		2923F92913C9169D00228AE9 /* sgSoundSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2923F92413C9169D00228AE9 /* sgSoundSource.cpp */; };
+		2923F92B13C916AC00228AE9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2923F92A13C916AC00228AE9 /* AudioToolbox.framework */; };
+		2923F92D13C916AC00228AE9 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2923F92C13C916AC00228AE9 /* OpenAL.framework */; };
+		2923F93213C916E200228AE9 /* sgCameraStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2923F93013C916E200228AE9 /* sgCameraStream.cpp */; };
 		292FFC2F12159C61003564EE /* f360.sgm in Resources */ = {isa = PBXBuildFile; fileRef = 292FFC0B12159C61003564EE /* f360.sgm */; };
 		292FFC3312159C61003564EE /* jeep2.png in Resources */ = {isa = PBXBuildFile; fileRef = 292FFC1012159C61003564EE /* jeep2.png */; };
 		292FFC3412159C61003564EE /* jeep2.sgm in Resources */ = {isa = PBXBuildFile; fileRef = 292FFC1112159C61003564EE /* jeep2.sgm */; };
@@ -261,6 +268,18 @@
 		290B48A611BFB58C00A54048 /* sgMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgMain.h; sourceTree = "<group>"; };
 		290B48AA11BFB5BB00A54048 /* sgTimer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgTimer.cpp; sourceTree = "<group>"; };
 		290B48AB11BFB5BB00A54048 /* sgTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgTimer.h; sourceTree = "<group>"; };
+		2923F91E13C9169D00228AE9 /* sgAudioFiles.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgAudioFiles.cpp; sourceTree = "<group>"; };
+		2923F91F13C9169D00228AE9 /* sgAudioFiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgAudioFiles.h; sourceTree = "<group>"; };
+		2923F92013C9169D00228AE9 /* sgAudioPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgAudioPlayer.cpp; sourceTree = "<group>"; };
+		2923F92113C9169D00228AE9 /* sgAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgAudioPlayer.h; sourceTree = "<group>"; };
+		2923F92213C9169D00228AE9 /* sgSound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgSound.cpp; sourceTree = "<group>"; };
+		2923F92313C9169D00228AE9 /* sgSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgSound.h; sourceTree = "<group>"; };
+		2923F92413C9169D00228AE9 /* sgSoundSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgSoundSource.cpp; sourceTree = "<group>"; };
+		2923F92513C9169D00228AE9 /* sgSoundSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgSoundSource.h; sourceTree = "<group>"; };
+		2923F92A13C916AC00228AE9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		2923F92C13C916AC00228AE9 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
+		2923F93013C916E200228AE9 /* sgCameraStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgCameraStream.cpp; sourceTree = "<group>"; };
+		2923F93113C916E200228AE9 /* sgCameraStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgCameraStream.h; sourceTree = "<group>"; };
 		292FFC0B12159C61003564EE /* f360.sgm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = f360.sgm; sourceTree = "<group>"; };
 		292FFC1012159C61003564EE /* jeep2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = jeep2.png; sourceTree = "<group>"; };
 		292FFC1112159C61003564EE /* jeep2.sgm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = jeep2.sgm; sourceTree = "<group>"; };
@@ -731,6 +750,8 @@
 				28FD15000DC6FC520079059D /* OpenGLES.framework in Frameworks */,
 				28FD15080DC6FC5B0079059D /* QuartzCore.framework in Frameworks */,
 				2952EEAE117A6F90006FAB6F /* CoreGraphics.framework in Frameworks */,
+				2923F92B13C916AC00228AE9 /* AudioToolbox.framework in Frameworks */,
+				2923F92D13C916AC00228AE9 /* OpenAL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -765,6 +786,14 @@
 		290B10B2117905E500AC324E /* Audio */ = {
 			isa = PBXGroup;
 			children = (
+				2923F91E13C9169D00228AE9 /* sgAudioFiles.cpp */,
+				2923F91F13C9169D00228AE9 /* sgAudioFiles.h */,
+				2923F92013C9169D00228AE9 /* sgAudioPlayer.cpp */,
+				2923F92113C9169D00228AE9 /* sgAudioPlayer.h */,
+				2923F92213C9169D00228AE9 /* sgSound.cpp */,
+				2923F92313C9169D00228AE9 /* sgSound.h */,
+				2923F92413C9169D00228AE9 /* sgSoundSource.cpp */,
+				2923F92513C9169D00228AE9 /* sgSoundSource.h */,
 			);
 			path = Audio;
 			sourceTree = "<group>";
@@ -1540,6 +1569,8 @@
 		29AD37BA1179DBED0089F607 /* Input */ = {
 			isa = PBXGroup;
 			children = (
+				2923F93013C916E200228AE9 /* sgCameraStream.cpp */,
+				2923F93113C916E200228AE9 /* sgCameraStream.h */,
 				29360AE3117B586200EDD4F2 /* sgTouches.h */,
 				29360AE4117B586200EDD4F2 /* sgTouches.cpp */,
 				29360AE9117B589600EDD4F2 /* sgAccelerometer.h */,
@@ -1579,6 +1610,8 @@
 				28FD14FF0DC6FC520079059D /* OpenGLES.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
+				2923F92A13C916AC00228AE9 /* AudioToolbox.framework */,
+				2923F92C13C916AC00228AE9 /* OpenAL.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1882,6 +1915,11 @@
 				29A247EA135B2D8500001E88 /* sgPhysConstraint.cpp in Sources */,
 				29A247EB135B2D8500001E88 /* sgPhysBody.cpp in Sources */,
 				29A247EC135B2D8500001E88 /* sgPhysWorld.cpp in Sources */,
+				2923F92613C9169D00228AE9 /* sgAudioFiles.cpp in Sources */,
+				2923F92713C9169D00228AE9 /* sgAudioPlayer.cpp in Sources */,
+				2923F92813C9169D00228AE9 /* sgSound.cpp in Sources */,
+				2923F92913C9169D00228AE9 /* sgSoundSource.cpp in Sources */,
+				2923F93213C916E200228AE9 /* sgCameraStream.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -24,10 +24,14 @@
 //	THE SOFTWARE.
 
 #include "Events.h"
+#include "sgView.h"
 
 void Events::onInit(sgMain *m)
 {
 	sgmain = m;
+	
+	//Activate multitouch support
+	[sgView view].multipleTouchEnabled = true;
 	
 	//Set device orientation
 	sgmain->setOrientation(2);

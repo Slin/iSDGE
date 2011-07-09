@@ -26,21 +26,21 @@
 #include "Events.h"
 
 //Has to be included, if you want to enable multitouch
-//#import "sgView.h"
+#import "sgView.h"
 
 //This method will be called directly after initializing the engine and is meant to be used to initialize your project in
 void Events::onInit(sgMain *m)
 {
 	sgmain = m;
-	
+    
 	//Activate multitouch support
-//	[sgView view].multipleTouchEnabled = true;
+	[sgView view].multipleTouchEnabled = true;
 	
 	//Set device orientation
 	sgmain->setOrientation(2);
 	
 	//Activate multisampling
-//	sgmain->renderer->setMultisampling(4);
+	sgmain->renderer->setMultisampling(4);
 	
 	//Create sun at default position
 	sgmain->renderer->first_light->createLight();
@@ -57,9 +57,8 @@ void Events::onInit(sgMain *m)
 	sgmain->first_ent->createSkyCubeEntity("sky_right.png", "sky_back.png", "sky_left.png", "sky_front.png", "sky_down.png", "sky_up.png");
 	
 	//Create a rotating space ship
-	sgEntity *ent = sgmain->first_ent->createObjEntity("spacecraft.sgm", sgObjectFiles::NONE, (sgAction*)new Rotate);
-	ent->obj->position.z = 0.0;
-	ent->obj->scale *= 4;
+    sgEntity *ship = sgmain->first_ent->createObjEntity("spacecraft.sgm", sgObjectFiles::NONE, (sgAction*)new Rotate);
+    ship->obj->scale *= 4.0;
 }
 
 //Called every frame, just before drawing

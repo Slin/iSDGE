@@ -203,6 +203,16 @@
 		vrLen = 1121;
 		vrLoc = 7925;
 	};
+	2923F90913C9164F00228AE9 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 295CBF5A1215861700F1F941 /* Events.mm */;
+		name = "Events.mm: 29";
+		rLen = 0;
+		rLoc = 1269;
+		rType = 0;
+		vrLen = 2266;
+		vrLoc = 186;
+	};
 	2926F7D3121029AF00AD1100 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 29D7EA84117CA95D0091D933 /* sgLight.h */;
@@ -461,23 +471,6 @@
 			sepNavVisRange = "{0, 1367}";
 		};
 	};
-	2942C99E11DBEF6B00031A3D /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 2942C99F11DBEF6B00031A3D /* OGLES2IntroducingPOD.cpp */;
-		name = "OGLES2IntroducingPOD.cpp: 1";
-		rLen = 0;
-		rLoc = 0;
-		rType = 0;
-		vrLen = 2469;
-		vrLoc = 4048;
-	};
-	2942C99F11DBEF6B00031A3D /* OGLES2IntroducingPOD.cpp */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.cpp.cpp;
-		name = OGLES2IntroducingPOD.cpp;
-		path = /Users/nils/Downloads/SDKPackage/TrainingCourse/07_IntroducingPOD/OGLES2/OGLES2IntroducingPOD.cpp;
-		sourceTree = "<absolute>";
-	};
 	2952EC4C117A1666006FAB6F /* Mesh.cpp */ = {
 		isa = PBXFileReference;
 		lastKnownFileType = sourcecode.cpp.cpp;
@@ -587,9 +580,9 @@
 	};
 	295CBF5A1215861700F1F941 /* Events.mm */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1615, 910}}";
-			sepNavSelRange = "{2220, 0}";
-			sepNavVisRange = "{106, 2366}";
+			sepNavIntBoundsRect = "{{0, 0}, {1615, 897}}";
+			sepNavSelRange = "{1269, 0}";
+			sepNavVisRange = "{186, 2266}";
 		};
 	};
 	295CBF5B1215861700F1F941 /* main.cpp */ = {
@@ -792,7 +785,7 @@
 		fRef = 290B48A511BFB58C00A54048 /* sgMain.cpp */;
 		name = "sgMain.cpp: 98";
 		rLen = 0;
-		rLoc = 2367;
+		rLoc = 2422;
 		rType = 0;
 		vrLen = 1030;
 		vrLoc = 1483;
@@ -852,7 +845,7 @@
 		fRef = 295CBF5A1215861700F1F941 /* Events.mm */;
 		name = "Events.mm: 60";
 		rLen = 0;
-		rLoc = 2220;
+		rLoc = 2217;
 		rType = 0;
 		vrLen = 2366;
 		vrLoc = 106;
@@ -906,23 +899,6 @@
 			sepNavVisRange = "{0, 1383}";
 		};
 	};
-	29A8D59E11E0B01200746D31 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 29A8D59F11E0B01200746D31 /* OGLES2ShadowVolume.cpp */;
-		name = "OGLES2ShadowVolume.cpp: 831";
-		rLen = 0;
-		rLoc = 28093;
-		rType = 0;
-		vrLen = 1604;
-		vrLoc = 26959;
-	};
-	29A8D59F11E0B01200746D31 /* OGLES2ShadowVolume.cpp */ = {
-		isa = PBXFileReference;
-		lastKnownFileType = sourcecode.cpp.cpp;
-		name = OGLES2ShadowVolume.cpp;
-		path = /Users/nils/Downloads/SDKPackage/TrainingCourse/27_ShadowVolume/OGLES2/OGLES2ShadowVolume.cpp;
-		sourceTree = "<absolute>";
-	};
 	29AB96B21184F61B0071CC97 /* sgPanel.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1615, 2925}}";
@@ -946,16 +922,6 @@
 		rType = 0;
 		vrLen = 2120;
 		vrLoc = 427;
-	};
-	29ABC685133FB39000C8CAB2 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 295CBF5A1215861700F1F941 /* Events.mm */;
-		name = "Events.mm: 60";
-		rLen = 0;
-		rLoc = 2220;
-		rType = 0;
-		vrLen = 2284;
-		vrLoc = 186;
 	};
 	29AC5B1211DE75FA009F1A01 /* RedCyanStereo.fsh */ = {
 		uiCtxt = {
@@ -1288,11 +1254,12 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 324748515;
-			PBXWorkspaceStateSaveDate = 324748515;
+			PBXPerProjectTemplateStateSaveDate = 331944896;
+			PBXWorkspaceStateSaveDate = 331944896;
 		};
 		perUserProjectItems = {
 			2917F559118A5D8E005F295E /* PBXTextBookmark */ = 2917F559118A5D8E005F295E /* PBXTextBookmark */;
+			2923F90913C9164F00228AE9 /* PBXTextBookmark */ = 2923F90913C9164F00228AE9 /* PBXTextBookmark */;
 			2926F7D3121029AF00AD1100 /* PBXTextBookmark */ = 2926F7D3121029AF00AD1100 /* PBXTextBookmark */;
 			29360B70117BA93400EDD4F2 /* PBXTextBookmark */ = 29360B70117BA93400EDD4F2 /* PBXTextBookmark */;
 			2941E1F411C0F6B800B6EC59 /* PBXTextBookmark */ = 2941E1F411C0F6B800B6EC59 /* PBXTextBookmark */;
@@ -1311,7 +1278,6 @@
 			2941E2EE11C10E9A00B6EC59 /* PBXTextBookmark */ = 2941E2EE11C10E9A00B6EC59 /* PBXTextBookmark */;
 			2941E2EF11C10E9A00B6EC59 /* PBXTextBookmark */ = 2941E2EF11C10E9A00B6EC59 /* PBXTextBookmark */;
 			2941E2F011C10E9A00B6EC59 /* PBXTextBookmark */ = 2941E2F011C10E9A00B6EC59 /* PBXTextBookmark */;
-			2942C99E11DBEF6B00031A3D /* PBXTextBookmark */ = 2942C99E11DBEF6B00031A3D /* PBXTextBookmark */;
 			2952EE03117A4985006FAB6F /* PBXTextBookmark */ = 2952EE03117A4985006FAB6F /* PBXTextBookmark */;
 			2952F105117A9056006FAB6F /* PBXTextBookmark */ = 2952F105117A9056006FAB6F /* PBXTextBookmark */;
 			2952F12B117A92B7006FAB6F /* PBXTextBookmark */ = 2952F12B117A92B7006FAB6F /* PBXTextBookmark */;
@@ -1335,9 +1301,7 @@
 			2991E58B1185E869002B9D46 /* PBXTextBookmark */ = 2991E58B1185E869002B9D46 /* PBXTextBookmark */;
 			2999AE2B130753AD004E4700 /* PBXTextBookmark */ = 2999AE2B130753AD004E4700 /* PBXTextBookmark */;
 			29A256FB135B472E00001E88 /* PBXTextBookmark */ = 29A256FB135B472E00001E88 /* PBXTextBookmark */;
-			29A8D59E11E0B01200746D31 /* PBXTextBookmark */ = 29A8D59E11E0B01200746D31 /* PBXTextBookmark */;
 			29ABC684133FB39000C8CAB2 /* PBXTextBookmark */ = 29ABC684133FB39000C8CAB2 /* PBXTextBookmark */;
-			29ABC685133FB39000C8CAB2 /* PBXTextBookmark */ = 29ABC685133FB39000C8CAB2 /* PBXTextBookmark */;
 			29AD37F41179F1FB0089F607 /* PBXTextBookmark */ = 29AD37F41179F1FB0089F607 /* PBXTextBookmark */;
 			29B7B8D51224631200CECE3C /* PBXTextBookmark */ = 29B7B8D51224631200CECE3C /* PBXTextBookmark */;
 			29CCB1941186FDCE00FB4890 /* PBXTextBookmark */ = 29CCB1941186FDCE00FB4890 /* PBXTextBookmark */;
@@ -1632,7 +1596,7 @@
 		fRef = 290A3766118B89A400F2CBE5 /* sgEntity.cpp */;
 		name = "sgEntity.cpp: 49";
 		rLen = 0;
-		rLoc = 1554;
+		rLoc = 1570;
 		rType = 0;
 		vrLen = 705;
 		vrLoc = 1333;
@@ -1642,7 +1606,7 @@
 		fRef = 290A3765118B89A400F2CBE5 /* sgEntity.h */;
 		name = "sgEntity.h: 59";
 		rLen = 0;
-		rLoc = 1965;
+		rLoc = 1992;
 		rType = 0;
 		vrLen = 1656;
 		vrLoc = 1694;
@@ -1712,7 +1676,7 @@
 		fRef = 290B48A611BFB58C00A54048 /* sgMain.h */;
 		name = "sgMain.h: 82";
 		rLen = 23;
-		rLoc = 2383;
+		rLoc = 2410;
 		rType = 0;
 		vrLen = 1465;
 		vrLoc = 1194;
