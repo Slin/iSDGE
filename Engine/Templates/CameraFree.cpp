@@ -103,7 +103,7 @@ void CameraFree::makeAnaglyph(float dist, const char *fs)
 	stereo_cam->rendertarget = sgTexture::getTexture2D(512, 512);
 	stereo_cam->rendertarget->makeRendertarget();
 	
-	sgMaterial *mat = sgMaterial::getMaterial("default", "RedCyanStereo");
+	sgMaterial *mat = sgMaterial::getMaterial("iSDGE.bundle/sgsPPBase.vsh", "iSDGE.bundle/RedCyanStereo.fsh");
 	mat->setTexture2D(-1, ent->cam->rendertarget);
 	mat->setTexture2D(-1, stereo_cam->rendertarget);
 	
