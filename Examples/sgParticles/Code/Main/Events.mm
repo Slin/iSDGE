@@ -26,7 +26,7 @@
 #include "Events.h"
 
 //Has to be included, if you want to enable multitouch
-//#import "sgView.h"
+#import "sgView.h"
 
 //This method will be called directly after initializing the engine and is meant to be used to initialize your project in
 void Events::onInit(sgMain *m)
@@ -34,7 +34,7 @@ void Events::onInit(sgMain *m)
 	sgmain = m;
 	
 	//Activate multitouch support
-//	[sgView view].multipleTouchEnabled = true;
+	[sgView view].multipleTouchEnabled = true;
 	
 	//Set device orientation
 	sgmain->setOrientation(2);
@@ -62,6 +62,8 @@ void Events::onInit(sgMain *m)
 	
 	//Add an object to it
 	emitter->createObj("jeep2.sgm");
+    
+    [[sgView viewcontroller] startAccelerometer];
 }
 
 //Called every frame, just before drawing

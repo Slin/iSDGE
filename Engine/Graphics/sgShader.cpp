@@ -73,7 +73,7 @@ sgShader *sgShader::getShader(BuiltInShaders shad)
 			shader = (sgShader*)sgResourceManager::getResource("shader_texture");
 			if(shader == NULL)
 			{
-				shader = new sgShader("sgsTexture.vsh", "sgsTexture.fsh");
+				shader = new sgShader("iSDGE.bundle/sgsTexture.vsh", "iSDGE.bundle/sgsTexture.fsh");
 				sgResourceManager::addResource("shader_texture", shader);
 			}
 			break;
@@ -83,7 +83,7 @@ sgShader *sgShader::getShader(BuiltInShaders shad)
 			shader = (sgShader*)sgResourceManager::getResource("shader_texture_discard");
 			if(shader == NULL)
 			{
-				shader = new sgShader("sgsTexture.vsh", "sgsTextureDiscard.fsh");
+				shader = new sgShader("iSDGE.bundle/sgsTexture.vsh", "iSDGE.bundle/sgsTextureDiscard.fsh");
 				sgResourceManager::addResource("shader_texture_discard", shader);
 			}
 			break;
@@ -93,7 +93,7 @@ sgShader *sgShader::getShader(BuiltInShaders shad)
 			shader = (sgShader*)sgResourceManager::getResource("shader_sun");
 			if(shader == NULL)
 			{
-				shader = new sgShader("sgsSun.vsh", "sgsSun.fsh");
+				shader = new sgShader("iSDGE.bundle/sgsSun.vsh", "iSDGE.bundle/sgsSun.fsh");
 				sgResourceManager::addResource("shader_sun", shader);
 			}
 			break;
@@ -103,7 +103,7 @@ sgShader *sgShader::getShader(BuiltInShaders shad)
 			shader = (sgShader*)sgResourceManager::getResource("shader_light");
 			if(shader == NULL)
 			{
-				shader = new sgShader("sgsLight.vsh", "sgsLight.fsh");
+				shader = new sgShader("iSDGE.bundle/sgsLight.vsh", "iSDGE.bundle/sgsLight.fsh");
 				sgResourceManager::addResource("shader_light", shader);
 			}
 			break;
@@ -113,7 +113,7 @@ sgShader *sgShader::getShader(BuiltInShaders shad)
 			shader = (sgShader*)sgResourceManager::getResource("shader_lightmap");
 			if(shader == NULL)
 			{
-				shader = new sgShader("sgsLightmap.vsh", "sgsLightmap.fsh");
+				shader = new sgShader("iSDGE.bundle/sgsLightmap.vsh", "iSDGE.bundle/sgsLightmap.fsh");
 				sgResourceManager::addResource("shader_lightmap", shader);
 			}
 			break;
@@ -125,7 +125,7 @@ sgShader *sgShader::getShader(BuiltInShaders shad)
 			shader = (sgShader*)sgResourceManager::getResource("shader_shadowvolume");
 			if(shader == NULL)
 			{
-				shader = new sgShader("sgsShadowvolume.vsh", "sgsShadowvolume.fsh");
+				shader = new sgShader("iSDGE.bundle/sgsShadowvolume.vsh", "iSDGE.bundle/sgsShadowvolume.fsh");
 				sgResourceManager::addResource("shader_shadowvolume", shader);
 			}
 			break;
@@ -135,7 +135,7 @@ sgShader *sgShader::getShader(BuiltInShaders shad)
 			shader = (sgShader*)sgResourceManager::getResource("shader_shadowquad");
 			if(shader == NULL)
 			{
-				shader = new sgShader("sgsShadowquad.vsh", "sgsShadowquad.fsh");
+				shader = new sgShader("iSDGE.bundle/sgsShadowquad.vsh", "iSDGE.bundle/sgsShadowquad.fsh");
 				sgResourceManager::addResource("shader_shadowquad", shader);
 			}
 			break;
@@ -145,7 +145,7 @@ sgShader *sgShader::getShader(BuiltInShaders shad)
 			shader = (sgShader*)sgResourceManager::getResource("shader_particle");
 			if(shader == NULL)
 			{
-				shader = new sgShader("sgsParticle.vsh", "sgsParticle.fsh");
+				shader = new sgShader("iSDGE.bundle/sgsParticle.vsh", "iSDGE.bundle/sgsParticle.fsh");
 				sgResourceManager::addResource("shader_particle", shader);
 			}
 			break;
@@ -156,7 +156,7 @@ sgShader *sgShader::getShader(BuiltInShaders shad)
 			shader = (sgShader*)sgResourceManager::getResource("shader_texture");
 			if(shader == NULL)
 			{
-				shader = new sgShader("sgsTexture.vsh", "sgsTexture.fsh");
+				shader = new sgShader("iSDGE.bundle/sgsTexture.vsh", "iSDGE.bundle/sgsTexture.fsh");
 				sgResourceManager::addResource("shader_texture", shader);
 			}
 			break;

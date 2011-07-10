@@ -65,7 +65,7 @@ namespace sgResourceManager
 	{
 		char *ptr;
 		std::string fnm(filename);
-		if(fnm.find("/") == fnm.npos)
+		if(fnm.find("/") != 0)
 		{
 			CFBundleRef mainBundle = CFBundleGetMainBundle();
 			CFURLRef resourcesURL = CFBundleCopyBundleURL(mainBundle);
