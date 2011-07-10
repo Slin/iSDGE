@@ -30,11 +30,6 @@
 #include "sgMain.h"
 #include "sgDebug.h"
 
-#include "CameraFree.h"
-#include "FPSDisplay.h"
-
-#include "AutoDoor.h"
-
 
 class Events : public sgEvents
 {

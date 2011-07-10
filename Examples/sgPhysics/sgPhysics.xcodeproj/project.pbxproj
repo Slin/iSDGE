@@ -115,6 +115,7 @@
 		2916729E13474F34009E7A51 /* roomlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 2916727913474F34009E7A51 /* roomlight.png */; };
 		291672F213475E8C009E7A51 /* woodb3.png in Resources */ = {isa = PBXBuildFile; fileRef = 291672EC13475E8C009E7A51 /* woodb3.png */; };
 		291672F513475E8C009E7A51 /* woodbox3.sgm in Resources */ = {isa = PBXBuildFile; fileRef = 291672EF13475E8C009E7A51 /* woodbox3.sgm */; };
+		293522B413A3754B002608F7 /* sgCameraStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 293522B313A3754B002608F7 /* sgCameraStream.cpp */; };
 		2952EEAE117A6F90006FAB6F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2952EEAD117A6F90006FAB6F /* CoreGraphics.framework */; };
 		295CBF5C1215861700F1F941 /* Events.mm in Sources */ = {isa = PBXBuildFile; fileRef = 295CBF5A1215861700F1F941 /* Events.mm */; };
 		295CBF5D1215861700F1F941 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295CBF5B1215861700F1F941 /* main.cpp */; };
@@ -256,7 +257,7 @@
 		29A61B91134660FA0000754C /* btSerializer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29A61AA4134660FA0000754C /* btSerializer.cpp */; };
 		29A61BC713466AB10000754C /* sgPhysBody.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29A61BC613466AB10000754C /* sgPhysBody.cpp */; };
 		29A61BCA13466AC50000754C /* sgPhysBodyBullet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29A61BC813466AC50000754C /* sgPhysBodyBullet.cpp */; };
-		29A61D391346A33B0000754C /* CameraFree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29A61D371346A33B0000754C /* CameraFree.cpp */; };
+		29A61D391346A33B0000754C /* CameraFreePhys.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29A61D371346A33B0000754C /* CameraFreePhys.cpp */; };
 		29D64C4113506F1100DEDE70 /* sgCharacterController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29D64C4013506F1100DEDE70 /* sgCharacterController.cpp */; };
 		29D64C4413506F2500DEDE70 /* sgCharacterControllerBullet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29D64C4313506F2500DEDE70 /* sgCharacterControllerBullet.cpp */; };
 		29D7EB5B117CFABF0091D933 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29D7EB5A117CFABF0091D933 /* Entitlements.plist */; };
@@ -420,6 +421,8 @@
 		2916727913474F34009E7A51 /* roomlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = roomlight.png; sourceTree = "<group>"; };
 		291672EC13475E8C009E7A51 /* woodb3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = woodb3.png; sourceTree = "<group>"; };
 		291672EF13475E8C009E7A51 /* woodbox3.sgm */ = {isa = PBXFileReference; lastKnownFileType = file; path = woodbox3.sgm; sourceTree = "<group>"; };
+		293522B213A3754B002608F7 /* sgCameraStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgCameraStream.h; sourceTree = "<group>"; };
+		293522B313A3754B002608F7 /* sgCameraStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgCameraStream.cpp; sourceTree = "<group>"; };
 		2952EEAD117A6F90006FAB6F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		295CBF591215861700F1F941 /* Events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Events.h; sourceTree = "<group>"; };
 		295CBF5A1215861700F1F941 /* Events.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Events.mm; sourceTree = "<group>"; };
@@ -765,8 +768,8 @@
 		29A61BC613466AB10000754C /* sgPhysBody.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgPhysBody.cpp; sourceTree = "<group>"; };
 		29A61BC813466AC50000754C /* sgPhysBodyBullet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgPhysBodyBullet.cpp; sourceTree = "<group>"; };
 		29A61BC913466AC50000754C /* sgPhysBodyBullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgPhysBodyBullet.h; sourceTree = "<group>"; };
-		29A61D371346A33B0000754C /* CameraFree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CameraFree.cpp; sourceTree = "<group>"; };
-		29A61D381346A33B0000754C /* CameraFree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraFree.h; sourceTree = "<group>"; };
+		29A61D371346A33B0000754C /* CameraFreePhys.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CameraFreePhys.cpp; sourceTree = "<group>"; };
+		29A61D381346A33B0000754C /* CameraFreePhys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraFreePhys.h; sourceTree = "<group>"; };
 		29D64C3F13506F1100DEDE70 /* sgCharacterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgCharacterController.h; sourceTree = "<group>"; };
 		29D64C4013506F1100DEDE70 /* sgCharacterController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgCharacterController.cpp; sourceTree = "<group>"; };
 		29D64C4213506F2500DEDE70 /* sgCharacterControllerBullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgCharacterControllerBullet.h; sourceTree = "<group>"; };
@@ -941,6 +944,8 @@
 		291518241343BBE5008C40DF /* Input */ = {
 			isa = PBXGroup;
 			children = (
+				293522B213A3754B002608F7 /* sgCameraStream.h */,
+				293522B313A3754B002608F7 /* sgCameraStream.cpp */,
 				291518251343BBE5008C40DF /* sgAccelerometer.cpp */,
 				291518261343BBE5008C40DF /* sgAccelerometer.h */,
 				291518271343BBE5008C40DF /* sgTouches.cpp */,
@@ -1156,8 +1161,8 @@
 		295CBF66121587B300F1F941 /* Objects */ = {
 			isa = PBXGroup;
 			children = (
-				29A61D371346A33B0000754C /* CameraFree.cpp */,
-				29A61D381346A33B0000754C /* CameraFree.h */,
+				29A61D371346A33B0000754C /* CameraFreePhys.cpp */,
+				29A61D381346A33B0000754C /* CameraFreePhys.h */,
 				295CBF67121587B300F1F941 /* AutoDoor.cpp */,
 				295CBF68121587B300F1F941 /* AutoDoor.h */,
 			);
@@ -2006,11 +2011,12 @@
 				29A61B91134660FA0000754C /* btSerializer.cpp in Sources */,
 				29A61BC713466AB10000754C /* sgPhysBody.cpp in Sources */,
 				29A61BCA13466AC50000754C /* sgPhysBodyBullet.cpp in Sources */,
-				29A61D391346A33B0000754C /* CameraFree.cpp in Sources */,
+				29A61D391346A33B0000754C /* CameraFreePhys.cpp in Sources */,
 				2911C769134A4F1B00308D0B /* sgPhysConstraint.cpp in Sources */,
 				2911C76C134A508C00308D0B /* sgPhysConstraintBullet.cpp in Sources */,
 				29D64C4113506F1100DEDE70 /* sgCharacterController.cpp in Sources */,
 				29D64C4413506F2500DEDE70 /* sgCharacterControllerBullet.cpp in Sources */,
+				293522B413A3754B002608F7 /* sgCameraStream.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2028,11 +2034,7 @@
 				GCC_PREFIX_HEADER = "";
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				INFOPLIST_FILE = "sgPhysics-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../Engine/Physics/bullet/Glut\"",
-					"\"$(SRCROOT)/../../Engine/Physics/Bullet/bullet-2.77/Glut\"",
-				);
+				LIBRARY_SEARCH_PATHS = "";
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				PRODUCT_NAME = sgPhysics;
 			};
@@ -2048,11 +2050,7 @@
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				HEADER_SEARCH_PATHS = "../../Engine/Physics/Bullet/bullet-2.77/src/**";
 				INFOPLIST_FILE = "sgPhysics-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../Engine/Physics/bullet/Glut\"",
-					"\"$(SRCROOT)/../../Engine/Physics/Bullet/bullet-2.77/Glut\"",
-				);
+				LIBRARY_SEARCH_PATHS = "";
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				PRODUCT_NAME = sgPhysics;
 				VALIDATE_PRODUCT = YES;
@@ -2092,7 +2090,7 @@
 				GCC_PREFIX_HEADER = "";
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				INFOPLIST_FILE = "sgPhysics-Info.plist";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = "";
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				PRODUCT_NAME = sgPhysics;
 				VALIDATE_PRODUCT = YES;

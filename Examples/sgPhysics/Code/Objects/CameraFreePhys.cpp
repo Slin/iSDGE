@@ -23,18 +23,18 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-#include "CameraFree.h"
+#include "CameraFreePhys.h"
 #include "sgMain.h"
 #include "sgDebug.h"
 
-CameraFree::CameraFree(float sp)
+CameraFreePhys::CameraFreePhys(float sp)
 {
 	speed = sp;
 	counter = 0;
 	picked = NULL;
 }
 
-void CameraFree::onDraw(float timestep)
+void CameraFreePhys::onDraw(float timestep)
 {
 	timestep *= 16.0f;
 	

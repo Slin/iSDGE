@@ -28,6 +28,10 @@
 //Has to be included, if you want to enable multitouch
 #import "sgView.h"
 
+#include "CameraFreePhys.h"
+#include "FPSDisplay.h"
+#include "AutoDoor.h"
+
 //This method will be called directly after initializing the engine and is meant to be used to initialize your project in
 void Events::onInit(sgMain *m)
 {
@@ -50,7 +54,7 @@ void Events::onInit(sgMain *m)
 	te->createPhysBody(sgPhysBody::ES_BOX, 1.0);
 	
 	//Create the camera
-	cam = sgmain->first_ent->createCamEntity((sgAction*)new CameraFree);
+	cam = sgmain->first_ent->createCamEntity((sgAction*)new CameraFreePhys);
 	
 	//Create sun at default position
 //	sgmain->renderer->first_light->createLight();
@@ -82,6 +86,8 @@ void Events::onInit(sgMain *m)
 	
 	//create the FPS display
 	sgmain->first_ent->createPanEntity((sgAction*)new FPSDisplay);
+	
+	[[sgView viewcontroller] startAccelerometer];
 }
 
 //Called every frame, just before drawing

@@ -23,8 +23,8 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-#ifndef __CAMERAFREE_H__
-#define __CAMERAFREE_H__
+#ifndef __CAMERAFREEPHYS_H__
+#define __CAMERAFREEPHYS_H__
 
 #include <cmath>
 
@@ -32,10 +32,10 @@
 #include "sgTouches.h"
 #include "sgAccelerometer.h"
 
-class CameraFree : public sgAction
+class CameraFreePhys : public sgAction
 {
 	public:
-		CameraFree(float sp = 1.0);
+		CameraFreePhys(float sp = 1.0);
 	
 		void onDraw(float timestep);
 	
