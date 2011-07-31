@@ -35,7 +35,7 @@
 #include "sgDebug.h"
 
 #include <stdlib.h>
-#include <math.h>s
+#include <math.h>
 
 sgObject::sgObject(sgObject* p, sgObject *n)
 {

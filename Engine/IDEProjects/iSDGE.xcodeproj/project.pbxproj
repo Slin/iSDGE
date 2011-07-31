@@ -141,7 +141,6 @@
 		2904EF2313C9DB5A00E04491 /* btGeometryUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2904EDF213C9DB5800E04491 /* btGeometryUtil.cpp */; };
 		2904EF2E13C9DB5A00E04491 /* btQuickprof.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2904EDFD13C9DB5800E04491 /* btQuickprof.cpp */; };
 		2904EF3213C9DB5A00E04491 /* btSerializer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2904EE0113C9DB5800E04491 /* btSerializer.cpp */; };
-		293385BA13C9B379007FC59F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 293381D313C9A81A007FC59F /* Foundation.framework */; };
 		29338D5B13C9B534007FC59F /* sgAudioFiles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29338B6813C9B533007FC59F /* sgAudioFiles.cpp */; };
 		29338D5D13C9B534007FC59F /* sgAudioFiles.h in Headers */ = {isa = PBXBuildFile; fileRef = 29338B6913C9B533007FC59F /* sgAudioFiles.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		29338D5F13C9B534007FC59F /* sgAudioPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29338B6A13C9B533007FC59F /* sgAudioPlayer.cpp */; };
@@ -571,7 +570,6 @@
 		2904EE1513C9DB5800E04491 /* vecidx_aos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vecidx_aos.h; sourceTree = "<group>"; };
 		2904EE1613C9DB5800E04491 /* vectormath_aos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vectormath_aos.h; sourceTree = "<group>"; };
 		2904EE1713C9DB5800E04491 /* vmInclude.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vmInclude.h; sourceTree = "<group>"; };
-		293381D313C9A81A007FC59F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		293385AC13C9B170007FC59F /* iSDGE.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iSDGE.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		29338B6413C9B472007FC59F /* iSDGE-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "iSDGE-Info.plist"; sourceTree = SOURCE_ROOT; };
 		29338B6813C9B533007FC59F /* sgAudioFiles.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgAudioFiles.cpp; sourceTree = "<group>"; };
@@ -726,7 +724,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				293385BA13C9B379007FC59F /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1152,7 +1149,6 @@
 			isa = PBXGroup;
 			children = (
 				29338B6613C9B51B007FC59F /* iSDGE */,
-				293381D213C9A81A007FC59F /* Frameworks */,
 				293381D113C9A81A007FC59F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -1164,14 +1160,6 @@
 				2904EC8E13C9BE8200E04491 /* iSDGE.bundle */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		293381D213C9A81A007FC59F /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				293381D313C9A81A007FC59F /* Foundation.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		29338B6613C9B51B007FC59F /* iSDGE */ = {
@@ -1574,6 +1562,9 @@
 /* Begin PBXProject section */
 		293381C713C9A81A007FC59F /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+			};
 			buildConfigurationList = 293381CA13C9A81A007FC59F /* Build configuration list for PBXProject "iSDGE" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;

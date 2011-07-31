@@ -41,8 +41,10 @@ namespace sgAudioFiles
 		CFStringRef pathstring = CFStringCreateWithCString(NULL, filepath, kCFStringEncodingASCII);
 		delete[] filepath;
 		
-		CFURLRef pathasurl = CFURLCreateWithString(NULL, pathstring, NULL);
+		CFStringRef finalpathstr = CFURLCreateStringByAddingPercentEscapes(NULL, pathstring, NULL, NULL, kCFStringEncodingUTF8);
+		CFURLRef pathasurl = CFURLCreateWithString(NULL, finalpathstr, NULL);
 		CFRelease(pathstring);
+		CFRelease(finalpathstr);
 		
 		ExtAudioFileRef audiofileobject = NULL;
 		OSStatus err = ExtAudioFileOpenURL(pathasurl, &audiofileobject);
@@ -101,7 +103,7 @@ namespace sgAudioFiles
 		*audio = new sgUncompressedAudio;
 		
 		// Read all the data into memory
-		(*audio)->dataLength = theFileLengthInFrames*theOutputFormat.mBytesPerFrame;
+		(*audio)->dataLength = (unsigned long)theFileLengthInFrames*theOutputFormat.mBytesPerFrame;
 		(*audio)->bytes = new unsigned char[(*audio)->dataLength];
 		if((*audio)->bytes)
 		{

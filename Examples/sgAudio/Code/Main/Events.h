@@ -1,9 +1,9 @@
 //
-//	sgParticle.cpp
-//	iSDGE
+//	Events.h
+//	Engine
 //
-//	Created by Nils Daumann on 13.02.11.
-//	Copyright (c) 2011 Nils Daumann
+//	Created by Nils Daumann on 01.05.10.
+//	Copyright (c) 2010 Nils Daumann
 
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
 //	of this software and associated documentation files (the "Software"), to deal
@@ -23,37 +23,21 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-#include "sgParticle.h"
+#ifndef __EVENTS_H__
+#define __EVENTS_H__
 
-#include "sgResourceManager.h"
-#include "sgObjectFiles.h"
-#include "sgMaterial.h"
-#include "sgMesh.h"
-#include "sgLight.h"
-#include "sgShadowVolume.h"
-#include "sgRenderer.h"
-#include "sgDebug.h"
+#include "sgEvents.h"
+#include "sgMain.h"
 
-#include <stdlib.h>
-#include <math.h>
 
-sgParticle::sgParticle()
+class Events : public sgEvents
 {
-	color = 1.0;
-	scale = 1.0;
-	destroy = false;
-	texcoords.x = 0;
-	texcoords.y = 0;
-	texcoords.z = 1.0;
-	texcoords.w = 1.0;
-}
+	public:
+		void onInit(sgMain *m);
+		void onDraw(float timestep);
+		
+	private:
+		sgMain *sgmain;
+};
 
-sgParticle::~sgParticle()
-{
-	
-}
-
-void sgParticle::onDraw(float timestep)
-{
-	
-}
+#endif

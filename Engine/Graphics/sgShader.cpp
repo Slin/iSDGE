@@ -215,7 +215,7 @@ bool sgShader::linkProgram(GLuint prog)
 	{
 		GLchar *log = (GLchar *)malloc(logLength);
 		glGetProgramInfoLog(prog, logLength, &logLength, log);
-		sgLog("Program link log:\n &s", log);
+		sgLog("Program link log:\n %s", log);
 		free(log);
 	}
 	

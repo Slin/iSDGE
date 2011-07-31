@@ -28,6 +28,12 @@
 //Has to be included, if you want to enable multitouch
 #import "sgView.h"
 
+#include "sgDebug.h"
+#include "CameraFree.h"
+#include "FPSDisplay.h"
+
+#include "Car.h"
+
 //This method will be called directly after initializing the engine and is meant to be used to initialize your project in
 void Events::onInit(sgMain *m)
 {
@@ -43,7 +49,7 @@ void Events::onInit(sgMain *m)
 	sgmain->renderer->setMultisampling(4);
 	
 	//Create sun at default position
-//	sgmain->renderer->first_light->createLight();
+	sgmain->renderer->first_light->createLight();
 	
 	//create the FPS display
 	sgmain->first_ent->createPanEntity((sgAction*)new FPSDisplay);
@@ -53,22 +59,24 @@ void Events::onInit(sgMain *m)
 	cam->cam->position = sgVector3(0.0f, 5.0f, 5.0f);
 	cam->cam->rotation = sgVector3(0.0f, 0.0f, -45.0f);
 	
+	//Play background music using OpenAL
+	unsigned int hndl = sgmain->audioplayer->registerSound(sgSound::getSound("bgm.m4a"));
+	sgmain->audioplayer->playSound(hndl, true, 0.2f);
+	
 	//Create skycube
 	sgmain->first_ent->createSkyCubeEntity("sky_right.png", "sky_back.png", "sky_left.png", "sky_front.png", "sky_down.png", "sky_up.png");
 	
-	//Create a particle emitter
-	sgEntity *emitter = sgmain->first_ent->createEmitterEntity("testpart.png", (sgAction*)new SpawnParts);
-	emitter->emitt->sorted = true;
+	//Create the ground
+	sgEntity *ent = sgmain->first_ent->createObjEntity("box");
+	ent->obj->scale.x *= 10;
+	ent->obj->scale.y *= 0.1;
+	ent->obj->scale.z *= 10;
+	ent->obj->position.y = -0.1;
+	ent->obj->body->materials[0]->setTexture2D(-1, "sand.png");
+	ent->obj->body->materials[0]->mattex.makeScale(sgVector3(10, 10, 10));
 	
-	//Add an object to it
-	emitter->createObj("jeep2.sgm");
-	
-	//Play fire sound
-	emitter->createSndSource();
-	unsigned int hndl = emitter->sndsrc->registerSound(sgSound::getSound("fire.caf"));
-	emitter->sndsrc->playSound(hndl, true);
-    
-    [[sgView viewcontroller] startAccelerometer];
+	//Create a moving car
+	ent = sgmain->first_ent->createObjEntity("f360.sgm", (sgAction*)new Car);
 }
 
 //Called every frame, just before drawing

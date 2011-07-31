@@ -25,4 +25,7 @@
    <FileRef
       location = "group:Examples/sgMirror/sgMirror.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:Examples/sgAudio/sgAudio.xcodeproj">
+   </FileRef>
 </Workspace>

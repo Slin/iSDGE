@@ -1,8 +1,8 @@
 //
-//	sgParticle.cpp
-//	iSDGE
+//	Car.cpp
+//	Engine
 //
-//	Created by Nils Daumann on 13.02.11.
+//	Created by Nils Daumann on 30.07.11.
 //	Copyright (c) 2011 Nils Daumann
 
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,37 +23,24 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-#include "sgParticle.h"
+#include "Car.h"
+#include "sgVector3.h"
+#include "sgSound.h"
 
-#include "sgResourceManager.h"
-#include "sgObjectFiles.h"
-#include "sgMaterial.h"
-#include "sgMesh.h"
-#include "sgLight.h"
-#include "sgShadowVolume.h"
-#include "sgRenderer.h"
-#include "sgDebug.h"
-
-#include <stdlib.h>
-#include <math.h>
-
-sgParticle::sgParticle()
+void Car::onInit(sgEntity *e)
 {
-	color = 1.0;
-	scale = 1.0;
-	destroy = false;
-	texcoords.x = 0;
-	texcoords.y = 0;
-	texcoords.z = 1.0;
-	texcoords.w = 1.0;
+	ent = e;
+	
+	ent->createSndSource();
+	unsigned int hndl = ent->sndsrc->registerSound(sgSound::getSound("engine.caf"));
+	ent->sndsrc->playSound(hndl, true, 5.0, 1.5);
 }
 
-sgParticle::~sgParticle()
+//This method is called every frame, just before drawing for each object with this action attached
+void Car::onDraw(float timestep)
 {
-	
-}
-
-void sgParticle::onDraw(float timestep)
-{
-	
+	if(ent->obj->position.z > 50.0f)
+		ent->obj->position.z = -50.0f;
+	ent->obj->position.z += timestep*20.0f;
+	ent->sndsrc->position = ent->obj->position;
 }

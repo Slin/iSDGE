@@ -120,6 +120,13 @@
 		295CBF5C1215861700F1F941 /* Events.mm in Sources */ = {isa = PBXBuildFile; fileRef = 295CBF5A1215861700F1F941 /* Events.mm */; };
 		295CBF5D1215861700F1F941 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295CBF5B1215861700F1F941 /* main.cpp */; };
 		295CBF69121587B300F1F941 /* AutoDoor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295CBF67121587B300F1F941 /* AutoDoor.cpp */; };
+		2978B6BB13CA2BFE00C483FF /* sgAudioFiles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2978B6B313CA2BFE00C483FF /* sgAudioFiles.cpp */; };
+		2978B6BC13CA2BFE00C483FF /* sgAudioPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2978B6B513CA2BFE00C483FF /* sgAudioPlayer.cpp */; };
+		2978B6BD13CA2BFE00C483FF /* sgSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2978B6B713CA2BFE00C483FF /* sgSound.cpp */; };
+		2978B6BE13CA2BFE00C483FF /* sgSoundSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2978B6B913CA2BFE00C483FF /* sgSoundSource.cpp */; };
+		2978B6CA13CA2C0E00C483FF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2978B6C913CA2C0E00C483FF /* AudioToolbox.framework */; };
+		2978B6CC13CA2C0E00C483FF /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2978B6CB13CA2C0E00C483FF /* OpenAL.framework */; };
+		2978B6EA13CA2FA000C483FF /* iSDGE.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2978B6E913CA2FA000C483FF /* iSDGE.bundle */; };
 		298D8E40134907630082F726 /* hauptmodul.png in Resources */ = {isa = PBXBuildFile; fileRef = 298D8E2B134907630082F726 /* hauptmodul.png */; };
 		298D8E41134907630082F726 /* hauptmodul_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 298D8E2C134907630082F726 /* hauptmodul_normal.png */; };
 		298D8E43134907630082F726 /* wandmodul.png in Resources */ = {isa = PBXBuildFile; fileRef = 298D8E2E134907630082F726 /* wandmodul.png */; };
@@ -430,6 +437,17 @@
 		295CBF67121587B300F1F941 /* AutoDoor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AutoDoor.cpp; sourceTree = "<group>"; };
 		295CBF68121587B300F1F941 /* AutoDoor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoDoor.h; sourceTree = "<group>"; };
 		295CBF8C12158A9600F1F941 /* sgPhysics-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "sgPhysics-Info.plist"; sourceTree = "<group>"; };
+		2978B6B313CA2BFE00C483FF /* sgAudioFiles.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgAudioFiles.cpp; sourceTree = "<group>"; };
+		2978B6B413CA2BFE00C483FF /* sgAudioFiles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgAudioFiles.h; sourceTree = "<group>"; };
+		2978B6B513CA2BFE00C483FF /* sgAudioPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgAudioPlayer.cpp; sourceTree = "<group>"; };
+		2978B6B613CA2BFE00C483FF /* sgAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgAudioPlayer.h; sourceTree = "<group>"; };
+		2978B6B713CA2BFE00C483FF /* sgSound.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgSound.cpp; sourceTree = "<group>"; };
+		2978B6B813CA2BFE00C483FF /* sgSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgSound.h; sourceTree = "<group>"; };
+		2978B6B913CA2BFE00C483FF /* sgSoundSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgSoundSource.cpp; sourceTree = "<group>"; };
+		2978B6BA13CA2BFE00C483FF /* sgSoundSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgSoundSource.h; sourceTree = "<group>"; };
+		2978B6C913CA2C0E00C483FF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		2978B6CB13CA2C0E00C483FF /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
+		2978B6E913CA2FA000C483FF /* iSDGE.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = iSDGE.bundle; path = "../../DerivedData/iSDGE/Build/Products/Debug-iphoneos/iSDGE.bundle"; sourceTree = SOURCE_ROOT; };
 		298D8E2B134907630082F726 /* hauptmodul.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hauptmodul.png; sourceTree = "<group>"; };
 		298D8E2C134907630082F726 /* hauptmodul_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hauptmodul_normal.png; sourceTree = "<group>"; };
 		298D8E2E134907630082F726 /* wandmodul.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wandmodul.png; sourceTree = "<group>"; };
@@ -787,6 +805,8 @@
 				28FD15000DC6FC520079059D /* OpenGLES.framework in Frameworks */,
 				28FD15080DC6FC5B0079059D /* QuartzCore.framework in Frameworks */,
 				2952EEAE117A6F90006FAB6F /* CoreGraphics.framework in Frameworks */,
+				2978B6CA13CA2C0E00C483FF /* AudioToolbox.framework in Frameworks */,
+				2978B6CC13CA2C0E00C483FF /* OpenAL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -821,6 +841,14 @@
 		291517C81343BBE5008C40DF /* Audio */ = {
 			isa = PBXGroup;
 			children = (
+				2978B6B313CA2BFE00C483FF /* sgAudioFiles.cpp */,
+				2978B6B413CA2BFE00C483FF /* sgAudioFiles.h */,
+				2978B6B513CA2BFE00C483FF /* sgAudioPlayer.cpp */,
+				2978B6B613CA2BFE00C483FF /* sgAudioPlayer.h */,
+				2978B6B713CA2BFE00C483FF /* sgSound.cpp */,
+				2978B6B813CA2BFE00C483FF /* sgSound.h */,
+				2978B6B913CA2BFE00C483FF /* sgSoundSource.cpp */,
+				2978B6BA13CA2BFE00C483FF /* sgSoundSource.h */,
 			);
 			path = Audio;
 			sourceTree = "<group>";
@@ -1697,11 +1725,14 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2978B6E913CA2FA000C483FF /* iSDGE.bundle */,
 				2952EEAD117A6F90006FAB6F /* CoreGraphics.framework */,
 				28FD15070DC6FC5B0079059D /* QuartzCore.framework */,
 				28FD14FF0DC6FC520079059D /* OpenGLES.framework */,
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
+				2978B6C913CA2C0E00C483FF /* AudioToolbox.framework */,
+				2978B6CB13CA2C0E00C483FF /* OpenAL.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1828,6 +1859,7 @@
 				2911C6EB134A2F5A00308D0B /* lightmap.png in Resources */,
 				29A29CCC134BD0BA0028D69E /* door2.sgm in Resources */,
 				29A29CCD134BD0BA0028D69E /* door1.sgm in Resources */,
+				2978B6EA13CA2FA000C483FF /* iSDGE.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2017,6 +2049,10 @@
 				29D64C4113506F1100DEDE70 /* sgCharacterController.cpp in Sources */,
 				29D64C4413506F2500DEDE70 /* sgCharacterControllerBullet.cpp in Sources */,
 				293522B413A3754B002608F7 /* sgCameraStream.cpp in Sources */,
+				2978B6BB13CA2BFE00C483FF /* sgAudioFiles.cpp in Sources */,
+				2978B6BC13CA2BFE00C483FF /* sgAudioPlayer.cpp in Sources */,
+				2978B6BD13CA2BFE00C483FF /* sgSound.cpp in Sources */,
+				2978B6BE13CA2BFE00C483FF /* sgSoundSource.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

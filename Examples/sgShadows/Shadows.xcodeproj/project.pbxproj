@@ -82,8 +82,8 @@
 		2952EEAD117A6F90006FAB6F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29A247F2135B2E0A00001E88 /* haus.sgm */ = {isa = PBXFileReference; lastKnownFileType = file; path = haus.sgm; sourceTree = "<group>"; };
 		29B7B9091224649D00CECE3C /* logo_64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo_64.png; path = Logos/logo_64.png; sourceTree = "<group>"; };
-		29D0638C13C9E20D00C001B2 /* iSDGE.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iSDGE.framework; path = "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgBase/../../DerivedData/iSDGE/Build/Products/Debug-iphoneos/iSDGE.framework"; sourceTree = "<absolute>"; };
-		29D0638D13C9E20D00C001B2 /* iSDGE.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = iSDGE.bundle; path = "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgBase/../../DerivedData/iSDGE/Build/Products/Debug-iphoneos/iSDGE.bundle"; sourceTree = "<absolute>"; };
+		29D0638C13C9E20D00C001B2 /* iSDGE.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iSDGE.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		29D0638D13C9E20D00C001B2 /* iSDGE.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iSDGE.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		29D7EB5A117CFABF0091D933 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		29F0806712146A5C0004587B /* Shadows-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Shadows-Info.plist"; sourceTree = "<group>"; };
 		29F1840612AB1AA800B7F5F2 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -397,7 +397,7 @@
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../DerivedData/iSDGE/Build/Products/Debug-iphoneos\"",
+					"\"$(SRCROOT)/../../DerivedData/iSDGE/Build/Products/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -405,7 +405,7 @@
 				GCC_PREFIX_HEADER = "";
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../DerivedData/iSDGE/Build/Products/Debug-iphoneos/iSDGE.framework/Headers\"/**";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../DerivedData/iSDGE/Build/Products/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/iSDGE.framework/Headers\"/**";
 				INFOPLIST_FILE = "Shadows-Info.plist";
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				PRODUCT_NAME = sgShadows;
@@ -422,13 +422,13 @@
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../DerivedData/iSDGE/Build/Products/Debug-iphoneos\"",
+					"\"$(SRCROOT)/../../DerivedData/iSDGE/Build/Products/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../DerivedData/iSDGE/Build/Products/Debug-iphoneos/iSDGE.framework/Headers\"/**";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../DerivedData/iSDGE/Build/Products/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/iSDGE.framework/Headers\"/**";
 				INFOPLIST_FILE = "Shadows-Info.plist";
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				PRODUCT_NAME = sgShadows;
@@ -466,13 +466,13 @@
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../DerivedData/iSDGE/Build/Products/Debug-iphoneos\"",
+					"\"$(SRCROOT)/../../DerivedData/iSDGE/Build/Products/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../DerivedData/iSDGE/Build/Products/Debug-iphoneos/iSDGE.framework/Headers\"/**";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../DerivedData/iSDGE/Build/Products/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/iSDGE.framework/Headers\"/**";
 				INFOPLIST_FILE = "Shadows-Info.plist";
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				PRODUCT_NAME = sgShadows;

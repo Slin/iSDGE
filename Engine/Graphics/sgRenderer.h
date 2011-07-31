@@ -48,7 +48,7 @@
 #include "sgObjectBody.h"
 
 #include "sgMatrix4x4.h"
-#include "sgColor.h";
+#include "sgColor.h"
 
 #include "sgRenderEvent.h"
 #include "sgTimer.h"

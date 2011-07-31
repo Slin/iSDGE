@@ -24,6 +24,7 @@
 		291D8B4813085E4000935F3B /* sky_left.png in Resources */ = {isa = PBXBuildFile; fileRef = 291D8ADC13085E4000935F3B /* sky_left.png */; };
 		291D8B4913085E4000935F3B /* sky_right.png in Resources */ = {isa = PBXBuildFile; fileRef = 291D8ADD13085E4000935F3B /* sky_right.png */; };
 		291D8B4A13085E4000935F3B /* sky_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 291D8ADE13085E4000935F3B /* sky_up.png */; };
+		2944FEF313E35616007C28C4 /* fire.caf in Resources */ = {isa = PBXBuildFile; fileRef = 2944FEED13E35616007C28C4 /* fire.caf */; };
 		295CBF5C1215861700F1F941 /* Events.mm in Sources */ = {isa = PBXBuildFile; fileRef = 295CBF5A1215861700F1F941 /* Events.mm */; };
 		295CBF5D1215861700F1F941 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295CBF5B1215861700F1F941 /* main.cpp */; };
 		295CBF69121587B300F1F941 /* TestPart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295CBF67121587B300F1F941 /* TestPart.cpp */; };
@@ -61,6 +62,7 @@
 		291D8ADC13085E4000935F3B /* sky_left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sky_left.png; sourceTree = "<group>"; };
 		291D8ADD13085E4000935F3B /* sky_right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sky_right.png; sourceTree = "<group>"; };
 		291D8ADE13085E4000935F3B /* sky_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sky_up.png; sourceTree = "<group>"; };
+		2944FEED13E35616007C28C4 /* fire.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = fire.caf; sourceTree = "<group>"; };
 		295CBF591215861700F1F941 /* Events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Events.h; sourceTree = "<group>"; };
 		295CBF5A1215861700F1F941 /* Events.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Events.mm; sourceTree = "<group>"; };
 		295CBF5B1215861700F1F941 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
@@ -76,8 +78,8 @@
 		297C8EA61310A09100AC1D24 /* jeep2.sgm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = jeep2.sgm; sourceTree = "<group>"; };
 		29D0637413C9DFC100C001B2 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		29D0637513C9DFC100C001B2 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
-		29D0639013C9E21100C001B2 /* iSDGE.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iSDGE.framework; path = "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgBase/../../DerivedData/iSDGE/Build/Products/Debug-iphoneos/iSDGE.framework"; sourceTree = "<absolute>"; };
-		29D0639113C9E21100C001B2 /* iSDGE.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = iSDGE.bundle; path = "/Users/nils/Documents/X-Code Projects/iSDGE/Examples/sgBase/../../DerivedData/iSDGE/Build/Products/Debug-iphoneos/iSDGE.bundle"; sourceTree = "<absolute>"; };
+		29D0639013C9E21100C001B2 /* iSDGE.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iSDGE.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		29D0639113C9E21100C001B2 /* iSDGE.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iSDGE.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		29D7EB5A117CFABF0091D933 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -111,6 +113,7 @@
 		291D8A6913085E3F00935F3B /* Media */ = {
 			isa = PBXGroup;
 			children = (
+				2944FEE713E35616007C28C4 /* Audio */,
 				297C8E701310A09000AC1D24 /* Models */,
 				291D8A6A13085E3F00935F3B /* Device */,
 				291D8ACC13085E4000935F3B /* Textures */,
@@ -147,6 +150,22 @@
 				291D8ADE13085E4000935F3B /* sky_up.png */,
 			);
 			path = Textures;
+			sourceTree = "<group>";
+		};
+		2944FEE713E35616007C28C4 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				2944FEE813E35616007C28C4 /* ezekiel_rage */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
+		2944FEE813E35616007C28C4 /* ezekiel_rage */ = {
+			isa = PBXGroup;
+			children = (
+				2944FEED13E35616007C28C4 /* fire.caf */,
+			);
+			path = ezekiel_rage;
 			sourceTree = "<group>";
 		};
 		295CBF571215861700F1F941 /* Code */ = {
@@ -314,6 +333,7 @@
 				297C8ED31310A09100AC1D24 /* jeep2.png in Resources */,
 				297C8ED41310A09100AC1D24 /* jeep2.sgm in Resources */,
 				29D0639313C9E21200C001B2 /* iSDGE.bundle in Resources */,
+				2944FEF313E35616007C28C4 /* fire.caf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,7 +361,7 @@
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../DerivedData/iSDGE/Build/Products/Debug-iphoneos\"",
+					"\"$(SRCROOT)/../../DerivedData/iSDGE/Build/Products/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -349,7 +369,7 @@
 				GCC_PREFIX_HEADER = "";
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../DerivedData/iSDGE/Build/Products/Debug-iphoneos/iSDGE.framework/Headers\"/**";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../DerivedData/iSDGE/Build/Products/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/iSDGE.framework/Headers\"/**";
 				INFOPLIST_FILE = "sgParticles-Info.plist";
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				PRODUCT_NAME = sgParticles;
@@ -363,13 +383,13 @@
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../DerivedData/iSDGE/Build/Products/Debug-iphoneos\"",
+					"\"$(SRCROOT)/../../DerivedData/iSDGE/Build/Products/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../DerivedData/iSDGE/Build/Products/Debug-iphoneos/iSDGE.framework/Headers\"/**";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../DerivedData/iSDGE/Build/Products/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/iSDGE.framework/Headers\"/**";
 				INFOPLIST_FILE = "sgParticles-Info.plist";
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				PRODUCT_NAME = sgParticles;
@@ -403,13 +423,13 @@
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../../DerivedData/iSDGE/Build/Products/Debug-iphoneos\"",
+					"\"$(SRCROOT)/../../DerivedData/iSDGE/Build/Products/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
 				"GCC_THUMB_SUPPORT[arch=armv6]" = "";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../DerivedData/iSDGE/Build/Products/Debug-iphoneos/iSDGE.framework/Headers\"/**";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../DerivedData/iSDGE/Build/Products/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/iSDGE.framework/Headers\"/**";
 				INFOPLIST_FILE = "sgParticles-Info.plist";
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				PRODUCT_NAME = sgParticles;
