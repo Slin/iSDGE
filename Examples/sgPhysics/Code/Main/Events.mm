@@ -81,7 +81,7 @@ void Events::onInit(sgMain *m)
 	ent->obj->position = sgVector3(35.0, -0.275, 18.5);
 	ent->createPhysBody(sgPhysBody::ES_BOX, 1, sgVector3(1.0, 2.0, 0.2));
 	sgPhysConstraint *constr = sgmain->physworld->getConstraint(sgPhysConstraint::ET_HINGE);
-	constr->initHinge(ent->body, /*ent->obj->position+*/sgVector3(1.0, 0.0, 0.0), sgVector3(0.0, 1.0, 0.0));
+	constr->initHinge(ent->body, sgVector3(1.0, 0.0, 0.0), sgVector3(0.0, 1.0, 0.0));
 	constr->setHingeLimit(270.0, 360.0);
 	
 	//create the FPS display

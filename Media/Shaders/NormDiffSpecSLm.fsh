@@ -25,13 +25,13 @@
 
 precision highp float;
 
-uniform sampler2D mTexture0;
-uniform sampler2D mTexture1;
-//uniform sampler2D mTexture2;
+uniform lowp sampler2D mTexture0;
+uniform lowp sampler2D mTexture1;
+//uniform lowp sampler2D mTexture2;
 
 varying vec4 texcoord;
-varying vec3 lightdir;
-varying vec3 viewdir;
+//varying vec3 lightdir;
+//varying vec3 viewdir;
 
 void main()
 {

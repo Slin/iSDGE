@@ -39,12 +39,13 @@ varying vec3 viewdir;
 
 void main()
 {
+	vec3 worldpos = (matModel*vec4(vertPos, 1.0)).xyz;
+	
 	mat3 mattangent;
 	mattangent[0] = (matNormal*vec4(vertTangent.xyz, 0.0)).xyz;
 	mattangent[2] = (matNormal*vec4(vertNormal, 0.0)).xyz;
 	mattangent[1] = cross(mattangent[0], mattangent[2])*vertTangent.w;
 	
-	vec3 worldpos = (matModel*vec4(vertPos, 1.0)).xyz;
 	viewdir = normalize((vPosition-worldpos)*mattangent);
 	lightdir = -normalize(worldpos*mattangent);
 	
