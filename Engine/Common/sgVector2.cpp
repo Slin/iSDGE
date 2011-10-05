@@ -32,6 +32,12 @@ sgVector2::sgVector2(float x_, float y_)
 	y = y_;
 }
 
+sgVector2::sgVector2(const float *other)
+{
+	x = other[0];
+	y = other[1];
+}
+
 sgVector2::sgVector2(const sgVector2 &other)
 {
 	x = other.x;

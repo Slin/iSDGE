@@ -38,6 +38,14 @@ sgVector4::sgVector4(float x_, float y_, float z_, float w_)
 	w = w_;
 }
 
+sgVector4::sgVector4(const float *other)
+{
+	x = other[0];
+	y = other[1];
+	z = other[2];
+	z = other[3];
+}
+
 sgVector4::sgVector4(const sgVector4 &other)
 {
 	x = other.x;

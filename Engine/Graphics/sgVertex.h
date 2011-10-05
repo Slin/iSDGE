@@ -60,6 +60,17 @@ enum VERTEXSIZE
 class sgVertex
 {
 	public:
+		enum VERTEXFEATURES
+		{
+			POSITION = 1<<1,
+			NORMAL = 1<<2,
+			UV0 = 1<<3,
+			UV1 = 1<<4,
+			COLOR = 1<<5,
+			TANGENT = 1<<6,
+			BONES = 1<<7
+		};
+	
 		sgVertex &operator= (const sgVertex &other)
 		{
 			position = other.position;

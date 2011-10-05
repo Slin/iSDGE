@@ -29,13 +29,13 @@ void Water::onInit(sgEntity *e)
 	//Create the reflection camera and create and assign a rendertarget
 	mirror = ent->createCamEntity();
 	mirror->cam->size = sgVector2(128, 128);
-	mirror->cam->rendertarget = sgTexture::getTexture2D(128, 128);
+	mirror->cam->rendertarget = sgTexture::getTexture(128, 128);
 	mirror->cam->rendertarget->makeRendertarget();
 	mirror->cam->tag = 1;
 	mirror->cam->lodshift = 150.0;
 	
-	ent->obj->body->materials[0]->setTexture2D(-1, bumpfile);
-	ent->obj->body->materials[0]->setTexture2D(-1, mirror->cam->rendertarget);
+	ent->obj->body->materials[0]->setTexture(-1, bumpfile);
+	ent->obj->body->materials[0]->setTexture(-1, mirror->cam->rendertarget);
 	ent->obj->body->materials[0]->setShader("iSDGE.bundle/Water.vsh", "iSDGE.bundle/Water.fsh");
 	ent->obj->body->materials[0]->mattex.makeScale(sgVector3(0.1, 0.1, 1));
 	

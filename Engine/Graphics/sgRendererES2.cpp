@@ -469,6 +469,7 @@ void sgRendererES2::renderObjects(sgCamera *cam, sgObject *first)
 	sgMatrix4x4 matprojviewmodel;
 	sgObject *curr;
 	sgObjectBody *currbod;
+	unsigned char featureloc = 0;
 	int i;
 	for(curr = first->next; curr != NULL; curr = curr->next)
 	{
@@ -532,184 +533,155 @@ void sgRendererES2::renderObjects(sgCamera *cam, sgObject *first)
 			{
 				glUniformMatrix4fv(currbod->materials[i]->shader->mattex, 1, GL_FALSE, currbod->materials[i]->mattex.mat);
 			}
+			if(curr->skeleton != NULL && currbod->materials[i]->shader->matbones != -1)
+			{
+				glUniformMatrix4fv(currbod->materials[i]->shader->matbones, maxbones, GL_FALSE, curr->skeleton->matrices);
+			}
 			
 			setMaterial(currbod->materials[i]);
-			
+			featureloc = 0;
 			if(currbod->meshs[i]->vbo != -1)
 			{
 				glBindBuffer(GL_ARRAY_BUFFER, currbod->meshs[i]->vbo);
-				if(currbod->materials[i]->shader->position != -1)
+				if((currbod->meshs[i]->vtxfeatures & sgVertex::POSITION) > 0)
 				{
-					glEnableVertexAttribArray(currbod->materials[i]->shader->position);
-					glVertexAttribPointer(currbod->materials[i]->shader->position, 3, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, 0);
+					if(currbod->materials[i]->shader->position != -1)
+					{
+						glEnableVertexAttribArray(currbod->materials[i]->shader->position);
+						glVertexAttribPointer(currbod->materials[i]->shader->position, 3, GL_FLOAT, 0, currbod->meshs[i]->vtxsize*sizeof(float), (const void*)featureloc);
+					}
+					featureloc += 12;
 				}
-				if(currbod->materials[i]->shader->normal != -1)
+				if((currbod->meshs[i]->vtxfeatures & sgVertex::NORMAL) > 0)
 				{
-					glEnableVertexAttribArray(currbod->materials[i]->shader->normal);
-					glVertexAttribPointer(currbod->materials[i]->shader->normal, 3, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, (const void*)12);
+					if(currbod->materials[i]->shader->normal != -1)
+					{
+						glEnableVertexAttribArray(currbod->materials[i]->shader->normal);
+						glVertexAttribPointer(currbod->materials[i]->shader->normal, 3, GL_FLOAT, 0, currbod->meshs[i]->vtxsize*sizeof(float), (const void*)featureloc);
+					}
+					featureloc += 12;
 				}
-				if(currbod->materials[i]->shader->texcoord0 != -1)
+				if((currbod->meshs[i]->vtxfeatures & sgVertex::UV0) > 0)
 				{
-					glEnableVertexAttribArray(currbod->materials[i]->shader->texcoord0);
-					glVertexAttribPointer(currbod->materials[i]->shader->texcoord0, 2, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, (const void*)24);
+					if(currbod->materials[i]->shader->texcoord0 != -1)
+					{
+						glEnableVertexAttribArray(currbod->materials[i]->shader->texcoord0);
+						glVertexAttribPointer(currbod->materials[i]->shader->texcoord0, 2, GL_FLOAT, 0, currbod->meshs[i]->vtxsize*sizeof(float), (const void*)featureloc);
+					}
+					featureloc += 8;
 				}
-				if(currbod->meshs[i]->vtxform == SECONDUV)
+				if((currbod->meshs[i]->vtxfeatures & sgVertex::UV1) > 0)
 				{
 					if(currbod->materials[i]->shader->texcoord1 != -1)
 					{
 						glEnableVertexAttribArray(currbod->materials[i]->shader->texcoord1);
-						glVertexAttribPointer(currbod->materials[i]->shader->texcoord1, 2, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, (const void*)32);
+						glVertexAttribPointer(currbod->materials[i]->shader->texcoord1, 2, GL_FLOAT, 0, currbod->meshs[i]->vtxsize*sizeof(float), (const void*)featureloc);
 					}
-				}else if(currbod->meshs[i]->vtxform == COLOR)
+					featureloc += 8;
+				}
+				if((currbod->meshs[i]->vtxfeatures & sgVertex::COLOR) > 0)
 				{
 					if(currbod->materials[i]->shader->color != -1)
 					{
 						glEnableVertexAttribArray(currbod->materials[i]->shader->color);
-						glVertexAttribPointer(currbod->materials[i]->shader->color, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, (const void*)32);
+						glVertexAttribPointer(currbod->materials[i]->shader->color, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize*sizeof(float), (const void*)featureloc);
 					}
-				}else if(currbod->meshs[i]->vtxform == SECONDUVCOLOR)
-				{
-					if(currbod->materials[i]->shader->texcoord1 != -1)
-					{
-						glEnableVertexAttribArray(currbod->materials[i]->shader->texcoord1);
-						glVertexAttribPointer(currbod->materials[i]->shader->texcoord1, 2, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, (const void*)32);
-					}
-					
-					if(currbod->materials[i]->shader->color != -1)
-					{
-						glEnableVertexAttribArray(currbod->materials[i]->shader->color);
-						glVertexAttribPointer(currbod->materials[i]->shader->color, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, (const void*)40);
-					}
-				}else if(currbod->meshs[i]->vtxform == TANGENT)
+					featureloc += 16;
+				}
+				if((currbod->meshs[i]->vtxfeatures & sgVertex::TANGENT) > 0)
 				{
 					if(currbod->materials[i]->shader->tangent != -1)
 					{
 						glEnableVertexAttribArray(currbod->materials[i]->shader->tangent);
-						glVertexAttribPointer(currbod->materials[i]->shader->tangent, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, (const void*)32);
+						glVertexAttribPointer(currbod->materials[i]->shader->tangent, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize*sizeof(float), (const void*)featureloc);
 					}
-				}else if(currbod->meshs[i]->vtxform == TANGENTSECONDUV)
+					featureloc += 16;
+				}
+				if((currbod->meshs[i]->vtxfeatures & sgVertex::BONES) > 0)
 				{
-					if(currbod->materials[i]->shader->texcoord1 != -1)
+					if(currbod->materials[i]->shader->boneweights != -1)
 					{
-						glEnableVertexAttribArray(currbod->materials[i]->shader->texcoord1);
-						glVertexAttribPointer(currbod->materials[i]->shader->texcoord1, 2, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, (const void*)32);
+						glEnableVertexAttribArray(currbod->materials[i]->shader->boneweights);
+						glVertexAttribPointer(currbod->materials[i]->shader->boneweights, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize*sizeof(float), (const void*)featureloc);
 					}
-					if(currbod->materials[i]->shader->tangent != -1)
+					if(currbod->materials[i]->shader->boneindices != -1)
 					{
-						glEnableVertexAttribArray(currbod->materials[i]->shader->tangent);
-						glVertexAttribPointer(currbod->materials[i]->shader->tangent, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, (const void*)40);
+						glEnableVertexAttribArray(currbod->materials[i]->shader->boneindices);
+						glVertexAttribPointer(currbod->materials[i]->shader->boneindices, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize*sizeof(float), (const void*)featureloc);
 					}
-				}else if(currbod->meshs[i]->vtxform == TANGENTCOLOR)
-				{
-					if(currbod->materials[i]->shader->color != -1)
-					{
-						glEnableVertexAttribArray(currbod->materials[i]->shader->color);
-						glVertexAttribPointer(currbod->materials[i]->shader->color, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, (const void*)32);
-					}
-					if(currbod->materials[i]->shader->tangent != -1)
-					{
-						glEnableVertexAttribArray(currbod->materials[i]->shader->tangent);
-						glVertexAttribPointer(currbod->materials[i]->shader->tangent, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, (const void*)48);
-					}
-				}else if(currbod->meshs[i]->vtxform == TANGENTSECONDUVCOLOR)
-				{
-					if(currbod->materials[i]->shader->texcoord1 != -1)
-					{
-						glEnableVertexAttribArray(currbod->materials[i]->shader->texcoord1);
-						glVertexAttribPointer(currbod->materials[i]->shader->texcoord1, 2, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, (const void*)32);
-					}
-					if(currbod->materials[i]->shader->color != -1)
-					{
-						glEnableVertexAttribArray(currbod->materials[i]->shader->color);
-						glVertexAttribPointer(currbod->materials[i]->shader->color, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, (const void*)40);
-					}
-					if(currbod->materials[i]->shader->tangent != -1)
-					{
-						glEnableVertexAttribArray(currbod->materials[i]->shader->tangent);
-						glVertexAttribPointer(currbod->materials[i]->shader->tangent, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, (const void*)46);
-					}
+					featureloc += 32;
 				}
 			}else
 			{
 				glBindBuffer(GL_ARRAY_BUFFER, 0);
-				if(currbod->materials[i]->shader->position != -1)
+				if((currbod->meshs[i]->vtxfeatures & sgVertex::POSITION) > 0)
 				{
-					glVertexAttribPointer(currbod->materials[i]->shader->position, 3, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, &currbod->meshs[i]->vertices->position.x);
-					glEnableVertexAttribArray(currbod->materials[i]->shader->position);
+					if(currbod->materials[i]->shader->position != -1)
+					{
+						glVertexAttribPointer(currbod->materials[i]->shader->position, 3, GL_FLOAT, 0, currbod->meshs[i]->vtxsize*sizeof(float), currbod->meshs[i]->vertices+featureloc);
+						glEnableVertexAttribArray(currbod->materials[i]->shader->position);
+					}
+					featureloc += 3;
 				}
-				if(currbod->materials[i]->shader->normal != -1)
+				if((currbod->meshs[i]->vtxfeatures & sgVertex::NORMAL) > 0)
 				{
-					glVertexAttribPointer(currbod->materials[i]->shader->normal, 3, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, &currbod->meshs[i]->vertices->normal.x);
-					glEnableVertexAttribArray(currbod->materials[i]->shader->normal);
+					if(currbod->materials[i]->shader->normal != -1)
+					{
+						glVertexAttribPointer(currbod->materials[i]->shader->normal, 3, GL_FLOAT, 0, currbod->meshs[i]->vtxsize*sizeof(float), currbod->meshs[i]->vertices+featureloc);
+						glEnableVertexAttribArray(currbod->materials[i]->shader->normal);
+					}
+					featureloc += 3;
 				}
-				if(currbod->materials[i]->shader->texcoord0 != -1)
+				if((currbod->meshs[i]->vtxfeatures & sgVertex::UV0) > 0)
 				{
-					glVertexAttribPointer(currbod->materials[i]->shader->texcoord0, 2, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, &currbod->meshs[i]->vertices->uv.x);
-					glEnableVertexAttribArray(currbod->materials[i]->shader->texcoord0);
+					if(currbod->materials[i]->shader->texcoord0 != -1)
+					{
+						glVertexAttribPointer(currbod->materials[i]->shader->texcoord0, 2, GL_FLOAT, 0, currbod->meshs[i]->vtxsize*sizeof(float), currbod->meshs[i]->vertices+featureloc);
+						glEnableVertexAttribArray(currbod->materials[i]->shader->texcoord0);
+					}
+					featureloc += 2;
 				}
-				if(currbod->meshs[i]->vtxform == SECONDUV)
+				if((currbod->meshs[i]->vtxfeatures & sgVertex::UV1) > 0)
 				{
 					if(currbod->materials[i]->shader->texcoord1 != -1)
 					{
-						glVertexAttribPointer(currbod->materials[i]->shader->texcoord1, 2, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, &((sgVertexUV*)currbod->meshs[i]->vertices)->uv2.x);
+						glVertexAttribPointer(currbod->materials[i]->shader->texcoord1, 2, GL_FLOAT, 0, currbod->meshs[i]->vtxsize*sizeof(float), currbod->meshs[i]->vertices+featureloc);
 						glEnableVertexAttribArray(currbod->materials[i]->shader->texcoord1);
 					}
-				}else if(currbod->meshs[i]->vtxform == COLOR)
+					featureloc += 2;
+				}
+				if((currbod->meshs[i]->vtxfeatures & sgVertex::COLOR) > 0)
 				{
 					if(currbod->materials[i]->shader->color != -1)
 					{
-						glVertexAttribPointer(currbod->materials[i]->shader->color, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, &((sgVertexCol*)currbod->meshs[i]->vertices)->color.x);
+						glVertexAttribPointer(currbod->materials[i]->shader->color, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize*sizeof(float), currbod->meshs[i]->vertices+featureloc);
 						glEnableVertexAttribArray(currbod->materials[i]->shader->color);
 					}
-				}else if(currbod->meshs[i]->vtxform == SECONDUVCOLOR)
-				{
-					if(currbod->materials[i]->shader->texcoord1 != -1)
-					{
-						glVertexAttribPointer(currbod->materials[i]->shader->texcoord1, 2, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, &((sgVertexUVCol*)currbod->meshs[i]->vertices)->uv2.x);
-						glEnableVertexAttribArray(currbod->materials[i]->shader->texcoord1);
-					}
-					
-					if(currbod->materials[i]->shader->color != -1)
-					{
-						glVertexAttribPointer(currbod->materials[i]->shader->color, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, &((sgVertexUVCol*)currbod->meshs[i]->vertices)->color.x);
-						glEnableVertexAttribArray(currbod->materials[i]->shader->color);
-					}
-				}else if(currbod->meshs[i]->vtxform == TANGENT || currbod->meshs[i]->vtxform == TANGENTSECONDUV || currbod->meshs[i]->vtxform == TANGENTCOLOR || currbod->meshs[i]->vtxform == TANGENTSECONDUVCOLOR)
+					featureloc += 4;
+				}
+				if((currbod->meshs[i]->vtxfeatures & sgVertex::TANGENT) > 0)
 				{
 					if(currbod->materials[i]->shader->tangent != -1)
 					{
-						glVertexAttribPointer(currbod->materials[i]->shader->tangent, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, &((sgVertexTan*)currbod->meshs[i]->vertices)->tangent.x);
+						glVertexAttribPointer(currbod->materials[i]->shader->tangent, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize*sizeof(float), currbod->meshs[i]->vertices+featureloc);
 						glEnableVertexAttribArray(currbod->materials[i]->shader->tangent);
 					}
-					
-					if(currbod->meshs[i]->vtxform == SECONDUV)
+					featureloc += 4;
+				}
+				if((currbod->meshs[i]->vtxfeatures & sgVertex::BONES) > 0)
+				{
+					if(currbod->materials[i]->shader->boneweights != -1)
 					{
-						if(currbod->materials[i]->shader->texcoord1 != -1)
-						{
-							glVertexAttribPointer(currbod->materials[i]->shader->texcoord1, 2, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, &((sgVertexTanUV*)currbod->meshs[i]->vertices)->uv2.x);
-							glEnableVertexAttribArray(currbod->materials[i]->shader->texcoord1);
-						}
-					}else if(currbod->meshs[i]->vtxform == COLOR)
-					{
-						if(currbod->materials[i]->shader->color != -1)
-						{
-							glVertexAttribPointer(currbod->materials[i]->shader->color, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, &((sgVertexTanCol*)currbod->meshs[i]->vertices)->color.x);
-							glEnableVertexAttribArray(currbod->materials[i]->shader->color);
-						}
-					}else if(currbod->meshs[i]->vtxform == SECONDUVCOLOR)
-					{
-						if(currbod->materials[i]->shader->texcoord1 != -1)
-						{
-							glVertexAttribPointer(currbod->materials[i]->shader->texcoord1, 2, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, &((sgVertexTanUVCol*)currbod->meshs[i]->vertices)->uv2.x);
-							glEnableVertexAttribArray(currbod->materials[i]->shader->texcoord1);
-						}
-						
-						if(currbod->materials[i]->shader->color != -1)
-						{
-							glVertexAttribPointer(currbod->materials[i]->shader->color, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize, &((sgVertexTanUVCol*)currbod->meshs[i]->vertices)->color.x);
-							glEnableVertexAttribArray(currbod->materials[i]->shader->color);
-						}
+						glVertexAttribPointer(currbod->materials[i]->shader->boneweights, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize*sizeof(float), currbod->meshs[i]->vertices+featureloc);
+						glEnableVertexAttribArray(currbod->materials[i]->shader->boneweights);
 					}
+					featureloc += 16;
+					if(currbod->materials[i]->shader->boneindices != -1)
+					{
+						glVertexAttribPointer(currbod->materials[i]->shader->boneindices, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize*sizeof(float), currbod->meshs[i]->vertices+featureloc);
+						glEnableVertexAttribArray(currbod->materials[i]->shader->boneindices);
+					}
+					featureloc += 16;
 				}
 			}
 			
@@ -723,81 +695,49 @@ void sgRendererES2::renderObjects(sgCamera *cam, sgObject *first)
 				glDrawElements(GL_TRIANGLES, currbod->meshs[i]->indexnum, GL_UNSIGNED_SHORT, currbod->meshs[i]->indices);
 			}
 			
-			if(currbod->materials[i]->shader->position != -1)
+			if((currbod->meshs[i]->vtxfeatures & sgVertex::POSITION) > 0)
 			{
-				glDisableVertexAttribArray(currbod->materials[i]->shader->position);
+				if(currbod->materials[i]->shader->position != -1)
+				{
+					glDisableVertexAttribArray(currbod->materials[i]->shader->position);
+				}
 			}
-			if(currbod->materials[i]->shader->normal != -1)
+			if((currbod->meshs[i]->vtxfeatures & sgVertex::NORMAL) > 0)
 			{
-				glDisableVertexAttribArray(currbod->materials[i]->shader->normal);
+				if(currbod->materials[i]->shader->normal != -1)
+				{
+					glDisableVertexAttribArray(currbod->materials[i]->shader->normal);
+				}
 			}
-			if(currbod->materials[i]->shader->texcoord0 != -1)
+			if((currbod->meshs[i]->vtxfeatures & sgVertex::UV0) > 0)
 			{
-				glDisableVertexAttribArray(currbod->materials[i]->shader->texcoord0);
+				if(currbod->materials[i]->shader->texcoord0 != -1)
+				{
+					glDisableVertexAttribArray(currbod->materials[i]->shader->texcoord0);
+				}
 			}
-			if(currbod->meshs[i]->vtxform == SECONDUV)
+			if((currbod->meshs[i]->vtxfeatures & sgVertex::UV1) > 0)
 			{
 				if(currbod->materials[i]->shader->texcoord1 != -1)
 				{
 					glDisableVertexAttribArray(currbod->materials[i]->shader->texcoord1);
 				}
-			}else if(currbod->meshs[i]->vtxform == COLOR)
+			}
+			if((currbod->meshs[i]->vtxfeatures & sgVertex::COLOR) > 0)
 			{
 				if(currbod->materials[i]->shader->color != -1)
 				{
 					glDisableVertexAttribArray(currbod->materials[i]->shader->color);
 				}
-			}else if(currbod->meshs[i]->vtxform == SECONDUVCOLOR)
+			}
+			if((currbod->meshs[i]->vtxfeatures & TANGENT) > 0)
 			{
-				if(currbod->materials[i]->shader->texcoord1 != -1)
-				{
-					glDisableVertexAttribArray(currbod->materials[i]->shader->texcoord1);
-				}
-				if(currbod->materials[i]->shader->color != -1)
-				{
-					glDisableVertexAttribArray(currbod->materials[i]->shader->color);
-				}
-			}else if(currbod->meshs[i]->vtxform == TANGENT)
-			{
-				if(currbod->materials[i]->shader->tangent != -1)
-				{
-					glDisableVertexAttribArray(currbod->materials[i]->shader->tangent);
-				}
-			}else if(currbod->meshs[i]->vtxform == TANGENTSECONDUV)
-			{
-				if(currbod->materials[i]->shader->texcoord1 != -1)
-				{
-					glDisableVertexAttribArray(currbod->materials[i]->shader->texcoord1);
-				}
-				if(currbod->materials[i]->shader->tangent != -1)
-				{
-					glDisableVertexAttribArray(currbod->materials[i]->shader->tangent);
-				}
-			}else if(currbod->meshs[i]->vtxform == TANGENTCOLOR)
-			{
-				if(currbod->materials[i]->shader->color != -1)
-				{
-					glDisableVertexAttribArray(currbod->materials[i]->shader->color);
-				}
-				if(currbod->materials[i]->shader->tangent != -1)
-				{
-					glDisableVertexAttribArray(currbod->materials[i]->shader->tangent);
-				}
-			}else if(currbod->meshs[i]->vtxform == TANGENTSECONDUVCOLOR)
-			{
-				if(currbod->materials[i]->shader->texcoord1 != -1)
-				{
-					glDisableVertexAttribArray(currbod->materials[i]->shader->texcoord1);
-				}
-				if(currbod->materials[i]->shader->color != -1)
-				{
-					glDisableVertexAttribArray(currbod->materials[i]->shader->color);
-				}
 				if(currbod->materials[i]->shader->tangent != -1)
 				{
 					glDisableVertexAttribArray(currbod->materials[i]->shader->tangent);
 				}
 			}
+			
 		}
 	}
 }
@@ -1028,12 +968,12 @@ void sgRendererES2::renderShadowVolumes(sgCamera *cam, sgObject *first)
 			if(shadowvolume->shader->position != -1)
 			{
 				glEnableVertexAttribArray(shadowvolume->shader->position);
-				glVertexAttribPointer(shadowvolume->shader->position, 3, GL_FLOAT, 0, sizeof(sgVertex), &(curr->shadowvolume->mesh->vertices->position.x));
+				glVertexAttribPointer(shadowvolume->shader->position, 3, GL_FLOAT, 0, sizeof(sgVertex), curr->shadowvolume->mesh->vertices);
 			}
 			if(shadowvolume->shader->normal != -1)
 			{
 				glEnableVertexAttribArray(shadowvolume->shader->normal);
-				glVertexAttribPointer(shadowvolume->shader->normal, 3, GL_FLOAT, 0, sizeof(sgVertex), &(curr->shadowvolume->mesh->vertices->normal.x));
+				glVertexAttribPointer(shadowvolume->shader->normal, 3, GL_FLOAT, 0, sizeof(sgVertex), curr->shadowvolume->mesh->vertices+3);
 			}
 		}
 		

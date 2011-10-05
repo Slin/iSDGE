@@ -36,7 +36,7 @@ sgPhysBodyBullet::sgPhysBodyBullet(eShape shp, sgVector3 &pos, sgQuaternion &rot
 			break;
 			
 		case ES_SPHERE:
-			shape = new btSphereShape(sz.length());
+			shape = new btSphereShape(sz.x);
 			break;
 			
 		case ES_MESH:
@@ -124,6 +124,11 @@ void sgPhysBodyBullet::setKinematic(bool enable)
 void *sgPhysBodyBullet::getBody()
 {
 	return (void*)body;
+}
+
+void *sgPhysBodyBullet::getShape()
+{
+	return (void*)shape;
 }
 
 void sgPhysBodyBullet::getWorldTransform(btTransform &worldTrans) const

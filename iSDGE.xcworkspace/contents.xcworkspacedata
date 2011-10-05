@@ -31,4 +31,7 @@
    <FileRef
       location = "group:Examples/sgPhysics/sgPhysics.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:Examples/sgAnimation/sgAnimation.xcodeproj">
+   </FileRef>
 </Workspace>

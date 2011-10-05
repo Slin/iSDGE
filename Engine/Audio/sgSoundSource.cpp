@@ -90,6 +90,13 @@ void sgSoundSource::stopSound(unsigned int handle)
 	alSourceStop(handle);
 }
 
+bool sgSoundSource::isPlaying(unsigned int handle)
+{
+	ALenum state;
+	alGetSourcei(handle, AL_SOURCE_STATE, &state);
+	return (state == AL_PLAYING);
+}
+
 void sgSoundSource::update(float timestep)
 {
 	sgVector3 vel = lastpos-position;

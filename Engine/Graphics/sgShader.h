@@ -27,6 +27,7 @@
 #define __SGSHADER_H__
 
 #include "sgBase.h"
+#include <string>
 
 /**
  * Shader class. This class loads, compiles and represents shaders.
@@ -41,6 +42,7 @@ class sgShader : public sgBase
 			BIS_SUN = 2,
 			BIS_LIGHT = 3,
 			BIS_LIGHTMAP = 4,
+			BIS_LIGHTMAP_DISCARD = 5,
 			
 			BIS_SHADOWVOLUME = -1,
 			BIS_SHADOWQUAD = -2,
@@ -116,6 +118,7 @@ class sgShader : public sgBase
 		unsigned int matprojviewmodel;
 		unsigned int matnormal;
 		unsigned int mattex;
+		unsigned int matbones;
 	
 		unsigned int position;
 		unsigned int normal;
@@ -123,6 +126,8 @@ class sgShader : public sgBase
 		unsigned int texcoord1;
 		unsigned int color;
 		unsigned int tangent;
+		unsigned int boneweights;
+		unsigned int boneindices;
 	
 		unsigned int mambientloc;
 		unsigned int mdiffuseloc;
@@ -148,6 +153,11 @@ class sgShader : public sgBase
 		bool compileShader(unsigned int *shader, unsigned int type, const char *filepath);
 		bool linkProgram(unsigned int prog);
 		void getEngineUniforms();
+	
+#if defined (DEBUG)
+		std::string vsfile;
+		std::string fsfile;
+#endif
 };
 
 #endif

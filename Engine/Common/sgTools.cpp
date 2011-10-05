@@ -117,7 +117,7 @@ namespace sgTools
 	
 	void traceRayMesh(sgMesh *mesh, sgVector3 from, sgVector3 to, sgVertex* I)
 	{
-		sgVertex point;
+/*		sgVertex point;
 		std::vector<sgVertex> points;
 		if(mesh->vtxform == BASIC)
 		{
@@ -189,7 +189,7 @@ namespace sgTools
 				I->position = points[i].position;
 				I->normal = points[i].normal;
 			}
-		}
+		}*/
 	}
 	
 	void traceRayObject(sgObject *object, sgVector3 from, sgVector3 to, sgVertex* I)

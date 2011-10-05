@@ -100,6 +100,16 @@ class sgPhysWorldBullet : public sgPhysWorld
 		bool traceRay(sgVector3 from, sgVector3 to, sgTraceResult &res);
 	
 		/**
+		 *	Trace shape
+		 *	Gets the surfaces the given rigid bodies shape intersects. It does not support mesh shapes.
+		 *	@param bdy rigid body whichs shape to use
+		 *	@param from the start position of the ray
+		 *	@param to the end position of the ray
+		 *	@return true if something was hit
+		 */
+		bool traceShape(sgPhysBody *bdy, sgVector3 from, sgVector3 to, sgTraceResult &res);
+	
+		/**
 		 *	Bullet world.
 		 *	The physics world.
 		 */

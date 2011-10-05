@@ -100,91 +100,48 @@ namespace sgObjectFiles
 			fread(&datacount, 1, 1, file);
 			unsigned char hastangent = 0;
 			fread(&hastangent, 1, 1, file);
+			unsigned char hasbones = 0;
+			fread(&hasbones, 1, 1, file);
 			
-			unsigned short numfloats = 8;
+			meshes[i].vtxsize = 8;
+			meshes[i].vtxfeatures = sgVertex::POSITION|sgVertex::NORMAL|sgVertex::UV0;
 			if((flags & GEN_TANGENT) > 0 || hastangent == 1)
 			{
-				meshes[i].vtxformat = TANGENT;
-				meshes[i].vtxsize = SZ_TANGENT;
-				if(uvcount > 1)
-				{
-					meshes[i].vtxformat = TANGENTSECONDUV;
-					meshes[i].vtxsize = SZ_TANGENTSECONDUV;
-					numfloats = 10;
-					if(datacount == 4)
-					{
-						meshes[i].vtxformat = TANGENTSECONDUVCOLOR;
-						meshes[i].vtxsize = SZ_TANGENTSECONDUVCOLOR;
-						numfloats = 14;
-					}
-				}else if(datacount == 4)
-				{
-					meshes[i].vtxformat = TANGENTCOLOR;
-					meshes[i].vtxsize = SZ_TANGENTCOLOR;
-					numfloats = 12;
-				}
-			}else
-			{
-				meshes[i].vtxformat = BASIC;
-				meshes[i].vtxsize = SZ_BASIC;
-				if(uvcount > 1)
-				{
-					meshes[i].vtxformat = SECONDUV;
-					meshes[i].vtxsize = SZ_SECONDUV;
-					numfloats = 10;
-					if(datacount == 4)
-					{
-						meshes[i].vtxformat = SECONDUVCOLOR;
-						meshes[i].vtxsize = SZ_SECONDUVCOLOR;
-						numfloats = 14;
-					}
-				}else if(datacount == 4)
-				{
-					meshes[i].vtxformat = COLOR;
-					meshes[i].vtxsize = SZ_COLOR;
-					numfloats = 12;
-				}				
+				meshes[i].vtxfeatures |= sgVertex::TANGENT;
+				meshes[i].vtxsize += 4;
 			}
-			if(hastangent == 1)
-				numfloats += 4;
+			if(uvcount > 1)
+			{
+				meshes[i].vtxfeatures |= sgVertex::UV0;
+				meshes[i].vtxsize += 2;
+			}
+			if(datacount == 4)
+			{
+				meshes[i].vtxfeatures |= sgVertex::COLOR;
+				meshes[i].vtxsize += 4;
+			}
+			if(hasbones)
+			{
+				meshes[i].vtxfeatures |= sgVertex::BONES;
+				meshes[i].vtxsize += 8;
+			}
 			
 			//Vertexdata
 			meshes[i].vertexnum = numverts;
-			meshes[i].vertices = (sgVertex*)malloc(meshes[i].vtxsize*numverts);
+			meshes[i].vertices = (float*)malloc(meshes[i].vtxsize*numverts*sizeof(float));
 			
 			if((flags & GEN_TANGENT) == 0)
 			{
-				fread(meshes[i].vertices, 4, numfloats*numverts, file);
+				fread(meshes[i].vertices, 4, meshes[i].vtxsize*numverts, file);
 			}else
 			{
-				float *vertdatasrc = new float[numfloats*numverts];
-				fread(vertdatasrc, 4, numfloats*numverts, file);
-				sgVertex *vertdatatarget = meshes[i].vertices;
+				float *vertdatasrc = new float[meshes[i].vtxsize*numverts];
+				fread(vertdatasrc, 4, meshes[i].vtxsize*numverts, file);
+				float *vertdatatarget = meshes[i].vertices;
 				
-				if(meshes[i].vtxformat == TANGENT)
+				for(int n = 0; n < numverts; n++)
 				{
-					for(int n = 0; n < numverts; n++)
-					{
-						memcpy(&((sgVertexTan*)vertdatatarget)[n].position, &vertdatasrc[n*numfloats], sizeof(float)*numfloats);
-					}
-				}else if(meshes[i].vtxformat == TANGENTSECONDUV)
-				{
-					for(int n = 0; n < numverts; n++)
-					{
-						memcpy(&((sgVertexTanUV*)vertdatatarget)[n].position, &vertdatasrc[n*numfloats], sizeof(float)*numfloats);
-					}
-				}else if(meshes[i].vtxformat == TANGENTCOLOR)
-				{
-					for(int n = 0; n < numverts; n++)
-					{
-						memcpy(&((sgVertexTanCol*)vertdatatarget)[n].position, &vertdatasrc[n*numfloats], sizeof(float)*numfloats);
-					}
-				}else if(meshes[i].vtxformat == TANGENTSECONDUVCOLOR)
-				{
-					for(int n = 0; n < numverts; n++)
-					{
-						memcpy(&((sgVertexTanUVCol*)vertdatatarget)[n].position, &vertdatasrc[n*numfloats], sizeof(float)*numfloats);
-					}
+					memcpy((vertdatatarget+meshes[i].vtxsize*n), &vertdatasrc[n*meshes[i].vtxsize], sizeof(float)*meshes[i].vtxsize);
 				}
 			}
 			
@@ -199,7 +156,7 @@ namespace sgObjectFiles
 		{
 			sgMesh *mesh_ = new sgMesh;
 			
-			mesh_->vtxform = meshes[meshnum].vtxformat;
+			mesh_->vtxfeatures = meshes[meshnum].vtxfeatures;
 			mesh_->vtxsize = meshes[meshnum].vtxsize;
 			
 			mesh_->vertexnum = meshes[meshnum].vertexnum;
@@ -220,7 +177,7 @@ namespace sgObjectFiles
 				obj->materials.push_back(sgMaterial::getMaterial(meshes[meshnum].material->texnames[0].c_str()));
 				for(int tex = 1; tex < meshes[meshnum].material->texnames.size(); tex++)
 				{
-					obj->materials[obj->materials.size()-1]->setTexture2D(-1, meshes[meshnum].material->texnames[tex].c_str());
+					obj->materials[obj->materials.size()-1]->setTexture(-1, meshes[meshnum].material->texnames[tex].c_str());
 				}
 			}else
 			{

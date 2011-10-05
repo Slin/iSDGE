@@ -25,7 +25,7 @@
 
 precision lowp float;
 
-uniform sampler2D mTexture0;
+uniform lowp sampler2D mTexture0;
 varying mediump vec2 texcoord;
 varying vec4 color;
 

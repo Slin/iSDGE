@@ -159,22 +159,22 @@ class sgMaterial : public sgBase
 		void setShader(sgShader::BuiltInShaders shad);
 	
 		/**
-		 *	Set 2D texture.
+		 *	Set texture.
 		 *	Adds or replaces a texture.
 		 * @param tex index of the texture to replace, or -1 to add a new one
 		 * @param texfile the name of the texture file to set
 		 * @param mipmaps activates or deactivates mipmaps for the texture
 		 */
-		void setTexture2D(unsigned int tex, const char *texfile, bool mipmaps = true);
+		void setTexture(unsigned int tex, const char *texfile, bool mipmaps = true);
 	
 		/**
-		 *	Set 2D texture.
+		 *	Set texture.
 		 *	Adds or replaces a texture.
 		 * @param tex index of the texture to replace, or -1 to add a new one
 		 * @param texptr pointer to the textures instance
 		 * @param mipmaps activates or deactivates mipmaps for the texture
 		 */
-		void setTexture2D(unsigned int tex, sgTexture *texptr);
+		void setTexture(unsigned int tex, sgTexture *texptr);
 	
 		/**
 		 *	Get uniforms.

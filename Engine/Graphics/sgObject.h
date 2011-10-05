@@ -36,6 +36,7 @@
 #include "sgMatrix4x4.h"
 #include "sgQuaternion.h"
 #include "sgObjectBody.h"
+#include "sgSkeleton.h"
 
 //class sgMesh;
 class sgTexture;
@@ -198,7 +199,13 @@ class sgObject
 		 *	Maximum distance to show this object at.
 		 */
 		float loddist;
-		
+	
+		/**
+		 *	Skeleton.
+		 *	The skeleton used for animations.
+		 */
+		sgSkeleton *skeleton;
+	
 		/**
 		 *	LOD object.
 		 *	Object switched to at distances higher than loddist.
@@ -206,8 +213,8 @@ class sgObject
 		sgObjectBody *body;
 	
 		/**
-		 *	LOD object.
-		 *	Object switched to at distances higher than loddist.
+		 *	Current LOD object.
+		 *	The currently chosen LOD mesh of this object.
 		 */
 		sgObjectBody *currbody;
 	

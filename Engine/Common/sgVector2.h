@@ -43,6 +43,13 @@ class sgVector2
 		/**
 		 *	Constructor.
 		 *	Initializes a new instance.
+		 * @param other float array to copy the values from
+		 */
+		sgVector2(const float *other);
+	
+		/**
+		 *	Constructor.
+		 *	Initializes a new instance.
 		 * @param other vector to copy the values from
 		 */
 		sgVector2(const sgVector2 &other);

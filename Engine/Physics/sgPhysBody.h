@@ -123,6 +123,13 @@ class sgPhysBody
 		virtual void *getBody(){return 0;}
 	
 		/**
+		 *	Get shape.
+		 *	Returns a pointer to the used physics engines internal shape.
+		 *	@return pointer to the physics engines internal shape
+		 */
+		virtual void *getShape(){return 0;}
+	
+		/**
 		 *	Position.
 		 *	Reference to the bodys position (usually the graphic objects position).
 		 */

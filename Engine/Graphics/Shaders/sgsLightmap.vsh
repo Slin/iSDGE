@@ -30,11 +30,12 @@ attribute vec2 vertTexcoord1;
 uniform mat4 matProjViewModel;
 uniform mat4 matTex;
 
-varying vec4 texcoord;
+varying vec2 texcoord0;
+varying vec2 texcoord1;
 
 void main()
 {
-	texcoord.xy = (matTex*vec4(vertTexcoord0, 1.0, 1.0)).xy;
-	texcoord.zw = vertTexcoord1;
+	texcoord0 = (matTex*vec4(vertTexcoord0, 1.0, 1.0)).xy;
+	texcoord1 = vertTexcoord1;
 	gl_Position = matProjViewModel*vec4(vertPos, 1.0);
 }

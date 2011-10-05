@@ -40,8 +40,11 @@ namespace sgTextureFiles
 	
 	enum
 	{
-		kPVRTextureFlagTypePVRTC_2 = 24,
-		kPVRTextureFlagTypePVRTC_4
+		kPVRTextureFlagTypePVRTC_2 = 11,
+		kPVRTextureFlagTypePVRTC_4,
+		
+		kPVRTextureFlagTypePVRTC_2_GL = 24,
+		kPVRTextureFlagTypePVRTC_4_GL
 	};
 	
 	bool loadPNG(sgUncompressedTexture **tex, const char *filename)
@@ -109,9 +112,9 @@ namespace sgTextureFiles
 		
 		if(texture->flags == kPVRTextureFlagTypePVRTC_4 || texture->flags == kPVRTextureFlagTypePVRTC_2)
 		{
-			if(texture->flags == kPVRTextureFlagTypePVRTC_4)
+			if(texture->flags == kPVRTextureFlagTypePVRTC_4 || texture->flags == kPVRTextureFlagTypePVRTC_4_GL)
 				texture->glformat = GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG;
-			else if(texture->flags == kPVRTextureFlagTypePVRTC_2)
+			else if(texture->flags == kPVRTextureFlagTypePVRTC_2 || texture->flags == kPVRTextureFlagTypePVRTC_2_GL)
 				texture->glformat = GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG;
 			
 			width = texture->width = CFSwapInt32LittleToHost(texture->width);

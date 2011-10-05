@@ -141,6 +141,7 @@
 		2904EF2313C9DB5A00E04491 /* btGeometryUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2904EDF213C9DB5800E04491 /* btGeometryUtil.cpp */; };
 		2904EF2E13C9DB5A00E04491 /* btQuickprof.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2904EDFD13C9DB5800E04491 /* btQuickprof.cpp */; };
 		2904EF3213C9DB5A00E04491 /* btSerializer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2904EE0113C9DB5800E04491 /* btSerializer.cpp */; };
+		291E63FE141631160006882F /* sgsLightmapDiscard.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 291E63FC141630FD0006882F /* sgsLightmapDiscard.fsh */; };
 		29338D5B13C9B534007FC59F /* sgAudioFiles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29338B6813C9B533007FC59F /* sgAudioFiles.cpp */; };
 		29338D5D13C9B534007FC59F /* sgAudioFiles.h in Headers */ = {isa = PBXBuildFile; fileRef = 29338B6913C9B533007FC59F /* sgAudioFiles.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		29338D5F13C9B534007FC59F /* sgAudioPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29338B6A13C9B533007FC59F /* sgAudioPlayer.cpp */; };
@@ -263,6 +264,8 @@
 		29D0635D13C9DC4F00C001B2 /* btBulletCollisionCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 2904ECDB13C9DB5800E04491 /* btBulletCollisionCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		29D0635E13C9DC5200C001B2 /* btBulletDynamicsCommon.h in Headers */ = {isa = PBXBuildFile; fileRef = 2904ECDC13C9DB5800E04491 /* btBulletDynamicsCommon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		29D0635F13C9DC5600C001B2 /* Bullet-C-Api.h in Headers */ = {isa = PBXBuildFile; fileRef = 2904ECDD13C9DB5800E04491 /* Bullet-C-Api.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		29F0100A142A3F340008FF12 /* sgSkeleton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29F01008142A3F320008FF12 /* sgSkeleton.cpp */; };
+		29F0100B142A3F340008FF12 /* sgSkeleton.h in Headers */ = {isa = PBXBuildFile; fileRef = 29F01009142A3F330008FF12 /* sgSkeleton.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -570,6 +573,7 @@
 		2904EE1513C9DB5800E04491 /* vecidx_aos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vecidx_aos.h; sourceTree = "<group>"; };
 		2904EE1613C9DB5800E04491 /* vectormath_aos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vectormath_aos.h; sourceTree = "<group>"; };
 		2904EE1713C9DB5800E04491 /* vmInclude.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vmInclude.h; sourceTree = "<group>"; };
+		291E63FC141630FD0006882F /* sgsLightmapDiscard.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = sgsLightmapDiscard.fsh; sourceTree = "<group>"; };
 		293385AC13C9B170007FC59F /* iSDGE.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iSDGE.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		29338B6413C9B472007FC59F /* iSDGE-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "iSDGE-Info.plist"; sourceTree = SOURCE_ROOT; };
 		29338B6813C9B533007FC59F /* sgAudioFiles.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgAudioFiles.cpp; sourceTree = "<group>"; };
@@ -710,6 +714,8 @@
 		29D0635513C9DC3200C001B2 /* BulletDynamics */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BulletDynamics; sourceTree = "<group>"; };
 		29D0635613C9DC3200C001B2 /* LinearMath */ = {isa = PBXFileReference; lastKnownFileType = folder; path = LinearMath; sourceTree = "<group>"; };
 		29D0635713C9DC3200C001B2 /* vectormath */ = {isa = PBXFileReference; lastKnownFileType = folder; path = vectormath; sourceTree = "<group>"; };
+		29F01008142A3F320008FF12 /* sgSkeleton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgSkeleton.cpp; sourceTree = "<group>"; };
+		29F01009142A3F330008FF12 /* sgSkeleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgSkeleton.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1249,6 +1255,8 @@
 		29338B9413C9B533007FC59F /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				29F01008142A3F320008FF12 /* sgSkeleton.cpp */,
+				29F01009142A3F330008FF12 /* sgSkeleton.h */,
 				29338B9513C9B533007FC59F /* sgCamera.cpp */,
 				29338B9613C9B533007FC59F /* sgCamera.h */,
 				29338B9713C9B533007FC59F /* sgLight.cpp */,
@@ -1295,6 +1303,7 @@
 		29338BBA13C9B533007FC59F /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
+				291E63FC141630FD0006882F /* sgsLightmapDiscard.fsh */,
 				29338BBB13C9B533007FC59F /* sgsLight.fsh */,
 				29338BBC13C9B533007FC59F /* sgsLight.vsh */,
 				29338BBD13C9B533007FC59F /* sgsLightmap.fsh */,
@@ -1513,6 +1522,7 @@
 				29D0635D13C9DC4F00C001B2 /* btBulletCollisionCommon.h in Headers */,
 				29D0635E13C9DC5200C001B2 /* btBulletDynamicsCommon.h in Headers */,
 				29D0635F13C9DC5600C001B2 /* Bullet-C-Api.h in Headers */,
+				29F0100B142A3F340008FF12 /* sgSkeleton.h in Headers */,
 				29D0635913C9DC3B00C001B2 /* BulletCollision in Headers */,
 				29D0635A13C9DC3B00C001B2 /* BulletDynamics in Headers */,
 				29D0635B13C9DC3B00C001B2 /* LinearMath in Headers */,
@@ -1594,6 +1604,7 @@
 				2904EC9B13C9BEFD00E04491 /* sgsLight.fsh in Resources */,
 				2904EC9C13C9BEFD00E04491 /* sgsLight.vsh in Resources */,
 				2904EC9D13C9BEFD00E04491 /* sgsLightmap.fsh in Resources */,
+				291E63FE141631160006882F /* sgsLightmapDiscard.fsh in Resources */,
 				2904EC9E13C9BEFD00E04491 /* sgsLightmap.vsh in Resources */,
 				2904EC9F13C9BEFD00E04491 /* sgsParticle.fsh in Resources */,
 				2904ECA013C9BEFD00E04491 /* sgsParticle.vsh in Resources */,
@@ -1796,6 +1807,7 @@
 				2904EF2313C9DB5A00E04491 /* btGeometryUtil.cpp in Sources */,
 				2904EF2E13C9DB5A00E04491 /* btQuickprof.cpp in Sources */,
 				2904EF3213C9DB5A00E04491 /* btSerializer.cpp in Sources */,
+				29F0100A142A3F340008FF12 /* sgSkeleton.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1817,6 +1829,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = iSDGE;
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = bundle;
 			};
@@ -1837,6 +1850,7 @@
 				MACOSX_DEPLOYMENT_TARGET = "";
 				PRODUCT_NAME = iSDGE;
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = bundle;
 			};
@@ -1895,6 +1909,7 @@
 				GCC_FAST_MATH = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
+				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				HEADER_SEARCH_PATHS = "../Physics/Bullet/bullet-2.77/src/**";
 				INFOPLIST_FILE = "iSDGE-Info.plist";
@@ -1905,6 +1920,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = iSDGE;
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -1923,6 +1939,7 @@
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
+				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				HEADER_SEARCH_PATHS = "../Physics/Bullet/bullet-2.77/src/**";
 				INFOPLIST_FILE = "iSDGE-Info.plist";
@@ -1932,6 +1949,7 @@
 				MACOSX_DEPLOYMENT_TARGET = "";
 				PRODUCT_NAME = iSDGE;
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = framework;
 			};

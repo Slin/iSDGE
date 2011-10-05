@@ -37,6 +37,13 @@ sgVector3::sgVector3(float x_, float y_, float z_)
 	z = z_;
 }
 
+sgVector3::sgVector3(const float *other)
+{
+	x = other[0];
+	y = other[1];
+	z = other[2];
+}
+
 sgVector3::sgVector3(const sgVector3 &other)
 {
 	x = other.x;

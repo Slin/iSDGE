@@ -210,27 +210,27 @@ void sgEntity::createSkyCube(const char *right, const char *back, const char *le
 	
 	obj = sgmain->renderer->first_sky->createObject("skycube");
 	
-	obj->body->materials[0]->setTexture2D(-1, right, false);
+	obj->body->materials[0]->setTexture(-1, right, false);
 	obj->body->materials[0]->depthtest = false;
 	obj->body->materials[0]->textures[0]->setParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	obj->body->materials[0]->textures[0]->setParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	obj->body->materials[1]->setTexture2D(-1, back, false);
+	obj->body->materials[1]->setTexture(-1, back, false);
 	obj->body->materials[1]->depthtest = false;
 	obj->body->materials[1]->textures[0]->setParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	obj->body->materials[1]->textures[0]->setParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	obj->body->materials[2]->setTexture2D(-1, left, false);
+	obj->body->materials[2]->setTexture(-1, left, false);
 	obj->body->materials[2]->textures[0]->setParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	obj->body->materials[2]->textures[0]->setParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	obj->body->materials[2]->depthtest = false;
-	obj->body->materials[3]->setTexture2D(-1, front, false);
+	obj->body->materials[3]->setTexture(-1, front, false);
 	obj->body->materials[3]->textures[0]->setParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	obj->body->materials[3]->textures[0]->setParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	obj->body->materials[3]->depthtest = false;
-	obj->body->materials[4]->setTexture2D(-1, down, false);
+	obj->body->materials[4]->setTexture(-1, down, false);
 	obj->body->materials[4]->textures[0]->setParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	obj->body->materials[4]->textures[0]->setParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	obj->body->materials[4]->depthtest = false;
-	obj->body->materials[5]->setTexture2D(-1, up, false);
+	obj->body->materials[5]->setTexture(-1, up, false);
 	obj->body->materials[5]->textures[0]->setParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	obj->body->materials[5]->textures[0]->setParameteri(GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	obj->body->materials[5]->depthtest = false;
@@ -286,55 +286,9 @@ void sgEntity::createPhysBody(sgPhysBody::eShape shape, float mass, sgVector3 si
 		for(int n = 0; n < obj->body->meshs.size(); n++)
 		{
 			mesh = obj->body->meshs[n];
-		
-			if(mesh->vtxform == BASIC)
+			for(int i = 0; i < mesh->indexnum; i += 3)
 			{
-				for(int i = 0; i < mesh->indexnum; i += 3)
-				{
-					body->addFace(mesh->vertices[mesh->indices[i+0]].position, mesh->vertices[mesh->indices[i+1]].position, mesh->vertices[mesh->indices[i+2]].position);
-				}
-			}else if(mesh->vtxform == SECONDUV)
-			{
-				for(int i = 0; i < mesh->indexnum; i += 3)
-				{
-					body->addFace(((sgVertexUV*)mesh->vertices)[mesh->indices[i+0]].position, ((sgVertexUV*)mesh->vertices)[mesh->indices[i+1]].position, ((sgVertexUV*)mesh->vertices)[mesh->indices[i+2]].position);
-				}
-			}else if(mesh->vtxform == COLOR)
-			{
-				for(int i = 0; i < mesh->indexnum; i += 3)
-				{
-					body->addFace(((sgVertexCol*)mesh->vertices)[mesh->indices[i+0]].position, ((sgVertexCol*)mesh->vertices)[mesh->indices[i+1]].position, ((sgVertexCol*)mesh->vertices)[mesh->indices[i+2]].position);
-				}
-			}else if(mesh->vtxform == SECONDUVCOLOR)
-			{
-				for(int i = 0; i < mesh->indexnum; i += 3)
-				{
-					body->addFace(((sgVertexUVCol*)mesh->vertices)[mesh->indices[i+0]].position, ((sgVertexUVCol*)mesh->vertices)[mesh->indices[i+1]].position, ((sgVertexUVCol*)mesh->vertices)[mesh->indices[i+2]].position);
-				}
-			}else if(mesh->vtxform == TANGENT)
-			{
-				for(int i = 0; i < mesh->indexnum; i += 3)
-				{
-					body->addFace(((sgVertexTan*)mesh->vertices)[mesh->indices[i+0]].position, ((sgVertexTan*)mesh->vertices)[mesh->indices[i+1]].position, ((sgVertexTan*)mesh->vertices)[mesh->indices[i+2]].position);
-				}
-			}else if(mesh->vtxform == TANGENTSECONDUV)
-			{
-				for(int i = 0; i < mesh->indexnum; i += 3)
-				{
-					body->addFace(((sgVertexTanUV*)mesh->vertices)[mesh->indices[i+0]].position, ((sgVertexTanUV*)mesh->vertices)[mesh->indices[i+1]].position, ((sgVertexTanUV*)mesh->vertices)[mesh->indices[i+2]].position);
-				}
-			}else if(mesh->vtxform == TANGENTCOLOR)
-			{
-				for(int i = 0; i < mesh->indexnum; i += 3)
-				{
-					body->addFace(((sgVertexTanCol*)mesh->vertices)[mesh->indices[i+0]].position, ((sgVertexTanCol*)mesh->vertices)[mesh->indices[i+1]].position, ((sgVertexTanCol*)mesh->vertices)[mesh->indices[i+2]].position);
-				}
-			}else if(mesh->vtxform == TANGENTSECONDUVCOLOR)
-			{
-				for(int i = 0; i < mesh->indexnum; i += 3)
-				{
-					body->addFace(((sgVertexTanUVCol*)mesh->vertices)[mesh->indices[i+0]].position, ((sgVertexTanUVCol*)mesh->vertices)[mesh->indices[i+1]].position, ((sgVertexTanUVCol*)mesh->vertices)[mesh->indices[i+2]].position);
-				}
+				body->addFace(sgVector3(mesh->vertices[mesh->indices[i+0]*mesh->vtxsize+0]), sgVector3(mesh->vertices[mesh->indices[i+1]*mesh->vtxsize+0]), sgVector3(mesh->vertices[mesh->indices[i+2]*mesh->vtxsize+0]));
 			}
 		}
 	}

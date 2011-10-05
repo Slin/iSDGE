@@ -25,7 +25,7 @@
 
 precision highp float;
 
-uniform sampler2D mTexture0;
+uniform lowp sampler2D mTexture0;
 uniform lowp float mAlphaTest;
 
 varying vec2 texcoord;

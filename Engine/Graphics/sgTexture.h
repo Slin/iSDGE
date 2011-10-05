@@ -55,33 +55,30 @@ class sgTexture : public sgBase
 		~sgTexture();
 	
 		/**
-		 *	Create 2D Texture.
+		 *	Create Texture.
 		 *	If there isn´t already a texture, this function loads it from the given file.
 		 * @param filename the name of the file to load
 		 * @param mipmaps has to be set to FALSE if you don´t want mipmaps to be created for this texture
 		 * @param lock keeps the texture locked after creation if true.
 		 */
-		void createTexture2D(const char *filename, bool mipmaps = true, bool lock = false);
+		void createTexture(const char *filename, bool mipmaps = true, bool lock = false);
 	
 		/**
-		 *	Create 2D Texture.
+		 *	Create Texture.
 		 *	If there isn´t already a texture, this function creates a black one with the given dimensions.
 		 * @param width the width of the texture to create
 		 * @param height the height of the texture to create
+		 * @param cubemap will create this as a cubemap with 6 sides
 		 */
-		void createTexture2D(float width_, float height_);
+		void createTexture(float width_, float height_, bool cubemap = false);
 	
 		/**
-		 *	Create 2D Texture from PVR file.
+		 *	Create Texture from PVR file.
 		 *	If there isn´t already a texture, this function loads it from a PVRTS compressed file.
 		 * @param filename the name of the file to load, without the type
-		 * @param w the width of the image can´t be set automatically
-		 * @param h the height of the image can´t be set automatically
-		 * @param type the type of the texture
-		 * @param mipmaps has to be set to false if you don´t want mipmaps to be created for this texture
 		 * @return pointer to the texture classes instance
 		 */
-		void createPVRTexture2D(const char *filename);
+		void createPVRTexture(const char *filename);
 	
 		/**
 		 *	Make rendertarget.
@@ -95,18 +92,20 @@ class sgTexture : public sgBase
 		 * @param filename the name of the file to load
 		 * @param mipmaps has to be set to FALSE if you don´t want mipmaps to be created for this texture
 		 * @param lock keeps the texture locked after creation if true.
+		 * @param cubemap you are expected to add the 5 missing sides of the cube if this is true
 		 * @return pointer to the texture classes instance
 		 */
-		static sgTexture *getTexture2D(const char *filename, bool mipmaps = true, bool lock = false);
+		static sgTexture *getTexture(const char *filename, bool mipmaps = true, bool lock = false);
 	
 		/**
 		 * Get Texture.
 		 * Creates and returns a pointer to a texture loaded from the given file.
 		 * @param width the width of the texture to create
 		 * @param height the height of the texture to create
+		 * @param cubemap will create this as a cubemap with 6 sides
 		 * @return pointer to the texture classes instance
 		 */
-		static sgTexture *getTexture2D(float width_, float height_);
+		static sgTexture *getTexture(float width_, float height_, bool cubemap = false);
 	
 		/**
 		 * Lock pixels.
@@ -176,6 +175,12 @@ class sgTexture : public sgBase
 		 *	Destroys the instance.
 		 */
 		void destroy();
+	
+		/**
+		 *	Texture type.
+		 *	The OpenGL type of the texture.
+		 */
+		unsigned int textype;
 		
 		/**
 		 *	Texture ID.

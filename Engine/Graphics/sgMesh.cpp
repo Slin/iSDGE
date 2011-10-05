@@ -46,6 +46,10 @@ sgMesh::sgMesh()
 	vbotoggle = false;
 	dynamic = false;
 	
+	bonenum = 0;
+	boneindices = NULL;
+	bonematrices = NULL;
+	
 	vertexnum = 0;
 	indexnum = 0;
 	vertices = NULL;
@@ -67,6 +71,8 @@ sgMesh::~sgMesh()
 	
 	free(vertices);
 	delete[] indices;
+	delete[] bonematrices;
+	delete[] boneindices;
 }
 
 void sgMesh::generateVBO(bool dyn)
@@ -94,7 +100,7 @@ void sgMesh::generateVBO(bool dyn)
 	{
 		glGenBuffers(1, &vbo0);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo0);
-		glBufferData(GL_ARRAY_BUFFER, vertexnum*vtxsize, vertices, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, vertexnum*vtxsize*sizeof(float), vertices, GL_STATIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		
 		glGenBuffers(1, &ivbo0);
@@ -107,7 +113,7 @@ void sgMesh::generateVBO(bool dyn)
 	{
 		glGenBuffers(1, &vbo0);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo0);
-		glBufferData(GL_ARRAY_BUFFER, vertexnum*vtxsize, vertices, GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, vertexnum*vtxsize*sizeof(float), vertices, GL_DYNAMIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		
 		glGenBuffers(1, &ivbo0);
@@ -117,7 +123,7 @@ void sgMesh::generateVBO(bool dyn)
 		
 		glGenBuffers(1, &vbo1);
 		glBindBuffer(GL_ARRAY_BUFFER, vbo1);
-		glBufferData(GL_ARRAY_BUFFER, vertexnum*vtxsize, vertices, GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, vertexnum*vtxsize*sizeof(float), vertices, GL_DYNAMIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		
 		glGenBuffers(1, &ivbo1);
@@ -142,7 +148,7 @@ void sgMesh::updateVBO()
 		ivbo = ivbo1;
 		
 		glBindBuffer(GL_ARRAY_BUFFER, vbo0);
-		glBufferSubData(GL_ARRAY_BUFFER, 0, vertexnum*vtxsize, vertices);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, vertexnum*vtxsize*sizeof(float), vertices);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		
 		glBindBuffer(GL_ARRAY_BUFFER, ivbo0);
@@ -154,7 +160,7 @@ void sgMesh::updateVBO()
 		ivbo = ivbo0;
 		
 		glBindBuffer(GL_ARRAY_BUFFER, vbo1);
-		glBufferSubData(GL_ARRAY_BUFFER, 0, vertexnum*vtxsize, vertices);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, vertexnum*vtxsize*sizeof(float), vertices);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		
 		glBindBuffer(GL_ARRAY_BUFFER, ivbo1);
@@ -168,101 +174,29 @@ void sgMesh::calculateNormals()
 	int i;
 	int n;
 	sgVertex *tempvtx;
-	sgVertex *tempverts = (sgVertex*)malloc(vtxsize*vertexnum);
+	float *tempverts = (float*)malloc(vtxsize*vertexnum*sizeof(float));
 	
 	//Reset all normals
 	for(i = 0; i < vertexnum; i++)
 	{
-		if(vtxform == BASIC)
-		{
-			tempvtx = &vertices[i];
-		}else if(vtxform == SECONDUV)
-		{
-			tempvtx = (sgVertex*)&((sgVertexUV*)vertices)[i];
-		}else if(vtxform == COLOR)
-		{
-			tempvtx = (sgVertex*)&((sgVertexCol*)vertices)[i];
-		}else if(vtxform == SECONDUVCOLOR)
-		{
-			tempvtx = (sgVertex*)&((sgVertexUVCol*)vertices)[i];
-		}else if(vtxform == TANGENT)
-		{
-			tempvtx = (sgVertex*)&((sgVertexTan*)vertices)[i];
-		}else if(vtxform == TANGENTSECONDUV)
-		{
-			tempvtx = (sgVertex*)&((sgVertexTanUV*)vertices)[i];
-		}else if(vtxform == TANGENTCOLOR)
-		{
-			tempvtx = (sgVertex*)&((sgVertexTanCol*)vertices)[i];
-		}else if(vtxform == TANGENTSECONDUVCOLOR)
-		{
-			tempvtx = (sgVertex*)&((sgVertexTanUVCol*)vertices)[i];
-		}
+		tempvtx = (sgVertex*)(vertices+vtxsize*i);
 		
 		tempvtx->normal.x = 0;
 		tempvtx->normal.y = 0;
 		tempvtx->normal.z = 0;
 	}
-	memcpy(tempverts, vertices, vtxsize*vertexnum);
+	memcpy(tempverts, vertices, vtxsize*vertexnum*sizeof(float));
 	
 	//Calculate the normal of each vertex
 	for(i = 0; i < indexnum; i += 3)
 	{
-		if(vtxform == BASIC)
-		{
-			calculateFaceNormal(&vertices[indices[i]], &vertices[indices[i+2]], &vertices[indices[i+1]]);
-		}else if(vtxform == SECONDUV)
-		{
-			calculateFaceNormal((sgVertex*)&((sgVertexUV*)vertices)[indices[i]], (sgVertex*)&((sgVertexUV*)vertices)[indices[i+2]], (sgVertex*)&((sgVertexUV*)vertices)[indices[i+1]]);
-		}else if(vtxform == COLOR)
-		{
-			calculateFaceNormal((sgVertex*)&((sgVertexCol*)vertices)[indices[i]], (sgVertex*)&((sgVertexCol*)vertices)[indices[i+2]], (sgVertex*)&((sgVertexCol*)vertices)[indices[i+1]]);
-		}else if(vtxform == SECONDUVCOLOR)
-		{
-			calculateFaceNormal((sgVertex*)&((sgVertexUVCol*)vertices)[indices[i]], (sgVertex*)&((sgVertexUVCol*)vertices)[indices[i+2]], (sgVertex*)&((sgVertexUVCol*)vertices)[indices[i+1]]);
-		}else if(vtxform == TANGENT)
-		{
-			calculateFaceNormal((sgVertex*)&((sgVertexTan*)vertices)[indices[i]], (sgVertex*)&((sgVertexTan*)vertices)[indices[i+2]], (sgVertex*)&((sgVertexTan*)vertices)[indices[i+1]]);
-		}else if(vtxform == TANGENTSECONDUV)
-		{
-			calculateFaceNormal((sgVertex*)&((sgVertexTanUV*)vertices)[indices[i]], (sgVertex*)&((sgVertexTanUV*)vertices)[indices[i+2]], (sgVertex*)&((sgVertexTanUV*)vertices)[indices[i+1]]);
-		}else if(vtxform == TANGENTCOLOR)
-		{
-			calculateFaceNormal((sgVertex*)&((sgVertexTanCol*)vertices)[indices[i]], (sgVertex*)&((sgVertexTanCol*)vertices)[indices[i+2]], (sgVertex*)&((sgVertexTanCol*)vertices)[indices[i+1]]);
-		}else if(vtxform == TANGENTSECONDUVCOLOR)
-		{
-			calculateFaceNormal((sgVertex*)&((sgVertexTanUVCol*)vertices)[indices[i]], (sgVertex*)&((sgVertexTanUVCol*)vertices)[indices[i+2]], (sgVertex*)&((sgVertexTanUVCol*)vertices)[indices[i+1]]);
-		}
+		calculateFaceNormal((sgVertex*)(vertices+indices[i]*vtxsize), (sgVertex*)(vertices+indices[i+2]*vtxsize), (sgVertex*)(vertices+indices[i+1]*vtxsize));
 	}
 	
 	//Normalize all normals
 	for(i = 0; i < vertexnum; i++)
 	{
-		if(vtxform == BASIC)
-		{
-			tempvtx = &vertices[i];
-		}else if(vtxform == SECONDUV)
-		{
-			tempvtx = (sgVertex*)&((sgVertexUV*)vertices)[i];
-		}else if(vtxform == COLOR)
-		{
-			tempvtx = (sgVertex*)&((sgVertexCol*)vertices)[i];
-		}else if(vtxform == SECONDUVCOLOR)
-		{
-			tempvtx = (sgVertex*)&((sgVertexUVCol*)vertices)[i];
-		}else if(vtxform == TANGENT)
-		{
-			tempvtx = (sgVertex*)&((sgVertexTan*)vertices)[i];
-		}else if(vtxform == TANGENTSECONDUV)
-		{
-			tempvtx = (sgVertex*)&((sgVertexTanUV*)vertices)[i];
-		}else if(vtxform == TANGENTCOLOR)
-		{
-			tempvtx = (sgVertex*)&((sgVertexTanCol*)vertices)[i];
-		}else if(vtxform == TANGENTSECONDUVCOLOR)
-		{
-			tempvtx = (sgVertex*)&((sgVertexTanUVCol*)vertices)[i];
-		}
+		tempvtx = (sgVertex*)(vertices+i*vtxsize);
 		tempvtx->normal.normalize();
 	}
 	
@@ -271,39 +205,8 @@ void sgMesh::calculateNormals()
 	{
 		for(n = 0; n < vertexnum; n++)
 		{
-			if(vtxform == BASIC)
-			{
-				if(vertices[i].position.dist(vertices[n].position) < 0.00001 && vertices[i].normal.dot(vertices[n].normal) > 0.8)
-					tempverts[i].normal += vertices[n].normal;
-			}else if(vtxform == SECONDUV)
-			{
-				if(((sgVertexUV*)vertices)[i].position.dist(((sgVertexUV*)vertices)[n].position) < 0.000001 && ((sgVertexUV*)vertices)[i].normal.dot(((sgVertexUV*)vertices)[n].normal) > 0.8)
-					((sgVertexUV*)tempverts)[i].normal += ((sgVertexUV*)vertices)[n].normal;
-			}else if(vtxform == COLOR)
-			{
-				if(((sgVertexCol*)vertices)[i].position.dist(((sgVertexCol*)vertices)[n].position) < 0.000001 && ((sgVertexCol*)vertices)[i].normal.dot(((sgVertexCol*)vertices)[n].normal) > 0.8)
-					((sgVertexCol*)tempverts)[i].normal += ((sgVertexCol*)vertices)[n].normal;
-			}else if(vtxform == SECONDUVCOLOR)
-			{
-				if(((sgVertexUVCol*)vertices)[i].position.dist(((sgVertexUVCol*)vertices)[n].position) < 0.000001 && ((sgVertexUVCol*)vertices)[i].normal.dot(((sgVertexUVCol*)vertices)[n].normal) > 0.8)
-					((sgVertexUVCol*)tempverts)[i].normal += ((sgVertexUVCol*)vertices)[n].normal;
-			}else if(vtxform == TANGENT)
-			{
-				if(((sgVertexTan*)vertices)[i].position.dist(((sgVertexTan*)vertices)[n].position) < 0.000001 && ((sgVertexTan*)vertices)[i].normal.dot(((sgVertexTan*)vertices)[n].normal) > 0.8)
-					((sgVertexTan*)tempverts)[i].normal += ((sgVertexTan*)vertices)[n].normal;
-			}else if(vtxform == TANGENTSECONDUV)
-			{
-				if(((sgVertexTanUV*)vertices)[i].position.dist(((sgVertexTanUV*)vertices)[n].position) < 0.000001 && ((sgVertexTanUV*)vertices)[i].normal.dot(((sgVertexTanUV*)vertices)[n].normal) > 0.8)
-					((sgVertexTanUV*)tempverts)[i].normal += ((sgVertexTanUV*)vertices)[n].normal;
-			}else if(vtxform == TANGENTCOLOR)
-			{
-				if(((sgVertexTanCol*)vertices)[i].position.dist(((sgVertexTanCol*)vertices)[n].position) < 0.000001 && ((sgVertexTanCol*)vertices)[i].normal.dot(((sgVertexTanCol*)vertices)[n].normal) > 0.8)
-					((sgVertexTanCol*)tempverts)[i].normal += ((sgVertexTanCol*)vertices)[n].normal;
-			}else if(vtxform == TANGENTSECONDUVCOLOR)
-			{
-				if(((sgVertexTanUVCol*)vertices)[i].position.dist(((sgVertexTanUVCol*)vertices)[n].position) < 0.000001 && ((sgVertexTanUVCol*)vertices)[i].normal.dot(((sgVertexTanUVCol*)vertices)[n].normal) > 0.8)
-					((sgVertexTanUVCol*)tempverts)[i].normal += ((sgVertexTanUVCol*)vertices)[n].normal;
-			}
+			if(((sgVertex*)(vertices+i*vtxsize))->position.dist(((sgVertex*)(vertices+n*vtxsize))->position) < 0.00001 && ((sgVertex*)(vertices+i*vtxsize))->normal.dot(((sgVertex*)(vertices+n*vtxsize))->normal) > 0.8)
+				((sgVertex*)(tempverts+i*vtxsize))->normal += ((sgVertex*)(vertices+n*vtxsize))->normal;
 		}
 	}
 	free(vertices);
@@ -312,126 +215,58 @@ void sgMesh::calculateNormals()
 	//Normalize all normals
 	for(i = 0; i < vertexnum; i++)
 	{
-		if(vtxform == BASIC)
-		{
-			tempvtx = &vertices[i];
-		}else if(vtxform == SECONDUV)
-		{
-			tempvtx = (sgVertex*)&((sgVertexUV*)vertices)[i];
-		}else if(vtxform == COLOR)
-		{
-			tempvtx = (sgVertex*)&((sgVertexCol*)vertices)[i];
-		}else if(vtxform == SECONDUVCOLOR)
-		{
-			tempvtx = (sgVertex*)&((sgVertexUVCol*)vertices)[i];
-		}else if(vtxform == TANGENT)
-		{
-			tempvtx = (sgVertex*)&((sgVertexTan*)vertices)[i];
-		}else if(vtxform == TANGENTSECONDUV)
-		{
-			tempvtx = (sgVertex*)&((sgVertexTanUV*)vertices)[i];
-		}else if(vtxform == TANGENTCOLOR)
-		{
-			tempvtx = (sgVertex*)&((sgVertexTanCol*)vertices)[i];
-		}else if(vtxform == TANGENTSECONDUVCOLOR)
-		{
-			tempvtx = (sgVertex*)&((sgVertexTanUVCol*)vertices)[i];
-		}
+		tempvtx = (sgVertex*)(vertices+i*vtxsize);
 		tempvtx->normal.normalize();
 	}
 }
 
 void sgMesh::calculateTangents()
 {
-	if(vtxform == BASIC || vtxform == SECONDUV || vtxform == COLOR || vtxform == SECONDUVCOLOR)
+	if((vtxfeatures & sgVertex::TANGENT) == 0)
 		return;
 	
 	int i;
-	sgVertexTan *tempvtx;
+	char tangentoffset = 8;
+	if((vtxfeatures & sgVertex::UV1))
+		tangentoffset += 2;
+	if((vtxfeatures & sgVertex::COLOR))
+		tangentoffset += 4;
+	
+	sgVector3 tempnormal;
 	sgVector3 temptangent;
 	sgVector3 *bitangents = new sgVector3[vertexnum];
 	
 	//Reset all tangents
 	for(i = 0; i < vertexnum; i++)
 	{
-		if(vtxform == TANGENT)
-		{
-			tempvtx = (sgVertexTan*)&((sgVertexTan*)vertices)[i];
-		}else if(vtxform == TANGENTSECONDUV)
-		{
-			tempvtx = (sgVertexTan*)&((sgVertexTanUV*)vertices)[i];
-		}else if(vtxform == TANGENTCOLOR)
-		{
-			tempvtx = (sgVertexTan*)&((sgVertexTanCol*)vertices)[i];
-		}else if(vtxform == TANGENTSECONDUVCOLOR)
-		{
-			tempvtx = (sgVertexTan*)&((sgVertexTanUVCol*)vertices)[i];
-		}
-		
-		tempvtx->tangent.x = 0;
-		tempvtx->tangent.y = 0;
-		tempvtx->tangent.z = 0;
-		tempvtx->tangent.w = 0;
+		vertices[i*vtxsize+tangentoffset] = 0;
+		vertices[i*vtxsize+tangentoffset+1] = 0;
+		vertices[i*vtxsize+tangentoffset+2] = 0;
+		vertices[i*vtxsize+tangentoffset+3] = 0;
 	}
 	
 	//Calculate the tangent of each vertex
 	for(i = 0; i < indexnum; i += 3)
 	{
-		if(vtxform == TANGENT)
-		{
-			calculateFaceTangent((sgVertexTan*)&((sgVertexTan*)vertices)[indices[i]], (sgVertexTan*)&((sgVertexTan*)vertices)[indices[i+2]], (sgVertexTan*)&((sgVertexTan*)vertices)[indices[i+1]], &bitangents[indices[i]], &bitangents[indices[i+2]], &bitangents[indices[i+1]]);
-		}else if(vtxform == TANGENTSECONDUV)
-		{
-			calculateFaceTangent((sgVertexTan*)&((sgVertexTanUV*)vertices)[indices[i]], (sgVertexTan*)&((sgVertexTanUV*)vertices)[indices[i+2]], (sgVertexTan*)&((sgVertexTanUV*)vertices)[indices[i+1]], &bitangents[indices[i]], &bitangents[indices[i+2]], &bitangents[indices[i+1]]);
-		}else if(vtxform == TANGENTCOLOR)
-		{
-			calculateFaceTangent((sgVertexTan*)&((sgVertexTanCol*)vertices)[indices[i]], (sgVertexTan*)&((sgVertexTanCol*)vertices)[indices[i+2]], (sgVertexTan*)&((sgVertexTanCol*)vertices)[indices[i+1]], &bitangents[indices[i]], &bitangents[indices[i+2]], &bitangents[indices[i+1]]);
-		}else if(vtxform == TANGENTSECONDUVCOLOR)
-		{
-			calculateFaceTangent((sgVertexTan*)&((sgVertexTanUVCol*)vertices)[indices[i]], (sgVertexTan*)&((sgVertexTanUVCol*)vertices)[indices[i+2]], (sgVertexTan*)&((sgVertexTanUVCol*)vertices)[indices[i+1]], &bitangents[indices[i]], &bitangents[indices[i+2]], &bitangents[indices[i+1]]);
-		}
+		calculateFaceTangent((sgVertex*)(vertices+indices[i]*vtxsize), (sgVertex*)(vertices+indices[i+2]*vtxsize), (sgVertex*)(vertices+indices[i+1]*vtxsize), (sgVector3*)(vertices+indices[i]*vtxsize+tangentoffset), (sgVector3*)(vertices+indices[i+2]*vtxsize+tangentoffset), (sgVector3*)(vertices+indices[i+1]*vtxsize+tangentoffset), &bitangents[indices[i]], &bitangents[indices[i+2]], &bitangents[indices[i+1]]);
 	}
 	
 	//Normalize all tangents
 	for(i = 0; i < vertexnum; i++)
 	{
-		if(vtxform == TANGENT)
-		{
-			tempvtx = (sgVertexTan*)&((sgVertexTan*)vertices)[i];
-		}else if(vtxform == TANGENTSECONDUV)
-		{
-			tempvtx = (sgVertexTan*)&((sgVertexTanUV*)vertices)[i];
-		}else if(vtxform == TANGENTCOLOR)
-		{
-			tempvtx = (sgVertexTan*)&((sgVertexTanCol*)vertices)[i];
-		}else if(vtxform == TANGENTSECONDUVCOLOR)
-		{
-			tempvtx = (sgVertexTan*)&((sgVertexTanUVCol*)vertices)[i];
-		}
-		temptangent = tempvtx->tangent;
-		temptangent -= tempvtx->normal*tempvtx->normal.dot(tempvtx->tangent);
+		tempnormal = sgVector3(vertices[i*vtxsize+3]);
+		temptangent = sgVector3(vertices[i*vtxsize+tangentoffset]);
+		temptangent -= tempnormal*tempnormal.dot(temptangent);
 		temptangent.normalize();
-		tempvtx->tangent = temptangent;
+		memccpy(&vertices[i*vtxsize+tangentoffset], &temptangent.x, 3, sizeof(float));
 	}
 	
 	//Calculate bitangent direction
 	for(i = 0; i < vertexnum; i++)
 	{
-		if(vtxform == TANGENT)
-		{
-			tempvtx = (sgVertexTan*)&((sgVertexTan*)vertices)[i];
-		}else if(vtxform == TANGENTSECONDUV)
-		{
-			tempvtx = (sgVertexTan*)&((sgVertexTanUV*)vertices)[i];
-		}else if(vtxform == TANGENTCOLOR)
-		{
-			tempvtx = (sgVertexTan*)&((sgVertexTanCol*)vertices)[i];
-		}else if(vtxform == TANGENTSECONDUVCOLOR)
-		{
-			tempvtx = (sgVertexTan*)&((sgVertexTanUVCol*)vertices)[i];
-		}
-		temptangent = tempvtx->tangent;
-		tempvtx->tangent.w = (tempvtx->normal.cross(temptangent).dot(bitangents[i]) < 0.0f)? -1.0f : 1.0f;
+		tempnormal = sgVector3(vertices[i*vtxsize+3]);
+		temptangent = sgVector3(vertices[i*vtxsize+tangentoffset]);;
+		vertices[i*vtxsize+tangentoffset+3] = (tempnormal.cross(temptangent).dot(bitangents[i]) < 0.0f)? -1.0f : 1.0f;
 	}
 	
 	delete[] bitangents;
@@ -475,7 +310,7 @@ void sgMesh::calculateFaceNormal(sgVertex *vertex, sgVertex *neighbour_a, sgVert
 	neighbour_b->normal.z += normal[2];
 }
 
-void sgMesh::calculateFaceTangent(sgVertexTan *vertex, sgVertexTan *neighbour_a, sgVertexTan *neighbour_b, sgVector3 *bitangent0, sgVector3 *bitangent1, sgVector3 *bitangent2)
+void sgMesh::calculateFaceTangent(sgVertex *vertex, sgVertex *neighbour_a, sgVertex *neighbour_b, sgVector3 *tangent0, sgVector3 *tangent1, sgVector3 *tangent2, sgVector3 *bitangent0, sgVector3 *bitangent1, sgVector3 *bitangent2)
 {
 	sgVector3 posdir1 = neighbour_a->position-vertex->position;
 	sgVector3 posdir2 = neighbour_b->position-vertex->position;
@@ -490,9 +325,9 @@ void sgMesh::calculateFaceTangent(sgVertexTan *vertex, sgVertexTan *neighbour_a,
 	sgVector4 tangent((uvdir2.y*posdir1.x-uvdir1.y*posdir2.x)*r, (uvdir2.y*posdir1.y-uvdir1.y*posdir2.y)*r, (uvdir2.y*posdir1.z-uvdir1.y*posdir2.z)*r, 0.0);
 	sgVector3 bitangent((uvdir1.x*posdir2.x-uvdir2.x*posdir1.x)*r, (uvdir1.x*posdir2.y-uvdir2.x*posdir1.y)*r, (uvdir1.x*posdir2.z-uvdir2.x*posdir1.z)*r);
 	
-	vertex->tangent += tangent;
-	neighbour_a->tangent += tangent;
-	neighbour_b->tangent += tangent;
+	*tangent0 += tangent;
+	*tangent1 += tangent;
+	*tangent2 += tangent;
 	
 	*bitangent0 += bitangent;
 	*bitangent1 += bitangent;
@@ -501,107 +336,17 @@ void sgMesh::calculateFaceTangent(sgVertexTan *vertex, sgVertexTan *neighbour_a,
 
 void sgMesh::invertTexCoordsX()
 {
-	if(vtxform == BASIC)
+	for(int i = 0; i < vertexnum; i++)
 	{
-		for(int i = 0; i < vertexnum; i++)
-		{
-			vertices[i].uv.x = 1.0f-vertices[i].uv.x;
-		}
-	}else if(vtxform == SECONDUV)
-	{
-		for(int i = 0; i < vertexnum; i++)
-		{
-			((sgVertexUV*)vertices)[i].uv.x = 1.0f-((sgVertexUV*)vertices)[i].uv.x;
-		}
-	}else if(vtxform == COLOR)
-	{
-		for(int i = 0; i < vertexnum; i++)
-		{
-			((sgVertexCol*)vertices)[i].uv.x = 1.0f-((sgVertexCol*)vertices)[i].uv.x;
-		}
-	}else if(vtxform == SECONDUVCOLOR)
-	{
-		for(int i = 0; i < vertexnum; i++)
-		{
-			((sgVertexUVCol*)vertices)[i].uv.x = 1.0f-((sgVertexUVCol*)vertices)[i].uv.x;
-		}
-	}else if(vtxform == TANGENT)
-	{
-		for(int i = 0; i < vertexnum; i++)
-		{
-			((sgVertexTan*)vertices)[i].uv.x = 1.0f-((sgVertexTan*)vertices)[i].uv.x;
-		}
-	}else if(vtxform == TANGENTSECONDUV)
-	{
-		for(int i = 0; i < vertexnum; i++)
-		{
-			((sgVertexTanUV*)vertices)[i].uv.x = 1.0f-((sgVertexTanUV*)vertices)[i].uv.x;
-		}
-	}else if(vtxform == TANGENTCOLOR)
-	{
-		for(int i = 0; i < vertexnum; i++)
-		{
-			((sgVertexTanCol*)vertices)[i].uv.x = 1.0f-((sgVertexTanCol*)vertices)[i].uv.x;
-		}
-	}else if(vtxform == TANGENTSECONDUVCOLOR)
-	{
-		for(int i = 0; i < vertexnum; i++)
-		{
-			((sgVertexTanUVCol*)vertices)[i].uv.x = 1.0f-((sgVertexTanUVCol*)vertices)[i].uv.x;
-		}
+		vertices[i*vtxsize+6] = 1.0f-vertices[i*vtxsize+6];
 	}
 }
 
 void sgMesh::invertTexCoordsY()
 {
-	if(vtxform == BASIC)
+	for(int i = 0; i < vertexnum; i++)
 	{
-		for(int i = 0; i < vertexnum; i++)
-		{
-			vertices[i].uv.y = 1.0f-vertices[i].uv.y;
-		}
-	}else if(vtxform == SECONDUV)
-	{
-		for(int i = 0; i < vertexnum; i++)
-		{
-			((sgVertexUV*)vertices)[i].uv.y = 1.0f-((sgVertexUV*)vertices)[i].uv.y;
-		}
-	}else if(vtxform == COLOR)
-	{
-		for(int i = 0; i < vertexnum; i++)
-		{
-			((sgVertexCol*)vertices)[i].uv.y = 1.0f-((sgVertexCol*)vertices)[i].uv.y;
-		}
-	}else if(vtxform == SECONDUVCOLOR)
-	{
-		for(int i = 0; i < vertexnum; i++)
-		{
-			((sgVertexUVCol*)vertices)[i].uv.y = 1.0f-((sgVertexUVCol*)vertices)[i].uv.y;
-		}
-	}else if(vtxform == TANGENT)
-	{
-		for(int i = 0; i < vertexnum; i++)
-		{
-			((sgVertexTan*)vertices)[i].uv.y = 1.0f-((sgVertexTan*)vertices)[i].uv.y;
-		}
-	}else if(vtxform == TANGENTSECONDUV)
-	{
-		for(int i = 0; i < vertexnum; i++)
-		{
-			((sgVertexTanUV*)vertices)[i].uv.y = 1.0f-((sgVertexTanUV*)vertices)[i].uv.y;
-		}
-	}else if(vtxform == TANGENTCOLOR)
-	{
-		for(int i = 0; i < vertexnum; i++)
-		{
-			((sgVertexTanCol*)vertices)[i].uv.y = 1.0f-((sgVertexTanCol*)vertices)[i].uv.y;
-		}
-	}else if(vtxform == TANGENTSECONDUVCOLOR)
-	{
-		for(int i = 0; i < vertexnum; i++)
-		{
-			((sgVertexTanUVCol*)vertices)[i].uv.y = 1.0f-((sgVertexTanUVCol*)vertices)[i].uv.y;
-		}
+		vertices[i*vtxsize+7] = 1.0f-vertices[i*vtxsize+7];
 	}
 }
 
@@ -614,31 +359,7 @@ void sgMesh::calcCullSphere()
 	sgVertex *tempvtx;
 	for(int i = 0; i < vertexnum; i++)
 	{
-		if(vtxform == BASIC)
-		{
-			tempvtx = &vertices[i];
-		}else if(vtxform == SECONDUV)
-		{
-			tempvtx = (sgVertex*)&((sgVertexUV*)vertices)[i];
-		}else if(vtxform == COLOR)
-		{
-			tempvtx = (sgVertex*)&((sgVertexCol*)vertices)[i];
-		}else if(vtxform == SECONDUVCOLOR)
-		{
-			tempvtx = (sgVertex*)&((sgVertexUVCol*)vertices)[i];
-		}else if(vtxform == TANGENT)
-		{
-			tempvtx = (sgVertex*)&((sgVertexTan*)vertices)[i];
-		}else if(vtxform == TANGENTSECONDUV)
-		{
-			tempvtx = (sgVertex*)&((sgVertexTanUV*)vertices)[i];
-		}else if(vtxform == TANGENTCOLOR)
-		{
-			tempvtx = (sgVertex*)&((sgVertexTanCol*)vertices)[i];
-		}else if(vtxform == TANGENTSECONDUVCOLOR)
-		{
-			tempvtx = (sgVertex*)&((sgVertexTanUVCol*)vertices)[i];
-		}
+		tempvtx = (sgVertex*)(vertices+i*vtxsize);
 		
 		if(tempvtx->position.x > vmax.x)
 			vmax.x = tempvtx->position.x;

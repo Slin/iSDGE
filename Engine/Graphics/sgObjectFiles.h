@@ -59,12 +59,12 @@ namespace sgObjectFiles
 	{
 		unsigned char id_;
 		sgSGMMaterial *material;
-		VERTEXFORMAT vtxformat;
-		VERTEXSIZE vtxsize;
+		unsigned long vtxfeatures;
+		unsigned char vtxsize;
 		
 		unsigned short vertexnum;
 		unsigned short indexnum;
-		sgVertex *vertices;
+		float *vertices;
 		unsigned short *indices;
 	};
 

@@ -91,7 +91,7 @@ class sgMesh : public sgBase
 		 * @param neighbour_a a second vertex
 		 * @param neighbour_b a third vertex
 		 */
-		void calculateFaceTangent(sgVertexTan *vertex, sgVertexTan *neighbour_a, sgVertexTan *neighbour_b, sgVector3 *bitangent0, sgVector3 *bitangent1, sgVector3 *bitangent2);
+		void calculateFaceTangent(sgVertex *vertex, sgVertex *neighbour_a, sgVertex *neighbour_b, sgVector3 *tangent0, sgVector3 *tangent1, sgVector3 *tangent2, sgVector3 *bitangent0, sgVector3 *bitangent1, sgVector3 *bitangent2);
 	
 		/**
 		 *	Invert texcoords X.
@@ -112,16 +112,34 @@ class sgMesh : public sgBase
 		void calcCullSphere();
 	
 		/**
-		 *	Vertex format.
-		 *	The format of the vertices of this mesh.
+		 *	Bone number.
+		 *	The number of this meshs bones.
 		 */
-		VERTEXFORMAT vtxform;
+		unsigned int bonenum;
+	
+		/**
+		 *	Bone indices.
+		 *	Maps the indices within the vertex data to the real bone indices to allow more than 30 bones per object, by restricting it to 30 bones per mesh.
+		 */
+		unsigned int *boneindices;
+	
+		/**
+		 *	Bone matrices.
+		 *	The matrices used to transform this meshs bones.
+		 */
+		float *bonematrices;
 	
 		/**
 		 *	Vertex size.
 		 *	The size of a vertex of this mesh.
 		 */
-		VERTEXSIZE vtxsize;
+		unsigned char vtxsize;
+	
+		/**
+		 *	Vertex features.
+		 *	Bitmask of the feautures of the interleaved vertex data.
+		 */
+		unsigned long vtxfeatures;
 	
 		/**
 		 *	Vertex number.
@@ -133,7 +151,7 @@ class sgMesh : public sgBase
 		 *	Vertex array.
 		 *	Pointer to the meshs array of vertices.
 		 */
-		sgVertex *vertices;
+		float *vertices;
 	
 		/**
 		 *	Index number.

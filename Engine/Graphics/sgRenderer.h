@@ -194,6 +194,12 @@ class sgRenderer
 		static unsigned int oglversion;
 	
 		/**
+		 * Maximum number of bones per mesh.
+		 * Default value is 30.
+		 */
+		static unsigned int maxbones;
+	
+		/**
 		 * Device orientation.
 		 * The current device orientation.
 		 */

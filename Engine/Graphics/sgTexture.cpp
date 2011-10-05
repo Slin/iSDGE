@@ -39,6 +39,7 @@ sgTexture::sgTexture()
 	fbo = -1;
 	texid = -1;
 	texdata = NULL;
+	textype = GL_TEXTURE_2D;
 }
 
 sgTexture::~sgTexture()
@@ -63,7 +64,7 @@ sgTexture::~sgTexture()
 		delete[] texdata;
 }
 
-void sgTexture::createTexture2D(const char *filename, bool mipmaps, bool lock)
+void sgTexture::createTexture(const char *filename, bool mipmaps, bool lock)
 {
 	if(loaded)
 		return;
@@ -98,7 +99,7 @@ void sgTexture::createTexture2D(const char *filename, bool mipmaps, bool lock)
 
 	glGenTextures(1, &texid);
 	glBindTexture(GL_TEXTURE_2D, texid);
-	
+
 	if(mipmaps)
 	{
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -138,7 +139,7 @@ void sgTexture::createTexture2D(const char *filename, bool mipmaps, bool lock)
 	loaded = true;
 }
 
-void sgTexture::createPVRTexture2D(const char *filename)
+void sgTexture::createPVRTexture(const char *filename)
 {
 	if(loaded)
 		return;
@@ -186,8 +187,8 @@ void sgTexture::createPVRTexture2D(const char *filename)
 		glCompressedTexImage2D(GL_TEXTURE_2D, i, tex->glformat, w, h, 0, tex->mipsizes[i], &tex->bytes[offset]);
 		offset += tex->mipsizes[i];
 		
-		w = fmax(w >> 1, 1);
-		h = fmax(h >> 1, 1);
+		w = fmaxf((unsigned int)(w >> 1), 1.0f);
+		h = fmaxf((unsigned int)(h >> 1), 1.0f);
 	}	
 	
 	if(tex->bytes)
@@ -199,22 +200,41 @@ void sgTexture::createPVRTexture2D(const char *filename)
 	loaded = TRUE;
 }
 
-void sgTexture::createTexture2D(float width_, float height_)
+void sgTexture::createTexture(float width_, float height_, bool cubemap)
 {
 	if(loaded)
 		return;
 	
+	if(cubemap)
+	{
+		textype = GL_TEXTURE_CUBE_MAP;
+	}else
+	{
+		textype = GL_TEXTURE_2D;
+	}
 	width = width_;
 	height = height_;
 	
 	glGenTextures(1, &texid);
-	glBindTexture(GL_TEXTURE_2D, texid);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+	glBindTexture(textype, texid);
 	
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	if(cubemap)
+	{
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, GL_RGBA, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, 0, GL_RGBA, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, GL_RGBA, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, GL_RGBA, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, GL_RGBA, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, GL_RGBA, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+	}else
+	{
+		glTexImage2D(textype, 0, GL_RGBA, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+	}
+	
+	glTexParameterf(textype, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameterf(textype, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameterf(textype, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameterf(textype, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	
 	sgResourceManager::addResource(this);
 	
@@ -223,14 +243,14 @@ void sgTexture::createTexture2D(float width_, float height_)
 
 void sgTexture::makeRendertarget()
 {
-	if(fbo != -1)
+	if(textype != GL_TEXTURE_2D || fbo != -1)
 		return;
 	
 	if(sgRenderer::oglversion > 1)
 	{
 		glGenFramebuffers(1, &fbo);
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
-		glBindTexture(GL_TEXTURE_2D, 0);
+		glBindTexture(textype, 0);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texid, 0);
 		glClear(GL_COLOR_BUFFER_BIT);
 		
@@ -258,11 +278,11 @@ void sgTexture::setParameteri(unsigned int pname, unsigned int param)
 	if(!loaded)
 		return;
 	
-	glBindTexture(GL_TEXTURE_2D, texid);
-	glTexParameteri(GL_TEXTURE_2D, pname, param);
+	glBindTexture(textype, texid);
+	glTexParameteri(textype, pname, param);
 }
 
-sgTexture *sgTexture::getTexture2D(const char *filename, bool mipmaps, bool lock)
+sgTexture *sgTexture::getTexture(const char *filename, bool mipmaps, bool lock)
 {
 	sgTexture *tex = (sgTexture*)sgResourceManager::getResource(filename);
 	if(tex != NULL)
@@ -272,10 +292,10 @@ sgTexture *sgTexture::getTexture2D(const char *filename, bool mipmaps, bool lock
 	std::string fnm(filename);
 	if(fnm.rfind(".png") != std::string::npos || fnm.rfind(".jpg") != std::string::npos || fnm.rfind(".PNG") != std::string::npos || fnm.rfind(".JPG") != std::string::npos)
 	{
-		tex->createTexture2D(filename, mipmaps, lock);
+		tex->createTexture(filename, mipmaps, lock);
 	}else if(fnm.rfind(".pvr") != std::string::npos || fnm.rfind(".PVR") != std::string::npos)
 	{
-		tex->createPVRTexture2D(filename);
+		tex->createPVRTexture(filename);
 	}else
 	{
 		delete tex;
@@ -284,10 +304,10 @@ sgTexture *sgTexture::getTexture2D(const char *filename, bool mipmaps, bool lock
 	return tex;
 }
 
-sgTexture *sgTexture::getTexture2D(float width_, float height_)
+sgTexture *sgTexture::getTexture(float width_, float height_, bool cubemap)
 {
 	sgTexture *tex = new sgTexture();
-	tex->createTexture2D(width_, height_);
+	tex->createTexture(width_, height_, cubemap);
 	return tex;
 }
 

@@ -80,7 +80,7 @@ sgMaterial::sgMaterial(const char *texfile, bool mipmaps, sgShader::BuiltInShade
 	if(shad == 0)
 		lighting = false;
 
-	textures.push_back(sgTexture::getTexture2D(texfile, mipmaps));
+	textures.push_back(sgTexture::getTexture(texfile, mipmaps));
 	setDefault();
 }
 
@@ -112,7 +112,7 @@ sgMaterial::sgMaterial(const char *vsname, const char *fsname, const char *texfi
 		shader = NULL;
 	}
 
-	textures.push_back(sgTexture::getTexture2D(texfile, mipmaps));
+	textures.push_back(sgTexture::getTexture(texfile, mipmaps));
 	setDefault();
 }
 
@@ -235,11 +235,11 @@ void sgMaterial::setShader(sgShader::BuiltInShaders shad)
 	getUniforms();
 }
 
-void sgMaterial::setTexture2D(unsigned int tex, const char *texfile, bool mipmaps)
+void sgMaterial::setTexture(unsigned int tex, const char *texfile, bool mipmaps)
 {
 	if(tex == -1 || tex >= textures.size())
 	{
-		textures.push_back(sgTexture::getTexture2D(texfile, mipmaps));
+		textures.push_back(sgTexture::getTexture(texfile, mipmaps));
 		getUniforms();
 		return;
 	}
@@ -247,11 +247,11 @@ void sgMaterial::setTexture2D(unsigned int tex, const char *texfile, bool mipmap
 	if(tex >= textures.size())
 		return;
 	
-	textures[tex] = sgTexture::getTexture2D(texfile, mipmaps);
+	textures[tex] = sgTexture::getTexture(texfile, mipmaps);
 	getUniforms();
 }
 
-void sgMaterial::setTexture2D(unsigned int tex, sgTexture *texptr)
+void sgMaterial::setTexture(unsigned int tex, sgTexture *texptr)
 {
 	if(tex == -1)
 	{

@@ -125,3 +125,33 @@ bool sgPhysWorldBullet::traceRay(sgVector3 from, sgVector3 to, sgTraceResult &re
 		return false;
 	}
 }
+
+bool sgPhysWorldBullet::traceShape(sgPhysBody *bdy, sgVector3 from, sgVector3 to, sgTraceResult &res)
+{	
+	btTransform btfrom;
+	btfrom.setRotation(btQuaternion(bdy->rotation.x, bdy->rotation.y, bdy->rotation.z, bdy->rotation.w));
+	btfrom.setOrigin(btVector3(from.x, from.y, from.z));
+
+	btTransform btto;
+	btto.setRotation(btQuaternion(bdy->rotation.x, bdy->rotation.y, bdy->rotation.z, bdy->rotation.w));
+	btto.setOrigin(btVector3(to.x, to.y, to.z));
+	
+	btCollisionWorld::ClosestConvexResultCallback cb(btVector3(from.x, from.y, from.z), btVector3(to.x, to.y, to.z));
+	dynamicsWorld->convexSweepTest((btConvexShape*)bdy->getShape(), btfrom, btto, cb);
+	
+	if(cb.hasHit())
+	{
+		res.position = sgVector3(cb.m_hitPointWorld.x(), cb.m_hitPointWorld.y(), cb.m_hitPointWorld.z());
+		res.normal = sgVector3(cb.m_hitNormalWorld.x(), cb.m_hitNormalWorld.y(), cb.m_hitNormalWorld.z());
+		if(cb.m_hitCollisionObject)
+			res.entity = cb.m_hitCollisionObject->getUserPointer();
+			else
+				res.entity = 0;
+				
+				return true;
+	}else
+	{
+		res.entity = 0;
+		return false;
+	}
+}

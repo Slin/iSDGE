@@ -33,12 +33,12 @@
 
 sgShader::sgShader()
 {
-	program = 0;
+	program = -1;
 }
 
 sgShader::sgShader(const char *vsfilename, const char *fsfilename)
 {
-	program = 0;
+	program = -1;
 	create(vsfilename, fsfilename);
 	maxlights = 2;
 }
@@ -115,6 +115,16 @@ sgShader *sgShader::getShader(BuiltInShaders shad)
 			{
 				shader = new sgShader("iSDGE.bundle/sgsLightmap.vsh", "iSDGE.bundle/sgsLightmap.fsh");
 				sgResourceManager::addResource("shader_lightmap", shader);
+			}
+			break;
+		}
+		case BIS_LIGHTMAP_DISCARD:
+		{
+			shader = (sgShader*)sgResourceManager::getResource("shader_lightmap_discard");
+			if(shader == NULL)
+			{
+				shader = new sgShader("iSDGE.bundle/sgsLightmap.vsh", "iSDGE.bundle/sgsLightmapDiscard.fsh");
+				sgResourceManager::addResource("shader_lightmap_discard", shader);
 			}
 			break;
 		}
@@ -215,7 +225,11 @@ bool sgShader::linkProgram(GLuint prog)
 	{
 		GLchar *log = (GLchar *)malloc(logLength);
 		glGetProgramInfoLog(prog, logLength, &logLength, log);
+#if defined (DEBUG)
+		sgLog("%s and %s: Program link log:\n %s", vsfile.c_str(), fsfile.c_str(), log);
+#else
 		sgLog("Program link log:\n %s", log);
+#endif
 		free(log);
 	}
 	
@@ -255,6 +269,7 @@ void sgShader::getEngineUniforms()
 	matprojviewmodel = glGetUniformLocation(program, "matProjViewModel");
 	matnormal = glGetUniformLocation(program, "matNormal");
 	mattex = glGetUniformLocation(program, "matTex");
+	matbones = glGetUniformLocation(program, "matBones");
 	
 	position = glGetAttribLocation(program, "vertPos");
 	normal = glGetAttribLocation(program, "vertNormal");
@@ -262,6 +277,8 @@ void sgShader::getEngineUniforms()
 	texcoord1 = glGetAttribLocation(program, "vertTexcoord1");
 	color = glGetAttribLocation(program, "vertColor");
 	tangent = glGetAttribLocation(program, "vertTangent");
+	boneweights = glGetAttribLocation(program, "vertBoneWeights");
+	boneindices = glGetAttribLocation(program, "vertBoneIndices");
 	
 	mambientloc = glGetUniformLocation(program, "mAmbient");
 	mdiffuseloc = glGetUniformLocation(program, "mDiffuse");
@@ -285,10 +302,15 @@ void sgShader::getEngineUniforms()
 
 bool sgShader::create(const char *vsfilename, const char *fsfilename)
 {
-	if(program != 0)
+	if(program != -1)
 		return false;
 	
-	GLuint vertShader, fragShader;
+#if defined (DEBUG)
+	vsfile = std::string(vsfilename);
+	fsfile = std::string(fsfilename);
+#endif
+	
+	GLuint vertShader, fragShader = -1;
 	const char *vertShaderPathname, *fragShaderPathname;
 	
 	// Create shader program
@@ -325,30 +347,35 @@ bool sgShader::create(const char *vsfilename, const char *fsfilename)
 	{
 		sgLog("Failed to link program: %i", program);
 		
-		if(vertShader)
-		{
-			glDeleteShader(vertShader);
-			vertShader = 0;
-		}
-		if(fragShader)
-		{
-			glDeleteShader(fragShader);
-			fragShader = 0;
-		}
 		if(program)
 		{
 			glDeleteProgram(program);
-			program = 0;
+			program = -1;
+		}
+		
+		if(vertShader != -1)
+		{
+			glDeleteShader(vertShader);
+		}
+		if(fragShader != -1)
+		{
+			glDeleteShader(fragShader);
 		}
 		
 		return false;
 	}
 	
-	if(vertShader)
+	if(vertShader != -1)
+	{
+		glDetachShader(program, vertShader);
 		glDeleteShader(vertShader);
+	}
 	
-	if(fragShader)
+	if(fragShader != -1)
+	{
+		glDetachShader(program, fragShader);
 		glDeleteShader(fragShader);
+	}
 	
 	getEngineUniforms();
 				
@@ -360,7 +387,7 @@ void sgShader::destroy()
 	if(program)
 	{
 		glDeleteProgram(program);
-		program = 0;
+		program = -1;
 	}
 	
 	sgResourceManager::removeResource(this);

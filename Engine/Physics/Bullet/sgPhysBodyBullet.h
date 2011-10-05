@@ -115,6 +115,13 @@ class sgPhysBodyBullet : public sgPhysBody, public btMotionState
 		void *getBody();
 	
 		/**
+		 *	Get shape.
+		 *	Returns a pointer to the used physics engines internal shape.
+		 *	@return pointer to the physics engines internal shape
+		 */
+		void *getShape();
+	
+		/**
 		 *	Motion state events.
 		 *	Functions used internally to set and get the bodys transformation.
 		 */

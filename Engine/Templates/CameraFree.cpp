@@ -96,16 +96,16 @@ void CameraFree::makeAnaglyph(float dist, const char *fs)
 	stereo_cam->updateProj();
 	
 	//Attach a texture and make it a rendertarget
-	ent->cam->rendertarget = sgTexture::getTexture2D(512, 512);
+	ent->cam->rendertarget = sgTexture::getTexture(512, 512);
 	ent->cam->rendertarget->makeRendertarget();
 	
 	//Attach a texture and make it a rendertarget
-	stereo_cam->rendertarget = sgTexture::getTexture2D(512, 512);
+	stereo_cam->rendertarget = sgTexture::getTexture(512, 512);
 	stereo_cam->rendertarget->makeRendertarget();
 	
 	sgMaterial *mat = sgMaterial::getMaterial("iSDGE.bundle/sgsPPBase.vsh", "iSDGE.bundle/RedCyanStereo.fsh");
-	mat->setTexture2D(-1, ent->cam->rendertarget);
-	mat->setTexture2D(-1, stereo_cam->rendertarget);
+	mat->setTexture(-1, ent->cam->rendertarget);
+	mat->setTexture(-1, stereo_cam->rendertarget);
 	
 	//Display it on the HUD
 	sgEntity *hud = ent->sgmain->first_ent->createPanEntity();

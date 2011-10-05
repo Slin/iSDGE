@@ -265,10 +265,7 @@ sgPanel::sgPanel(sgPanel* p, sgPanel *n)
 
 sgPanel::~sgPanel()
 {
-	for(int i = 0; i < elements.size(); i++)
-	{
-		delete elements[i];
-	}
+	removeAllElements();
 }
 
 sgPanel *sgPanel::createPanel()
@@ -367,6 +364,27 @@ sgPanelElement *sgPanel::addText(const char *str, const sgVector2 &charsize, con
 	elements.push_back(txt);
 	
 	return (sgPanelElement*)txt;
+}
+
+void sgPanel::removeElement(sgPanelElement *element)
+{
+	for(std::vector<sgPanelElement*>::iterator it = elements.begin(); it != elements.end(); it++)
+	{
+		if(*it == element)
+		{
+			elements.erase(it);
+			delete element;
+		}
+	}
+}
+
+void sgPanel::removeAllElements()
+{
+	for(int i = 0; i < elements.size(); i++)
+	{
+		delete elements[i];
+	}
+	elements.clear();
 }
 
 void sgPanel::destroy()

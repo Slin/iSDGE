@@ -102,6 +102,16 @@ class sgPhysWorld
 		 *	@return true if something was hit
 		 */
 		virtual bool traceRay(sgVector3 from, sgVector3 to, sgTraceResult &res){return false;}
+	
+		/**
+		 *	Trace shape
+		 *	Gets the surfaces the given rigid bodies shape intersects. It does not support mesh shapes.
+		 *	@param bdy rigid body whichs shape to use
+		 *	@param from the start position of the ray
+		 *	@param to the end position of the ray
+		 *	@return true if something was hit
+		 */
+		virtual bool traceShape(sgPhysBody *bdy, sgVector3 from, sgVector3 to, sgTraceResult &res){return false;}
 };
 
 #endif

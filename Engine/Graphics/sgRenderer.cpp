@@ -35,6 +35,7 @@
 #endif
 
 unsigned int sgRenderer::oglversion = 0;
+unsigned int sgRenderer::maxbones = 30;
 int sgRenderer::backingWidth = 640;
 int sgRenderer::backingHeight = 480;
 

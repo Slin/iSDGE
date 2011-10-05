@@ -48,8 +48,8 @@ void Events::onInit(sgMain *m)
 		sgmain->renderer->setMultisampling(2);
 	
 	sgEntity *te = sgmain->first_ent->createObjEntity("kiste.sgm");
-	te->obj->body->materials[0]->setTexture2D(0, "kiste_diffuse.png");
-	te->obj->body->materials[0]->setTexture2D(1, "kiste_normal.png");
+	te->obj->body->materials[0]->setTexture(0, "kiste_diffuse.png");
+	te->obj->body->materials[0]->setTexture(1, "kiste_normal.png");
 	te->obj->body->materials[0]->setShader("NormDiffSpecS.vsh", "NormDiffSpecS.fsh");
 	te->createPhysBody(sgPhysBody::ES_BOX, 1.0);
 	
@@ -60,15 +60,15 @@ void Events::onInit(sgMain *m)
 //	sgmain->renderer->first_light->createLight();
 	
 	sgEntity *ent = sgmain->first_ent->createObjEntity("space_room.sgm");
-	ent->obj->body->materials[1]->setTexture2D(2, "hauptmodul_normal.png");
-	ent->obj->body->materials[0]->setTexture2D(2, "wandmodul_normal.png");
+	ent->obj->body->materials[1]->setTexture(2, "hauptmodul_normal.png");
+	ent->obj->body->materials[0]->setTexture(2, "wandmodul_normal.png");
 	ent->obj->body->materials[0]->setShader("NormDiffSpecSLm.vsh", "NormDiffSpecSLm.fsh");
 	ent->obj->body->materials[1]->setShader("NormDiffSpecSLm.vsh", "NormDiffSpecSLm.fsh");
 	ent->createPhysBody(sgPhysBody::ES_MESH, 0.0);
 	ent->body->setFriction(0.7);
 	
 	ent = sgmain->first_ent->createObjEntity("door1.sgm", new AutoDoor);
-	ent->obj->body->materials[0]->setTexture2D(2, "wandmodul_normal.png");
+	ent->obj->body->materials[0]->setTexture(2, "wandmodul_normal.png");
 	ent->obj->body->materials[0]->setShader("NormDiffSpecSLm.vsh", "NormDiffSpecSLm.fsh");
 	ent->obj->position = sgVector3(19.1, 1.0, -0.1);
 	ent->createPhysBody(sgPhysBody::ES_BOX, 0, sgVector3(0.5, 3.0, 10.0));
@@ -76,7 +76,7 @@ void Events::onInit(sgMain *m)
 	ent->body->setAlwaysActive();
 	
 	ent = sgmain->first_ent->createObjEntity("door2.sgm");
-	ent->obj->body->materials[0]->setTexture2D(1, "wandmodul_normal.png");
+	ent->obj->body->materials[0]->setTexture(1, "wandmodul_normal.png");
 	ent->obj->body->materials[0]->setShader("NormDiffSpecS.vsh", "NormDiffSpecS.fsh");
 	ent->obj->position = sgVector3(35.0, -0.275, 18.5);
 	ent->createPhysBody(sgPhysBody::ES_BOX, 1, sgVector3(1.0, 2.0, 0.2));

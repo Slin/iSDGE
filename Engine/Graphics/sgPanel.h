@@ -193,6 +193,19 @@ class sgPanel
 		 * @return pointer to the added element.
 		 */
 		sgPanelElement *addText(const char *str, const sgVector2 &charsize, const sgVector2 &pos, const sgVector2 &size, const char *fonttexfile, const char *vs = NULL, const char *fs = NULL);
+	
+		/**
+		 *	Remove panel element.
+		 *	Removes the panel element from the panel and destroys it.
+		 * @param element the element to remove
+		 */
+		void removeElement(sgPanelElement *element);
+	
+		/**
+		 *	Remove all panel elements.
+		 *	Removes and destroys all elements of this panel.
+		 */
+		void removeAllElements();
 		
 		/**
 		 *	Destroy.

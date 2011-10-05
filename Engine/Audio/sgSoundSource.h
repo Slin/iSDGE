@@ -93,6 +93,14 @@ class sgSoundSource
 		void stopSound(unsigned int handle);
 	
 		/**
+		 *	Is playing.
+		 *	Returns weather the sound with the given handle is playing or not.
+		 * @param handle handle to the sound to check
+		 * @return true if the sound is currently playing, false otherwize
+		 */
+		bool isPlaying(unsigned int handle);
+	
+		/**
 		 *	Update.
 		 *	Updates this sound source (is called automatically each frame).
 		 * @param timestep time passed since the previous frame

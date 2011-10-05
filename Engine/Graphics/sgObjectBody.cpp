@@ -62,244 +62,244 @@ sgObjectBody *sgObjectBody::makeObject(const char *name, unsigned long flags)
 	{
 		sgMesh *mesh = new sgMesh;
 		
-		mesh->vtxform = BASIC;
-		mesh->vtxsize = SZ_BASIC;
+		mesh->vtxfeatures = sgVertex::POSITION|sgVertex::NORMAL|sgVertex::UV0;
+		mesh->vtxsize = 8;
 		mesh->vertexnum = 36;
 		mesh->indexnum = 36;
 		
-		mesh->vertices = new sgVertex[mesh->vertexnum];
+		mesh->vertices = new float[mesh->vertexnum*mesh->vtxsize];
 		mesh->indices = new unsigned short[mesh->indexnum];
 		
 		for(int i = 0; i < mesh->indexnum; i++)
 			mesh->indices[i] = mesh->indexnum-i-1;
 		
 		//left
-		mesh->vertices[0].position.x = -1.0f;
-		mesh->vertices[0].position.y = -1.0f;
-		mesh->vertices[0].position.z = -1.0f;
-		mesh->vertices[0].uv.x = 0.0f;
-		mesh->vertices[0].uv.y = 0.0f;
+		mesh->vertices[0*mesh->vtxsize+0] = -1.0f;	//pos x
+		mesh->vertices[0*mesh->vtxsize+1] = -1.0f;	//pos y
+		mesh->vertices[0*mesh->vtxsize+2] = -1.0f;	//pos z
+		mesh->vertices[0*mesh->vtxsize+6] = 0.0f;	//uv x
+		mesh->vertices[0*mesh->vtxsize+7] = 0.0f;	//uv y
 		
-		mesh->vertices[1].position.x = 1.0f;
-		mesh->vertices[1].position.y = 1.0f;
-		mesh->vertices[1].position.z = -1.0f;
-		mesh->vertices[1].uv.x = 1.0f;
-		mesh->vertices[1].uv.y = 1.0f;
+		mesh->vertices[1*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[1*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[1*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[1*mesh->vtxsize+6] = 1.0f;
+		mesh->vertices[1*mesh->vtxsize+7] = 1.0f;
 		
-		mesh->vertices[2].position.x = -1.0f;
-		mesh->vertices[2].position.y = 1.0f;
-		mesh->vertices[2].position.z = -1.0f;
-		mesh->vertices[2].uv.x = 0.0f;
-		mesh->vertices[2].uv.y = 1.0f;
+		mesh->vertices[2*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[2*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[2*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[2*mesh->vtxsize+6] = 0.0f;
+		mesh->vertices[2*mesh->vtxsize+7] = 1.0f;
 		
 		
-		mesh->vertices[3].position.x = -1.0f;
-		mesh->vertices[3].position.y = -1.0f;
-		mesh->vertices[3].position.z = -1.0f;
-		mesh->vertices[3].uv.x = 0.0f;
-		mesh->vertices[3].uv.y = 0.0f;
+		mesh->vertices[3*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[3*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[3*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[3*mesh->vtxsize+6] = 0.0f;
+		mesh->vertices[3*mesh->vtxsize+7] = 0.0f;
 		
-		mesh->vertices[4].position.x = 1.0f;
-		mesh->vertices[4].position.y = -1.0f;
-		mesh->vertices[4].position.z = -1.0f;
-		mesh->vertices[4].uv.x = 1.0f;
-		mesh->vertices[4].uv.y = 0.0f;
+		mesh->vertices[4*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[4*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[4*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[4*mesh->vtxsize+6] = 1.0f;
+		mesh->vertices[4*mesh->vtxsize+7] = 0.0f;
 		
-		mesh->vertices[5].position.x = 1.0f;
-		mesh->vertices[5].position.y = 1.0f;
-		mesh->vertices[5].position.z = -1.0f;
-		mesh->vertices[5].uv.x = 1.0f;
-		mesh->vertices[5].uv.y = 1.0f;
+		mesh->vertices[5*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[5*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[5*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[5*mesh->vtxsize+6] = 1.0f;
+		mesh->vertices[5*mesh->vtxsize+7] = 1.0f;
 		
 		//back
-		mesh->vertices[6].position.x = 1.0f;
-		mesh->vertices[6].position.y = 1.0f;
-		mesh->vertices[6].position.z = 1.0f;
-		mesh->vertices[6].uv.x = 1.0f;
-		mesh->vertices[6].uv.y = 1.0f;
+		mesh->vertices[6*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[6*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[6*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[6*mesh->vtxsize+6] = 1.0f;
+		mesh->vertices[6*mesh->vtxsize+7] = 1.0f;
 		
-		mesh->vertices[7].position.x = 1.0f;
-		mesh->vertices[7].position.y = -1.0f;
-		mesh->vertices[7].position.z = -1.0f;
-		mesh->vertices[7].uv.x = 0.0f;
-		mesh->vertices[7].uv.y = 0.0f;
+		mesh->vertices[7*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[7*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[7*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[7*mesh->vtxsize+6] = 0.0f;
+		mesh->vertices[7*mesh->vtxsize+7] = 0.0f;
 		
-		mesh->vertices[8].position.x = 1.0f;
-		mesh->vertices[8].position.y = -1.0f;
-		mesh->vertices[8].position.z = 1.0f;
-		mesh->vertices[8].uv.x = 1.0f;
-		mesh->vertices[8].uv.y = 0.0f;
+		mesh->vertices[8*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[8*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[8*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[8*mesh->vtxsize+6] = 1.0f;
+		mesh->vertices[8*mesh->vtxsize+7] = 0.0f;
 		
 		
-		mesh->vertices[9].position.x = 1.0f;
-		mesh->vertices[9].position.y = 1.0f;
-		mesh->vertices[9].position.z = 1.0f;
-		mesh->vertices[9].uv.x = 1.0f;
-		mesh->vertices[9].uv.y = 1.0f;
+		mesh->vertices[9*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[9*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[9*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[9*mesh->vtxsize+6] = 1.0f;
+		mesh->vertices[9*mesh->vtxsize+7] = 1.0f;
 		
-		mesh->vertices[10].position.x = 1.0f;
-		mesh->vertices[10].position.y = 1.0f;
-		mesh->vertices[10].position.z = -1.0f;
-		mesh->vertices[10].uv.x = 0.0f;
-		mesh->vertices[10].uv.y = 1.0f;
+		mesh->vertices[10*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[10*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[10*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[10*mesh->vtxsize+6] = 0.0f;
+		mesh->vertices[10*mesh->vtxsize+7] = 1.0f;
 		
-		mesh->vertices[11].position.x = 1.0f;
-		mesh->vertices[11].position.y = -1.0f;
-		mesh->vertices[11].position.z = -1.0f;
-		mesh->vertices[11].uv.x = 0.0f;
-		mesh->vertices[11].uv.y = 0.0f;
+		mesh->vertices[11*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[11*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[11*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[11*mesh->vtxsize+6] = 0.0f;
+		mesh->vertices[11*mesh->vtxsize+7] = 0.0f;
 		
 		//right
-		mesh->vertices[12].position.x = 1.0f;
-		mesh->vertices[12].position.y = 1.0f;
-		mesh->vertices[12].position.z = 1.0f;
-		mesh->vertices[12].uv.x = 0.0f;
-		mesh->vertices[12].uv.y = 1.0f;
+		mesh->vertices[12*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[12*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[12*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[12*mesh->vtxsize+6] = 0.0f;
+		mesh->vertices[12*mesh->vtxsize+7] = 1.0f;
 		
-		mesh->vertices[13].position.x = 1.0f;
-		mesh->vertices[13].position.y = -1.0f;
-		mesh->vertices[13].position.z = 1.0f;
-		mesh->vertices[13].uv.x = 0.0f;
-		mesh->vertices[13].uv.y = 0.0f;
+		mesh->vertices[13*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[13*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[13*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[13*mesh->vtxsize+6] = 0.0f;
+		mesh->vertices[13*mesh->vtxsize+7] = 0.0f;
 		
-		mesh->vertices[14].position.x = -1.0f;
-		mesh->vertices[14].position.y = -1.0f;
-		mesh->vertices[14].position.z = 1.0f;
-		mesh->vertices[14].uv.x = 1.0f;
-		mesh->vertices[14].uv.y = 0.0f;
+		mesh->vertices[14*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[14*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[14*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[14*mesh->vtxsize+6] = 1.0f;
+		mesh->vertices[14*mesh->vtxsize+7] = 0.0f;
 		
 		
-		mesh->vertices[15].position.x = 1.0f;
-		mesh->vertices[15].position.y = 1.0f;
-		mesh->vertices[15].position.z = 1.0f;
-		mesh->vertices[15].uv.x = 0.0f;
-		mesh->vertices[15].uv.y = 1.0f;
+		mesh->vertices[15*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[15*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[15*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[15*mesh->vtxsize+6] = 0.0f;
+		mesh->vertices[15*mesh->vtxsize+7] = 1.0f;
 		
-		mesh->vertices[16].position.x = -1.0f;
-		mesh->vertices[16].position.y = -1.0f;
-		mesh->vertices[16].position.z = 1.0f;
-		mesh->vertices[16].uv.x = 1.0f;
-		mesh->vertices[16].uv.y = 0.0f;
+		mesh->vertices[16*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[16*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[16*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[16*mesh->vtxsize+6] = 1.0f;
+		mesh->vertices[16*mesh->vtxsize+7] = 0.0f;
 		
-		mesh->vertices[17].position.x = -1.0f;
-		mesh->vertices[17].position.y = 1.0f;
-		mesh->vertices[17].position.z = 1.0f;
-		mesh->vertices[17].uv.x = 1.0f;
-		mesh->vertices[17].uv.y = 1.0f;
+		mesh->vertices[17*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[17*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[17*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[17*mesh->vtxsize+6] = 1.0f;
+		mesh->vertices[17*mesh->vtxsize+7] = 1.0f;
 		
 		//front
-		mesh->vertices[18].position.x = -1.0f;
-		mesh->vertices[18].position.y = -1.0f;
-		mesh->vertices[18].position.z = -1.0f;
-		mesh->vertices[18].uv.x = 1.0f;
-		mesh->vertices[18].uv.y = 0.0f;
+		mesh->vertices[18*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[18*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[18*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[18*mesh->vtxsize+6] = 1.0f;
+		mesh->vertices[18*mesh->vtxsize+7] = 0.0f;
 		
-		mesh->vertices[19].position.x = -1.0f;
-		mesh->vertices[19].position.y = 1.0f;
-		mesh->vertices[19].position.z = -1.0f;
-		mesh->vertices[19].uv.x = 1.0f;
-		mesh->vertices[19].uv.y = 1.0f;
+		mesh->vertices[19*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[19*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[19*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[19*mesh->vtxsize+6] = 1.0f;
+		mesh->vertices[19*mesh->vtxsize+7] = 1.0f;
 		
-		mesh->vertices[20].position.x = -1.0f;
-		mesh->vertices[20].position.y = 1.0f;
-		mesh->vertices[20].position.z = 1.0f;
-		mesh->vertices[20].uv.x = 0.0f;
-		mesh->vertices[20].uv.y = 1.0f;
+		mesh->vertices[20*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[20*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[20*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[20*mesh->vtxsize+6] = 0.0f;
+		mesh->vertices[20*mesh->vtxsize+7] = 1.0f;
 		
 		
-		mesh->vertices[21].position.x = -1.0f;
-		mesh->vertices[21].position.y = -1.0f;
-		mesh->vertices[21].position.z = -1.0f;
-		mesh->vertices[21].uv.x = 1.0f;
-		mesh->vertices[21].uv.y = 0.0f;
+		mesh->vertices[21*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[21*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[21*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[21*mesh->vtxsize+6] = 1.0f;
+		mesh->vertices[21*mesh->vtxsize+7] = 0.0f;
 		
-		mesh->vertices[22].position.x = -1.0f;
-		mesh->vertices[22].position.y = 1.0f;
-		mesh->vertices[22].position.z = 1.0f;
-		mesh->vertices[22].uv.x = 0.0f;
-		mesh->vertices[22].uv.y = 1.0f;
+		mesh->vertices[22*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[22*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[22*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[22*mesh->vtxsize+6] = 0.0f;
+		mesh->vertices[22*mesh->vtxsize+7] = 1.0f;
 		
-		mesh->vertices[23].position.x = -1.0f;
-		mesh->vertices[23].position.y = -1.0f;
-		mesh->vertices[23].position.z = 1.0f;
-		mesh->vertices[23].uv.x = 0.0f;
-		mesh->vertices[23].uv.y = 0.0f;
+		mesh->vertices[23*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[23*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[23*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[23*mesh->vtxsize+6] = 0.0f;
+		mesh->vertices[23*mesh->vtxsize+7] = 0.0f;
 		
 		//bottom
-		mesh->vertices[24].position.x = -1.0f;
-		mesh->vertices[24].position.y = -1.0f;
-		mesh->vertices[24].position.z = -1.0f;
-		mesh->vertices[24].uv.x = 1.0f;
-		mesh->vertices[24].uv.y = 1.0f;
+		mesh->vertices[24*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[24*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[24*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[24*mesh->vtxsize+6] = 1.0f;
+		mesh->vertices[24*mesh->vtxsize+7] = 1.0f;
 		
-		mesh->vertices[25].position.x = 1.0f;
-		mesh->vertices[25].position.y = -1.0f;
-		mesh->vertices[25].position.z = 1.0f;
-		mesh->vertices[25].uv.x = 0.0f;
-		mesh->vertices[25].uv.y = 0.0f;
+		mesh->vertices[25*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[25*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[25*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[25*mesh->vtxsize+6] = 0.0f;
+		mesh->vertices[25*mesh->vtxsize+7] = 0.0f;
 		
-		mesh->vertices[26].position.x = 1.0f;
-		mesh->vertices[26].position.y = -1.0f;
-		mesh->vertices[26].position.z = -1.0f;
-		mesh->vertices[26].uv.x = 1.0f;
-		mesh->vertices[26].uv.y = 0.0f;
+		mesh->vertices[26*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[26*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[26*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[26*mesh->vtxsize+6] = 1.0f;
+		mesh->vertices[26*mesh->vtxsize+7] = 0.0f;
 		
 		
-		mesh->vertices[27].position.x = -1.0f;
-		mesh->vertices[27].position.y = -1.0f;
-		mesh->vertices[27].position.z = -1.0f;
-		mesh->vertices[27].uv.x = 1.0f;
-		mesh->vertices[27].uv.y = 1.0f;
+		mesh->vertices[27*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[27*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[27*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[27*mesh->vtxsize+6] = 1.0f;
+		mesh->vertices[27*mesh->vtxsize+7] = 1.0f;
 		
-		mesh->vertices[28].position.x = -1.0f;
-		mesh->vertices[28].position.y = -1.0f;
-		mesh->vertices[28].position.z = 1.0f;
-		mesh->vertices[28].uv.x = 0.0f;
-		mesh->vertices[28].uv.y = 1.0f;
+		mesh->vertices[28*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[28*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[28*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[28*mesh->vtxsize+6] = 0.0f;
+		mesh->vertices[28*mesh->vtxsize+7] = 1.0f;
 		
-		mesh->vertices[29].position.x = 1.0f;
-		mesh->vertices[29].position.y = -1.0f;
-		mesh->vertices[29].position.z = 1.0f;
-		mesh->vertices[29].uv.x = 0.0f;
-		mesh->vertices[29].uv.y = 0.0f;
+		mesh->vertices[29*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[29*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[29*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[29*mesh->vtxsize+6] = 0.0f;
+		mesh->vertices[29*mesh->vtxsize+7] = 0.0f;
 		
 		//top
-		mesh->vertices[30].position.x = 1.0f;
-		mesh->vertices[30].position.y = 1.0f;
-		mesh->vertices[30].position.z = 1.0f;
-		mesh->vertices[30].uv.x = 1.0f;
-		mesh->vertices[30].uv.y = 0.0f;
+		mesh->vertices[30*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[30*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[30*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[30*mesh->vtxsize+6] = 1.0f;
+		mesh->vertices[30*mesh->vtxsize+7] = 0.0f;
 		
-		mesh->vertices[31].position.x = -1.0f;
-		mesh->vertices[31].position.y = 1.0f;
-		mesh->vertices[31].position.z = 1.0f;
-		mesh->vertices[31].uv.x = 1.0f;
-		mesh->vertices[31].uv.y = 1.0f;
+		mesh->vertices[31*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[31*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[31*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[31*mesh->vtxsize+6] = 1.0f;
+		mesh->vertices[31*mesh->vtxsize+7] = 1.0f;
 		
-		mesh->vertices[32].position.x = -1.0f;
-		mesh->vertices[32].position.y = 1.0f;
-		mesh->vertices[32].position.z = -1.0f;
-		mesh->vertices[32].uv.x = 0.0f;
-		mesh->vertices[32].uv.y = 1.0f;
+		mesh->vertices[32*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[32*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[32*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[32*mesh->vtxsize+6] = 0.0f;
+		mesh->vertices[32*mesh->vtxsize+7] = 1.0f;
 		
 		
-		mesh->vertices[33].position.x = 1.0f;
-		mesh->vertices[33].position.y = 1.0f;
-		mesh->vertices[33].position.z = 1.0f;
-		mesh->vertices[33].uv.x = 1.0f;
-		mesh->vertices[33].uv.y = 0.0f;
+		mesh->vertices[33*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[33*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[33*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[33*mesh->vtxsize+6] = 1.0f;
+		mesh->vertices[33*mesh->vtxsize+7] = 0.0f;
 		
-		mesh->vertices[34].position.x = -1.0f;
-		mesh->vertices[34].position.y = 1.0f;
-		mesh->vertices[34].position.z = -1.0f;
-		mesh->vertices[34].uv.x = 0.0f;
-		mesh->vertices[34].uv.y = 1.0f;
+		mesh->vertices[34*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[34*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[34*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[34*mesh->vtxsize+6] = 0.0f;
+		mesh->vertices[34*mesh->vtxsize+7] = 1.0f;
 		
-		mesh->vertices[35].position.x = 1.0f;
-		mesh->vertices[35].position.y = 1.0f;
-		mesh->vertices[35].position.z = -1.0f;
-		mesh->vertices[35].uv.x = 0.0f;
-		mesh->vertices[35].uv.y = 0.0f;
+		mesh->vertices[35*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[35*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[35*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[35*mesh->vtxsize+6] = 0.0f;
+		mesh->vertices[35*mesh->vtxsize+7] = 0.0f;
 		
 		mesh->calculateNormals();
 		mesh->generateVBO();
@@ -321,54 +321,54 @@ sgObjectBody *sgObjectBody::makeObject(const char *name, unsigned long flags)
 		float widthoff = 0;
 		float heightoff = 0;
 		
-		mesh->vtxform = BASIC;
-		mesh->vtxsize = SZ_BASIC;
+		mesh->vtxfeatures = sgVertex::POSITION|sgVertex::NORMAL|sgVertex::UV0;
+		mesh->vtxsize = 8;
 		mesh->vertexnum = 6;
 		mesh->indexnum = 6;
 		
-		mesh->vertices = new sgVertex[mesh->vertexnum];
+		mesh->vertices = new float[mesh->vertexnum*mesh->vtxsize];
 		mesh->indices = new unsigned short[mesh->indexnum];
 		
 		for(int i = 0; i < mesh->indexnum; i++)
 			mesh->indices[i] = i;
 		
 		//left
-		mesh->vertices[0].position.x = -1.0f;
-		mesh->vertices[0].position.y = -1.0f;
-		mesh->vertices[0].position.z = -1.0f;
-		mesh->vertices[0].uv.x = widthoff;
-		mesh->vertices[0].uv.y = 1.0f-heightoff;
+		mesh->vertices[0*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[0*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[0*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[0*mesh->vtxsize+6] = widthoff;
+		mesh->vertices[0*mesh->vtxsize+7] = 1.0f-heightoff;
 		
-		mesh->vertices[1].position.x = 1.0f;
-		mesh->vertices[1].position.y = 1.0f;
-		mesh->vertices[1].position.z = -1.0f;
-		mesh->vertices[1].uv.x = 1.0f-widthoff;
-		mesh->vertices[1].uv.y = heightoff;
+		mesh->vertices[1*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[1*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[1*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[1*mesh->vtxsize+6] = 1.0f-widthoff;
+		mesh->vertices[1*mesh->vtxsize+7] = heightoff;
 		
-		mesh->vertices[2].position.x = -1.0f;
-		mesh->vertices[2].position.y = 1.0f;
-		mesh->vertices[2].position.z = -1.0f;
-		mesh->vertices[2].uv.x = widthoff;
-		mesh->vertices[2].uv.y = heightoff;
+		mesh->vertices[2*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[2*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[2*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[2*mesh->vtxsize+6] = widthoff;
+		mesh->vertices[2*mesh->vtxsize+7] = heightoff;
 		
 		
-		mesh->vertices[3].position.x = -1.0f;
-		mesh->vertices[3].position.y = -1.0f;
-		mesh->vertices[3].position.z = -1.0f;
-		mesh->vertices[3].uv.x = widthoff;
-		mesh->vertices[3].uv.y = 1.0f-heightoff;
+		mesh->vertices[3*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[3*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[3*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[3*mesh->vtxsize+6] = widthoff;
+		mesh->vertices[3*mesh->vtxsize+7] = 1.0f-heightoff;
 		
-		mesh->vertices[4].position.x = 1.0f;
-		mesh->vertices[4].position.y = -1.0f;
-		mesh->vertices[4].position.z = -1.0f;
-		mesh->vertices[4].uv.x = 1.0f-widthoff;
-		mesh->vertices[4].uv.y = 1.0f-heightoff;
+		mesh->vertices[4*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[4*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[4*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[4*mesh->vtxsize+6] = 1.0f-widthoff;
+		mesh->vertices[4*mesh->vtxsize+7] = 1.0f-heightoff;
 		
-		mesh->vertices[5].position.x = 1.0f;
-		mesh->vertices[5].position.y = 1.0f;
-		mesh->vertices[5].position.z = -1.0f;
-		mesh->vertices[5].uv.x = 1.0f-widthoff;
-		mesh->vertices[5].uv.y = heightoff;
+		mesh->vertices[5*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[5*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[5*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[5*mesh->vtxsize+6] = 1.0f-widthoff;
+		mesh->vertices[5*mesh->vtxsize+7] = heightoff;
 		
 		mesh->generateVBO();
 		cont->meshs.push_back(mesh);
@@ -376,54 +376,54 @@ sgObjectBody *sgObjectBody::makeObject(const char *name, unsigned long flags)
 		
 		mesh = new sgMesh;
 		
-		mesh->vtxform = BASIC;
-		mesh->vtxsize = SZ_BASIC;
+		mesh->vtxfeatures = sgVertex::POSITION|sgVertex::NORMAL|sgVertex::UV0;
+		mesh->vtxsize = 8;
 		mesh->vertexnum = 6;
 		mesh->indexnum = 6;
 		
-		mesh->vertices = new sgVertex[mesh->vertexnum];
+		mesh->vertices = new float[mesh->vertexnum*mesh->vtxsize];
 		mesh->indices = new unsigned short[mesh->indexnum];
 		
 		for(int i = 0; i < mesh->indexnum; i++)
 			mesh->indices[i] = i;
 		
 		//back
-		mesh->vertices[0].position.x = 1.0f;
-		mesh->vertices[0].position.y = 1.0f;
-		mesh->vertices[0].position.z = 1.0f;
-		mesh->vertices[0].uv.x = 1.0f-widthoff;
-		mesh->vertices[0].uv.y = heightoff;
+		mesh->vertices[0*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[0*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[0*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[0*mesh->vtxsize+6] = 1.0f-widthoff;
+		mesh->vertices[0*mesh->vtxsize+7] = heightoff;
 		
-		mesh->vertices[1].position.x = 1.0f;
-		mesh->vertices[1].position.y = -1.0f;
-		mesh->vertices[1].position.z = -1.0f;
-		mesh->vertices[1].uv.x = widthoff;
-		mesh->vertices[1].uv.y = 1.0f-heightoff;
+		mesh->vertices[1*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[1*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[1*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[1*mesh->vtxsize+6] = widthoff;
+		mesh->vertices[1*mesh->vtxsize+7] = 1.0f-heightoff;
 		
-		mesh->vertices[2].position.x = 1.0f;
-		mesh->vertices[2].position.y = -1.0f;
-		mesh->vertices[2].position.z = 1.0f;
-		mesh->vertices[2].uv.x = 1.0f-widthoff;
-		mesh->vertices[2].uv.y = 1.0f-heightoff;
+		mesh->vertices[2*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[2*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[2*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[2*mesh->vtxsize+6] = 1.0f-widthoff;
+		mesh->vertices[2*mesh->vtxsize+7] = 1.0f-heightoff;
 		
 		
-		mesh->vertices[3].position.x = 1.0f;
-		mesh->vertices[3].position.y = 1.0f;
-		mesh->vertices[3].position.z = 1.0f;
-		mesh->vertices[3].uv.x = 1.0f-widthoff;
-		mesh->vertices[3].uv.y = heightoff;
+		mesh->vertices[3*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[3*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[3*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[3*mesh->vtxsize+6] = 1.0f-widthoff;
+		mesh->vertices[3*mesh->vtxsize+7] = heightoff;
 		
-		mesh->vertices[4].position.x = 1.0f;
-		mesh->vertices[4].position.y = 1.0f;
-		mesh->vertices[4].position.z = -1.0f;
-		mesh->vertices[4].uv.x = widthoff;
-		mesh->vertices[4].uv.y = heightoff;
+		mesh->vertices[4*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[4*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[4*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[4*mesh->vtxsize+6] = widthoff;
+		mesh->vertices[4*mesh->vtxsize+7] = heightoff;
 		
-		mesh->vertices[5].position.x = 1.0f;
-		mesh->vertices[5].position.y = -1.0f;
-		mesh->vertices[5].position.z = -1.0f;
-		mesh->vertices[5].uv.x = widthoff;
-		mesh->vertices[5].uv.y = 1.0f-heightoff;
+		mesh->vertices[5*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[5*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[5*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[5*mesh->vtxsize+6] = widthoff;
+		mesh->vertices[5*mesh->vtxsize+7] = 1.0f-heightoff;
 		
 		mesh->generateVBO();
 		cont->meshs.push_back(mesh);
@@ -431,54 +431,54 @@ sgObjectBody *sgObjectBody::makeObject(const char *name, unsigned long flags)
 		
 		mesh = new sgMesh;
 		
-		mesh->vtxform = BASIC;
-		mesh->vtxsize = SZ_BASIC;
+		mesh->vtxfeatures = sgVertex::POSITION|sgVertex::NORMAL|sgVertex::UV0;
+		mesh->vtxsize = 8;
 		mesh->vertexnum = 6;
 		mesh->indexnum = 6;
 		
-		mesh->vertices = new sgVertex[mesh->vertexnum];
+		mesh->vertices = new float[mesh->vertexnum*mesh->vtxsize];
 		mesh->indices = new unsigned short[mesh->indexnum];
 		
 		for(int i = 0; i < mesh->indexnum; i++)
 			mesh->indices[i] = i;
 		
 		//right
-		mesh->vertices[0].position.x = 1.0f;
-		mesh->vertices[0].position.y = 1.0f;
-		mesh->vertices[0].position.z = 1.0f;
-		mesh->vertices[0].uv.x = widthoff;
-		mesh->vertices[0].uv.y = heightoff;
+		mesh->vertices[0*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[0*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[0*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[0*mesh->vtxsize+6] = widthoff;
+		mesh->vertices[0*mesh->vtxsize+7] = heightoff;
 		
-		mesh->vertices[1].position.x = 1.0f;
-		mesh->vertices[1].position.y = -1.0f;
-		mesh->vertices[1].position.z = 1.0f;
-		mesh->vertices[1].uv.x = widthoff;
-		mesh->vertices[1].uv.y = 1.0f-heightoff;
+		mesh->vertices[1*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[1*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[1*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[1*mesh->vtxsize+6] = widthoff;
+		mesh->vertices[1*mesh->vtxsize+7] = 1.0f-heightoff;
 		
-		mesh->vertices[2].position.x = -1.0f;
-		mesh->vertices[2].position.y = -1.0f;
-		mesh->vertices[2].position.z = 1.0f;
-		mesh->vertices[2].uv.x = 1.0f-widthoff;
-		mesh->vertices[2].uv.y = 1.0f-heightoff;
+		mesh->vertices[2*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[2*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[2*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[2*mesh->vtxsize+6] = 1.0f-widthoff;
+		mesh->vertices[2*mesh->vtxsize+7] = 1.0f-heightoff;
 		
 		
-		mesh->vertices[3].position.x = 1.0f;
-		mesh->vertices[3].position.y = 1.0f;
-		mesh->vertices[3].position.z = 1.0f;
-		mesh->vertices[3].uv.x = widthoff;
-		mesh->vertices[3].uv.y = heightoff;
+		mesh->vertices[3*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[3*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[3*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[3*mesh->vtxsize+6] = widthoff;
+		mesh->vertices[3*mesh->vtxsize+7] = heightoff;
 		
-		mesh->vertices[4].position.x = -1.0f;
-		mesh->vertices[4].position.y = -1.0f;
-		mesh->vertices[4].position.z = 1.0f;
-		mesh->vertices[4].uv.x = 1.0f-widthoff;
-		mesh->vertices[4].uv.y = 1.0f-heightoff;
+		mesh->vertices[4*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[4*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[4*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[4*mesh->vtxsize+6] = 1.0f-widthoff;
+		mesh->vertices[4*mesh->vtxsize+7] = 1.0f-heightoff;
 		
-		mesh->vertices[5].position.x = -1.0f;
-		mesh->vertices[5].position.y = 1.0f;
-		mesh->vertices[5].position.z = 1.0f;
-		mesh->vertices[5].uv.x = 1.0f-widthoff;
-		mesh->vertices[5].uv.y = heightoff;
+		mesh->vertices[5*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[5*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[5*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[5*mesh->vtxsize+6] = 1.0f-widthoff;
+		mesh->vertices[5*mesh->vtxsize+7] = heightoff;
 		
 		mesh->generateVBO();
 		cont->meshs.push_back(mesh);
@@ -486,54 +486,54 @@ sgObjectBody *sgObjectBody::makeObject(const char *name, unsigned long flags)
 		
 		mesh = new sgMesh;
 		
-		mesh->vtxform = BASIC;
-		mesh->vtxsize = SZ_BASIC;
+		mesh->vtxfeatures = sgVertex::POSITION|sgVertex::NORMAL|sgVertex::UV0;
+		mesh->vtxsize = 8;
 		mesh->vertexnum = 6;
 		mesh->indexnum = 6;
 		
-		mesh->vertices = new sgVertex[mesh->vertexnum];
+		mesh->vertices = new float[mesh->vertexnum*mesh->vtxsize];
 		mesh->indices = new unsigned short[mesh->indexnum];
 		
 		for(int i = 0; i < mesh->indexnum; i++)
 			mesh->indices[i] = i;
 		
 		//front
-		mesh->vertices[0].position.x = -1.0f;
-		mesh->vertices[0].position.y = -1.0f;
-		mesh->vertices[0].position.z = -1.0f;
-		mesh->vertices[0].uv.x = 1.0f-widthoff;
-		mesh->vertices[0].uv.y = 1.0f-heightoff;
+		mesh->vertices[0*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[0*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[0*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[0*mesh->vtxsize+6] = 1.0f-widthoff;
+		mesh->vertices[0*mesh->vtxsize+7] = 1.0f-heightoff;
 		
-		mesh->vertices[1].position.x = -1.0f;
-		mesh->vertices[1].position.y = 1.0f;
-		mesh->vertices[1].position.z = -1.0f;
-		mesh->vertices[1].uv.x = 1.0f-widthoff;
-		mesh->vertices[1].uv.y = heightoff;
+		mesh->vertices[1*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[1*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[1*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[1*mesh->vtxsize+6] = 1.0f-widthoff;
+		mesh->vertices[1*mesh->vtxsize+7] = heightoff;
 		
-		mesh->vertices[2].position.x = -1.0f;
-		mesh->vertices[2].position.y = 1.0f;
-		mesh->vertices[2].position.z = 1.0f;
-		mesh->vertices[2].uv.x = widthoff;
-		mesh->vertices[2].uv.y = heightoff;
+		mesh->vertices[2*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[2*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[2*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[2*mesh->vtxsize+6] = widthoff;
+		mesh->vertices[2*mesh->vtxsize+7] = heightoff;
 		
 		
-		mesh->vertices[3].position.x = -1.0f;
-		mesh->vertices[3].position.y = -1.0f;
-		mesh->vertices[3].position.z = -1.0f;
-		mesh->vertices[3].uv.x = 1.0f-widthoff;
-		mesh->vertices[3].uv.y = 1.0f-heightoff;
+		mesh->vertices[3*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[3*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[3*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[3*mesh->vtxsize+6] = 1.0f-widthoff;
+		mesh->vertices[3*mesh->vtxsize+7] = 1.0f-heightoff;
 		
-		mesh->vertices[4].position.x = -1.0f;
-		mesh->vertices[4].position.y = 1.0f;
-		mesh->vertices[4].position.z = 1.0f;
-		mesh->vertices[4].uv.x = widthoff;
-		mesh->vertices[4].uv.y = heightoff;
+		mesh->vertices[4*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[4*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[4*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[4*mesh->vtxsize+6] = widthoff;
+		mesh->vertices[4*mesh->vtxsize+7] = heightoff;
 		
-		mesh->vertices[5].position.x = -1.0f;
-		mesh->vertices[5].position.y = -1.0f;
-		mesh->vertices[5].position.z = 1.0f;
-		mesh->vertices[5].uv.x = widthoff;
-		mesh->vertices[5].uv.y = 1.0-heightoff;
+		mesh->vertices[5*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[5*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[5*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[5*mesh->vtxsize+6] = widthoff;
+		mesh->vertices[5*mesh->vtxsize+7] = 1.0-heightoff;
 		
 		mesh->generateVBO();
 		cont->meshs.push_back(mesh);
@@ -541,54 +541,54 @@ sgObjectBody *sgObjectBody::makeObject(const char *name, unsigned long flags)
 		
 		mesh = new sgMesh;
 		
-		mesh->vtxform = BASIC;
-		mesh->vtxsize = SZ_BASIC;
+		mesh->vtxfeatures = sgVertex::POSITION|sgVertex::NORMAL|sgVertex::UV0;
+		mesh->vtxsize = 8;
 		mesh->vertexnum = 6;
 		mesh->indexnum = 6;
 		
-		mesh->vertices = new sgVertex[mesh->vertexnum];
+		mesh->vertices = new float[mesh->vertexnum*mesh->vtxsize];
 		mesh->indices = new unsigned short[mesh->indexnum];
 		
 		for(int i = 0; i < mesh->indexnum; i++)
 			mesh->indices[i] = i;
 		
 		//bottom
-		mesh->vertices[0].position.x = -1.0f;
-		mesh->vertices[0].position.y = -1.0f;
-		mesh->vertices[0].position.z = -1.0f;
-		mesh->vertices[0].uv.x = 1.0f-widthoff;
-		mesh->vertices[0].uv.y = heightoff;
+		mesh->vertices[0*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[0*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[0*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[0*mesh->vtxsize+6] = 1.0f-widthoff;
+		mesh->vertices[0*mesh->vtxsize+7] = heightoff;
 		
-		mesh->vertices[1].position.x = 1.0f;
-		mesh->vertices[1].position.y = -1.0f;
-		mesh->vertices[1].position.z = 1.0f;
-		mesh->vertices[1].uv.x = widthoff;
-		mesh->vertices[1].uv.y = 1.0f-heightoff;
+		mesh->vertices[1*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[1*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[1*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[1*mesh->vtxsize+6] = widthoff;
+		mesh->vertices[1*mesh->vtxsize+7] = 1.0f-heightoff;
 		
-		mesh->vertices[2].position.x = 1.0f;
-		mesh->vertices[2].position.y = -1.0f;
-		mesh->vertices[2].position.z = -1.0f;
-		mesh->vertices[2].uv.x = 1.0f-widthoff;
-		mesh->vertices[2].uv.y = 1.0f-heightoff;
+		mesh->vertices[2*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[2*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[2*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[2*mesh->vtxsize+6] = 1.0f-widthoff;
+		mesh->vertices[2*mesh->vtxsize+7] = 1.0f-heightoff;
 		
 		
-		mesh->vertices[3].position.x = -1.0f;
-		mesh->vertices[3].position.y = -1.0f;
-		mesh->vertices[3].position.z = -1.0f;
-		mesh->vertices[3].uv.x = 1.0f-widthoff;
-		mesh->vertices[3].uv.y = heightoff;
+		mesh->vertices[3*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[3*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[3*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[3*mesh->vtxsize+6] = 1.0f-widthoff;
+		mesh->vertices[3*mesh->vtxsize+7] = heightoff;
 		
-		mesh->vertices[4].position.x = -1.0f;
-		mesh->vertices[4].position.y = -1.0f;
-		mesh->vertices[4].position.z = 1.0f;
-		mesh->vertices[4].uv.x = widthoff;
-		mesh->vertices[4].uv.y = heightoff;
+		mesh->vertices[4*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[4*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[4*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[4*mesh->vtxsize+6] = widthoff;
+		mesh->vertices[4*mesh->vtxsize+7] = heightoff;
 		
-		mesh->vertices[5].position.x = 1.0f;
-		mesh->vertices[5].position.y = -1.0f;
-		mesh->vertices[5].position.z = 1.0f;
-		mesh->vertices[5].uv.x = widthoff;
-		mesh->vertices[5].uv.y = 1.0f-heightoff;
+		mesh->vertices[5*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[5*mesh->vtxsize+1] = -1.0f;
+		mesh->vertices[5*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[5*mesh->vtxsize+6] = widthoff;
+		mesh->vertices[5*mesh->vtxsize+7] = 1.0f-heightoff;
 		
 		mesh->generateVBO();
 		cont->meshs.push_back(mesh);
@@ -596,54 +596,54 @@ sgObjectBody *sgObjectBody::makeObject(const char *name, unsigned long flags)
 		
 		mesh = new sgMesh;
 		
-		mesh->vtxform = BASIC;
-		mesh->vtxsize = SZ_BASIC;
+		mesh->vtxfeatures = sgVertex::POSITION|sgVertex::NORMAL|sgVertex::UV0;
+		mesh->vtxsize = 8;
 		mesh->vertexnum = 6;
 		mesh->indexnum = 6;
 		
-		mesh->vertices = new sgVertex[mesh->vertexnum];
+		mesh->vertices = new float[mesh->vertexnum*mesh->vtxsize];
 		mesh->indices = new unsigned short[mesh->indexnum];
 		
 		for(int i = 0; i < mesh->indexnum; i++)
 			mesh->indices[i] = i;
 		
 		//top
-		mesh->vertices[0].position.x = 1.0f;
-		mesh->vertices[0].position.y = 1.0f;
-		mesh->vertices[0].position.z = 1.0f;
-		mesh->vertices[0].uv.x = widthoff;
-		mesh->vertices[0].uv.y = heightoff;
+		mesh->vertices[0*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[0*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[0*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[0*mesh->vtxsize+6] = widthoff;
+		mesh->vertices[0*mesh->vtxsize+7] = heightoff;
 		
-		mesh->vertices[1].position.x = -1.0f;
-		mesh->vertices[1].position.y = 1.0f;
-		mesh->vertices[1].position.z = 1.0f;
-		mesh->vertices[1].uv.x = widthoff;
-		mesh->vertices[1].uv.y = 1.0f-heightoff;
+		mesh->vertices[1*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[1*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[1*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[1*mesh->vtxsize+6] = widthoff;
+		mesh->vertices[1*mesh->vtxsize+7] = 1.0f-heightoff;
 		
-		mesh->vertices[2].position.x = -1.0f;
-		mesh->vertices[2].position.y = 1.0f;
-		mesh->vertices[2].position.z = -1.0f;
-		mesh->vertices[2].uv.x = 1.0f-widthoff;
-		mesh->vertices[2].uv.y = 1.0f-heightoff;
+		mesh->vertices[2*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[2*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[2*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[2*mesh->vtxsize+6] = 1.0f-widthoff;
+		mesh->vertices[2*mesh->vtxsize+7] = 1.0f-heightoff;
 		
 		
-		mesh->vertices[3].position.x = 1.0f;
-		mesh->vertices[3].position.y = 1.0f;
-		mesh->vertices[3].position.z = 1.0f;
-		mesh->vertices[3].uv.x = widthoff;
-		mesh->vertices[3].uv.y = heightoff;
+		mesh->vertices[3*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[3*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[3*mesh->vtxsize+2] = 1.0f;
+		mesh->vertices[3*mesh->vtxsize+6] = widthoff;
+		mesh->vertices[3*mesh->vtxsize+7] = heightoff;
 		
-		mesh->vertices[4].position.x = -1.0f;
-		mesh->vertices[4].position.y = 1.0f;
-		mesh->vertices[4].position.z = -1.0f;
-		mesh->vertices[4].uv.x = 1.0f-widthoff;
-		mesh->vertices[4].uv.y = 1.0f-heightoff;
+		mesh->vertices[4*mesh->vtxsize+0] = -1.0f;
+		mesh->vertices[4*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[4*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[4*mesh->vtxsize+6] = 1.0f-widthoff;
+		mesh->vertices[4*mesh->vtxsize+7] = 1.0f-heightoff;
 		
-		mesh->vertices[5].position.x = 1.0f;
-		mesh->vertices[5].position.y = 1.0f;
-		mesh->vertices[5].position.z = -1.0f;
-		mesh->vertices[5].uv.x = 1.0f-widthoff;
-		mesh->vertices[5].uv.y = heightoff;
+		mesh->vertices[5*mesh->vtxsize+0] = 1.0f;
+		mesh->vertices[5*mesh->vtxsize+1] = 1.0f;
+		mesh->vertices[5*mesh->vtxsize+2] = -1.0f;
+		mesh->vertices[5*mesh->vtxsize+6] = 1.0f-widthoff;
+		mesh->vertices[5*mesh->vtxsize+7] = heightoff;
 		
 		mesh->generateVBO();
 		cont->meshs.push_back(mesh);
@@ -680,8 +680,8 @@ void sgObjectBody::addTerrainPlane(unsigned int xverts, unsigned int zverts, sgV
 	
 	sgMesh *mesh = new sgMesh;
 	
-	mesh->vtxform = BASIC;
-	mesh->vtxsize = SZ_BASIC;
+	mesh->vtxfeatures = sgVertex::POSITION|sgVertex::NORMAL|sgVertex::UV0;
+	mesh->vtxsize = 8;
 	mesh->vertexnum = xverts*zverts;
 	mesh->indexnum = 3*2*(xverts-1)*(zverts-1);
 	if(addborder)
@@ -689,7 +689,7 @@ void sgObjectBody::addTerrainPlane(unsigned int xverts, unsigned int zverts, sgV
 		mesh->vertexnum += 2*(xverts+zverts);
 		mesh->indexnum += 12*(xverts+zverts-2);
 	}
-	mesh->vertices = new sgVertex[mesh->vertexnum];
+	mesh->vertices = new float[mesh->vertexnum*mesh->vtxsize];
 	mesh->indices = new unsigned short[mesh->indexnum];
 	
 	int face = 0;
@@ -801,12 +801,14 @@ void sgObjectBody::addTerrainPlane(unsigned int xverts, unsigned int zverts, sgV
 				color.a = 0;
 			}
 			
-			mesh->vertices[x*zverts+y].position.x = ((float)x-0.5f*(float)(xverts-1.0))*scale.x+posoffset.x;
-			mesh->vertices[x*zverts+y].position.y = height+posoffset.y;
-			mesh->vertices[x*zverts+y].position.z = ((float)y-0.5f*(float)(zverts-1.0))*scale.y+posoffset.z;
-			mesh->vertices[x*zverts+y].normal = norm*-1;
-			mesh->vertices[x*zverts+y].uv.x = mesh->vertices[x*zverts+y].position.x*uvfac.x+0.5f;
-			mesh->vertices[x*zverts+y].uv.y = mesh->vertices[x*zverts+y].position.z*uvfac.y+0.5f;
+			mesh->vertices[(x*zverts+y)*mesh->vtxsize+0] = ((float)x-0.5f*(float)(xverts-1.0))*scale.x+posoffset.x;
+			mesh->vertices[(x*zverts+y)*mesh->vtxsize+1] = height+posoffset.y;
+			mesh->vertices[(x*zverts+y)*mesh->vtxsize+2] = ((float)y-0.5f*(float)(zverts-1.0))*scale.y+posoffset.z;
+			mesh->vertices[(x*zverts+y)*mesh->vtxsize+3] = norm.x*-1;
+			mesh->vertices[(x*zverts+y)*mesh->vtxsize+4] = norm.y*-1;
+			mesh->vertices[(x*zverts+y)*mesh->vtxsize+5] = norm.z*-1;
+			mesh->vertices[(x*zverts+y)*mesh->vtxsize+6] = mesh->vertices[(x*zverts+y)*mesh->vtxsize+0]*uvfac.x+0.5f;
+			mesh->vertices[(x*zverts+y)*mesh->vtxsize+7] = mesh->vertices[(x*zverts+y)*mesh->vtxsize+2]*uvfac.y+0.5f;
 		}
 	}
 	
@@ -825,11 +827,20 @@ void sgObjectBody::addTerrainPlane(unsigned int xverts, unsigned int zverts, sgV
 			mesh->indices[face*3+1] = startverts+x+1;
 			mesh->indices[face*3+2] = startverts+x;
 			face++;
+
+			//copy position
+			mesh->vertices[(startverts+x)*mesh->vtxsize+0] = mesh->vertices[x*zverts*mesh->vtxsize+0];
+			mesh->vertices[(startverts+x)*mesh->vtxsize+1] = mesh->vertices[x*zverts*mesh->vtxsize+1]-10.0;
+			mesh->vertices[(startverts+x)*mesh->vtxsize+2] = mesh->vertices[x*zverts*mesh->vtxsize+2];
 			
-			mesh->vertices[startverts+x].position = mesh->vertices[x*zverts].position;
-			mesh->vertices[startverts+x].position.y -= 10.0;
-			mesh->vertices[startverts+x].normal = mesh->vertices[x*zverts].normal;
-			mesh->vertices[startverts+x].uv = mesh->vertices[x*zverts].uv;
+			//copy normal
+			mesh->vertices[(startverts+x)*mesh->vtxsize+3] = mesh->vertices[x*zverts*mesh->vtxsize+3];
+			mesh->vertices[(startverts+x)*mesh->vtxsize+4] = mesh->vertices[x*zverts*mesh->vtxsize+4];
+			mesh->vertices[(startverts+x)*mesh->vtxsize+5] = mesh->vertices[x*zverts*mesh->vtxsize+5];
+			
+			//copy texcoords
+			mesh->vertices[(startverts+x)*mesh->vtxsize+6] = mesh->vertices[x*zverts*mesh->vtxsize+6];
+			mesh->vertices[(startverts+x)*mesh->vtxsize+7] = mesh->vertices[x*zverts*mesh->vtxsize+7];
 			
 			//bottom row
 			mesh->indices[face*3+0] = (x+1)*zverts+zverts-1;
@@ -842,21 +853,48 @@ void sgObjectBody::addTerrainPlane(unsigned int xverts, unsigned int zverts, sgV
 			mesh->indices[face*3+2] = startverts+xverts+x;
 			face++;
 			
-			mesh->vertices[startverts+x+xverts].position = mesh->vertices[x*zverts+zverts-1].position;
-			mesh->vertices[startverts+x+xverts].position.y -= 10.0;
-			mesh->vertices[startverts+x+xverts].normal = mesh->vertices[x*zverts+zverts-1].normal;
-			mesh->vertices[startverts+x+xverts].uv = mesh->vertices[x*zverts+zverts-1].uv;
+			//copy position
+			mesh->vertices[(startverts+x+xverts)*mesh->vtxsize+0] = mesh->vertices[(x*zverts+zverts-1)*mesh->vtxsize+0];
+			mesh->vertices[(startverts+x+xverts)*mesh->vtxsize+1] = mesh->vertices[(x*zverts+zverts-1)*mesh->vtxsize+1]-10.0;
+			mesh->vertices[(startverts+x+xverts)*mesh->vtxsize+2] = mesh->vertices[(x*zverts+zverts-1)*mesh->vtxsize+2];
+			
+			//copy normal
+			mesh->vertices[(startverts+x+xverts)*mesh->vtxsize+3] = mesh->vertices[(x*zverts+zverts-1)*mesh->vtxsize+3];
+			mesh->vertices[(startverts+x+xverts)*mesh->vtxsize+4] = mesh->vertices[(x*zverts+zverts-1)*mesh->vtxsize+4];
+			mesh->vertices[(startverts+x+xverts)*mesh->vtxsize+5] = mesh->vertices[(x*zverts+zverts-1)*mesh->vtxsize+5];
+			
+			//copy texcoords
+			mesh->vertices[(startverts+x+xverts)*mesh->vtxsize+6] = mesh->vertices[(x*zverts+zverts-1)*mesh->vtxsize+6];
+			mesh->vertices[(startverts+x+xverts)*mesh->vtxsize+7] = mesh->vertices[(x*zverts+zverts-1)*mesh->vtxsize+7];
 		}
 		
-		mesh->vertices[startverts+xverts-1].position = mesh->vertices[(xverts-1)*zverts].position;
-		mesh->vertices[startverts+xverts-1].position.y -= 10.0;
-		mesh->vertices[startverts+xverts-1].normal = mesh->vertices[(xverts-1)*zverts].normal;
-		mesh->vertices[startverts+xverts-1].uv = mesh->vertices[(xverts-1)*zverts].uv;
+		//copy position
+		mesh->vertices[(startverts+xverts-1)*mesh->vtxsize+0] = mesh->vertices[(xverts-1)*zverts*mesh->vtxsize+0];
+		mesh->vertices[(startverts+xverts-1)*mesh->vtxsize+1] = mesh->vertices[(xverts-1)*zverts*mesh->vtxsize+1]-10.0;
+		mesh->vertices[(startverts+xverts-1)*mesh->vtxsize+2] = mesh->vertices[(xverts-1)*zverts*mesh->vtxsize+2];
 		
-		mesh->vertices[startverts+xverts+xverts-1].position = mesh->vertices[(xverts-1)*zverts+zverts-1].position;
-		mesh->vertices[startverts+xverts+xverts-1].position.y -= 10.0;
-		mesh->vertices[startverts+xverts+xverts-1].normal = mesh->vertices[(xverts-1)*zverts+zverts-1].normal;
-		mesh->vertices[startverts+xverts+xverts-1].uv = mesh->vertices[(xverts-1)*zverts+zverts-1].uv;
+		//copy normal
+		mesh->vertices[(startverts+xverts-1)*mesh->vtxsize+3] = mesh->vertices[(xverts-1)*zverts*mesh->vtxsize+3];
+		mesh->vertices[(startverts+xverts-1)*mesh->vtxsize+4] = mesh->vertices[(xverts-1)*zverts*mesh->vtxsize+4];
+		mesh->vertices[(startverts+xverts-1)*mesh->vtxsize+5] = mesh->vertices[(xverts-1)*zverts*mesh->vtxsize+5];
+		
+		//copy texcoords
+		mesh->vertices[(startverts+xverts-1)*mesh->vtxsize+6] = mesh->vertices[(xverts-1)*zverts*mesh->vtxsize+6];
+		mesh->vertices[(startverts+xverts-1)*mesh->vtxsize+7] = mesh->vertices[(xverts-1)*zverts*mesh->vtxsize+7];
+		
+		//copy position
+		mesh->vertices[(startverts+xverts+xverts-1)*mesh->vtxsize+0] = mesh->vertices[((xverts-1)*zverts+zverts-1)*mesh->vtxsize+0];
+		mesh->vertices[(startverts+xverts+xverts-1)*mesh->vtxsize+1] = mesh->vertices[((xverts-1)*zverts+zverts-1)*mesh->vtxsize+1]-10.0;
+		mesh->vertices[(startverts+xverts+xverts-1)*mesh->vtxsize+2] = mesh->vertices[((xverts-1)*zverts+zverts-1)*mesh->vtxsize+2];
+		
+		//copy normal
+		mesh->vertices[(startverts+xverts+xverts-1)*mesh->vtxsize+3] = mesh->vertices[((xverts-1)*zverts+zverts-1)*mesh->vtxsize+3];
+		mesh->vertices[(startverts+xverts+xverts-1)*mesh->vtxsize+4] = mesh->vertices[((xverts-1)*zverts+zverts-1)*mesh->vtxsize+4];
+		mesh->vertices[(startverts+xverts+xverts-1)*mesh->vtxsize+5] = mesh->vertices[((xverts-1)*zverts+zverts-1)*mesh->vtxsize+5];
+		
+		//copy texcoords
+		mesh->vertices[(startverts+xverts+xverts-1)*mesh->vtxsize+6] = mesh->vertices[((xverts-1)*zverts+zverts-1)*mesh->vtxsize+6];
+		mesh->vertices[(startverts+xverts+xverts-1)*mesh->vtxsize+7] = mesh->vertices[((xverts-1)*zverts+zverts-1)*mesh->vtxsize+7];
 		
 		for(int y = 0; y < zverts-1; y++)
 		{
@@ -871,10 +909,19 @@ void sgObjectBody::addTerrainPlane(unsigned int xverts, unsigned int zverts, sgV
 			mesh->indices[face*3+2] = startverts+2*xverts+y;
 			face++;
 			
-			mesh->vertices[startverts+2*xverts+y].position = mesh->vertices[y].position;
-			mesh->vertices[startverts+2*xverts+y].position.y -= 10.0;
-			mesh->vertices[startverts+2*xverts+y].normal = mesh->vertices[y].normal;
-			mesh->vertices[startverts+2*xverts+y].uv = mesh->vertices[y].uv;
+			//copy position
+			mesh->vertices[(startverts+2*xverts+y)*mesh->vtxsize+0] = mesh->vertices[y*mesh->vtxsize+0];
+			mesh->vertices[(startverts+2*xverts+y)*mesh->vtxsize+1] = mesh->vertices[y*mesh->vtxsize+1]-10.0;
+			mesh->vertices[(startverts+2*xverts+y)*mesh->vtxsize+2] = mesh->vertices[y*mesh->vtxsize+2];
+			
+			//copy normal
+			mesh->vertices[(startverts+2*xverts+y)*mesh->vtxsize+3] = mesh->vertices[y*mesh->vtxsize+3];
+			mesh->vertices[(startverts+2*xverts+y)*mesh->vtxsize+4] = mesh->vertices[y*mesh->vtxsize+4];
+			mesh->vertices[(startverts+2*xverts+y)*mesh->vtxsize+5] = mesh->vertices[y*mesh->vtxsize+5];
+			
+			//copy texcoords
+			mesh->vertices[(startverts+2*xverts+y)*mesh->vtxsize+6] = mesh->vertices[y*mesh->vtxsize+6];
+			mesh->vertices[(startverts+2*xverts+y)*mesh->vtxsize+7] = mesh->vertices[y*mesh->vtxsize+7];
 			
 			//right row
 			mesh->indices[face*3+0] = (xverts-1)*zverts+y;
@@ -887,21 +934,48 @@ void sgObjectBody::addTerrainPlane(unsigned int xverts, unsigned int zverts, sgV
 			mesh->indices[face*3+2] = startverts+2*xverts+zverts+y;
 			face++;
 			
-			mesh->vertices[startverts+2*xverts+zverts+y].position = mesh->vertices[(xverts-1)*zverts+y].position;
-			mesh->vertices[startverts+2*xverts+zverts+y].position.y -= 10.0;
-			mesh->vertices[startverts+2*xverts+zverts+y].normal = mesh->vertices[(xverts-1)*zverts+y].normal;
-			mesh->vertices[startverts+2*xverts+zverts+y].uv = mesh->vertices[(xverts-1)*zverts+y].uv;
+			//copy position
+			mesh->vertices[(startverts+2*xverts+zverts+y)*mesh->vtxsize+0] = mesh->vertices[((xverts-1)*zverts+y)*mesh->vtxsize+0];
+			mesh->vertices[(startverts+2*xverts+zverts+y)*mesh->vtxsize+1] = mesh->vertices[((xverts-1)*zverts+y)*mesh->vtxsize+1]-10.0f;
+			mesh->vertices[(startverts+2*xverts+zverts+y)*mesh->vtxsize+2] = mesh->vertices[((xverts-1)*zverts+y)*mesh->vtxsize+2];
+			
+			//copy normal
+			mesh->vertices[(startverts+2*xverts+zverts+y)*mesh->vtxsize+3] = mesh->vertices[((xverts-1)*zverts+y)*mesh->vtxsize+3];
+			mesh->vertices[(startverts+2*xverts+zverts+y)*mesh->vtxsize+4] = mesh->vertices[((xverts-1)*zverts+y)*mesh->vtxsize+4];
+			mesh->vertices[(startverts+2*xverts+zverts+y)*mesh->vtxsize+5] = mesh->vertices[((xverts-1)*zverts+y)*mesh->vtxsize+5];
+			
+			//copy texcoords
+			mesh->vertices[(startverts+2*xverts+zverts+y)*mesh->vtxsize+6] = mesh->vertices[((xverts-1)*zverts+y)*mesh->vtxsize+6];
+			mesh->vertices[(startverts+2*xverts+zverts+y)*mesh->vtxsize+7] = mesh->vertices[((xverts-1)*zverts+y)*mesh->vtxsize+7];
 		}
 		
-		mesh->vertices[startverts+2*xverts+zverts-1].position = mesh->vertices[zverts-1].position;
-		mesh->vertices[startverts+2*xverts+zverts-1].position.y -= 10.0;
-		mesh->vertices[startverts+2*xverts+zverts-1].normal = mesh->vertices[zverts-1].normal;
-		mesh->vertices[startverts+2*xverts+zverts-1].uv = mesh->vertices[zverts-1].uv;
+		//copy position
+		mesh->vertices[(startverts+2*xverts+zverts-1)*mesh->vtxsize+0] = mesh->vertices[(zverts-1)*mesh->vtxsize+0];
+		mesh->vertices[(startverts+2*xverts+zverts-1)*mesh->vtxsize+1] = mesh->vertices[(zverts-1)*mesh->vtxsize+1]-10.0;
+		mesh->vertices[(startverts+2*xverts+zverts-1)*mesh->vtxsize+2] = mesh->vertices[(zverts-1)*mesh->vtxsize+2];
 		
-		mesh->vertices[startverts+2*xverts+zverts+zverts-1].position = mesh->vertices[(xverts-1)*zverts+zverts-1].position;
-		mesh->vertices[startverts+2*xverts+zverts+zverts-1].position.y -= 10.0;
-		mesh->vertices[startverts+2*xverts+zverts+zverts-1].normal = mesh->vertices[(xverts-1)*zverts+zverts-1].normal;
-		mesh->vertices[startverts+2*xverts+zverts+zverts-1].uv = mesh->vertices[(xverts-1)*zverts+zverts-1].uv;
+		//copy normal
+		mesh->vertices[(startverts+2*xverts+zverts-1)*mesh->vtxsize+3] = mesh->vertices[(zverts-1)*mesh->vtxsize+3];
+		mesh->vertices[(startverts+2*xverts+zverts-1)*mesh->vtxsize+4] = mesh->vertices[(zverts-1)*mesh->vtxsize+4];
+		mesh->vertices[(startverts+2*xverts+zverts-1)*mesh->vtxsize+5] = mesh->vertices[(zverts-1)*mesh->vtxsize+5];
+	
+		//copy texcoords
+		mesh->vertices[(startverts+2*xverts+zverts-1)*mesh->vtxsize+6] = mesh->vertices[(zverts-1)*mesh->vtxsize+6];
+		mesh->vertices[(startverts+2*xverts+zverts-1)*mesh->vtxsize+7] = mesh->vertices[(zverts-1)*mesh->vtxsize+7];
+		
+		//copy position
+		mesh->vertices[(startverts+2*xverts+zverts+zverts-1)*mesh->vtxsize+0] = mesh->vertices[((xverts-1)*zverts+zverts-1)*mesh->vtxsize+0];
+		mesh->vertices[(startverts+2*xverts+zverts+zverts-1)*mesh->vtxsize+1] = mesh->vertices[((xverts-1)*zverts+zverts-1)*mesh->vtxsize+1]-10.0;
+		mesh->vertices[(startverts+2*xverts+zverts+zverts-1)*mesh->vtxsize+2] = mesh->vertices[((xverts-1)*zverts+zverts-1)*mesh->vtxsize+2];
+		
+		//copy normal
+		mesh->vertices[(startverts+2*xverts+zverts+zverts-1)*mesh->vtxsize+3] = mesh->vertices[((xverts-1)*zverts+zverts-1)*mesh->vtxsize+3];
+		mesh->vertices[(startverts+2*xverts+zverts+zverts-1)*mesh->vtxsize+4] = mesh->vertices[((xverts-1)*zverts+zverts-1)*mesh->vtxsize+4];
+		mesh->vertices[(startverts+2*xverts+zverts+zverts-1)*mesh->vtxsize+5] = mesh->vertices[((xverts-1)*zverts+zverts-1)*mesh->vtxsize+5];
+		
+		//copy texcoords
+		mesh->vertices[(startverts+2*xverts+zverts+zverts-1)*mesh->vtxsize+6] = mesh->vertices[((xverts-1)*zverts+zverts-1)*mesh->vtxsize+6];
+		mesh->vertices[(startverts+2*xverts+zverts+zverts-1)*mesh->vtxsize+7] = mesh->vertices[((xverts-1)*zverts+zverts-1)*mesh->vtxsize+7];
 	}
 	
 	mesh->generateVBO();

@@ -324,9 +324,9 @@ void sgRendererES1::renderObjects(sgCamera *cam, sgObject *first)
 				glBindBuffer(GL_ARRAY_BUFFER, 0);
 			}else
 			{
-				glVertexPointer(3, GL_FLOAT, sizeof(sgVertex), &currbod->meshs[i]->vertices->position.x);
-				glNormalPointer(GL_FLOAT, sizeof(sgVertex), &currbod->meshs[i]->vertices->normal.x);
-				glTexCoordPointer(2, GL_FLOAT, sizeof(sgVertex), &currbod->meshs[i]->vertices->uv.x);
+				glVertexPointer(3, GL_FLOAT, sizeof(sgVertex), &currbod->meshs[i]->vertices+0);
+				glNormalPointer(GL_FLOAT, sizeof(sgVertex), &currbod->meshs[i]->vertices+3);
+				glTexCoordPointer(2, GL_FLOAT, sizeof(sgVertex), &currbod->meshs[i]->vertices+6);
 			}
 			   
 			if(currbod->meshs[i]->ivbo != -1)

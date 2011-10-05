@@ -55,6 +55,7 @@ sgObject::sgObject(sgObject* p, sgObject *n)
 	culled = false;
 	body = NULL;
 	currbody = NULL;
+	skeleton = NULL;
 }
 
 sgObject::~sgObject()
@@ -109,7 +110,7 @@ sgObject *sgObject::createTerrain(unsigned int xverts, unsigned int zverts, unsi
 	float height = 0;
 	if(hmp != NULL)
 	{
-		tex = sgTexture::getTexture2D(hmp, false, true);
+		tex = sgTexture::getTexture(hmp, false, true);
 		width = (tex->width-1)/xchunks;
 		height = (tex->height-1)/zchunks;
 	}
