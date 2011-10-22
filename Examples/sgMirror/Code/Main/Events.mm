@@ -51,8 +51,8 @@ void Events::onInit(sgMain *m)
 	
 	//Create the reflection camera and create and assign a rendertarget
 	mirror = sgmain->first_ent->createCamEntity();
-	mirror->cam->size = sgVector2(128, 128);
-	mirror->cam->rendertarget = sgTexture::getTexture2D(128, 128);
+	mirror->cam->size = sgVector2(sgRenderer::backingWidth/sgRenderer::scaleFactor/2.0, sgRenderer::backingHeight/sgRenderer::scaleFactor/2.0);
+	mirror->cam->rendertarget = sgTexture::getTexture(mirror->cam->size.x, mirror->cam->size.y);
 	mirror->cam->rendertarget->makeRendertarget();
 	mirror->cam->tag = 1;
 	
@@ -71,9 +71,9 @@ void Events::onInit(sgMain *m)
 	ent->obj->scale.y *= 0.1;
 	ent->obj->scale.z *= 10;
 	ent->obj->position.y = -0.1;
-	ent->obj->body->materials[0]->setTexture2D(-1, "marble.png");
+	ent->obj->body->materials[0]->setTexture(-1, "marble.png");
 	ent->obj->body->materials[0]->mattex.makeScale(sgVector3(10, 10, 10));
-	ent->obj->body->materials[0]->setTexture2D(-1, mirror->cam->rendertarget);
+	ent->obj->body->materials[0]->setTexture(-1, mirror->cam->rendertarget);
 	ent->obj->body->materials[0]->setShader("Reflect.vsh", "Reflect.fsh");
 	ent->obj->tag = 1;
 }

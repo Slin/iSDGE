@@ -11,7 +11,26 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "CameraFree::onDraw(float):CameraFree.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "sgTouches::touches[0]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "Events::onInit(sgMain*):Events.mm">
+      </ContextState>
+      <ContextState
+         contextName = "sgRendererES2::resizeBuffers():sgRendererES2.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "sgRendererES2::renderObjects(sgCamera*, sgObject*):sgRendererES2.cpp">
+         <PersistentStrings>
+            <PersistentString
+               value = "*(currbod-&gt;meshs[2]-&gt;indices)@100">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
    </ContextStates>
 </VariablesViewState>

@@ -72,7 +72,7 @@ void Events::onInit(sgMain *m)
 	ent->obj->scale.y *= 0.1;
 	ent->obj->scale.z *= 10;
 	ent->obj->position.y = -0.1;
-	ent->obj->body->materials[0]->setTexture2D(-1, "sand.png");
+	ent->obj->body->materials[0]->setTexture(-1, "sand.png");
 	ent->obj->body->materials[0]->mattex.makeScale(sgVector3(10, 10, 10));
 	
 	//Create a moving car

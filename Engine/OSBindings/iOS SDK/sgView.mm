@@ -105,6 +105,8 @@ sgViewController *sgviewcontroller;
 	
 	//Initialize the renderer
 	sgmain = new sgMain(oglvers);
+	sgmain->renderer->scaleFactor = [UIScreen mainScreen].scale;
+	self.contentScaleFactor = sgmain->renderer->scaleFactor;
 	[self resizeFromLayer:(CAEAGLLayer*)self.layer];
 
 	//Initialize drawing

@@ -737,7 +737,6 @@ void sgRendererES2::renderObjects(sgCamera *cam, sgObject *first)
 					glDisableVertexAttribArray(currbod->materials[i]->shader->tangent);
 				}
 			}
-			
 		}
 	}
 }
@@ -750,7 +749,7 @@ void sgRendererES2::renderPanels(sgPanel *first)
 	sgMatrix4x4 matview;
 	sgMatrix4x4 matmodel;
 	sgMatrix4x4 mattex;
-	matproj.makeProjectionOrtho(0, backingWidth, 0, backingHeight, -1, 1);
+	matproj.makeProjectionOrtho(0, backingWidth/scaleFactor, 0, backingHeight/scaleFactor, -1, 1);
 	
 	glBindBuffer(GL_ARRAY_BUFFER, quadvbo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);

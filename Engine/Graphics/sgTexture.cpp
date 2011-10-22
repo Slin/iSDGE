@@ -273,6 +273,13 @@ void sgTexture::makeRendertarget()
 	}
 }
 
+void sgTexture::generateMipmaps()
+{
+	glBindTexture(textype, texid);
+	glTexParameteri(textype, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glGenerateMipmap(textype);
+}
+
 void sgTexture::setParameteri(unsigned int pname, unsigned int param)
 {
 	if(!loaded)
@@ -374,6 +381,14 @@ void sgTexture::unlockPixels()
 	updatePixels();
 	delete[] texdata;
 	texdata = NULL;
+}
+
+void sgTexture::setColor(sgColorA color)
+{
+	for(int i = 0; i < width*height; i++)
+	{
+		memcpy(&texdata[i*4], &color.r, 4*sizeof(char));
+	}
 }
 
 void sgTexture::setPixel(int x, int y, sgColorA color)

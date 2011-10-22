@@ -54,8 +54,8 @@ void Events::onInit(sgMain *m)
 	
 	//Create a terrain entity
 	sgEntity *terr = sgmain->first_ent->createTerrainEntity("czTerrHMP.png", 512, 512, 8, 8, 4, sgVector4(0.1, 0.1, 0.1, 0.0));
-	terr->obj->body->materials[0]->setTexture2D(-1, "czTerrTex.png");
-	terr->obj->body->materials[0]->setTexture2D(-1, "czTerrDet.png");
+	terr->obj->body->materials[0]->setTexture(-1, "czTerrTex.png");
+	terr->obj->body->materials[0]->setTexture(-1, "czTerrDet.png");
 	
 	//Create water entity
 	Water *water = new Water(m, "waterbump.png", cam->cam);

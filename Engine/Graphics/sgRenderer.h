@@ -128,6 +128,12 @@ class sgRenderer
 		static int backingHeight;
 	
 		/**
+		 * Scale factor.
+		 * Factor used to scale the gui with to make it fit for displays with different dpi counts. This is for example 2.0 on a device with retina display and 1.0 otherwize.
+		 */
+		static float scaleFactor;
+	
+		/**
 		 * Current time.
 		 * The time in seconds, the renderer is already running (automatically passed to shaders defining it as "Time").
 		 */

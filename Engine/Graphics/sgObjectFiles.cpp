@@ -47,7 +47,7 @@ namespace sgObjectFiles
 		
 		unsigned char version_id;
 		fread(&version_id, 1, 1, file);
-		if(version_id != 0)
+		if(version_id != 1)
 		{
 			sgLog("The file format is out of date or not supported: %s", filename);
 			return false;
@@ -100,8 +100,8 @@ namespace sgObjectFiles
 			fread(&datacount, 1, 1, file);
 			unsigned char hastangent = 0;
 			fread(&hastangent, 1, 1, file);
-			unsigned char hasbones = 0;
-			fread(&hasbones, 1, 1, file);
+			unsigned char bonecount = 0;
+			fread(&bonecount, 1, 1, file);
 			
 			meshes[i].vtxsize = 8;
 			meshes[i].vtxfeatures = sgVertex::POSITION|sgVertex::NORMAL|sgVertex::UV0;
@@ -112,7 +112,7 @@ namespace sgObjectFiles
 			}
 			if(uvcount > 1)
 			{
-				meshes[i].vtxfeatures |= sgVertex::UV0;
+				meshes[i].vtxfeatures |= sgVertex::UV1;
 				meshes[i].vtxsize += 2;
 			}
 			if(datacount == 4)
@@ -120,10 +120,12 @@ namespace sgObjectFiles
 				meshes[i].vtxfeatures |= sgVertex::COLOR;
 				meshes[i].vtxsize += 4;
 			}
-			if(hasbones)
+			if(bonecount > 0)
 			{
 				meshes[i].vtxfeatures |= sgVertex::BONES;
 				meshes[i].vtxsize += 8;
+				meshes[i].bonemapping = new unsigned short[bonecount];
+				fread(meshes[i].bonemapping, 2, bonecount, file);
 			}
 			
 			//Vertexdata
@@ -150,6 +152,20 @@ namespace sgObjectFiles
 			meshes[i].indices = new unsigned short[meshes[i].indexnum];
 			fread(meshes[i].indices, 2, meshes[i].indexnum, file);
 		}
+		
+		//Animations
+		unsigned char hasanimations = 0;
+		fread(&hasanimations, 1, 1, file);
+		if(hasanimations)
+		{
+			unsigned short lenanimfilename = 0;
+			fread(&lenanimfilename, 2, 1, file);
+			char *animfilename = new char[lenanimfilename];
+			fread(animfilename, 1, lenanimfilename, file);
+			printf("Animation filename: %s\n", animfilename);
+			//meshesstd::string(animfilename);
+		}
+		
 		fclose(file);
 		
 		for(int meshnum = 0; meshnum < countmeshs; meshnum++)

@@ -67,7 +67,7 @@ void CameraFreePhys::onDraw(float timestep)
 		if(!picked)
 		{
 			sgTraceResult res;
-			sgVector3 topos(sgTouches::touches[0]->position.y/(ent->sgmain->renderer->backingWidth)*2.0-1.0, -(sgTouches::touches[0]->position.x/(ent->sgmain->renderer->backingHeight)*2.0-1.0), 1.0);
+			sgVector3 topos(sgTouches::touches[0]->position.y/(ent->sgmain->renderer->backingWidth/sgRenderer::scaleFactor)*2.0-1.0, -(sgTouches::touches[0]->position.x/(ent->sgmain->renderer->backingHeight/sgRenderer::scaleFactor)*2.0-1.0), 1.0);
 			topos = ent->cam->camToWorld(topos);
 			ent->sgmain->physworld->traceRay(ent->cam->position, topos, res);
 			picked = (sgEntity*)res.entity;
@@ -85,7 +85,7 @@ void CameraFreePhys::onDraw(float timestep)
 			}
 		}else
 		{
-			sgVector3 topos(sgTouches::touches[0]->position.y/(ent->sgmain->renderer->backingWidth)*2.0-1.0, -(sgTouches::touches[0]->position.x/(ent->sgmain->renderer->backingHeight)*2.0-1.0), 1.0);
+			sgVector3 topos(sgTouches::touches[0]->position.y/(ent->sgmain->renderer->backingWidth/sgRenderer::scaleFactor)*2.0-1.0, -(sgTouches::touches[0]->position.x/(ent->sgmain->renderer->backingHeight/sgRenderer::scaleFactor)*2.0-1.0), 1.0);
 			topos = ent->cam->camToWorld(topos);
 			topos -= ent->cam->position;
 			topos.normalize();

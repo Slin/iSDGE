@@ -70,7 +70,7 @@ void Events::onInit(sgMain *m)
 	ent = sgmain->first_ent->createObjEntity("door1.sgm", new AutoDoor);
 	ent->obj->body->materials[0]->setTexture(2, "wandmodul_normal.png");
 	ent->obj->body->materials[0]->setShader("NormDiffSpecSLm.vsh", "NormDiffSpecSLm.fsh");
-	ent->obj->position = sgVector3(19.1, 1.0, -0.1);
+	ent->obj->position = sgVector3(7.5, -0.3, -1.2);
 	ent->createPhysBody(sgPhysBody::ES_BOX, 0, sgVector3(0.5, 3.0, 10.0));
 	ent->body->setKinematic();
 	ent->body->setAlwaysActive();
@@ -78,7 +78,7 @@ void Events::onInit(sgMain *m)
 	ent = sgmain->first_ent->createObjEntity("door2.sgm");
 	ent->obj->body->materials[0]->setTexture(1, "wandmodul_normal.png");
 	ent->obj->body->materials[0]->setShader("NormDiffSpecS.vsh", "NormDiffSpecS.fsh");
-	ent->obj->position = sgVector3(35.0, -0.275, 18.5);
+	ent->obj->position = sgVector3(23.25, -1.5, 17.4);
 	ent->createPhysBody(sgPhysBody::ES_BOX, 1, sgVector3(1.0, 2.0, 0.2));
 	sgPhysConstraint *constr = sgmain->physworld->getConstraint(sgPhysConstraint::ET_HINGE);
 	constr->initHinge(ent->body, sgVector3(1.0, 0.0, 0.0), sgVector3(0.0, 1.0, 0.0));

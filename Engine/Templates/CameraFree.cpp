@@ -146,28 +146,29 @@ void CameraFree::onDraw(float timestep)
             toll.y = 1.0;
     }else
     {
+		float halfheight = ent->sgmain->renderer->backingHeight/ent->sgmain->renderer->scaleFactor*0.5;
         if(sgTouches::touches.size() > 0)
         {
             if(lefttouchstart.x <= 0.1 && lefttouchstart.y <= 0.1)
             {
-                if(sgTouches::touches[0]->position.x < ent->sgmain->renderer->backingHeight*0.5)
+                if(sgTouches::touches[0]->position.x < halfheight)
                 {
                     lefttouchstart = sgTouches::touches[0]->position;
                 }else if(sgTouches::touches.size() > 1)
                 {
-                    if(sgTouches::touches[1]->position.x < ent->sgmain->renderer->backingHeight*0.5)
+                    if(sgTouches::touches[1]->position.x < halfheight)
                     {
                         lefttouchstart = sgTouches::touches[1]->position;
                     }
                 }
             }else
             {
-                if(sgTouches::touches[0]->position.x < ent->sgmain->renderer->backingHeight*0.5)
+                if(sgTouches::touches[0]->position.x < halfheight)
                 {
                     toll = sgTouches::touches[0]->position-lefttouchstart;
                 }else if(sgTouches::touches.size() > 1)
                 {
-                    if(sgTouches::touches[1]->position.x < ent->sgmain->renderer->backingHeight*0.5)
+                    if(sgTouches::touches[1]->position.x < halfheight)
                     {
                         toll = sgTouches::touches[1]->position-lefttouchstart;
                     }else
@@ -184,12 +185,12 @@ void CameraFree::onDraw(float timestep)
             
             if(righttouchstart.x <= 0.1 && righttouchstart.y <= 0.1)
             {
-                if(sgTouches::touches[0]->position.x > ent->sgmain->renderer->backingHeight*0.5)
+                if(sgTouches::touches[0]->position.x > halfheight)
                 {
                     righttouchstart = sgTouches::touches[0]->position;
                 }else if(sgTouches::touches.size() > 1)
                 {
-                    if(sgTouches::touches[1]->position.x > ent->sgmain->renderer->backingHeight*0.5)
+                    if(sgTouches::touches[1]->position.x > halfheight)
                     {
                         righttouchstart = sgTouches::touches[1]->position;
                     }
@@ -197,12 +198,12 @@ void CameraFree::onDraw(float timestep)
             }else
             {
                 sgVector2 touchdir;
-                if(sgTouches::touches[0]->position.x > ent->sgmain->renderer->backingHeight*0.5)
+                if(sgTouches::touches[0]->position.x > halfheight)
                 {
                     touchdir = righttouchstart-sgTouches::touches[0]->position;
                 }else if(sgTouches::touches.size() > 1)
                 {
-                    if(sgTouches::touches[1]->position.x > ent->sgmain->renderer->backingHeight*0.5)
+                    if(sgTouches::touches[1]->position.x > halfheight)
                     {
                         touchdir = righttouchstart-sgTouches::touches[1]->position;
                     }else

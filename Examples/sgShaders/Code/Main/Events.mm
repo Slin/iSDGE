@@ -25,10 +25,16 @@
 
 #include "Events.h"
 
+//Has to be included, if you want to enable multitouch
+#import "sgView.h"
+
 //This method will be called directly after initializing the engine and is meant to be used to initialize your project in
 void Events::onInit(sgMain *m)
 {
 	sgmain = m;
+	
+	//Activate multitouch support
+	[sgView view].multipleTouchEnabled = true;
 	
 	//Set device orientation
 	sgmain->setOrientation(2);
@@ -58,36 +64,37 @@ void Events::onInit(sgMain *m)
 	
 	//Clone its material (which is shared between primitives) and assign a texture and set its tiling
 	ent->obj->body->cloneMaterial(0);
-	ent->obj->body->materials[0]->setTexture2D(-1, "sand.png");
+	ent->obj->body->materials[0]->setTexture(-1, "sand.png");
 	ent->obj->body->materials[0]->mattex.makeScale(sgVector3(10.0f, 10.0f, 10.0f));
 	
 	
 	
 	//Create a rendertarget texture for the camera
-	cam->cam->size = 256;
-	cam->cam->rendertarget = sgTexture::getTexture2D(256, 256);
+	cam->cam->size.x = sgRenderer::backingWidth;
+	cam->cam->size.y = sgRenderer::backingHeight;
+	cam->cam->rendertarget = sgTexture::getTexture(sgRenderer::backingWidth, sgRenderer::backingHeight);
 	cam->cam->rendertarget->makeRendertarget();
 	
 	//Create a horizontal blur effect
 	sgMaterial *mat = sgMaterial::getMaterial("iSDGE.bundle/sgsPPBase.vsh", "PPBlurX.fsh");
-	mat->setTexture2D(-1, cam->cam->rendertarget);
+	mat->setTexture(-1, cam->cam->rendertarget);
 	
 	//Render it as a panel into the same texture
 	sgEntity *pan = ent->sgmain->first_ent->createPanEntity();
 	pan->pan->fixorientation = true;
-	pan->pan->addImage(mat, sgVector2(0, 0), sgVector2(256, 256));
+	pan->pan->addImage(mat, sgVector2(0, 0), sgVector2(sgRenderer::backingWidth/sgRenderer::scaleFactor, sgRenderer::backingHeight/sgRenderer::scaleFactor));
 //	pan->pan->rendertarget = cam->cam->rendertarget;
-	pan->pan->rendertarget = sgTexture::getTexture2D(256, 256);
+	pan->pan->rendertarget = sgTexture::getTexture(sgRenderer::backingWidth, sgRenderer::backingHeight);
 	pan->pan->rendertarget->makeRendertarget();
 	
 	//Create a vertical blur effect
 	mat = sgMaterial::getMaterial("iSDGE.bundle/sgsPPBase.vsh", "PPBlurY.fsh");
-	mat->setTexture2D(-1, pan->pan->rendertarget);
+	mat->setTexture(-1, pan->pan->rendertarget);
 	
 	//Render it as a panel to the screen
 	pan = ent->sgmain->first_ent->createPanEntity();
 	pan->pan->fixorientation = true;
-	pan->pan->addImage(mat, sgVector2(0, 0), sgVector2(sgRenderer::backingWidth, sgRenderer::backingHeight));
+	pan->pan->addImage(mat, sgVector2(0, 0), sgVector2(sgRenderer::backingWidth/sgRenderer::scaleFactor, sgRenderer::backingHeight/sgRenderer::scaleFactor));
 }
 
 //Called every frame, just before drawing

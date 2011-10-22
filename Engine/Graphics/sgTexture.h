@@ -87,6 +87,12 @@ class sgTexture : public sgBase
 		void makeRendertarget();
 	
 		/**
+		 *	Generate mipmaps.
+		 *	Generate mipmaps if the type and format allows mipmaps.
+		 */
+		void generateMipmaps();
+	
+		/**
 		 *	Get Texture.
 		 *	Creates and returns a pointer to a texture loaded from the given file.
 		 * @param filename the name of the file to load
@@ -125,6 +131,13 @@ class sgTexture : public sgBase
 		 * Updates the texture from the array created in lockPixels() and delete that array.
 		 */
 		void unlockPixels();
+	
+		/**
+		 * Set color.
+		 * Changes the color of all pixels between a lock and unlock call.
+		 * @param color new pixel color.
+		 */
+		void setColor(sgColorA color);
 	
 		/**
 		 * Set pixel.

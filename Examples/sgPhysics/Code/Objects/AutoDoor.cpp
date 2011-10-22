@@ -37,12 +37,12 @@ void AutoDoor::onDraw(float timestep)
 			ent->obj->position.y += timestep*3.0;
 		else
 			ent->obj->position.y = 11.0;
-	}else if(ent->obj->position.y > 1.0)
+	}else if(ent->obj->position.y > -0.3)
 	{
 		ent->obj->position.y -= timestep*3.0;
 	}else
 	{
-		ent->obj->position.y = 1.0;
+		ent->obj->position.y = -0.3;
 	}
 
 }

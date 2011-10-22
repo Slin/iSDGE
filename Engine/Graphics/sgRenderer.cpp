@@ -38,6 +38,7 @@ unsigned int sgRenderer::oglversion = 0;
 unsigned int sgRenderer::maxbones = 30;
 int sgRenderer::backingWidth = 640;
 int sgRenderer::backingHeight = 480;
+float sgRenderer::scaleFactor = 1.0f;
 
 sgRenderer::sgRenderer()
 {
@@ -130,25 +131,25 @@ void sgRenderer::updateOrientation()
 	{
 		matglobal3d.makeRotate(sgVector3(0, 180, 0));
 		
-		matglobal2d.makeTranslate(sgVector3(backingWidth*0.5, backingHeight*0.5, 0.0));
+		matglobal2d.makeTranslate(sgVector3(backingWidth/scaleFactor*0.5, backingHeight/scaleFactor*0.5, 0.0));
 		matglobal2d.rotate(sgVector3(0, 180, 0));
-		matglobal2d.translate(sgVector3(-backingWidth*0.5, -backingHeight*0.5, 0.0));
+		matglobal2d.translate(sgVector3(-backingWidth/scaleFactor*0.5, -backingHeight/scaleFactor*0.5, 0.0));
 	}
 	if(orientation == 2)
 	{
 		matglobal3d.makeRotate(sgVector3(0, 90, 0));
 		
-		matglobal2d.makeTranslate(sgVector3(backingWidth*0.5, backingHeight*0.5, 0.0));
+		matglobal2d.makeTranslate(sgVector3(backingWidth/scaleFactor*0.5, backingHeight/scaleFactor*0.5, 0.0));
 		matglobal2d.rotate(sgVector3(0, 90, 0));
-		matglobal2d.translate(sgVector3(-backingWidth*0.5-(backingHeight-backingWidth)*0.5, -backingHeight*0.5+(backingHeight-backingWidth)*0.5, 0.0));
+		matglobal2d.translate(sgVector3(-backingWidth/scaleFactor*0.5-(backingHeight/scaleFactor-backingWidth/scaleFactor)*0.5, -backingHeight/scaleFactor*0.5+(backingHeight/scaleFactor-backingWidth/scaleFactor)*0.5, 0.0));
 	}
 	if(orientation == 3)
 	{
 		matglobal3d.makeRotate(sgVector3(0, -90, 0));
 		
-		matglobal2d.makeTranslate(sgVector3(backingWidth*0.5, backingHeight*0.5, 0.0));
+		matglobal2d.makeTranslate(sgVector3(backingWidth/scaleFactor*0.5, backingHeight*0.5, 0.0));
 		matglobal2d.rotate(sgVector3(0, -90, 0));
-		matglobal2d.translate(sgVector3(-backingWidth*0.5-(backingHeight-backingWidth)*0.5, -backingHeight*0.5+(backingHeight-backingWidth)*0.5, 0.0));
+		matglobal2d.translate(sgVector3(-backingWidth/scaleFactor*0.5-(backingHeight/scaleFactor-backingWidth/scaleFactor)*0.5, -backingHeight/scaleFactor*0.5+(backingHeight/scaleFactor-backingWidth/scaleFactor)*0.5, 0.0));
 	}
 }
 

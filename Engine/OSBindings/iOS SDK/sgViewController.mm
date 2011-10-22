@@ -152,15 +152,15 @@
 		switch([sgView main]->orientation)
 		{
 			case 0:
-				sgTouches::addTouch(sgVector2(sgRenderer::backingWidth-pos.x, pos.y), sgVector2(pos.x, pos.y));
+				sgTouches::addTouch(sgVector2(sgRenderer::backingWidth/sgRenderer::scaleFactor-pos.x, pos.y), sgVector2(pos.x, pos.y));
 				break;
 				
 			case 1:
-				sgTouches::addTouch(sgVector2(pos.x, sgRenderer::backingHeight-pos.y), sgVector2(pos.x, pos.y));
+				sgTouches::addTouch(sgVector2(pos.x, sgRenderer::backingHeight/sgRenderer::scaleFactor-pos.y), sgVector2(pos.x, pos.y));
 				break;
 				
 			case 2:
-				sgTouches::addTouch(sgVector2(sgRenderer::backingHeight-pos.y, sgRenderer::backingWidth-pos.x), sgVector2(pos.x, pos.y));
+				sgTouches::addTouch(sgVector2(sgRenderer::backingHeight/sgRenderer::scaleFactor-pos.y, sgRenderer::backingWidth/sgRenderer::scaleFactor-pos.x), sgVector2(pos.x, pos.y));
 				break;
 				
 			case 3:
@@ -168,7 +168,7 @@
 				break;
 				
 			default:
-				sgTouches::addTouch(sgVector2(sgRenderer::backingWidth-pos.x, pos.y), sgVector2(pos.x, pos.y));
+				sgTouches::addTouch(sgVector2(sgRenderer::backingWidth/sgRenderer::scaleFactor-pos.x, pos.y), sgVector2(pos.x, pos.y));
 				break;
 		}
 	}
@@ -186,15 +186,15 @@
 		switch([sgView main]->orientation)
 		{
 			case 0:
-				sgTouches::updateTouch(i, sgVector2(sgRenderer::backingWidth-pos.x, pos.y), sgVector2(sgRenderer::backingWidth-ppos.x, ppos.y), sgVector2(pos.x, pos.y));
+				sgTouches::updateTouch(i, sgVector2(sgRenderer::backingWidth/sgRenderer::scaleFactor-pos.x, pos.y), sgVector2(sgRenderer::backingWidth/sgRenderer::scaleFactor-ppos.x, ppos.y), sgVector2(pos.x, pos.y));
 				break;
 				
 			case 1:
-				sgTouches::updateTouch(i, sgVector2(pos.x, sgRenderer::backingHeight-pos.y), sgVector2(ppos.x, sgRenderer::backingHeight-ppos.y), sgVector2(pos.x, pos.y));
+				sgTouches::updateTouch(i, sgVector2(pos.x, sgRenderer::backingHeight/sgRenderer::scaleFactor-pos.y), sgVector2(ppos.x, sgRenderer::backingHeight/sgRenderer::scaleFactor-ppos.y), sgVector2(pos.x, pos.y));
 				break;
 				
 			case 2:
-				sgTouches::updateTouch(i, sgVector2(sgRenderer::backingHeight-pos.y, sgRenderer::backingWidth-pos.x), sgVector2(sgRenderer::backingHeight-ppos.y, sgRenderer::backingWidth-ppos.x), sgVector2(pos.x, pos.y));
+				sgTouches::updateTouch(i, sgVector2(sgRenderer::backingHeight/sgRenderer::scaleFactor-pos.y, sgRenderer::backingWidth/sgRenderer::scaleFactor-pos.x), sgVector2(sgRenderer::backingHeight/sgRenderer::scaleFactor-ppos.y, sgRenderer::backingWidth/sgRenderer::scaleFactor-ppos.x), sgVector2(pos.x, pos.y));
 				break;
 				
 			case 3:
@@ -202,7 +202,7 @@
 				break;
 				
 			default:
-				sgTouches::updateTouch(i, sgVector2(sgRenderer::backingWidth-pos.x, pos.y), sgVector2(sgRenderer::backingWidth-ppos.x, ppos.y), sgVector2(pos.x, pos.y));
+				sgTouches::updateTouch(i, sgVector2(sgRenderer::backingWidth/sgRenderer::scaleFactor-pos.x, pos.y), sgVector2(sgRenderer::backingWidth/sgRenderer::scaleFactor-ppos.x, ppos.y), sgVector2(pos.x, pos.y));
 				break;
 		}
 	}
@@ -223,15 +223,15 @@
 		switch([sgView main]->orientation)
 		{
 			case 0:
-				sgTouches::updateTouch(i, sgVector2(sgRenderer::backingWidth-pos.x, pos.y), sgVector2(sgRenderer::backingWidth-ppos.x, ppos.y), sgVector2(pos.x, pos.y));
+				sgTouches::updateTouch(i, sgVector2(sgRenderer::backingWidth/sgRenderer::scaleFactor-pos.x, pos.y), sgVector2(sgRenderer::backingWidth/sgRenderer::scaleFactor-ppos.x, ppos.y), sgVector2(pos.x, pos.y));
 				break;
 				
 			case 1:
-				sgTouches::updateTouch(i, sgVector2(pos.x, sgRenderer::backingHeight-pos.y), sgVector2(ppos.x, sgRenderer::backingHeight-ppos.y), sgVector2(pos.x, pos.y));
+				sgTouches::updateTouch(i, sgVector2(pos.x, sgRenderer::backingHeight/sgRenderer::scaleFactor-pos.y), sgVector2(ppos.x, sgRenderer::backingHeight/sgRenderer::scaleFactor-ppos.y), sgVector2(pos.x, pos.y));
 				break;
 				
 			case 2:
-				sgTouches::updateTouch(i, sgVector2(sgRenderer::backingHeight-pos.y, sgRenderer::backingWidth-pos.x), sgVector2(sgRenderer::backingHeight-ppos.y, sgRenderer::backingWidth-ppos.x), sgVector2(pos.x, pos.y));
+				sgTouches::updateTouch(i, sgVector2(sgRenderer::backingHeight/sgRenderer::scaleFactor-pos.y, sgRenderer::backingWidth/sgRenderer::scaleFactor-pos.x), sgVector2(sgRenderer::backingHeight/sgRenderer::scaleFactor-ppos.y, sgRenderer::backingWidth/sgRenderer::scaleFactor-ppos.x), sgVector2(pos.x, pos.y));
 				break;
 				
 			case 3:
@@ -239,7 +239,7 @@
 				break;
 				
 			default:
-				sgTouches::updateTouch(i, sgVector2(sgRenderer::backingWidth-pos.x, pos.y), sgVector2(sgRenderer::backingWidth-ppos.x, ppos.y), sgVector2(pos.x, pos.y));
+				sgTouches::updateTouch(i, sgVector2(sgRenderer::backingWidth/sgRenderer::scaleFactor-pos.x, pos.y), sgVector2(sgRenderer::backingWidth/sgRenderer::scaleFactor-ppos.x, ppos.y), sgVector2(pos.x, pos.y));
 				break;
 		}
 		
@@ -261,15 +261,15 @@
 		switch([sgView main]->orientation)
 		{
 			case 0:
-				sgTouches::updateTouch(i, sgVector2(sgRenderer::backingWidth-pos.x, pos.y), sgVector2(sgRenderer::backingWidth-ppos.x, ppos.y), sgVector2(pos.x, pos.y));
+				sgTouches::updateTouch(i, sgVector2(sgRenderer::backingWidth/sgRenderer::scaleFactor-pos.x, pos.y), sgVector2(sgRenderer::backingWidth/sgRenderer::scaleFactor-ppos.x, ppos.y), sgVector2(pos.x, pos.y));
 				break;
 				
 			case 1:
-				sgTouches::updateTouch(i, sgVector2(pos.x, sgRenderer::backingHeight-pos.y), sgVector2(ppos.x, sgRenderer::backingHeight-ppos.y), sgVector2(pos.x, pos.y));
+				sgTouches::updateTouch(i, sgVector2(pos.x, sgRenderer::backingHeight/sgRenderer::scaleFactor-pos.y), sgVector2(ppos.x, sgRenderer::backingHeight/sgRenderer::scaleFactor-ppos.y), sgVector2(pos.x, pos.y));
 				break;
 				
 			case 2:
-				sgTouches::updateTouch(i, sgVector2(sgRenderer::backingHeight-pos.y, sgRenderer::backingWidth-pos.x), sgVector2(sgRenderer::backingHeight-ppos.y, sgRenderer::backingWidth-ppos.x), sgVector2(pos.x, pos.y));
+				sgTouches::updateTouch(i, sgVector2(sgRenderer::backingHeight/sgRenderer::scaleFactor-pos.y, sgRenderer::backingWidth/sgRenderer::scaleFactor-pos.x), sgVector2(sgRenderer::backingHeight/sgRenderer::scaleFactor-ppos.y, sgRenderer::backingWidth/sgRenderer::scaleFactor-ppos.x), sgVector2(pos.x, pos.y));
 				break;
 				
 			case 3:
@@ -277,7 +277,7 @@
 				break;
 				
 			default:
-				sgTouches::updateTouch(i, sgVector2(sgRenderer::backingWidth-pos.x, pos.y), sgVector2(sgRenderer::backingWidth-ppos.x, ppos.y), sgVector2(pos.x, pos.y));
+				sgTouches::updateTouch(i, sgVector2(sgRenderer::backingWidth/sgRenderer::scaleFactor-pos.x, pos.y), sgVector2(sgRenderer::backingWidth/sgRenderer::scaleFactor-ppos.x, ppos.y), sgVector2(pos.x, pos.y));
 				break;
 		}
 		

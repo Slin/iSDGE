@@ -1,0 +1,25 @@
+version - uint8 - 1
+number of materials - uint8
+material id - uint8
+    number of textures - uint8
+		filename length - uint16
+		filename - char*filename length
+
+number of meshs - uint8
+mesh id - uint8
+    used materials id - uint8
+    number of vertices - uint16
+    texcoord count - uint8
+    texdata count - uint8
+	has tangents - uint8 0 if not, 1 otherwize
+	bone count - uint8
+		mapping to armature bones with mesh bone as index - uint16
+    interleaved vertex data - float32
+		- position, normal, uvN, color, tangents, weights, mesh bones
+    
+    number of indices - uint16
+    indices - uint16
+	
+has animation - uint8 0 if not, 1 otherwize
+	animfilename length - uint16
+	animfilename - char*animfilename length
