@@ -27,6 +27,7 @@
 #define __SGPLANE_H__
 
 #include "sgVector3.h"
+#include "sgVector4.h"
 
 /**
  * Plane class. Stores a plane in 3d space and provides functionality for it.
@@ -78,7 +79,13 @@ class sgPlane
 		 *	Distance.
 		 *	Calculates the distance of the plane to the given position. Call calcD before, if you changed the planes position or normal directly.
 		 */
-		float dist(sgVector3 pos);
+		float dist(sgVector3 &pos);
+	
+		/**
+		 *	Distance.
+		 *	Calculates the distance of the plane to the given position. Call calcD before, if you changed the planes position or normal directly.
+		 */
+		float dist(sgVector4 &pos);
 	
 		/**
 		 *	Position.

@@ -78,6 +78,9 @@ sgRenderer::sgRenderer()
 	
 	lastmat = NULL;
 	event = NULL;
+	
+	matglobal2d.makeIdentity();
+	matglobal3d.makeIdentity();
 }
 
 sgRenderer::~sgRenderer()
@@ -201,17 +204,11 @@ void sgRenderer::culling(sgCamera *cam, sgObject *first)
 	sgVector3 pos;
 	float dist;
 	float radius;
-	
 	cam->updateFrustum();
 	
 	for(sgObject *obj = first->next; obj != NULL; obj = obj->next)
 	{
-		obj->updateModel();
-		pos = obj->cullsphere;
-		pos = obj->matmodel*pos;
-		radius = fabs(obj->cullsphere.w)*fmax(obj->scale.x, fmax(obj->scale.y, obj->scale.z));
-		
-		if(cam->inFrustum(pos, radius))
+		if(cam->inFrustum(obj->worldcullsphere))
 		{
 			obj->culled = false;
 			
@@ -231,7 +228,9 @@ void sgRenderer::culling(sgCamera *cam, sgObject *first)
 					
 					radius = obj->body->meshs[i]->cullsphere.w*fmax(obj->scale.x, fmax(obj->scale.y, obj->scale.z));
 					
-					if(cam->inFrustum(pos, radius))
+					sgVector4 temp(pos.x, pos.y, pos.z, radius);
+					
+					if(cam->inFrustum(temp))
 					{
 						obj->body->meshs[i]->culled = false;
 						
@@ -244,12 +243,21 @@ void sgRenderer::culling(sgCamera *cam, sgObject *first)
 				}
 			}else
 			{
-				dist = sgVector3(pos).dist(cam->position);
+				dist = sgVector3(obj->worldcullsphere).dist(cam->position);
 				chooseObjLOD(obj, dist+cam->lodshift);
 			}
 		}else
 		{
 			obj->culled = true;
+		}
+		
+		if(obj->culled == false)
+		{
+			visibleobjects.push_back(obj);
+		}
+		if(cam == first_cam->next && obj->shadow)
+		{
+			shadowcasters.push_back(obj);
 		}
 	}
 }

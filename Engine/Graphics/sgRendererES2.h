@@ -42,10 +42,10 @@ class sgRendererES2 : public sgRenderer
 		void setMultisampling(unsigned short samples);
 	
 		void setMaterial(sgMaterial *mat);
-		void renderObjects(sgCamera *cam, sgObject *first);
-		void renderShadowVolumes(sgCamera *cam, sgObject *first);
-		void renderShadows(sgCamera *cam, sgObject *first);
-		void updateShadows(sgObject *first);
+		void renderObjects(sgCamera *cam, std::vector<sgObject*> &objs);
+		void renderShadowVolumes(sgCamera *cam, std::vector<sgObject*> &objs);
+		void renderShadows(sgCamera *cam, std::vector<sgObject*> &objs);
+		void updateShadows(std::vector<sgObject*> &objs);
 		void renderPanels(sgPanel *first);
 		void renderParticles(sgCamera *cam, sgParticleEmitter *first);
 	

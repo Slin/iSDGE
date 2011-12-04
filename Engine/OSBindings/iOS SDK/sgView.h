@@ -82,6 +82,12 @@
 - (void)stopAnimation;
 
 /**
+ *	Set Context.
+ *	Sets the OpenGL context.
+ */
+- (void)setContext;
+
+/**
  *	Draw view.
  *	Called automatically every frame and draws everything. Just don´t touch it.
  */

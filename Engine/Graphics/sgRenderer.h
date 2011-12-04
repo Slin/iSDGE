@@ -248,6 +248,9 @@ class sgRenderer
 		std::vector<sgMesh*> meshes;
 		std::vector<sgMaterial*> materials;
 	
+		std::vector<sgObject*> visibleobjects;
+		std::vector<sgObject*> shadowcasters;
+	
 		sgMatrix4x4 matglobal2d;
 		sgMatrix4x4 matglobal3d;
 	

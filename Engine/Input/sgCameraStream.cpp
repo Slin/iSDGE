@@ -28,4 +28,5 @@
 namespace sgCameraStream
 {
 	sgTexture *currimage = 0;
+	CVImageBufferRef devicedata = 0;
 }

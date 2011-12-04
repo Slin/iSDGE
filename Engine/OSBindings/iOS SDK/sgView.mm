@@ -121,6 +121,11 @@ sgViewController *sgviewcontroller;
 	return self;
 }
 
+- (void)setContext
+{
+	[EAGLContext setCurrentContext:context];
+}
+
 - (void)drawView:(id)sender
 {
 	[EAGLContext setCurrentContext:context];

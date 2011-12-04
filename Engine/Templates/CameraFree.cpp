@@ -235,7 +235,9 @@ void CameraFree::onDraw(float timestep)
 		
 		dir = ent->cam->rotation.rotate(sgVector3(1.0f, 0.0f, 0.0f));
 		stereo_cam->position = ent->cam->position+dir*stereodist;
+		stereo_cam->updateCamera();
 	}
 	
 	ent->sgmain->audioplayer->updateListener(ent->cam->position, ent->cam->rotation, timestep);
+	ent->cam->updateCamera();
 }

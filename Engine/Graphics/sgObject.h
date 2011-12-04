@@ -129,10 +129,10 @@ class sgObject
 		void destroyAll();
 	
 		/**
-		 *	Update model.
-		 *	Updates this objects model transformation matrix. This function is called automatically before rendering.
+		 *	Update object.
+		 *	Updates this objects model transformation matrix. This function has to be called for position, rotation or scale changes to have an effect.
 		 */
-		void updateModel();
+		void updateObject();
 	
 		/**
 		 *	Position.
@@ -193,6 +193,12 @@ class sgObject
 		 *	Sphere checked against the view frustum for culling. XYZ is the local center and W the radius.
 		 */
 		sgVector4 cullsphere;
+	
+		/**
+		 *	World cull sphere.
+		 *	Sphere checked against the view frustum for culling. XYZ is the local center and W the radius. This is the transformed version in world space and updated through the updateObject method.
+		 */
+		sgVector4 worldcullsphere;
 	
 		/**
 		 *	LOD max dist.

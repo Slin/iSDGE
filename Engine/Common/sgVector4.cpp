@@ -320,6 +320,11 @@ float sgVector4::dot(sgVector4 &other)
 	return x*other.x+y*other.y+z*other.z+w*other.w;
 }
 
+float sgVector4::dot(sgVector3 &other)
+{
+	return x*other.x+y*other.y+z*other.z;
+}
+
 sgVector4 sgVector4::cross(sgVector4 &other)
 {
 	sgVector4 res;

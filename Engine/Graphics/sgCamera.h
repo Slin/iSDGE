@@ -91,10 +91,10 @@ class sgCamera
 		void updateProj();
 	
 		/**
-		 *	Update view.
-		 *	Updates this cameras view transformation matrix. This function is called automatically before rendering.
+		 *	Update Camera.
+		 *	Updates this cameras view transformation matrix. This function has to be called for position, rotation or scale changes to have an effect.
 		 */
-		void updateView();
+		void updateCamera();
 	
 		/**
 		 *	Update frustum.
@@ -106,7 +106,7 @@ class sgCamera
 		 *	Check visibility.
 		 *	Checks if the given sphere is within the view frustum.
 		 */
-		bool inFrustum(sgVector3 center, float radius);
+		bool inFrustum(sgVector4 &sphere);
 	
 		/**
 		 *	Rendertarget.

@@ -29,6 +29,7 @@
 #if defined (ISDGE_CAMERA_SUPPORT)
 #import <CoreVideo/CoreVideo.h>
 #import <CoreMedia/CoreMedia.h>
+#import <CoreImage/CoreImage.h>
 #import <QuartzCore/QuartzCore.h>
 #endif
 
@@ -57,21 +58,42 @@
  }
 
 
-- (void)startCamera
+- (void)startCamera:(bool)front
 {
 #if defined (ISDGE_CAMERA_SUPPORT)
 	if(sgCameraStream::currimage == 0)
 	{
-		sgCameraStream::currimage = sgTexture::getTexture2D(480, 360);
+		sgCameraStream::currimage = sgTexture::getTexture(480, 360);
 		sgCameraStream::currimage->lockPixels();
 	}
 	
 	captureSession = [[AVCaptureSession alloc] init];
 	captureSession.sessionPreset = AVCaptureSessionPresetMedium;
 	
-	AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+	AVCaptureDevice *camera = nil;
+	
+	NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+	for(AVCaptureDevice *device in devices) 
+	{
+		if(front && [device position] == AVCaptureDevicePositionFront)
+		{
+			camera = device;
+			break;
+		}
+		if([device position] == AVCaptureDevicePositionBack && !front) 
+		{
+			camera = device;
+			break;
+		}
+	}
+	
+	if(camera == nil)
+	{
+		camera = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+	}
+	
 	NSError *error = nil;
-	AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:device error:&error];
+	AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:camera error:&error];
 	[captureSession addInput:input];
 	
 	AVCaptureVideoDataOutput *output = [[[AVCaptureVideoDataOutput alloc] init] autorelease];
@@ -79,9 +101,9 @@
 	output.videoSettings = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey];
 //	output.minFrameDuration = CMTimeMake(1, 15);
 	
-	dispatch_queue_t queue = dispatch_queue_create("com.slindev.cameraqueue", NULL);
-	[output setSampleBufferDelegate:self queue:queue];
-	dispatch_release(queue);
+//	dispatch_queue_t queue = dispatch_queue_create("com.slindev.cameraqueue", NULL);
+	[output setSampleBufferDelegate:self queue:dispatch_get_current_queue()];
+//	dispatch_release(queue);
 	
 	[captureSession startRunning];
 #endif
@@ -345,6 +367,9 @@
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection
 {
 	CVImageBufferRef pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+	
+	sgCameraStream::devicedata = pixelBuffer;
+	
 	CVPixelBufferLockBaseAddress(pixelBuffer, 0);
 	
 	int bufferHeight = CVPixelBufferGetHeight(pixelBuffer);
@@ -354,9 +379,10 @@
 	
 	sgCameraStream::currimage->setPixels(rowBase, 0, bufferWidth*bufferHeight*4);
 	
-	dispatch_async(dispatch_get_main_queue(), ^{
+//	dispatch_async(dispatch_get_main_queue(), ^{
+//		[(sgView*)self.view setContext];
 		sgCameraStream::currimage->updatePixels(true);
-	});
+//	});
 	
 	CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);
 }

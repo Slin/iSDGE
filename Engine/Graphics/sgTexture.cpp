@@ -215,20 +215,22 @@ void sgTexture::createTexture(float width_, float height_, bool cubemap)
 	width = width_;
 	height = height_;
 	
+	texdata = new unsigned char[width*height*4];
+	
 	glGenTextures(1, &texid);
 	glBindTexture(textype, texid);
 	
 	if(cubemap)
 	{
-		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, GL_RGBA, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
-		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, 0, GL_RGBA, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
-		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, GL_RGBA, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
-		glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, GL_RGBA, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
-		glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, GL_RGBA, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
-		glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, GL_RGBA, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, GL_RGBA, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, texdata);
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, 0, GL_RGBA, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, texdata);
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, GL_RGBA, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, texdata);
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, GL_RGBA, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, texdata);
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, GL_RGBA, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, texdata);
+		glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, GL_RGBA, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, texdata);
 	}else
 	{
-		glTexImage2D(textype, 0, GL_RGBA, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+		glTexImage2D(textype, 0, GL_RGBA, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, texdata);
 	}
 	
 	glTexParameterf(textype, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -237,6 +239,9 @@ void sgTexture::createTexture(float width_, float height_, bool cubemap)
 	glTexParameterf(textype, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	
 	sgResourceManager::addResource(this);
+	
+	delete[] texdata;
+	texdata = 0;
 	
 	loaded = true;
 }
@@ -372,7 +377,9 @@ void sgTexture::lockPixels()
 void sgTexture::updatePixels(bool swapped)
 {
 	glBindTexture(GL_TEXTURE_2D, texid);
-	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, (swapped?GL_BGRA:GL_RGBA), GL_UNSIGNED_BYTE, texdata);
+//	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, (swapped?GL_BGRA:GL_RGBA), GL_UNSIGNED_BYTE, texdata);
+//	glTexImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, (swapped?GL_BGRA:GL_RGBA), GL_UNSIGNED_BYTE, texdata);
+	glTexImage2D(textype, 0, GL_RGBA, width, height, 0, (swapped?GL_BGRA:GL_RGBA), GL_UNSIGNED_BYTE, texdata);
 }
 
 

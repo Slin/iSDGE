@@ -30,6 +30,15 @@
 
 #define sgLog(...) printf(__VA_ARGS__);printf("\n")
 
+#define glError() { \
+unsigned int err = glGetError(); \
+while (err != GL_NO_ERROR) { \
+fprintf(stderr, "glError: %u caught at %s:%u\n", err, __FILE__, __LINE__); \
+err = glGetError(); \
+} \
+}
+
+
 namespace sgDebug
 {
 

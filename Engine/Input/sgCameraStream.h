@@ -28,6 +28,8 @@
 
 #include "sgTexture.h"
 
+#include <CoreVideo/CoreVideo.h>
+
 /**
  * Accelerometer namespace. Handles the accelerometer.
  */
@@ -38,6 +40,12 @@ namespace sgCameraStream
 	 *	The latest camera image as opengl texture.
 	 */
 	extern sgTexture *currimage;
+	
+	/**
+	 * Platform dependant data.
+	 * In case of iOS this points to the camera images pixelbuffer.
+	 */
+	extern CVImageBufferRef devicedata;
 }
 
 #endif

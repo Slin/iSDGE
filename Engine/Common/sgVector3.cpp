@@ -314,3 +314,10 @@ float sgVector3::dist(sgVector3 &other)
 	temp -= other;
 	return temp.length();
 }
+
+float sgVector3::dist(sgVector4 &other)
+{
+	sgVector3 temp(other);
+	temp -= *this;
+	return temp.length();
+}

@@ -34,7 +34,7 @@
 
 sgMatrix4x4::sgMatrix4x4()
 {
-	makeIdentity();
+//	makeIdentity();
 }
 
 sgMatrix4x4::sgMatrix4x4(const sgMatrix4x4 &other)
@@ -78,6 +78,47 @@ sgMatrix4x4 sgMatrix4x4::operator* (const sgMatrix4x4 &other)
 
 sgMatrix4x4 &sgMatrix4x4::operator*= (const sgMatrix4x4 &other)
 {
+#ifdef __ARM_NEON__
+	// Inspired by http://blogs.arm.com/software-enablement/241-coding-for-neon-part-3-matrix-multiplication/
+	
+	__asm__ volatile 
+	(
+	 // Load both source matrices into NEON registers...
+	 "vldmia %1, {q4-q7}              \n\t"
+	 "vldmia %2, {q8-q11}             \n\t"
+	 
+	 // Multiply the first column with the first row and store the value into another NEON register
+	 "vmul.f32 q0, q8, d8[0]          \n\t"
+	 "vmul.f32 q1, q8, d10[0]         \n\t"
+	 "vmul.f32 q2, q8, d12[0]         \n\t"
+	 "vmul.f32 q3, q8, d14[0]         \n\t"
+	 
+	 // Now multiply the second column with the second row, add the previous result to it and profit from the fast path optimization
+	 "vmla.f32 q0, q9, d8[1]          \n\t"
+	 "vmla.f32 q1, q9, d10[1]         \n\t"
+	 "vmla.f32 q2, q9, d12[1]         \n\t"
+	 "vmla.f32 q3, q9, d14[1]         \n\t"
+	 
+	 // Cloumn 3 * Row 3
+	 "vmla.f32 q0, q10, d9[0]         \n\t"
+	 "vmla.f32 q1, q10, d11[0]        \n\t"
+	 "vmla.f32 q2, q10, d13[0]        \n\t"
+	 "vmla.f32 q3, q10, d15[0]        \n\t"
+	 
+	 // Cloumn 4 * Row 4
+	 "vmla.f32 q0, q11, d9[1]         \n\t"
+	 "vmla.f32 q1, q11, d11[1]        \n\t"
+	 "vmla.f32 q2, q11, d13[1]        \n\t"
+	 "vmla.f32 q3, q11, d15[1]        \n\t"
+	 
+	 // Writeout the result from the NEON register
+	 "vstmia %0, {q0-q3}"
+	 
+	 : //no output registers!?
+	 : "r" (&mat), "r" (&other.mat), "r" (&mat)
+	 : "memory", "q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q11");
+#else
+	
 	sgMatrix4x4 temp(mat);
 
 	mat[0] = temp.mat[0]*other.mat[0]+temp.mat[4]*other.mat[1]+temp.mat[8]*other.mat[2]+temp.mat[12]*other.mat[3];
@@ -99,6 +140,7 @@ sgMatrix4x4 &sgMatrix4x4::operator*= (const sgMatrix4x4 &other)
 	mat[13] = temp.mat[1]*other.mat[12]+temp.mat[5]*other.mat[13]+temp.mat[9]*other.mat[14]+temp.mat[13]*other.mat[15];
 	mat[14] = temp.mat[2]*other.mat[12]+temp.mat[6]*other.mat[13]+temp.mat[10]*other.mat[14]+temp.mat[14]*other.mat[15];
 	mat[15] = temp.mat[3]*other.mat[12]+temp.mat[7]*other.mat[13]+temp.mat[11]*other.mat[14]+temp.mat[15]*other.mat[15];
+#endif
 
 	return *this;
 }

@@ -52,6 +52,8 @@ sgCamera::sgCamera(sgCamera *p, sgCamera *n)
 	{
 		next->prev = this;
 	}
+	
+	updateCamera();
 }
 
 sgCamera *sgCamera::createCamera()
@@ -93,7 +95,7 @@ void sgCamera::updateProj()
 //	sgLog("%f\t%f\t%f\t%f\n%f\t%f\t%f\t%f\n%f\t%f\t%f\t%f\n%f\t%f\t%f\t%f", test.mat[0], test.mat[1], test.mat[2], test.mat[3], test.mat[4], test.mat[5], test.mat[6], test.mat[7], test.mat[8], test.mat[9], test.mat[10], test.mat[11], test.mat[12], test.mat[13], test.mat[14], test.mat[15]);
 }
 
-void sgCamera::updateView()
+void sgCamera::updateCamera()
 {
 	matview = rotation.getMatrix();
 	matview.transpose();
@@ -132,21 +134,21 @@ void sgCamera::updateFrustum()
 //		sgLog("X: %f, Y: %f, Z: %f", dir.x, dir.y, dir.z);
 }
 
-bool sgCamera::inFrustum(sgVector3 center, float radius)
+bool sgCamera::inFrustum(sgVector4 &sphere)
 {
-	if(center.dist(frustumcenter) > frustumradius+radius)
+	if(frustumcenter.dist(sphere) > frustumradius+sphere.w)
 		return false;
 	
-	if(plleft.dist(center) > radius)
+	if(plleft.dist(sphere) > sphere.w)
 		return false;
 	
-	if(plright.dist(center) < -radius)
+	if(plright.dist(sphere) < -sphere.w)
 		return false;
 	
-	if(pltop.dist(center) < -radius)
+	if(pltop.dist(sphere) < -sphere.w)
 		return false;
 	
-	if(pldown.dist(center) > radius)
+	if(pldown.dist(sphere) > sphere.w)
 		return false;
 	
 	return true;

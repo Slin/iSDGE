@@ -54,7 +54,7 @@
 #endif
 }
 
-- (void)startCamera;
+- (void)startCamera:(bool)front;
 - (void)startAccelerometer;
 - (void)startCompass;
 

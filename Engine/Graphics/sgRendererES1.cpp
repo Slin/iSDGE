@@ -290,7 +290,7 @@ void sgRendererES1::renderObjects(sgCamera *cam, sgObject *first)
 		if((curr->tag == cam->tag && cam->tag != 0) || curr->culled)
 			continue;
 		
-		curr->updateModel();
+//		curr->updateModel();
 		currbod = curr->currbody;
 		if(curr->sky)
 		{
@@ -497,7 +497,6 @@ void sgRendererES1::render()
 		glClear(GL_DEPTH_BUFFER_BIT);
 		
 		//Update camera
-		cam->updateView();
 		cam->matview = matglobal3d*cam->matview;
 		
 		//Do view frustum culling

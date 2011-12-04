@@ -459,7 +459,7 @@ void sgRendererES2::setMaterial(sgMaterial *mat)
 	lastmat = mat;
 }
 
-void sgRendererES2::renderObjects(sgCamera *cam, sgObject *first)
+void sgRendererES2::renderObjects(sgCamera *cam, std::vector<sgObject*> &objs)
 {
 	//used for the sky
 	sgMatrix4x4 viewmat = cam->rotation.getMatrix();
@@ -471,8 +471,9 @@ void sgRendererES2::renderObjects(sgCamera *cam, sgObject *first)
 	sgObjectBody *currbod;
 	unsigned char featureloc = 0;
 	int i;
-	for(curr = first->next; curr != NULL; curr = curr->next)
+	for(int o = 0; o < objs.size(); o++)
 	{
+		curr = objs[o];
 		if((curr->tag == cam->tag && cam->tag != 0) || curr->culled)
 			continue;
 		
@@ -917,7 +918,7 @@ void sgRendererES2::renderPanels(sgPanel *first)
 	}
 }
 
-void sgRendererES2::renderShadowVolumes(sgCamera *cam, sgObject *first)
+void sgRendererES2::renderShadowVolumes(sgCamera *cam, std::vector<sgObject*> &objs)
 {
 	// Use shader program
 	glUseProgram(shadowvolume->shader->program);
@@ -933,8 +934,9 @@ void sgRendererES2::renderShadowVolumes(sgCamera *cam, sgObject *first)
 	}
 	
 	sgObject *curr;
-	for(curr = first->next; curr != NULL; curr = curr->next)
+	for(int o = 0; o < objs.size(); o++)
 	{
+		curr = objs[o];
 		if(!curr->shadow || curr->shadowvolume == NULL)
 			continue;
 		
@@ -997,7 +999,7 @@ void sgRendererES2::renderShadowVolumes(sgCamera *cam, sgObject *first)
 	}
 }
 
-void sgRendererES2::renderShadows(sgCamera *cam, sgObject *first)
+void sgRendererES2::renderShadows(sgCamera *cam, std::vector<sgObject*> &objs)
 {
 	if(cam->rendertarget != NULL)
 		return;
@@ -1014,7 +1016,7 @@ void sgRendererES2::renderShadows(sgCamera *cam, sgObject *first)
 	glStencilOpSeparate(GL_BACK, GL_KEEP, GL_KEEP, GL_DECR_WRAP);
 	
 	glDisable(GL_CULL_FACE);
-	renderShadowVolumes(cam, first);
+	renderShadowVolumes(cam, objs);
 	glEnable(GL_CULL_FACE);
 	
 	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
@@ -1043,14 +1045,16 @@ void sgRendererES2::renderShadows(sgCamera *cam, sgObject *first)
 	glDisable(GL_STENCIL_TEST);
 }
 
-void sgRendererES2::updateShadows(sgObject *first)
+void sgRendererES2::updateShadows(std::vector<sgObject*> &objs)
 {
+	sgObject *curr;
 	for(sgLight *light = first_light->next; light != NULL; light = light->next)
 	{
 		if(light->shadow)
 		{
-			for(sgObject *curr = first->next; curr != NULL; curr = curr->next)
+			for(int i = 0; i < shadowcasters.size(); i++)
 			{
+				curr = shadowcasters[i];
 				if(curr->shadow && curr->shadowvolume != NULL)
 				{
 					curr->shadowvolume->update(light);
@@ -1170,8 +1174,7 @@ void sgRendererES2::render()
 	glClearColor(clearcolor.r, clearcolor.g, clearcolor.b, clearcolor.a);
 	glClear(GL_COLOR_BUFFER_BIT);
 	
-	//Update the shadow volumes
-	updateShadows(first_solid);
+	shadowcasters.resize(0);
 	
 	//Draw cameras
 	sgCamera *cam;
@@ -1207,21 +1210,35 @@ void sgRendererES2::render()
 		glClear(GL_COLOR_BUFFER_BIT|GL_STENCIL_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 		
 		//Update camera
-		cam->updateView();
 		cam->matview = matglobal3d*cam->matview;
 		cam->matinvview = cam->matinvview*matglobal3d;
 		
 		if(event != NULL)
 			event->onDrawCam(cam, this);
 		
-		//Do view frustum culling
+		//clear list of visible objects
+		visibleobjects.resize(0);
+		
+		//add sky objects to the list of visible objects
+		sgObject *obj = first_sky->next;
+		while(obj != 0)
+		{
+			visibleobjects.push_back(obj);
+			obj = obj->next;
+		}
+		
+		//Do view frustum culling and add all visible objects to visibleobjects
 		culling(cam, first_solid);
 		
 		//Draw objects
 		glViewport(cam->screenpos.x, cam->screenpos.y, cam->size.x, cam->size.y);
-		renderObjects(cam, first_sky);
-		renderObjects(cam, first_solid);
-		renderShadows(cam, first_solid);
+		renderObjects(cam, visibleobjects);
+		if(cam == first_cam->next)
+		{
+			//Update the shadow volumes
+			updateShadows(shadowcasters);
+		}
+		renderShadows(cam, shadowcasters);
 		renderParticles(cam, first_partemitter);
 	}
 	

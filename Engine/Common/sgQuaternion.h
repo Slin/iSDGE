@@ -363,6 +363,13 @@ class sgQuaternion
 		sgMatrix4x4 getMatrix();
 	
 		/**
+		 *	Get matrix.
+		 * Sets a given matrix as rotation matrix representing the same rotation as the quaternion.
+		 * @return the rotation matrix
+		 */
+		void getMatrix(sgMatrix4x4 &res);
+	
+		/**
 		 *	Get euler.
 		 * Returns the quaternions rotation as euler angles.
 		 * @return the rotation as euler angles

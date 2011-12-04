@@ -474,18 +474,84 @@ sgVector4 sgQuaternion::rotate(const sgVector4 &vec)
 sgMatrix4x4 sgQuaternion::getMatrix()
 {
 	sgMatrix4x4 res;
-	
-	res.mat[0] = 1.0f - 2.0f * (y * y + z * z);
-	res.mat[4] = 2.0f * (x * y - z * w);
-	res.mat[8] = 2.0f * (x * z + y * w);
-	res.mat[1] = 2.0f * (x * y + z * w);
-	res.mat[5] = 1.0f - 2.0f * (x * x + z * z);
-	res.mat[9] = 2.0f * (y * z - x * w);
-	res.mat[2] = 2.0f * (x * z - y * w);
-	res.mat[6] = 2.0f * (y * z + x * w);
-	res.mat[10] = 1.0f - 2.0f * (x * x + y * y);
-	
+	res.makeIdentity();
+	getMatrix(res);
 	return res;
+}
+
+void sgQuaternion::getMatrix(sgMatrix4x4 &res)
+{
+//#ifdef __ARM_NEON__
+	
+//	float xyzxxxyyz[12] = {x, y, z, x, x, x, y, y, z, 0, 0, 0};
+//	float xyzyzwzww[12] = {x, y, z, y, z, w, z, w, w, 0, 0, 0};
+	
+	
+/*	res.mat[0] = 1.0f - 2.0f * (yy + zz);
+	res.mat[1] = 2.0f * (xy + zw);
+	res.mat[2] = 2.0f * (xz - yw);
+	
+	res.mat[4] = 2.0f * (xy - zw);
+	res.mat[5] = 1.0f - 2.0f * (xx + zz);
+	res.mat[6] = 2.0f * (yz + xw);
+	
+	res.mat[8] = 2.0f * (xz + yw);
+	res.mat[9] = 2.0f * (yz - xw);
+	res.mat[10] = 1.0f - 2.0f * (xx + yy);*/
+
+	
+/*	res.mat[0] = 1.0f - 2.0f * (yy + zz);
+	res.mat[4] = 2.0f * (xy - zw);
+	res.mat[8] = 2.0f * (xz + yw);
+	
+	res.mat[1] = 2.0f * (xy + zw);
+	res.mat[5] = 1.0f - 2.0f * (xx + zz);
+	res.mat[9] = 2.0f * (yz - xw);
+	
+	res.mat[2] = 2.0f * (xz - yw);
+	res.mat[6] = 2.0f * (yz + xw);
+	res.mat[10] = 1.0f - 2.0f * (xx + yy);
+	
+	__asm__ volatile 
+	(
+	 // Load both source arrays into NEON registers...
+	 "vld1.f32 {q4-q6}, [%1]              \n\t"
+	 "vld1.f32 {q7-q9}, [%2]              \n\t"
+	 
+	 // Multiply the arrays component wise
+	 "vmul.f32 q4, q4, q7         \n\t"
+	 "vmul.f32 q5, q5, q8         \n\t"
+	 "vmul.f32 q6, q6, q9         \n\t"
+	 
+	 // Multiply them by 2
+	 
+	 // Writeout the result from the NEON register
+	 "vstmia {q0-q3}, [%0]"
+	 
+	 : //no output registers!?
+	 : "r" (&res.mat), "r" (xyzxxxyyz), "r" (xyzyzwzww)
+	 : "memory", "q0", "q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8", "q9", "q11");
+#else*/
+	float xx = x*x;
+	float yy = y*y;
+	float zz = z*z;
+	float xy = x*y;
+	float xz = x*z;
+	float xw = x*w;
+	float yz = y*z;
+	float yw = y*w;
+	float zw = z*w;
+	
+	res.mat[0] = 1.0f - 2.0f * (yy + zz);
+	res.mat[4] = 2.0f * (xy - zw);
+	res.mat[8] = 2.0f * (xz + yw);
+	res.mat[1] = 2.0f * (xy + zw);
+	res.mat[5] = 1.0f - 2.0f * (xx + zz);
+	res.mat[9] = 2.0f * (yz - xw);
+	res.mat[2] = 2.0f * (xz - yw);
+	res.mat[6] = 2.0f * (yz + xw);
+	res.mat[10] = 1.0f - 2.0f * (xx + yy);
+//#endif
 }
 
 sgVector3 sgQuaternion::getEuler()

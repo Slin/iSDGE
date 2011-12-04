@@ -59,7 +59,12 @@ void sgPlane::calcD()
 	d = normal.dot(position);
 }
 
-float sgPlane::dist(sgVector3 pos)
+float sgPlane::dist(sgVector3 &pos)
+{
+	return pos.dot(normal)-d;
+}
+
+float sgPlane::dist(sgVector4 &pos)
 {
 	return pos.dot(normal)-d;
 }

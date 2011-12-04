@@ -26,11 +26,14 @@
 attribute vec3 vertPos;
 attribute vec3 vertNormal;
 attribute vec2 vertTexcoord0;
+attribute vec4 vertBoneWeights;
+attribute vec4 vertBoneIndices;
 
 uniform mat4 matModel;
 uniform mat4 matProjViewModel;
 uniform mat4 matNormal;
 uniform mat4 matTex;
+uniform mat4 matBones[30];
 
 uniform vec4 mAmbient;
 
@@ -44,7 +47,12 @@ varying vec3 light;
 void main()
 {
 	texcoord = (matTex*vec4(vertTexcoord0, 1.0, 1.0)).xy;
-	gl_Position = matProjViewModel*vec4(vertPos, 1.0);
+	gl_Position = matBones[int(vertBoneIndices.x)]*vec4(vertPos, 1.0)*vertBoneWeights.x;
+	gl_Position += matBones[int(vertBoneIndices.y)]*vec4(vertPos, 1.0)*vertBoneWeights.y;
+	gl_Position += matBones[int(vertBoneIndices.z)]*vec4(vertPos, 1.0)*vertBoneWeights.z;
+	gl_Position += matBones[int(vertBoneIndices.w)]*vec4(vertPos, 1.0)*vertBoneWeights.w;
+	gl_Position = matProjViewModel*gl_Position;
 	vec4 norm = normalize(matNormal*vec4(-vertNormal, 0.0));
 	light = max(dot(norm.xyz, lPosition[0].xyz), 0.0)*lDiffuse[0].rgb+mAmbient.rgb;
+	light = vertBoneIndices.xyz*0.3;
 }

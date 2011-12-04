@@ -56,6 +56,9 @@ sgObject::sgObject(sgObject* p, sgObject *n)
 	body = NULL;
 	currbody = NULL;
 	skeleton = NULL;
+	matmodel.makeIdentity();
+	matnormal.makeIdentity();
+	updateObject();
 }
 
 sgObject::~sgObject()
@@ -251,13 +254,20 @@ void sgObject::calcCullSphere()
 	cullsphere.w = radius*fac;
 }
 
-void sgObject::updateModel()
+void sgObject::updateObject()
 {
 	matmodel.makeTranslate(position);
-	matmodel.scale(scale);
 	
-	matnormal = rotation.getMatrix();
+	sgMatrix4x4 temp;
+	temp.makeScale(scale);
+	matmodel *= temp;
+	
+	rotation.getMatrix(matnormal);
 	matmodel *= matnormal;
+	
+	sgVector3 pos = cullsphere;
+	worldcullsphere = matmodel*pos;
+	worldcullsphere.w = fabs(cullsphere.w)*fmax(scale.x, fmax(scale.y, scale.z));
 }
 
 void sgObject::destroy()

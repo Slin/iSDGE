@@ -274,6 +274,14 @@ class sgVector3
 		 * @return the distance between both vectors
 		 */
 		float dist(sgVector3 &other);
+	
+		/**
+		 *	Distance.
+		 * The distance between the vector and the other one.
+		 * @param other another vector
+		 * @return the distance between both vectors
+		 */
+		float dist(sgVector4 &other);
 		
 		/**
 		 *	X.
