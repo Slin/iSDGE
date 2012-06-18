@@ -27,26 +27,32 @@
 #include "sgShadowVolume.h"
 #include "sgDebug.h"
 
+#if !defined __IOS__
+	#include <cstdlib>
+	#include <cstring>
+#endif
+
 sgRendererES2::sgRendererES2()
 {
 	oglversion = 2;
 	msaasamples = 0;
-	
+
 	mainFramebuffer = -1;
 	colorRenderbuffer = -1;
 	depthRenderbuffer = -1;
 	stencilRenderbuffer = -1;
 	msaaFramebuffer = -1;
 	msaaRenderbuffer = -1;
-	
+
+#if defined __IOS__
 	// Create main framebuffer object. The backing will be allocated for the current layer in -resizeFromLayer
 	glGenFramebuffers(1, &mainFramebuffer);
 	glBindFramebuffer(GL_FRAMEBUFFER, mainFramebuffer);
-	
+
 	glGenRenderbuffers(1, &colorRenderbuffer);
 	glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer);
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, colorRenderbuffer);
-	
+
 	glGenRenderbuffers(1, &depthRenderbuffer);
 	glBindRenderbuffer(GL_RENDERBUFFER, depthRenderbuffer);
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRenderbuffer);
@@ -58,9 +64,10 @@ sgRendererES2::sgRendererES2()
 		glBindRenderbuffer(GL_RENDERBUFFER, stencilRenderbuffer);
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, stencilRenderbuffer);
 	}
-	
+#endif
+
 	glEnable(GL_TEXTURE_2D);
-	
+
 	shadowvolume = sgMaterial::getMaterial(sgShader::BIS_SHADOWVOLUME);
 	shadowquad = sgMaterial::getMaterial(sgShader::BIS_SHADOWQUAD);
 }
@@ -72,32 +79,32 @@ sgRendererES2::~sgRendererES2()
 		glDeleteFramebuffers(1, &mainFramebuffer);
 		mainFramebuffer = -1;
 	}
-	
+
 	if(colorRenderbuffer != -1)
 	{
 		glDeleteRenderbuffers(1, &colorRenderbuffer);
 		colorRenderbuffer = -1;
 	}
-	
-	if(depthRenderbuffer != -1) 
+
+	if(depthRenderbuffer != -1)
 	{
 		glDeleteRenderbuffers(1, &depthRenderbuffer);
 		depthRenderbuffer = -1;
 	}
-	
-	if(stencilRenderbuffer != -1) 
+
+	if(stencilRenderbuffer != -1)
 	{
 		glDeleteRenderbuffers(1, &stencilRenderbuffer);
 		stencilRenderbuffer = -1;
 	}
-	
-	if(msaaFramebuffer != -1) 
+
+	if(msaaFramebuffer != -1)
 	{
 		glDeleteFramebuffers(1, &msaaFramebuffer);
 		msaaFramebuffer = -1;
 	}
-	
-	if(msaaRenderbuffer != -1) 
+
+	if(msaaRenderbuffer != -1)
 	{
 		glDeleteRenderbuffers(1, &msaaRenderbuffer);
 		msaaRenderbuffer = -1;
@@ -106,13 +113,14 @@ sgRendererES2::~sgRendererES2()
 
 void sgRendererES2::setMultisampling(unsigned short samples)
 {
+#if defined __IOS__
 	int maxSamplesAllowed;
 	glGetIntegerv(GL_MAX_SAMPLES_APPLE, &maxSamplesAllowed);
 	int samplesToUse = (samples > maxSamplesAllowed) ? maxSamplesAllowed : samples;
-	
+
 	if(msaasamples == samplesToUse || !supportmultisampling)
 		return;
-	
+
 	if(samplesToUse > 0)
 	{
 		if(msaasamples == 0)
@@ -122,7 +130,7 @@ void sgRendererES2::setMultisampling(unsigned short samples)
 			glBindRenderbuffer(GL_RENDERBUFFER, depthRenderbuffer);
 			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, 0);
 			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, 0);
-			
+
 			//Create the MSAA framebuffer (offscreen)
 			glGenFramebuffers(1, &msaaFramebuffer);
 			glBindFramebuffer(GL_FRAMEBUFFER, msaaFramebuffer);
@@ -131,7 +139,7 @@ void sgRendererES2::setMultisampling(unsigned short samples)
 			glGenRenderbuffers(1, &msaaRenderbuffer);
 			glBindRenderbuffer(GL_RENDERBUFFER, msaaRenderbuffer);
 			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, msaaRenderbuffer);
-			
+
 			//Attach depthbuffer
 			glBindRenderbuffer(GL_RENDERBUFFER, depthRenderbuffer);
 			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRenderbuffer);
@@ -147,19 +155,19 @@ void sgRendererES2::setMultisampling(unsigned short samples)
 		glBindRenderbuffer(GL_RENDERBUFFER, depthRenderbuffer);
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, 0);
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, 0);
-		
-		if(msaaFramebuffer) 
+
+		if(msaaFramebuffer)
 		{
 			glDeleteFramebuffers(1, &msaaFramebuffer);
 			msaaFramebuffer = 0;
 		}
-		
-		if(msaaRenderbuffer) 
+
+		if(msaaRenderbuffer)
 		{
 			glDeleteRenderbuffers(1, &msaaRenderbuffer);
 			msaaRenderbuffer = 0;
 		}
-		
+
 		glBindFramebuffer(GL_FRAMEBUFFER, mainFramebuffer);
 		glBindRenderbuffer(GL_RENDERBUFFER, depthRenderbuffer);
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRenderbuffer);
@@ -168,19 +176,21 @@ void sgRendererES2::setMultisampling(unsigned short samples)
 		else
 			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, stencilRenderbuffer);
 	}
-	
+
 	msaasamples = samplesToUse;
 	resizeBuffers();
+#endif
 }
 
 bool sgRendererES2::resizeBuffers()
 {
+#if defined __IOS__
 	// Allocate color buffer backing based on the current layer size
 	/*	glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer);
 	 [context renderbufferStorage:GL_RENDERBUFFER fromDrawable:layer];
 	 glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &backingWidth);
 	 glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &backingHeight);*/
-	
+
 	if(msaasamples == 0)
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, mainFramebuffer);
@@ -198,7 +208,7 @@ bool sgRendererES2::resizeBuffers()
 	}else
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, msaaFramebuffer);
-		
+
 		if(supportpackedstencil)
 		{
 			glBindRenderbuffer(GL_RENDERBUFFER, depthRenderbuffer);
@@ -210,11 +220,11 @@ bool sgRendererES2::resizeBuffers()
 			glBindRenderbuffer(GL_RENDERBUFFER, stencilRenderbuffer);
 			glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, msaasamples, GL_STENCIL_INDEX8, backingWidth, backingHeight);
 		}
-		
+
 		glBindRenderbuffer(GL_RENDERBUFFER, msaaRenderbuffer);
 		glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, msaasamples, GL_RGBA8_OES, backingWidth, backingHeight);
 	}
-	
+
 	if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{
 		if(GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT == glCheckFramebufferStatus(GL_FRAMEBUFFER))
@@ -226,9 +236,10 @@ bool sgRendererES2::resizeBuffers()
 		if(GL_FRAMEBUFFER_UNSUPPORTED == glCheckFramebufferStatus(GL_FRAMEBUFFER))
 			sgLog("GL_FRAMEBUFFER_UNSUPPORTED");
 	}
-	
+
 	updateOrientation();
-	
+#endif
+
 	return true;
 }
 
@@ -241,7 +252,7 @@ void sgRendererES2::setMaterial(sgMaterial *mat)
 		if(*lastmat == *mat)
 			return;
 	}
-	
+
 	// Set shader textures
 	int n;
 	int l;
@@ -250,7 +261,7 @@ void sgRendererES2::setMaterial(sgMaterial *mat)
 	{
 		if(mat->texlocation[n] == -1)
 			break;
-		
+
 		glActiveTexture(GL_TEXTURE0+n);
 		glBindTexture(GL_TEXTURE_2D, mat->textures[n]->texid);
 		glUniform1i(mat->texlocation[n], n);
@@ -264,7 +275,7 @@ void sgRendererES2::setMaterial(sgMaterial *mat)
 	{
 		glDisable(GL_CULL_FACE);
 	}
-	
+
 	if(mat->blending)
 	{
 		glEnable(GL_BLEND);
@@ -273,7 +284,7 @@ void sgRendererES2::setMaterial(sgMaterial *mat)
 	{
 		glDisable(GL_BLEND);
 	}
-	
+
 	if(mat->lighting)
 	{
 		//Set shader lights
@@ -312,14 +323,14 @@ void sgRendererES2::setMaterial(sgMaterial *mat)
 		{
 			glUniform1fv(mat->shader->lattenuationloc, mat->shader->maxlights, lightatt);
 		}
-		
+
 		free(lightambient);
 		free(lightdiffuse);
 		free(lightspecular);
 		free(lightpos);
 		free(lightatt);
 	}
-	
+
 	if(mat->colors)
 	{
 		if(mat->shader->mambientloc != -1)
@@ -343,7 +354,7 @@ void sgRendererES2::setMaterial(sgMaterial *mat)
 			glUniform4fv(mat->shader->memissiveloc, 1, &mat->emissive.r);
 		}
 	}
-	
+
 	if(mat->shader->malphatestvalue != -1)
 	{
 		if(mat->alphatest)
@@ -354,7 +365,7 @@ void sgRendererES2::setMaterial(sgMaterial *mat)
 			glUniform1f(mat->shader->malphatestvalue, 0.0f);
 		}
 	}
-	
+
 	if(mat->depthtest)
 	{
 		glEnable(GL_DEPTH_TEST);
@@ -363,7 +374,7 @@ void sgRendererES2::setMaterial(sgMaterial *mat)
 	{
 		glDisable(GL_DEPTH_TEST);
 	}
-	
+
 	if(mat->depthwrite)
 	{
 		glDepthMask(GL_TRUE);
@@ -371,12 +382,12 @@ void sgRendererES2::setMaterial(sgMaterial *mat)
 	{
 		glDepthMask(GL_FALSE);
 	}
-	
+
 	if(mat->shader->time != -1)
 	{
 		glUniform1f(mat->shader->time, (float)currenttime);
 	}
-	
+
 	for(n = 0; n < mat->parameters.size(); n++)
 	{
 		if(mat->parameters[n].location != -1)
@@ -455,7 +466,7 @@ void sgRendererES2::setMaterial(sgMaterial *mat)
 			}
 		}
 	}
-	
+
 	lastmat = mat;
 }
 
@@ -465,7 +476,7 @@ void sgRendererES2::renderObjects(sgCamera *cam, std::vector<sgObject*> &objs)
 	sgMatrix4x4 viewmat = cam->rotation.getMatrix();
 	viewmat.transpose();
 	viewmat = matglobal3d*viewmat;
-	
+
 	sgMatrix4x4 matprojviewmodel;
 	sgObject *curr;
 	sgObjectBody *currbod;
@@ -476,17 +487,17 @@ void sgRendererES2::renderObjects(sgCamera *cam, std::vector<sgObject*> &objs)
 		curr = objs[o];
 		if((curr->tag == cam->tag && cam->tag != 0) || curr->culled)
 			continue;
-		
+
 		currbod = curr->currbody;
-		
+
 		for(i = 0; i < currbod->meshs.size(); i++)
 		{
 			if(currbod->meshs[i]->culled)
 				continue;
-			
+
 			// Use shader program
 			glUseProgram(currbod->materials[i]->shader->program);
-			
+
 			// Set shader matrices
 			if(currbod->materials[i]->shader->matproj != -1)
 			{
@@ -538,7 +549,7 @@ void sgRendererES2::renderObjects(sgCamera *cam, std::vector<sgObject*> &objs)
 			{
 				glUniformMatrix4fv(currbod->materials[i]->shader->matbones, maxbones, GL_FALSE, curr->skeleton->matrices);
 			}
-			
+
 			setMaterial(currbod->materials[i]);
 			featureloc = 0;
 			if(currbod->meshs[i]->vbo != -1)
@@ -685,7 +696,7 @@ void sgRendererES2::renderObjects(sgCamera *cam, std::vector<sgObject*> &objs)
 					featureloc += 16;
 				}
 			}
-			
+
 			if(currbod->meshs[i]->ivbo != -1)
 			{
 				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, currbod->meshs[i]->ivbo);
@@ -695,7 +706,7 @@ void sgRendererES2::renderObjects(sgCamera *cam, std::vector<sgObject*> &objs)
 				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 				glDrawElements(GL_TRIANGLES, currbod->meshs[i]->indexnum, GL_UNSIGNED_SHORT, currbod->meshs[i]->indices);
 			}
-			
+
 			if((currbod->meshs[i]->vtxfeatures & sgVertex::POSITION) > 0)
 			{
 				if(currbod->materials[i]->shader->position != -1)
@@ -745,16 +756,16 @@ void sgRendererES2::renderObjects(sgCamera *cam, std::vector<sgObject*> &objs)
 void sgRendererES2::renderPanels(sgPanel *first)
 {
 	glViewport(0, 0, backingWidth, backingHeight);
-	
+
 	sgMatrix4x4 matproj;
 	sgMatrix4x4 matview;
 	sgMatrix4x4 matmodel;
 	sgMatrix4x4 mattex;
 	matproj.makeProjectionOrtho(0, backingWidth/scaleFactor, 0, backingHeight/scaleFactor, -1, 1);
-	
+
 	glBindBuffer(GL_ARRAY_BUFFER, quadvbo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	
+
 	sgMatrix4x4 matprojviewmodel;
 	sgImage *img;
 	sgText *txt;
@@ -768,14 +779,19 @@ void sgRendererES2::renderPanels(sgPanel *first)
 			matview = matglobal2d;
 			matview.translate(sgVector3(curr->pos.x, curr->pos.y, 0.0));
 		}
-		
+
 		if(curr->rendertarget != NULL && currfbo != curr->rendertarget->fbo)
 		{
+#if defined __IOS__
 			glBindFramebuffer(GL_FRAMEBUFFER, curr->rendertarget->fbo);
-			glClear(GL_COLOR_BUFFER_BIT);
+#else
+			glBindFramebufferEXT(GL_FRAMEBUFFER, curr->rendertarget->fbo);
+#endif
 			currfbo = curr->rendertarget->fbo;
+			glClear(GL_COLOR_BUFFER_BIT);
 		}else
 		{
+#if defined __IOS__
 			if(msaasamples > 0)
 			{
 				if(currfbo != msaaFramebuffer)
@@ -791,16 +807,25 @@ void sgRendererES2::renderPanels(sgPanel *first)
 					currfbo = mainFramebuffer;
 				}
 			}
+#else
+			if(currfbo != NULL)
+			{
+				glBindFramebufferEXT(GL_FRAMEBUFFER, NULL);
+				currfbo = NULL;
+			}
+#endif
 		}
-		
+
+#if defined __IOS__
 		glClearDepthf(1.0f);
+#endif
 		glClear(GL_DEPTH_BUFFER_BIT);
-		
+
 		for(int i = 0; i < curr->elements.size(); i++)
 		{
 			// Use shader program
 			glUseProgram(curr->elements[i]->mat->shader->program);
-			
+
 			// Set shader matrices
 			if(curr->elements[i]->mat->shader->matproj != -1)
 			{
@@ -810,36 +835,36 @@ void sgRendererES2::renderPanels(sgPanel *first)
 			{
 				glUniformMatrix4fv(curr->elements[i]->mat->shader->matview, 1, GL_FALSE, matview.mat);
 			}
-			
+
 			if(curr->elements[i]->type == 0)
 			{
 				//draw image elements
 				img = (sgImage*)curr->elements[i];
-				
+
 				if(img->mat->shader->matmodel != -1 || img->mat->shader->matprojviewmodel != -1)
 				{
 					matmodel.makeTranslate(sgVector3(img->pos.x, img->pos.y, 0.0));
 					matmodel.scale(sgVector3(img->size.x, img->size.y, 1.0));
 					matmodel.rotate(sgVector3(0.0, img->ang, 0.0));
-					
+
 					if(img->mat->shader->matmodel != -1)
 						glUniformMatrix4fv(img->mat->shader->matmodel, 1, GL_FALSE, matmodel.mat);
 				}
-				
+
 				if(img->mat->shader->matprojviewmodel != -1)
 				{
 					matprojviewmodel = matproj*matview*matmodel;
 					glUniformMatrix4fv(img->mat->shader->matprojviewmodel, 1, GL_FALSE, matprojviewmodel.mat);
 				}
-				
+
 				if(img->mat->shader->mattex != -1)
 				{
 					mattex.makeIdentity();
 					glUniformMatrix4fv(img->mat->shader->mattex, 1, GL_FALSE, mattex.mat);
 				}
-				
+
 				setMaterial(img->mat);
-				
+
 				if(img->mat->shader->position != -1)
 				{
 					glVertexAttribPointer(img->mat->shader->position, 3, GL_FLOAT, 0, 20, 0);
@@ -852,7 +877,7 @@ void sgRendererES2::renderPanels(sgPanel *first)
 				}
 
 				glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-				
+
 				if(img->mat->shader->position != -1)
 				{
 					glDisableVertexAttribArray(img->mat->shader->position);
@@ -871,17 +896,17 @@ void sgRendererES2::renderPanels(sgPanel *first)
 					{
 						matmodel.makeTranslate(sgVector3(curr->pos.x+txt->pos.x+txt->size.x*n, curr->pos.y+txt->pos.y, 0.0));
 						matmodel.scale(sgVector3(txt->size.x, txt->size.y, 1.0));
-						
+
 						if(txt->mat->shader->matmodel != -1)
 							glUniformMatrix4fv(txt->mat->shader->matmodel, 1, GL_FALSE, matmodel.mat);
 					}
-					
+
 					if(txt->mat->shader->matprojviewmodel != -1)
 					{
 						matprojviewmodel = matproj*matview*matmodel;
 						glUniformMatrix4fv(txt->mat->shader->matprojviewmodel, 1, GL_FALSE, matprojviewmodel.mat);
 					}
-					
+
 					if(txt->mat->shader->mattex != -1)
 					{
 						mattex.makeTranslate(sgVector3((float)txt->str.translatedx[n]*(float)txt->charsize.x/(float)txt->mat->textures[0]->width, (float)txt->str.translatedy[n]*(float)txt->charsize.y/(float)txt->mat->textures[0]->height, 0));
@@ -890,7 +915,7 @@ void sgRendererES2::renderPanels(sgPanel *first)
 					}
 
 					setMaterial(txt->mat);
-					
+
 					if(txt->mat->shader->position != -1)
 					{
 						glVertexAttribPointer(txt->mat->shader->position, 3, GL_FLOAT, 0, 20, 0);
@@ -901,9 +926,9 @@ void sgRendererES2::renderPanels(sgPanel *first)
 						glVertexAttribPointer(txt->mat->shader->texcoord0, 2, GL_FLOAT, 0, 20, (const void*)12);
 						glEnableVertexAttribArray(txt->mat->shader->texcoord0);
 					}
-					
+
 					glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-					
+
 					if(txt->mat->shader->position != -1)
 					{
 						glDisableVertexAttribArray(txt->mat->shader->position);
@@ -922,7 +947,7 @@ void sgRendererES2::renderShadowVolumes(sgCamera *cam, std::vector<sgObject*> &o
 {
 	// Use shader program
 	glUseProgram(shadowvolume->shader->program);
-	
+
 	// Set shader matrices
 	if(shadowvolume->shader->matproj != -1)
 	{
@@ -932,14 +957,14 @@ void sgRendererES2::renderShadowVolumes(sgCamera *cam, std::vector<sgObject*> &o
 	{
 		glUniformMatrix4fv(shadowvolume->shader->matview, 1, GL_FALSE, cam->matview.mat);
 	}
-	
+
 	sgObject *curr;
 	for(int o = 0; o < objs.size(); o++)
 	{
 		curr = objs[o];
 		if(!curr->shadow || curr->shadowvolume == NULL)
 			continue;
-		
+
 		// Set shader matrices
 		if(shadowvolume->shader->matmodel != -1)
 		{
@@ -949,7 +974,7 @@ void sgRendererES2::renderShadowVolumes(sgCamera *cam, std::vector<sgObject*> &o
 		{
 			glUniformMatrix4fv(shadowvolume->shader->matnormal, 1, GL_FALSE, curr->matnormal.mat);
 		}
-		
+
 		if(curr->shadowvolume->mesh->vbo != -1)
 		{
 			glBindBuffer(GL_ARRAY_BUFFER, curr->shadowvolume->mesh->vbo);
@@ -977,7 +1002,7 @@ void sgRendererES2::renderShadowVolumes(sgCamera *cam, std::vector<sgObject*> &o
 				glVertexAttribPointer(shadowvolume->shader->normal, 3, GL_FLOAT, 0, sizeof(sgVertex), curr->shadowvolume->mesh->vertices+3);
 			}
 		}
-		
+
 		if(curr->shadowvolume->mesh->ivbo != -1)
 		{
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, curr->shadowvolume->mesh->ivbo);
@@ -987,7 +1012,7 @@ void sgRendererES2::renderShadowVolumes(sgCamera *cam, std::vector<sgObject*> &o
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 			glDrawElements(GL_TRIANGLES, curr->shadowvolume->mesh->indexnum, GL_UNSIGNED_SHORT, curr->shadowvolume->mesh->indices);
 		}
-		
+
 		if(shadowvolume->shader->position != -1)
 		{
 			glDisableVertexAttribArray(shadowvolume->shader->position);
@@ -1003,7 +1028,7 @@ void sgRendererES2::renderShadows(sgCamera *cam, std::vector<sgObject*> &objs)
 {
 	if(cam->rendertarget != NULL)
 		return;
-	
+
 	glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
 	glDepthMask(GL_FALSE);
 
@@ -1011,18 +1036,18 @@ void sgRendererES2::renderShadows(sgCamera *cam, std::vector<sgObject*> &objs)
 	glDepthFunc(GL_LESS);
 	glEnable(GL_STENCIL_TEST);
 	glStencilFunc(GL_ALWAYS, 1, 0xFFFFFFFF);
-	
+
 	glStencilOpSeparate(GL_FRONT, GL_KEEP, GL_KEEP, GL_INCR_WRAP);
 	glStencilOpSeparate(GL_BACK, GL_KEEP, GL_KEEP, GL_DECR_WRAP);
-	
+
 	glDisable(GL_CULL_FACE);
 	renderShadowVolumes(cam, objs);
 	glEnable(GL_CULL_FACE);
-	
+
 	glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
 	glStencilFunc(GL_NOTEQUAL, 0, 0xFFFFFFFF);
 	glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-	
+
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -1070,19 +1095,19 @@ void sgRendererES2::renderParticles(sgCamera *cam, sgParticleEmitter *first)
 {
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	
+
 	sgMatrix4x4 matprojview;
 	sgParticleEmitter *curr;
 	for(curr = first->next; curr != NULL; curr = curr->next)
 	{
 		if((curr->tag == cam->tag && cam->tag != 0))
 			continue;
-		
+
 		curr->updateMesh(cam, timestep);
-		
+
 		// Use shader program
 		glUseProgram(curr->material->shader->program);
-		
+
 		// Set shader matrices
 		if(curr->material->shader->matproj != -1)
 		{
@@ -1116,9 +1141,9 @@ void sgRendererES2::renderParticles(sgCamera *cam, sgParticleEmitter *first)
 			matprojview = cam->matproj*cam->matview;
 			glUniformMatrix4fv(curr->material->shader->matprojviewmodel, 1, GL_FALSE, matprojview.mat);
 		}
-		
+
 		setMaterial(curr->material);
-		
+
 		if(curr->material->shader->position != -1)
 		{
 			glEnableVertexAttribArray(curr->material->shader->position);
@@ -1134,9 +1159,9 @@ void sgRendererES2::renderParticles(sgCamera *cam, sgParticleEmitter *first)
 			glEnableVertexAttribArray(curr->material->shader->texcoord0);
 			glVertexAttribPointer(curr->material->shader->texcoord0, 2, GL_FLOAT, 0, 36, &curr->vertices[7]);
 		}
-		
+
 		glDrawElements(GL_TRIANGLES, curr->indexnum, GL_UNSIGNED_SHORT, curr->indices);
-		
+
 		if(curr->material->shader->position != -1)
 		{
 			glDisableVertexAttribArray(curr->material->shader->position);
@@ -1155,6 +1180,7 @@ void sgRendererES2::renderParticles(sgCamera *cam, sgParticleEmitter *first)
 
 void sgRendererES2::render()
 {
+#if defined __IOS__
 	//Clear color buffer
 	if(msaasamples > 0)
 	{
@@ -1171,21 +1197,30 @@ void sgRendererES2::render()
 			currfbo = mainFramebuffer;
 		}
 	}
+#else
+	glBindFramebufferEXT(GL_FRAMEBUFFER, NULL);
+	currfbo = NULL;
+#endif
 	glClearColor(clearcolor.r, clearcolor.g, clearcolor.b, clearcolor.a);
 	glClear(GL_COLOR_BUFFER_BIT);
-	
+
 	shadowcasters.resize(0);
-	
+
 	//Draw cameras
 	sgCamera *cam;
 	for(cam = first_cam->next; cam != NULL; cam = cam->next)
 	{
 		if(cam->rendertarget != NULL && currfbo != cam->rendertarget->fbo)
 		{
+#if defined __IOS__
 			glBindFramebuffer(GL_FRAMEBUFFER, cam->rendertarget->fbo);
+#else
+			glBindFramebufferEXT(GL_FRAMEBUFFER, cam->rendertarget->fbo);
+#endif
 			currfbo = cam->rendertarget->fbo;
 		}else
 		{
+#if defined __IOS__
 			if(msaasamples > 0)
 			{
 				if(currfbo != msaaFramebuffer)
@@ -1201,24 +1236,32 @@ void sgRendererES2::render()
 					currfbo = mainFramebuffer;
 				}
 			}
+#else
+			glBindFramebufferEXT(GL_FRAMEBUFFER, NULL);
+			currfbo = NULL;
+#endif
 		}
-		
+
 		//Clear depth and stencil buffer
 		glDepthMask(GL_TRUE);
 		glClearStencil(0);
+#if defined __IOS__
 		glClearDepthf(1.0f);
+#else
+		glClearDepth(1.0f);
+#endif
 		glClear(GL_COLOR_BUFFER_BIT|GL_STENCIL_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
-		
+
 		//Update camera
 		cam->matview = matglobal3d*cam->matview;
 		cam->matinvview = cam->matinvview*matglobal3d;
-		
+
 		if(event != NULL)
 			event->onDrawCam(cam, this);
-		
+
 		//clear list of visible objects
 		visibleobjects.resize(0);
-		
+
 		//add sky objects to the list of visible objects
 		sgObject *obj = first_sky->next;
 		while(obj != 0)
@@ -1226,10 +1269,10 @@ void sgRendererES2::render()
 			visibleobjects.push_back(obj);
 			obj = obj->next;
 		}
-		
+
 		//Do view frustum culling and add all visible objects to visibleobjects
 		culling(cam, first_solid);
-		
+
 		//Draw objects
 		glViewport(cam->screenpos.x, cam->screenpos.y, cam->size.x, cam->size.y);
 		renderObjects(cam, visibleobjects);
@@ -1241,16 +1284,25 @@ void sgRendererES2::render()
 		renderShadows(cam, shadowcasters);
 		renderParticles(cam, first_partemitter);
 	}
-	
+
 	//Draw panels
 	renderPanels(first_panel);
-	
+
+#if defined __IOS__
 	if(currfbo != mainFramebuffer)
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, mainFramebuffer);
 		currfbo = mainFramebuffer;
 	}
-	
+#else
+	if(currfbo != NULL)
+	{
+		glBindFramebufferEXT(GL_FRAMEBUFFER, NULL);
+		currfbo = NULL;
+	}
+#endif
+
+#if defined __IOS__
 	if(msaasamples > 0)
 	{
 		//Resolve from msaaFramebuffer to resolveFramebuffer (scissortest has to be turned off for this to work)
@@ -1258,7 +1310,7 @@ void sgRendererES2::render()
 		glBindFramebuffer(GL_READ_FRAMEBUFFER_APPLE, msaaFramebuffer);
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER_APPLE, mainFramebuffer);
 		glResolveMultisampleFramebufferAPPLE();
-	
+
 		if(supportdiscard)
 		{
 			//discard framebuffer (a simple to use performence boost)
@@ -1274,6 +1326,7 @@ void sgRendererES2::render()
 			glDiscardFramebufferEXT(GL_FRAMEBUFFER, 2, attachments);
 		}
 	}
-	
+
 	glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer);
+#endif
 }

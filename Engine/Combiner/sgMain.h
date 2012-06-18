@@ -31,13 +31,16 @@
 #include "sgRendererES2.h"
 #include "sgTouches.h"
 #include "sgAccelerometer.h"
+#include "sgMouse.h"
 #include "sgCameraStream.h"
 #include "sgEvents.h"
 #include "sgAction.h"
 #include "sgEntity.h"
 #include "sgTimer.h"
 #include "sgPhysWorld.h"
-#include "sgPhysWorldBullet.h"
+#if defined __IOS__
+	#include "sgPhysWorldBullet.h"
+#endif
 #include "sgAudioPlayer.h"
 
 class sgMain
@@ -49,74 +52,74 @@ class sgMain
 		 * @param oglvers the OpenGL ES version to initialize the engine for (1 for 1.1 or 2 for 2.0)
 		 */
 		sgMain(unsigned int oglvers);
-	
+
 		/**
 		 *	Deconstructor.
 		 *	Frees an instance of this class.
 		 */
 		~sgMain();
-	
+
 		/**
 		 *	Draw view.
 		 *	Called automatically every frame and draws everything. Just don´t touch it.
 		 */
 		void drawView();
-		
+
 		/**
 		 *	Set orientation.
 		 *	Call this to set a new interface orientation.
 		 * @param interfaceOrientation the new orientation 0 = portrait, 1 = flipped portrait, 2 = landscape right, 3 = landscape left
 		 */
 		void setOrientation(unsigned int interfaceOrientation);
-	
+
 		/**
 		 *	Renderer.
 		 *	Pointer to the renderer.
 		 */
 		sgRenderer *renderer;
-	
+
 		/**
 		 *	Physics world.
 		 *	Pointer to the physics world.
 		 */
 		sgPhysWorld *physworld;
-	
+
 		/**
 		 *	Audio player.
 		 *	Pointer to the audio player.
 		 */
 		sgAudioPlayer *audioplayer;
-		
+
 		/**
 		 *	First entity.
 		 *	Create all your entities from this one.
 		 */
 		sgEntity *first_ent;
-		
+
 		/**
 		 *	Event handler.
 		 *	Set this to a custom sgEvent class to handle events.
 		 */
 		static sgEvents *eventhandler;
-	
+
 		/**
 		 *	Device orientation.
 		 *	The currently active device orientation.
 		 */
 		unsigned int orientation;
-	
+
 		/**
 		 *	Time step.
 		 *	The time the previous frame took in seconds.
 		 */
 		double timestep;
-	
+
 		/**
 		 *	Current frames.
 		 *	The number of frames rendered from the start of the engine.
 		 */
 		unsigned long currframes;
-	
+
 	private:
 		sgTimer timer;
 };

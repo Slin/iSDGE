@@ -41,9 +41,10 @@ class Events : public sgEvents
 	public:
 		void onInit(sgMain *m);
 		void onDraw(float timestep);
-		
+
 	private:
 		sgMain *sgmain;
+		sgEntity *cam;
 };
 
 #endif

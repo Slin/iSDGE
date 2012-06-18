@@ -25,10 +25,17 @@
 
 #include "sgMaterial.h"
 
-#include <OpenGLES/ES1/gl.h>
-#include <OpenGLES/ES1/glext.h>
-#include <OpenGLES/ES2/gl.h>
-#include <OpenGLES/ES2/glext.h>
+#if defined __IOS__
+	#include <OpenGLES/ES1/gl.h>
+	#include <OpenGLES/ES1/glext.h>
+	#include <OpenGLES/ES2/gl.h>
+	#include <OpenGLES/ES2/glext.h>
+#else
+	#define GLEW_STATIC
+	#include <GL/glew.h>
+	#include <GL/glfw.h>
+	#include <cstdio>
+#endif
 #include "sgResourceManager.h"
 #include "sgShader.h"
 #include "sgRenderer.h"
@@ -49,7 +56,7 @@ sgMaterial::sgMaterial(sgShader::BuiltInShaders shad)
 		shader = NULL;
 	}
 	setDefault();
-	
+
 	if(shad == 0)
 		lighting = false;
 }
@@ -76,7 +83,7 @@ sgMaterial::sgMaterial(const char *texfile, bool mipmaps, sgShader::BuiltInShade
 		shader = NULL;
 	}
 	setDefault();
-	
+
 	if(shad == 0)
 		lighting = false;
 
@@ -94,10 +101,10 @@ sgMaterial::sgMaterial(sgTexture *tex, sgShader::BuiltInShaders shad)
 		shader = NULL;
 	}
 	setDefault();
-	
+
 	if(shad == 0)
 		lighting = false;
-	
+
 	textures.push_back(tex);
 	setDefault();
 }
@@ -125,7 +132,7 @@ sgMaterial::sgMaterial(const char *vsname, const char *fsname, sgTexture *tex)
 	{
 		shader = NULL;
 	}
-	
+
 	textures.push_back(tex);
 	setDefault();
 }
@@ -148,13 +155,13 @@ bool sgMaterial::operator== (const sgMaterial &other)
 {
 	if(parameters.size() != other.parameters.size())
 		return false;
-	
+
 	for(int i = 0; i < parameters.size(); i++)
 	{
 		if(parameters[i] != other.parameters[i])
 			return false;
 	}
-	
+
 	if(shader == other.shader && textures == other.textures && culling == other.culling && cullmode == other.cullmode &&
 		blending == other.blending && blendsource == other.blendsource && blenddestination == other.blenddestination&& lighting == other.lighting && colors == other.colors &&
 		ambient == other.ambient && diffuse == other.diffuse && specular == other.specular && shininess == other.shininess && emissive == other.emissive && alphatest == other.alphatest &&
@@ -162,7 +169,7 @@ bool sgMaterial::operator== (const sgMaterial &other)
 	{
 		return true;
 	}
-	
+
 	return false;
 }
 
@@ -170,11 +177,11 @@ void sgMaterial::setDefault()
 {
 	culling = true;
 	cullmode = GL_CCW;
-	
+
 	blending = false;
 	blendsource = GL_ONE;
 	blenddestination = GL_ONE_MINUS_SRC_ALPHA;
-	
+
 	lighting = true;
 	colors = true;
 	ambient.r = 0.2;
@@ -194,21 +201,21 @@ void sgMaterial::setDefault()
 	emissive.g = 0.0;
 	emissive.b = 0.0;
 	emissive.a = 1.0;
-	
+
 	alphatest = false;
 	alphatestvalue = 0.75;
-	
+
 	depthtest = true;
 	depthtestmode = GL_LEQUAL;
 	depthwrite = true;
-	
+
 	mattex.makeIdentity();
-	
+
 	if(sgRenderer::oglversion > 1)
 	{
 		if(shader == NULL)
 			shader = sgShader::getShader(sgShader::BIS_TEXTURE);
-		
+
 		getUniforms();
 	}else
 	{
@@ -221,7 +228,7 @@ void sgMaterial::setShader(const char *vsname, const char *fsname)
 {
 	if(sgRenderer::oglversion <= 1)
 		return;
-	
+
 	shader = sgShader::getShader(vsname, fsname);
 	getUniforms();
 }
@@ -230,7 +237,7 @@ void sgMaterial::setShader(sgShader::BuiltInShaders shad)
 {
 	if(sgRenderer::oglversion <= 1)
 		return;
-	
+
 	shader = sgShader::getShader(shad);
 	getUniforms();
 }
@@ -243,10 +250,10 @@ void sgMaterial::setTexture(unsigned int tex, const char *texfile, bool mipmaps)
 		getUniforms();
 		return;
 	}
-	
+
 	if(tex >= textures.size())
 		return;
-	
+
 	textures[tex] = sgTexture::getTexture(texfile, mipmaps);
 	getUniforms();
 }
@@ -259,10 +266,10 @@ void sgMaterial::setTexture(unsigned int tex, sgTexture *texptr)
 		getUniforms();
 		return;
 	}
-	
+
 	if(tex > textures.size())
 		return;
-	
+
 	textures[tex] = texptr;
 	getUniforms();
 }
@@ -271,7 +278,7 @@ void sgMaterial::getUniforms()
 {
 	if(shader == NULL)
 		return;
-	
+
 	char str[10];
 	texlocation.clear();
 	for(int i = 0; i < textures.size(); i++)
@@ -279,7 +286,7 @@ void sgMaterial::getUniforms()
 		sprintf(str, "mTexture%i", i);
 		texlocation.push_back(glGetUniformLocation(shader->program, str));
 	}
-	
+
 	for(int i = 0; i < parameters.size(); i++)
 	{
 		parameters[i].location = glGetUniformLocation(shader->program, parameters[i].name.c_str());
@@ -291,15 +298,15 @@ sgMaterialParameter *sgMaterial::addParameter(const char *name, void *ptr, unsig
 	sgMaterialParameter param;
 	param.parameter = ptr;
 	param.name = std::string(name);
-	
+
 	if(sgRenderer::oglversion > 1)
 		param.location = glGetUniformLocation(shader->program, name);
-	
+
 	param.datatype = datatype;
 	param.size = size;
 	param.count = count;
 	parameters.push_back(param);
-	
+
 	return &parameters[parameters.size()-1];
 }
 
@@ -337,7 +344,7 @@ sgMaterial *sgMaterial::getMaterial(sgTexture *tex, sgShader::BuiltInShaders sha
 	sgResourceManager::addResource(mat);
 	return mat;
 }
-	
+
 sgMaterial *sgMaterial::getMaterial(const char *vsname, const char *fsname, const char *texfile, bool mipmaps)
 {
 	sgMaterial *mat = new sgMaterial(vsname, fsname, texfile, mipmaps);

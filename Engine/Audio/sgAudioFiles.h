@@ -29,6 +29,10 @@
 #include <vector>
 #include <string>
 
+#if defined __WIN32__
+	#include "CWaves.h"
+#endif
+
 /**
  * Object file namespace. Contains functionality to loat object files.
  */
@@ -41,7 +45,7 @@ namespace sgAudioFiles
 		unsigned long int dataLength;
 		unsigned char* bytes;
 	};
-	
+
 	/**
 	 *	Load audio.
 	 *	Loads an audio file into an uncompressed buffer.

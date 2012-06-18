@@ -31,7 +31,7 @@ sgMain::sgMain(unsigned int oglvers)
 {
 	timestep = 1.0/60.0;
 	currframes = 0;
-	
+
 	if(oglvers == 1)
 	{
 		renderer = new sgRendererES1;
@@ -39,13 +39,17 @@ sgMain::sgMain(unsigned int oglvers)
 	{
 		renderer = new sgRendererES2;
 	}
-	
+
+#if defined __IOS__
 	physworld = new sgPhysWorldBullet;
+#else
+	physworld = new sgPhysWorld;
+#endif
 	audioplayer = new sgAudioPlayer;
-	
+
 	setOrientation(0);
 	first_ent = new sgEntity(NULL, NULL, this);
-	
+
 	timer.start();
 }
 
@@ -62,19 +66,19 @@ void sgMain::drawView()
 	timer.stop();
 	timestep = timestep*0.9f+timer.getElapsedTime()*0.1f;
 	timer.start();
-	
+
 	renderer->currenttime += timestep;
 	renderer->timestep = timestep;
-	
+
 	if(currframes == 1)
 	{
 		if(eventhandler != NULL)
 			eventhandler->onInit(this);
 	}
-	
+
 	if(eventhandler != NULL && currframes > 0)
 		eventhandler->onDraw(timestep);
-	
+
 	sgEntity *nextent;
 	for(sgEntity *it = first_ent->next; it != NULL; it = nextent)
 	{
@@ -84,10 +88,10 @@ void sgMain::drawView()
 			it->act->onDraw(timestep);
 		}
 	}
-	
+
 	if(eventhandler != NULL && currframes > 0)
 		eventhandler->onDrawLate(timestep);
-	
+
 	for(sgEntity *it = first_ent->next; it != NULL; it = nextent)
 	{
 		nextent = it->next;
@@ -96,11 +100,11 @@ void sgMain::drawView()
 			it->act->onDrawLate(timestep);
 		}
 	}
-	
+
 	physworld->update(timestep);
 	audioplayer->update(timestep);
 	renderer->render();
-	
+
 	currframes += 1;
 }
 

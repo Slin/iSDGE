@@ -58,7 +58,6 @@ sgObject::sgObject(sgObject* p, sgObject *n)
 	skeleton = NULL;
 	matmodel.makeIdentity();
 	matnormal.makeIdentity();
-	updateObject();
 }
 
 sgObject::~sgObject()
@@ -68,10 +67,10 @@ sgObject::~sgObject()
 		delete shadowvolume;
 		shadowvolume = NULL;
 	}
-	
+
 	if(body != NULL)
 		body->destroyAll();
-	
+
 //	if(currbody != NULL)
 //		currbody->destroy();	//Probably not good...
 }
@@ -91,6 +90,7 @@ sgObject *sgObject::createObject(const char *name, unsigned long flags)
 	next->body->makeObject(name, flags);
 	next->currbody = next->body;
 	next->calcCullSphere();
+	next->updateObject();
 	return next;
 }
 
@@ -98,16 +98,16 @@ sgObject *sgObject::createTerrain(unsigned int xverts, unsigned int zverts, unsi
 {
 	if(xverts == 0 || zverts == 0)
 		return NULL;
-	
+
 	lodsteps += 1;
 	if(xchunks == 0)
 		xchunks = 1;
 	if(zchunks == 0)
 		zchunks = 1;
-	
+
 	next = new sgObject(this, next);
 	sgMaterial *mat = sgMaterial::getMaterial();
-	
+
 	sgTexture *tex = NULL;
 	float width = 0;
 	float height = 0;
@@ -117,7 +117,7 @@ sgObject *sgObject::createTerrain(unsigned int xverts, unsigned int zverts, unsi
 		width = (tex->width-1)/xchunks;
 		height = (tex->height-1)/zchunks;
 	}
-	
+
 	unsigned int realx;
 	unsigned int realz;
 
@@ -128,11 +128,11 @@ sgObject *sgObject::createTerrain(unsigned int xverts, unsigned int zverts, unsi
 		realx = xverts/xchunks;
 		if(xchunks > 1)
 			realx += 1;
-		
+
 		realz = zverts/zchunks;
 		if(zchunks > 1)
 			realz += 1;
-		
+
 		if(i == 0)
 		{
 			islod = false;
@@ -144,7 +144,7 @@ sgObject *sgObject::createTerrain(unsigned int xverts, unsigned int zverts, unsi
 			next->currbody->nextbody = new sgObjectBody;
 			next->currbody = next->currbody->nextbody;
 		}
-		
+
 		for(int x = 0; x < xchunks; x++)
 		{
 			for(int y = 0; y < zchunks; y++)
@@ -156,26 +156,27 @@ sgObject *sgObject::createTerrain(unsigned int xverts, unsigned int zverts, unsi
 												sgVector2(1.0/xverts/scl, 1.0/zverts/scl), tex, sgVector2(width, height), hmpscale, islod);
 			}
 		}
-		
+
 		next->currbody->loddist = 50.0+50.0*i;
-		
+
 		scl *= 2.0;
 		xverts /= 2;
 		zverts /= 2;
 	}
-	
+
 	next->currbody = new sgObjectBody;
 	for(int i = 0; i < next->body->meshs.size(); i++)
 	{
 		next->currbody->meshs.push_back(next->body->meshs[i]);
 		next->currbody->materials.push_back(next->body->materials[i]);
 	}
-	
+
 	if(tex != NULL)
 		tex->destroy();
 
 	next->calcCullSphere();
-	
+	next->updateObject();
+
 	return next;
 }
 
@@ -183,7 +184,7 @@ void sgObject::addLOD(const char *name)
 {
 	if(body == NULL)
 		return;
-	
+
 	currbody = body;
 	while(currbody->nextbody != NULL)
 	{
@@ -207,7 +208,7 @@ void sgObject::calcCullSphere()
 		tb->calcCullSphere();
 		tb = tb->nextbody;
 	}
-	
+
 	//Find center
 	sgVector3 vmax(-1000000000.0, -1000000000.0, -1000000000.0);
 	sgVector3 vmin(1000000000.0, 1000000000.0, 1000000000.0);
@@ -220,7 +221,7 @@ void sgObject::calcCullSphere()
 			vmax.y = body->meshs[m]->cullsphere.y;
 		if(body->meshs[m]->cullsphere.z > vmax.z)
 			vmax.z = body->meshs[m]->cullsphere.z;
-		
+
 		if(body->meshs[m]->cullsphere.x < vmin.x)
 			vmin.x = body->meshs[m]->cullsphere.x;
 		if(body->meshs[m]->cullsphere.y < vmin.y)
@@ -231,7 +232,7 @@ void sgObject::calcCullSphere()
 	center = vmin+vmax;
 	center *= 0.5f;
 	cullsphere = sgVector4(center.x, center.y, center.z);
-	
+
 	//Find radius
 	float radius = 0.0;
 	float temp;
@@ -245,26 +246,26 @@ void sgObject::calcCullSphere()
 		{
 			fac = -1.0;
 		}
-			
+
 		temp += body->meshs[m]->cullsphere.w;
 		if(temp > radius)
 			radius = temp;
 	}
-	
+
 	cullsphere.w = radius*fac;
 }
 
 void sgObject::updateObject()
 {
 	matmodel.makeTranslate(position);
-	
+
 	sgMatrix4x4 temp;
 	temp.makeScale(scale);
 	matmodel *= temp;
-	
+
 	rotation.getMatrix(matnormal);
 	matmodel *= matnormal;
-	
+
 	sgVector3 pos = cullsphere;
 	worldcullsphere = matmodel*pos;
 	worldcullsphere.w = fabs(cullsphere.w)*fmax(scale.x, fmax(scale.y, scale.z));
@@ -276,17 +277,17 @@ void sgObject::destroy()
 		prev->next = next;
 	else
 		return;
-	
+
 	if(next)
 		next->prev = prev;
-	
+
 	delete this;
 }
 
 void sgObject::destroyAll()
 {
 	destroy();
-	
+
 	if(next)
 		next->destroyAll();
 	if(prev)

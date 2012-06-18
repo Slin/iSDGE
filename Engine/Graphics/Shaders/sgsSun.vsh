@@ -46,7 +46,7 @@ varying vec3 light;
 
 void main()
 {
-	texcoord = (matTex*vec4(vertTexcoord0, 1.0, 1.0)).xy;
+/*	texcoord = (matTex*vec4(vertTexcoord0, 1.0, 1.0)).xy;
 	gl_Position = matBones[int(vertBoneIndices.x)]*vec4(vertPos, 1.0)*vertBoneWeights.x;
 	gl_Position += matBones[int(vertBoneIndices.y)]*vec4(vertPos, 1.0)*vertBoneWeights.y;
 	gl_Position += matBones[int(vertBoneIndices.z)]*vec4(vertPos, 1.0)*vertBoneWeights.z;
@@ -54,5 +54,8 @@ void main()
 	gl_Position = matProjViewModel*gl_Position;
 	vec4 norm = normalize(matNormal*vec4(-vertNormal, 0.0));
 	light = max(dot(norm.xyz, lPosition[0].xyz), 0.0)*lDiffuse[0].rgb+mAmbient.rgb;
-	light = vertBoneIndices.xyz*0.3;
+	light = vertBoneIndices.xyz*0.3;*/
+	
+	texcoord = vertTexcoord0;
+	gl_Position = matProjViewModel*vec4(vertPos, 1.0);
 }

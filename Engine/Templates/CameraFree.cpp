@@ -26,6 +26,8 @@
 #include "CameraFree.h"
 #include "sgMain.h"
 
+#include <cstdio>
+
 CameraFree::CameraFree(float sp, bool acc)
 {
 	speed = sp;
@@ -36,9 +38,9 @@ CameraFree::CameraFree(float sp, bool acc)
 void CameraFree::makeStereo(float dist, float xoffset)
 {
 	stereodist = dist;
-	
+
 	stereo_cam = ent->cam->createCamera();
-	
+
 	switch(ent->sgmain->renderer->orientation)
 	{
 		case 0:
@@ -48,7 +50,7 @@ void CameraFree::makeStereo(float dist, float xoffset)
 			stereo_cam->screenpos = sgVector2(ent->cam->size.x, 0.0f);
 			break;
 		}
-		
+
 		case 1:
 		{
 			ent->cam->size = sgVector2(sgRenderer::backingWidth*0.5+xoffset, sgRenderer::backingHeight);
@@ -57,7 +59,7 @@ void CameraFree::makeStereo(float dist, float xoffset)
 			stereo_cam->screenpos = sgVector2(0.0f, 0.0f);
 			break;
 		}
-		
+
 		case 2:
 		{
 			ent->cam->size = sgVector2(sgRenderer::backingWidth, sgRenderer::backingHeight*0.5+xoffset);
@@ -65,7 +67,7 @@ void CameraFree::makeStereo(float dist, float xoffset)
 			stereo_cam->screenpos = sgVector2(0.0f, ent->cam->size.y);
 			break;
 		}
-			
+
 		case 3:
 		{
 			ent->cam->size = sgVector2(sgRenderer::backingWidth, sgRenderer::backingHeight*0.5-xoffset);
@@ -75,10 +77,10 @@ void CameraFree::makeStereo(float dist, float xoffset)
 			break;
 		}
 	}
-	
+
 	ent->cam->aspect = ent->cam->size.x/ent->cam->size.y;
 	ent->cam->updateProj();
-	
+
 	stereo_cam->aspect = ent->cam->aspect;//stereo_cam->size.x/stereo_cam->size.y;
 	stereo_cam->updateProj();
 }
@@ -86,27 +88,27 @@ void CameraFree::makeStereo(float dist, float xoffset)
 void CameraFree::makeAnaglyph(float dist, const char *fs)
 {
 	stereodist = dist;
-	
+
 	ent->cam->size = 512;
-	
+
 	stereo_cam = ent->cam->createCamera();
 	stereo_cam->size = ent->cam->size;
 	stereo_cam->arc = ent->cam->arc;
 	stereo_cam->aspect = ent->cam->aspect;
 	stereo_cam->updateProj();
-	
+
 	//Attach a texture and make it a rendertarget
 	ent->cam->rendertarget = sgTexture::getTexture(512, 512);
 	ent->cam->rendertarget->makeRendertarget();
-	
+
 	//Attach a texture and make it a rendertarget
 	stereo_cam->rendertarget = sgTexture::getTexture(512, 512);
 	stereo_cam->rendertarget->makeRendertarget();
-	
+
 	sgMaterial *mat = sgMaterial::getMaterial("iSDGE.bundle/sgsPPBase.vsh", "iSDGE.bundle/RedCyanStereo.fsh");
 	mat->setTexture(-1, ent->cam->rendertarget);
 	mat->setTexture(-1, stereo_cam->rendertarget);
-	
+
 	//Display it on the HUD
 	sgEntity *hud = ent->sgmain->first_ent->createPanEntity();
 	hud->pan->fixorientation = true;
@@ -117,7 +119,8 @@ void CameraFree::onDraw(float timestep)
 {
 	timestep *= 16.0f;
 	sgVector2 toll;
-    
+
+#if defined __IOS__
     if(acccontrol)
     {
         if(sgAccelerometer::curracc.x > 0.1f || sgAccelerometer::curracc.x < -0.1f)
@@ -179,10 +182,10 @@ void CameraFree::onDraw(float timestep)
                 {
                     lefttouchstart = sgVector2();
                 }
-                
+
                 toll *= 0.01f;
             }
-            
+
             if(righttouchstart.x <= 0.1 && righttouchstart.y <= 0.1)
             {
                 if(sgTouches::touches[0]->position.x > halfheight)
@@ -214,7 +217,7 @@ void CameraFree::onDraw(float timestep)
                 {
                     righttouchstart = sgVector2();
                 }
-                
+
                 sgVector3 rot(touchdir.x, 0.0f, -touchdir.y);
                 ent->cam->rotation += rot*0.05f*timestep;
             }
@@ -224,20 +227,27 @@ void CameraFree::onDraw(float timestep)
             lefttouchstart = sgVector2();
         }
     }
-	
+#else
+	toll.y = glfwGetKey('W')-glfwGetKey('S');
+	toll.x = glfwGetKey('D')-glfwGetKey('A');
+
+	sgVector3 rot(sgMouse::currdir.x, 0.0f, sgMouse::currdir.y);
+	ent->cam->rotation -= rot*timestep;
+#endif
+
 	sgVector3 dir(toll.x, 0.0f, -toll.y);
 	dir = ent->cam->rotation.rotate(dir);
 	ent->cam->position += dir*speed*timestep;
-	
+
 	if(stereo_cam != NULL)
 	{
 		stereo_cam->rotation = ent->cam->rotation;
-		
+
 		dir = ent->cam->rotation.rotate(sgVector3(1.0f, 0.0f, 0.0f));
 		stereo_cam->position = ent->cam->position+dir*stereodist;
 		stereo_cam->updateCamera();
 	}
-	
+
 	ent->sgmain->audioplayer->updateListener(ent->cam->position, ent->cam->rotation, timestep);
 	ent->cam->updateCamera();
 }

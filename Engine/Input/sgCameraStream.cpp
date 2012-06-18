@@ -28,5 +28,8 @@
 namespace sgCameraStream
 {
 	sgTexture *currimage = 0;
+
+#if defined __IOS__
 	CVImageBufferRef devicedata = 0;
+#endif
 }

@@ -29,38 +29,47 @@
 #include "sgResourceManager.h"
 #include "sgDebug.h"
 
-#include <AudioToolbox/AudioToolbox.h>
-#include <CoreFoundation/CoreFoundation.h>
+#if defined __IOS__
+	#include <AudioToolbox/AudioToolbox.h>
+	#include <CoreFoundation/CoreFoundation.h>
+#elif defined __WIN32__
+	#include <al.h>
+#endif
 
 
 namespace sgAudioFiles
 {
+#if defined __WIN32__
+	CWaves waveparser;
+#endif
+
 	bool loadAudio(sgUncompressedAudio **audio, const char *filename)
 	{
+#if defined __IOS__
 		const char *filepath = sgResourceManager::getPath(filename);
 		CFStringRef pathstring = CFStringCreateWithCString(NULL, filepath, kCFStringEncodingASCII);
 		delete[] filepath;
-		
+
 		CFStringRef finalpathstr = CFURLCreateStringByAddingPercentEscapes(NULL, pathstring, NULL, NULL, kCFStringEncodingUTF8);
 		CFURLRef pathasurl = CFURLCreateWithString(NULL, finalpathstr, NULL);
 		CFRelease(pathstring);
 		CFRelease(finalpathstr);
-		
+
 		ExtAudioFileRef audiofileobject = NULL;
 		OSStatus err = ExtAudioFileOpenURL(pathasurl, &audiofileobject);
 		CFRelease(pathasurl);
-		
+
 		if(err)
 		{
 			sgLog("Could not open audio file: %s", filename);
 			return false;
 		}
-		
+
 		long long int theFileLengthInFrames = 0;
 		AudioStreamBasicDescription theFileFormat;
 		unsigned long int thePropertySize = sizeof(theFileFormat);
 		AudioStreamBasicDescription theOutputFormat;
-		
+
 		// Get the audio data format
 		err = ExtAudioFileGetProperty(audiofileobject, kExtAudioFileProperty_FileDataFormat, &thePropertySize, &theFileFormat);
 		if(theFileFormat.mChannelsPerFrame > 2)
@@ -69,7 +78,7 @@ namespace sgAudioFiles
 			ExtAudioFileDispose(audiofileobject);
 			return false;
 		}
-		
+
 		// Set the client format to 16 bit signed integer (native-endian) data
 		// Maintain the channel count and sample rate of the original source format
 		theOutputFormat.mSampleRate = theFileFormat.mSampleRate;
@@ -80,7 +89,7 @@ namespace sgAudioFiles
 		theOutputFormat.mBytesPerFrame = 2 * theOutputFormat.mChannelsPerFrame;
 		theOutputFormat.mBitsPerChannel = 16;
 		theOutputFormat.mFormatFlags = kAudioFormatFlagsNativeEndian | kAudioFormatFlagIsPacked | kAudioFormatFlagIsSignedInteger;
-		
+
 		// Set the desired client (output) data format
 		err = ExtAudioFileSetProperty(audiofileobject, kExtAudioFileProperty_ClientDataFormat, sizeof(theOutputFormat), &theOutputFormat);
 		if(err)
@@ -89,7 +98,7 @@ namespace sgAudioFiles
 			ExtAudioFileDispose(audiofileobject);
 			return false;
 		}
-		
+
 		// Get the total frame count
 		thePropertySize = sizeof(long long int);
 		err = ExtAudioFileGetProperty(audiofileobject, kExtAudioFileProperty_FileLengthFrames, &thePropertySize, &theFileLengthInFrames);
@@ -99,9 +108,9 @@ namespace sgAudioFiles
 			ExtAudioFileDispose(audiofileobject);
 			return false;
 		}
-		
+
 		*audio = new sgUncompressedAudio;
-		
+
 		// Read all the data into memory
 		(*audio)->dataLength = (unsigned long)theFileLengthInFrames*theOutputFormat.mBytesPerFrame;
 		(*audio)->bytes = new unsigned char[(*audio)->dataLength];
@@ -112,7 +121,7 @@ namespace sgAudioFiles
 			theDataBuffer.mBuffers[0].mDataByteSize = (*audio)->dataLength;
 			theDataBuffer.mBuffers[0].mNumberChannels = theOutputFormat.mChannelsPerFrame;
 			theDataBuffer.mBuffers[0].mData = (*audio)->bytes;
-			
+
 			// Read the data into an AudioBufferList
 			err = ExtAudioFileRead(audiofileobject, (unsigned long int*)&theFileLengthInFrames, &theDataBuffer);
 			if(err == noErr)
@@ -128,11 +137,52 @@ namespace sgAudioFiles
 				sgLog("Failed to read audio data from file: %s", filename);
 				ExtAudioFileDispose(audiofileobject);
 				return false;
-			}   
+			}
 		}
-		
+
 		ExtAudioFileDispose(audiofileobject);
-		
+
 		return true;
+#elif defined __WIN32__
+//		ALuint uiBufferID
+//		ALenum eXRAMBufferMode
+
+		WAVEID			WaveID;
+/*		ALint			iDataSize, iFrequency;
+		ALenum			eBufferFormat;
+		ALchar			*pData;*/
+
+		const char *filepath = sgResourceManager::getPath(filename);
+		if(SUCCEEDED(waveparser.LoadWaveFile(filepath, &WaveID)))
+		{
+			*audio = new sgUncompressedAudio;
+			if((SUCCEEDED(waveparser.GetWaveSize(WaveID, &((*audio)->dataLength)))) &&
+				(SUCCEEDED(waveparser.GetWaveData(WaveID, (void**)&((*audio)->bytes)))) &&
+				(SUCCEEDED(waveparser.GetWaveFrequency(WaveID, (unsigned long*)&((*audio)->sampleRate)))) &&
+				(SUCCEEDED(waveparser.GetWaveALBufferFormat(WaveID, &alGetEnumValue, (unsigned long*)&((*audio)->channelCount)))))
+			{
+				(*audio)->channelCount = 1;
+/*				// Set XRAM Mode (if application)
+				if(eaxSetBufferMode && eXRAMBufferMode)
+					eaxSetBufferMode(1, &uiBufferID, eXRAMBufferMode);
+					alGetError();
+				alBufferData(uiBufferID, eBufferFormat, pData, iDataSize, iFrequency);
+				if(alGetError() == AL_NO_ERROR)
+				{
+					waveparser.DeleteWaveFile(WaveID);
+					delete[] filepath;
+					return true;
+				}*/
+//				waveparser.DeleteWaveFile(WaveID);
+				delete[] filepath;
+				return true;
+			}
+		}
+		waveparser.DeleteWaveFile(WaveID);
+		delete[] filepath;
+		return false;
+#else
+		return false;
+#endif
 	}
 }

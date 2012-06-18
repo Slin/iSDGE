@@ -31,16 +31,17 @@
 #include "sgAction.h"
 #include "sgTouches.h"
 #include "sgAccelerometer.h"
+#include "sgMouse.h"
 
 class CameraFree : public sgAction
 {
 	public:
 		CameraFree(float sp = 1.0, bool acc = false);
-	
+
 		void makeStereo(float dist, float xoffset = 0.0f);
 		void makeAnaglyph(float dist, const char *fs);
 		void onDraw(float timestep);
-	
+
 	private:
 		float speed;
 		float stereodist;

@@ -26,8 +26,15 @@
 #include "sgShader.h"
 
 #include <string>
-#include <OpenGLES/ES2/gl.h>
-#include <OpenGLES/ES2/glext.h>
+#if defined __IOS__
+	#include <OpenGLES/ES2/gl.h>
+	#include <OpenGLES/ES2/glext.h>
+#else
+	#define GLEW_STATIC
+	#include <GL/glew.h>
+	#include <GL/glfw.h>
+	#include <cstdlib>
+#endif
 #include "sgResourceManager.h"
 #include "sgDebug.h"
 
@@ -45,20 +52,20 @@ sgShader::sgShader(const char *vsfilename, const char *fsfilename)
 
 sgShader::~sgShader()
 {
-	
+
 }
 
 sgShader *sgShader::getShader(const char *vsfilename, const char *fsfilename)
 {
 	std::string str = std::string("shader")+std::string(vsfilename)+std::string(fsfilename);
-	
+
 	sgShader *shader = (sgShader*)sgResourceManager::getResource(str.c_str());
 	if(shader != NULL)
 		return shader;
-	
+
 	shader = new sgShader(vsfilename, fsfilename);
 	sgResourceManager::addResource(str.c_str(), shader);
-	
+
 	return shader;
 }
 
@@ -73,7 +80,11 @@ sgShader *sgShader::getShader(BuiltInShaders shad)
 			shader = (sgShader*)sgResourceManager::getResource("shader_texture");
 			if(shader == NULL)
 			{
+#if defined __IOS__
 				shader = new sgShader("iSDGE.bundle/sgsTexture.vsh", "iSDGE.bundle/sgsTexture.fsh");
+#else
+				shader = new sgShader("shaders/sgsTexture.vsh", "shaders/sgsTexture.fsh");
+#endif
 				sgResourceManager::addResource("shader_texture", shader);
 			}
 			break;
@@ -83,7 +94,11 @@ sgShader *sgShader::getShader(BuiltInShaders shad)
 			shader = (sgShader*)sgResourceManager::getResource("shader_texture_discard");
 			if(shader == NULL)
 			{
+#if defined __IOS__
 				shader = new sgShader("iSDGE.bundle/sgsTexture.vsh", "iSDGE.bundle/sgsTextureDiscard.fsh");
+#else
+				shader = new sgShader("shaders/sgsTexture.vsh", "shaders/sgsTextureDiscard.fsh");
+#endif
 				sgResourceManager::addResource("shader_texture_discard", shader);
 			}
 			break;
@@ -93,7 +108,11 @@ sgShader *sgShader::getShader(BuiltInShaders shad)
 			shader = (sgShader*)sgResourceManager::getResource("shader_sun");
 			if(shader == NULL)
 			{
+#if defined __IOS__
 				shader = new sgShader("iSDGE.bundle/sgsSun.vsh", "iSDGE.bundle/sgsSun.fsh");
+#else
+				shader = new sgShader("shaders/sgsSun.vsh", "shaders/sgsSun.fsh");
+#endif
 				sgResourceManager::addResource("shader_sun", shader);
 			}
 			break;
@@ -103,7 +122,11 @@ sgShader *sgShader::getShader(BuiltInShaders shad)
 			shader = (sgShader*)sgResourceManager::getResource("shader_light");
 			if(shader == NULL)
 			{
+#if defined __IOS__
 				shader = new sgShader("iSDGE.bundle/sgsLight.vsh", "iSDGE.bundle/sgsLight.fsh");
+#else
+				shader = new sgShader("shaders/sgsLight.vsh", "shaders/sgsLight.fsh");
+#endif
 				sgResourceManager::addResource("shader_light", shader);
 			}
 			break;
@@ -113,7 +136,11 @@ sgShader *sgShader::getShader(BuiltInShaders shad)
 			shader = (sgShader*)sgResourceManager::getResource("shader_lightmap");
 			if(shader == NULL)
 			{
+#if defined __IOS__
 				shader = new sgShader("iSDGE.bundle/sgsLightmap.vsh", "iSDGE.bundle/sgsLightmap.fsh");
+#else
+				shader = new sgShader("shaders/sgsLightmap.vsh", "shaders/sgsLightmap.fsh");
+#endif
 				sgResourceManager::addResource("shader_lightmap", shader);
 			}
 			break;
@@ -123,19 +150,27 @@ sgShader *sgShader::getShader(BuiltInShaders shad)
 			shader = (sgShader*)sgResourceManager::getResource("shader_lightmap_discard");
 			if(shader == NULL)
 			{
+#if defined __IOS__
 				shader = new sgShader("iSDGE.bundle/sgsLightmap.vsh", "iSDGE.bundle/sgsLightmapDiscard.fsh");
+#else
+				shader = new sgShader("shaders/sgsLightmap.vsh", "shaders/sgsLightmapDiscard.fsh");
+#endif
 				sgResourceManager::addResource("shader_lightmap_discard", shader);
 			}
 			break;
 		}
-			
+
 		//Special shaders
 		case BIS_SHADOWVOLUME:
 		{
 			shader = (sgShader*)sgResourceManager::getResource("shader_shadowvolume");
 			if(shader == NULL)
 			{
+#if defined __IOS__
 				shader = new sgShader("iSDGE.bundle/sgsShadowvolume.vsh", "iSDGE.bundle/sgsShadowvolume.fsh");
+#else
+				shader = new sgShader("shaders/sgsShadowvolume.vsh", "shaders/sgsShadowvolume.fsh");
+#endif
 				sgResourceManager::addResource("shader_shadowvolume", shader);
 			}
 			break;
@@ -145,7 +180,11 @@ sgShader *sgShader::getShader(BuiltInShaders shad)
 			shader = (sgShader*)sgResourceManager::getResource("shader_shadowquad");
 			if(shader == NULL)
 			{
+#if defined __IOS__
 				shader = new sgShader("iSDGE.bundle/sgsShadowquad.vsh", "iSDGE.bundle/sgsShadowquad.fsh");
+#else
+				shader = new sgShader("shaders/sgsShadowquad.vsh", "shaders/sgsShadowquad.fsh");
+#endif
 				sgResourceManager::addResource("shader_shadowquad", shader);
 			}
 			break;
@@ -155,18 +194,26 @@ sgShader *sgShader::getShader(BuiltInShaders shad)
 			shader = (sgShader*)sgResourceManager::getResource("shader_particle");
 			if(shader == NULL)
 			{
+#if defined __IOS__
 				shader = new sgShader("iSDGE.bundle/sgsParticle.vsh", "iSDGE.bundle/sgsParticle.fsh");
+#else
+				shader = new sgShader("shaders/sgsParticle.vsh", "shaders/sgsParticle.fsh");
+#endif
 				sgResourceManager::addResource("shader_particle", shader);
 			}
 			break;
 		}
-			
+
 		default:
 		{
 			shader = (sgShader*)sgResourceManager::getResource("shader_texture");
 			if(shader == NULL)
 			{
+#if defined __IOS__
 				shader = new sgShader("iSDGE.bundle/sgsTexture.vsh", "iSDGE.bundle/sgsTexture.fsh");
+#else
+				shader = new sgShader("shaders/sgsTexture.vsh", "shaders/sgsTexture.fsh");
+#endif
 				sgResourceManager::addResource("shader_texture", shader);
 			}
 			break;
@@ -179,20 +226,20 @@ bool sgShader::compileShader(GLuint *shader, GLenum type, const char *filepath)
 {
 	GLint status;
 	const GLchar *source;
-	
+
 	source = (GLchar *)sgResourceManager::getFileAsString(filepath);
 	if(!source)
 	{
 		sgLog("Failed to load shader");
 		return false;
 	}
-	
+
 	*shader = glCreateShader(type);
 	glShaderSource(*shader, 1, &source, NULL);
 	glCompileShader(*shader);
-	
+
 	delete[] source;
-	
+
 	GLint logLength;
 	glGetShaderiv(*shader, GL_INFO_LOG_LENGTH, &logLength);
 	if(logLength > 0)
@@ -202,23 +249,23 @@ bool sgShader::compileShader(GLuint *shader, GLenum type, const char *filepath)
 		sgLog("%s: Shader compile log:\n %s", filepath, log);
 		free(log);
 	}
-	
+
 	glGetShaderiv(*shader, GL_COMPILE_STATUS, &status);
 	if(status == 0)
 	{
 		glDeleteShader(*shader);
 		return false;
 	}
-	
+
 	return true;
 }
 
 bool sgShader::linkProgram(GLuint prog)
 {
 	GLint status;
-	
+
 	glLinkProgram(prog);
-	
+
 	GLint logLength;
 	glGetProgramiv(prog, GL_INFO_LOG_LENGTH, &logLength);
 	if(logLength > 0)
@@ -232,18 +279,18 @@ bool sgShader::linkProgram(GLuint prog)
 #endif
 		free(log);
 	}
-	
+
 	glGetProgramiv(prog, GL_LINK_STATUS, &status);
 	if(status == 0)
 		return false;
-	
+
 	return true;
 }
 
 bool sgShader::validateProgram()
 {
 	GLint logLength, status;
-	
+
 	glValidateProgram(program);
 	glGetProgramiv(program, GL_INFO_LOG_LENGTH, &logLength);
 	if(logLength > 0)
@@ -253,11 +300,11 @@ bool sgShader::validateProgram()
 		sgLog("Program validate log:\n%s", log);
 		free(log);
 	}
-	
+
 	glGetProgramiv(program, GL_VALIDATE_STATUS, &status);
 	if(status == 0)
 		return false;
-	
+
 	return true;
 }
 
@@ -270,7 +317,7 @@ void sgShader::getEngineUniforms()
 	matnormal = glGetUniformLocation(program, "matNormal");
 	mattex = glGetUniformLocation(program, "matTex");
 	matbones = glGetUniformLocation(program, "matBones");
-	
+
 	position = glGetAttribLocation(program, "vertPos");
 	normal = glGetAttribLocation(program, "vertNormal");
 	texcoord0 = glGetAttribLocation(program, "vertTexcoord0");
@@ -279,23 +326,23 @@ void sgShader::getEngineUniforms()
 	tangent = glGetAttribLocation(program, "vertTangent");
 	boneweights = glGetAttribLocation(program, "vertBoneWeights");
 	boneindices = glGetAttribLocation(program, "vertBoneIndices");
-	
+
 	mambientloc = glGetUniformLocation(program, "mAmbient");
 	mdiffuseloc = glGetUniformLocation(program, "mDiffuse");
 	mspecularloc = glGetUniformLocation(program, "mSpecular");
 	mshininessloc = glGetUniformLocation(program, "mShininess");
 	memissiveloc = glGetUniformLocation(program, "mEmissive");
 	malphatestvalue = glGetUniformLocation(program, "mAlphaTest");
-	
+
 	fcolor = glGetUniformLocation(program, "fColor");
 	fstartend = glGetUniformLocation(program, "fStartEnd");
-	
+
 	lambientloc = glGetUniformLocation(program, "lAmbient");
 	ldiffuseloc = glGetUniformLocation(program, "lDiffuse");
 	lspecularloc = glGetUniformLocation(program, "lSpecular");
 	lpositionloc = glGetUniformLocation(program, "lPosition");
 	lattenuationloc = glGetUniformLocation(program, "lAttenuation");
-	
+
 	time = glGetUniformLocation(program, "Time");
 	vposition = glGetUniformLocation(program, "vPosition");
 }
@@ -304,18 +351,18 @@ bool sgShader::create(const char *vsfilename, const char *fsfilename)
 {
 	if(program != -1)
 		return false;
-	
+
 #if defined (DEBUG)
 	vsfile = std::string(vsfilename);
 	fsfile = std::string(fsfilename);
 #endif
-	
+
 	GLuint vertShader, fragShader = -1;
 	const char *vertShaderPathname, *fragShaderPathname;
-	
+
 	// Create shader program
 	program = glCreateProgram();
-	
+
 	// Create and compile vertex shader
 	vertShaderPathname = sgResourceManager::getPath(vsfilename);
 	if(!compileShader(&vertShader, GL_VERTEX_SHADER, vertShaderPathname))
@@ -325,7 +372,7 @@ bool sgShader::create(const char *vsfilename, const char *fsfilename)
 		return false;
 	}
 	delete[] vertShaderPathname;
-	
+
 	// Create and compile fragment shader
 	fragShaderPathname = sgResourceManager::getPath(fsfilename);
 	if(!compileShader(&fragShader, GL_FRAGMENT_SHADER, fragShaderPathname))
@@ -335,24 +382,24 @@ bool sgShader::create(const char *vsfilename, const char *fsfilename)
 		return false;
 	}
 	delete[] fragShaderPathname;
-	
+
 	// Attach vertex shader to program
 	glAttachShader(program, vertShader);
-	
+
 	// Attach fragment shader to program
 	glAttachShader(program, fragShader);
-	
+
 	// Link program
 	if(!linkProgram(program))
 	{
 		sgLog("Failed to link program: %i", program);
-		
+
 		if(program)
 		{
 			glDeleteProgram(program);
 			program = -1;
 		}
-		
+
 		if(vertShader != -1)
 		{
 			glDeleteShader(vertShader);
@@ -361,24 +408,24 @@ bool sgShader::create(const char *vsfilename, const char *fsfilename)
 		{
 			glDeleteShader(fragShader);
 		}
-		
+
 		return false;
 	}
-	
+
 	if(vertShader != -1)
 	{
 		glDetachShader(program, vertShader);
 		glDeleteShader(vertShader);
 	}
-	
+
 	if(fragShader != -1)
 	{
 		glDetachShader(program, fragShader);
 		glDeleteShader(fragShader);
 	}
-	
+
 	getEngineUniforms();
-				
+
 	return true;
 }
 
@@ -389,7 +436,7 @@ void sgShader::destroy()
 		glDeleteProgram(program);
 		program = -1;
 	}
-	
+
 	sgResourceManager::removeResource(this);
 	delete this;
 }

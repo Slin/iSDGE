@@ -25,8 +25,14 @@
 
 #include "sgSoundSource.h"
 #include "sgSound.h"
-#include <OpenAL/al.h>
-#include <OpenAL/alc.h>
+
+#if defined __IOS__
+	#include <OpenAL/al.h>
+	#include <OpenAL/alc.h>
+#elif defined __WIN32__
+	#include <al.h>
+	#include <alc.h>
+#endif
 
 sgSoundSource::sgSoundSource(sgSoundSource *p, sgSoundSource *n)
 {
@@ -40,8 +46,10 @@ sgSoundSource::sgSoundSource(sgSoundSource *p, sgSoundSource *n)
 
 sgSoundSource::~sgSoundSource()
 {
+#if defined __IOS__ || defined __WIN32__
 	if(handles.size() > 0)
 		alDeleteSources(handles.size(), &handles[0]);
+#endif
 }
 
 sgSoundSource *sgSoundSource::createSoundSource()
@@ -52,6 +60,7 @@ sgSoundSource *sgSoundSource::createSoundSource()
 
 unsigned int sgSoundSource::registerSound(sgSound *snd)
 {
+#if defined __IOS__ || defined __WIN32__
 	unsigned int src;
 	alGenSources(1, &src);
 	alSourcei(src, AL_SOURCE_RELATIVE, AL_FALSE);
@@ -59,10 +68,14 @@ unsigned int sgSoundSource::registerSound(sgSound *snd)
     alSourcei(src, AL_BUFFER, snd->sndid);
 	handles.push_back(src);
 	return src;
+#else
+	return 0;
+#endif
 }
 
 void sgSoundSource::unregisterSound(unsigned int handle)
 {
+#if defined __IOS__ || defined __WIN32__
 	alSourceStop(handle);
 	alDeleteSources(1, &handle);
 	for(unsigned int i = 0; i < handles.size(); i++)
@@ -73,41 +86,52 @@ void sgSoundSource::unregisterSound(unsigned int handle)
 			break;
 		}
 	}
+#endif
 }
 
 void sgSoundSource::playSound(unsigned int handle, bool loop, float nearrange, float falloff, float farrange, float vol)
 {
+#if defined __IOS__ || defined __WIN32__
 	alSourcef(handle, AL_REFERENCE_DISTANCE, nearrange);
 	alSourcef(handle, AL_MAX_DISTANCE, farrange);
 	alSourcef(handle, AL_ROLLOFF_FACTOR, falloff);
 	alSourcef(handle, AL_GAIN, vol);
 	alSourcei(handle, AL_LOOPING, loop?AL_TRUE:AL_FALSE);
 	alSourcePlay(handle);
+#endif
 }
 
 void sgSoundSource::stopSound(unsigned int handle)
 {
+#if defined __IOS__ || defined __WIN32__
 	alSourceStop(handle);
+#endif
 }
 
 bool sgSoundSource::isPlaying(unsigned int handle)
 {
+#if defined __IOS__ || defined __WIN32__
 	ALenum state;
 	alGetSourcei(handle, AL_SOURCE_STATE, &state);
 	return (state == AL_PLAYING);
+#else
+	return false;
+#endif
 }
 
 void sgSoundSource::update(float timestep)
 {
+#if defined __IOS__ || defined __WIN32__
 	sgVector3 vel = lastpos-position;
 	vel /= timestep;
 	lastpos = position;
-	
+
 	for(unsigned int i = 0; i < handles.size(); i++)
 	{
 		alSourcefv(handles[i], AL_POSITION, &position.x);
 		alSourcefv(handles[i], AL_VELOCITY, &vel.x);
 	}
+#endif
 }
 
 void sgSoundSource::destroy()
@@ -116,17 +140,17 @@ void sgSoundSource::destroy()
 		prev->next = next;
 	else
 		return;
-	
+
 	if(next)
 		next->prev = prev;
-	
+
 	delete this;
 }
 
 void sgSoundSource::destroyAll()
 {
 	destroy();
-	
+
 	if(next)
 		next->destroyAll();
 	if(prev)

@@ -28,11 +28,18 @@
 #include "sgVector3.h"
 #include "sgQuaternion.h"
 #include <float.h>
-#include <OpenAL/al.h>
-#include <OpenAL/alc.h>
+
+#if defined __IOS__
+	#include <OpenAL/al.h>
+	#include <OpenAL/alc.h>
+#elif defined __WIN32__
+	#include <al.h>
+	#include <alc.h>
+#endif
 
 sgAudioPlayer::sgAudioPlayer()
 {
+#if defined __IOS__ || defined __WIN32__
     device = alcOpenDevice(NULL);
     if(device != NULL)
     {
@@ -43,7 +50,8 @@ sgAudioPlayer::sgAudioPlayer()
         }
     }
     alGetError();	//clears all errors
-	
+#endif
+
 	first_sndsource = new sgSoundSource(NULL, NULL);
 }
 
@@ -51,16 +59,19 @@ sgAudioPlayer::~sgAudioPlayer()
 {
 	first_sndsource->destroyAll();
 	delete first_sndsource;
+#if defined __IOS__ || defined __WIN32__
 	if(handles.size() > 0)
 	{
 		alDeleteSources(handles.size(), &handles[0]);
 	}
     alcDestroyContext(context);
     alcCloseDevice(device);
+#endif
 }
 
 unsigned int sgAudioPlayer::registerSound(sgSound *snd)
 {
+#if defined __IOS__ || defined __WIN32__
 	static float sourcePosAL[] = {0.0f, 0.0f, 0.0f};
 	unsigned int src;
 	alGenSources(1, &src);
@@ -71,10 +82,14 @@ unsigned int sgAudioPlayer::registerSound(sgSound *snd)
     alSourcei(src, AL_BUFFER, snd->sndid);
 	handles.push_back(src);
 	return src;
+#else
+	return 0;
+#endif
 }
 
 void sgAudioPlayer::unregisterSound(unsigned int handle)
 {
+#if defined __IOS__ || defined __WIN32__
 	alSourceStop(handle);
 	alDeleteSources(1, &handle);
 	for(unsigned int i = 0; i < handles.size(); i++)
@@ -85,22 +100,28 @@ void sgAudioPlayer::unregisterSound(unsigned int handle)
 			break;
 		}
 	}
+#endif
 }
 
 void sgAudioPlayer::playSound(unsigned int handle, bool loop, float vol)
 {
+#if defined __IOS__ || defined __WIN32__
 	alSourcef(handle, AL_GAIN, vol);
 	alSourcei(handle, AL_LOOPING, loop?AL_TRUE:AL_FALSE);
 	alSourcePlay(handle);
+#endif
 }
 
 void sgAudioPlayer::stopSound(unsigned int handle)
 {
+#if defined __IOS__ || defined __WIN32__
 	alSourceStop(handle);
+#endif
 }
 
 void sgAudioPlayer::setListener(sgVector3 &pos, sgQuaternion &rot, sgVector3 vel)
 {
+#if defined __IOS__ || defined __WIN32__
 	sgVector3 upat[2];
 	upat[0] = rot.rotate(sgVector3(0.0, 1.0, 0.0));
 	upat[1] = rot.rotate(sgVector3(0.0, 0.0, 1.0));
@@ -108,10 +129,12 @@ void sgAudioPlayer::setListener(sgVector3 &pos, sgQuaternion &rot, sgVector3 vel
 	alListenerfv(AL_POSITION, &pos.x);
 	alListenerfv(AL_VELOCITY, &vel.x);
 	listenerpos = pos;
+#endif
 }
 
 void sgAudioPlayer::updateListener(sgVector3 &pos, sgQuaternion &rot, float timestep)
 {
+#if defined __IOS__ || defined __WIN32__
 	sgVector3 upat[2];
 	upat[0] = rot.rotate(sgVector3(0.0, 1.0, 0.0));
 	upat[1] = rot.rotate(sgVector3(0.0, 0.0, 1.0));
@@ -121,12 +144,15 @@ void sgAudioPlayer::updateListener(sgVector3 &pos, sgQuaternion &rot, float time
 	vel /= timestep;
 	alListenerfv(AL_VELOCITY, &vel.x);
 	listenerpos = pos;
+#endif
 }
 
 void sgAudioPlayer::update(float timestep)
 {
+#if defined __IOS__ || defined __WIN32__
 	for(sgSoundSource *src = first_sndsource->next; src != NULL; src = src->next)
 	{
 		src->update(timestep);
 	}
+#endif
 }

@@ -27,8 +27,14 @@
 #include "sgAudioFiles.h"
 #include "sgResourceManager.h"
 #include "sgDebug.h"
-#include <OpenAL/al.h>
-#include <OpenAL/alc.h>
+
+#if defined __IOS__
+	#include <OpenAL/al.h>
+	#include <OpenAL/alc.h>
+#elif defined __WIN32__
+	#include <al.h>
+	#include <alc.h>
+#endif
 
 sgSound::sgSound()
 {
@@ -38,18 +44,21 @@ sgSound::sgSound()
 
 sgSound::~sgSound()
 {
+#if defined __IOS__ || defined __WIN32__
 	if(sndid != -1)
 		alDeleteBuffers(1, &sndid);
-	
+
 	if(audiodata)
 		delete[] audiodata;
+#endif
 }
 
 void sgSound::createSound(const char *filename)
 {
 	if(sndid != -1)
 		return;
-	
+
+#if defined __IOS__ || defined __WIN32__
 	sgAudioFiles::sgUncompressedAudio *snd = 0;
 	if(!sgAudioFiles::loadAudio(&snd, filename))
 	{
@@ -59,13 +68,13 @@ void sgSound::createSound(const char *filename)
 				delete[] snd->bytes;
 			delete snd;
 		}
-		
+
 		sgLog("Can´t load audio file: %s", filename);
 		return;
 	}
-	
+
 	alGenBuffers(1, &sndid);
-	
+
 	typedef ALvoid  AL_APIENTRY (*alBufferDataStaticProcPtr) (const ALint bid, ALenum format, ALvoid* data, ALsizei size, ALsizei freq);
 	static alBufferDataStaticProcPtr proc = NULL;
 	if (proc == NULL)
@@ -76,10 +85,11 @@ void sgSound::createSound(const char *filename)
 	{
         proc(sndid, (snd->channelCount > 1)? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, snd->bytes, snd->dataLength, snd->sampleRate);
 	}
-	
+
 	audiodata = snd->bytes;
 	delete snd;
-	
+#endif
+
 	sgResourceManager::addResource(filename, this);
 }
 
@@ -88,10 +98,10 @@ sgSound *sgSound::getSound(const char *filename)
 	sgSound *snd = (sgSound*)sgResourceManager::getResource(filename);
 	if(snd != NULL)
 		return snd;
-	
+
 	snd = new sgSound();
 	snd->createSound(filename);
-	
+
 	return snd;
 }
 

@@ -31,4 +31,5 @@ void Rotate::onDraw(float timestep)
 {
 	//Rotate the object
 	ent->obj->rotation += sgVector3(timestep*50.0f);
+	ent->obj->updateObject();
 }

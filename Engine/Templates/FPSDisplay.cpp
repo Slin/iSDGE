@@ -24,6 +24,7 @@
 //	THE SOFTWARE.
 
 #include "FPSDisplay.h"
+#include <cstdio>
 
 void FPSDisplay::onInit(sgEntity *e)
 {

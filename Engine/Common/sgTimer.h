@@ -26,16 +26,25 @@
 #ifndef __SGTIMER_H__
 #define __SGTIMER_H__
 
-//#include <sys/time.h>
-#include <mach/mach.h>
-#include <mach/mach_time.h>
+#if defined __IOS__
+    //#include <sys/time.h>
+    #include <mach/mach.h>
+    #include <mach/mach_time.h>
+#elif defined __WIN32__
+	#include <windows.h>
+#endif
 
 typedef struct
 {
 /*	timeval start;
 	timeval stop;*/
+#if defined __IOS__
 	unsigned long long int start;
 	unsigned long long int stop;
+#elif defined __WIN32__
+	LARGE_INTEGER start;
+	LARGE_INTEGER stop;
+#endif
 }sgTimerWatch;
 
 class sgTimer
@@ -45,10 +54,15 @@ class sgTimer
 		void start( );
 		void stop( );
 		double getElapsedTime();
-	
+
 	private:
 		sgTimerWatch timer;
+
+#if defined __IOS__
 		mach_timebase_info_data_t timebase;
+#elif defined __WIN32__
+		LARGE_INTEGER frequency;
+#endif
 };
 
 #endif

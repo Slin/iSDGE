@@ -23,7 +23,13 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-precision lowp float;
+#ifdef GL_ES
+	precision lowp float;
+#else
+	#define lowp
+	#define mediump
+	#define highp
+#endif
 
 uniform lowp sampler2D mTexture0;
 varying mediump vec2 texcoord;

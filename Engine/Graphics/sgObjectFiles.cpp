@@ -32,6 +32,11 @@
 #include "sgObjectBody.h"
 #include "sgDebug.h"
 
+#if !defined __IOS__
+	#include <cstdlib>
+	#include <cstring>
+#endif
+
 namespace sgObjectFiles
 {
 	bool loadSGM(sgObjectContainer *obj, const char *filename, unsigned long flags)
@@ -44,7 +49,7 @@ namespace sgObjectFiles
 			sgLog("Could not open file: %s", filename);
 			return false;
 		}
-		
+
 		unsigned char version_id;
 		fread(&version_id, 1, 1, file);
 		if(version_id != 1)
@@ -52,7 +57,7 @@ namespace sgObjectFiles
 			sgLog("The file format is out of date or not supported: %s", filename);
 			return false;
 		}
-		
+
 		//Get materials
 		unsigned char countmats = 0;
 		fread(&countmats, 1, 1, file);
@@ -72,7 +77,7 @@ namespace sgObjectFiles
 				delete[] texfilename;
 			}
 		}
-		
+
 		//Get meshes
 		unsigned char countmeshs = 0;
 		fread(&countmeshs, 1, 1, file);
@@ -82,7 +87,7 @@ namespace sgObjectFiles
 			fread(&meshes[i].id_, 1, 1, file);
 			unsigned char matid = 0;
 			fread(&matid, 1, 1, file);
-			
+
 			for(unsigned int n = 0; n < countmats; n++)
 			{
 				if(materials[n].id_ == matid)
@@ -91,7 +96,7 @@ namespace sgObjectFiles
 					break;
 				}
 			}
-			
+
 			unsigned short numverts = 0;
 			fread(&numverts, 2, 1, file);
 			unsigned char uvcount = 0;
@@ -102,7 +107,7 @@ namespace sgObjectFiles
 			fread(&hastangent, 1, 1, file);
 			unsigned char bonecount = 0;
 			fread(&bonecount, 1, 1, file);
-			
+
 			meshes[i].vtxsize = 8;
 			meshes[i].vtxfeatures = sgVertex::POSITION|sgVertex::NORMAL|sgVertex::UV0;
 			if((flags & GEN_TANGENT) > 0 || hastangent == 1)
@@ -127,11 +132,11 @@ namespace sgObjectFiles
 				meshes[i].bonemapping = new unsigned short[bonecount];
 				fread(meshes[i].bonemapping, 2, bonecount, file);
 			}
-			
+
 			//Vertexdata
 			meshes[i].vertexnum = numverts;
 			meshes[i].vertices = (float*)malloc(meshes[i].vtxsize*numverts*sizeof(float));
-			
+
 			if((flags & GEN_TANGENT) == 0)
 			{
 				fread(meshes[i].vertices, 4, meshes[i].vtxsize*numverts, file);
@@ -140,19 +145,19 @@ namespace sgObjectFiles
 				float *vertdatasrc = new float[meshes[i].vtxsize*numverts];
 				fread(vertdatasrc, 4, meshes[i].vtxsize*numverts, file);
 				float *vertdatatarget = meshes[i].vertices;
-				
+
 				for(int n = 0; n < numverts; n++)
 				{
 					memcpy((vertdatatarget+meshes[i].vtxsize*n), &vertdatasrc[n*meshes[i].vtxsize], sizeof(float)*meshes[i].vtxsize);
 				}
 			}
-			
+
 			//Indices
 			fread(&meshes[i].indexnum, 2, 1, file);
 			meshes[i].indices = new unsigned short[meshes[i].indexnum];
 			fread(meshes[i].indices, 2, meshes[i].indexnum, file);
 		}
-		
+
 		//Animations
 		unsigned char hasanimations = 0;
 		fread(&hasanimations, 1, 1, file);
@@ -165,19 +170,19 @@ namespace sgObjectFiles
 			printf("Animation filename: %s\n", animfilename);
 			//meshesstd::string(animfilename);
 		}
-		
+
 		fclose(file);
-		
+
 		for(int meshnum = 0; meshnum < countmeshs; meshnum++)
 		{
 			sgMesh *mesh_ = new sgMesh;
-			
+
 			mesh_->vtxfeatures = meshes[meshnum].vtxfeatures;
 			mesh_->vtxsize = meshes[meshnum].vtxsize;
-			
+
 			mesh_->vertexnum = meshes[meshnum].vertexnum;
 			mesh_->vertices = meshes[meshnum].vertices;
-			
+
 			mesh_->indexnum = meshes[meshnum].indexnum;
 			mesh_->indices = meshes[meshnum].indices;
 
@@ -185,9 +190,9 @@ namespace sgObjectFiles
 				mesh_->calculateTangents();
 			mesh_->generateVBO();
 			obj->meshs.push_back(mesh_);
-			
+
 			sgResourceManager::addResource(mesh_);
-			
+
 			if(meshes[meshnum].material->texnames.size() > 0)
 			{
 				obj->materials.push_back(sgMaterial::getMaterial(meshes[meshnum].material->texnames[0].c_str()));
@@ -200,10 +205,10 @@ namespace sgObjectFiles
 				obj->materials.push_back(sgMaterial::getMaterial());
 			}
 		}
-		
+
 		delete[] meshes;
 		delete[] materials;
-		
+
 		return true;
 	}
 }

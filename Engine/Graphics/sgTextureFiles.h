@@ -49,20 +49,21 @@ namespace sgTextureFiles
 		unsigned long bitmaskAlpha;
 		unsigned long pvrTag;
 		unsigned long numSurfs;
-		
+
 		unsigned long glformat;
 		unsigned char* bytes;
 		std::vector<unsigned long> mipsizes;
 	};
-	
+
 	struct sgUncompressedTexture
 	{
+		bool hasalpha;
 		unsigned long height;
 		unsigned long width;
 		unsigned long dataLength;
 		unsigned char* bytes;
 	};
-	
+
 	/**
 	 *	Load png.
 	 *	Loads a png texture file.
@@ -71,7 +72,7 @@ namespace sgTextureFiles
 	 * @return true if it was successfull, false otherwise
 	 */
 	bool loadPNG(sgUncompressedTexture **tex, const char *filename);
-	
+
 	/**
 	 *	Load pvr.
 	 *	Loads a pvr compressed texture file.

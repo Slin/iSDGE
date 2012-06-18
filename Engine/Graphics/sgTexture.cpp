@@ -33,6 +33,10 @@
 #include "sgColor.h"
 #include "sgDebug.h"
 
+#if !defined __IOS__
+	#include <cstring>
+#endif
+
 sgTexture::sgTexture()
 {
 	loaded = false;
@@ -40,6 +44,7 @@ sgTexture::sgTexture()
 	texid = -1;
 	texdata = NULL;
 	textype = GL_TEXTURE_2D;
+	format = GL_RGBA;
 }
 
 sgTexture::~sgTexture()
@@ -52,14 +57,16 @@ sgTexture::~sgTexture()
 			glDeleteRenderbuffers(1, &fbo_depth);
 		}else
 		{
+#if defined __IOS__
 			glDeleteFramebuffersOES(1, &fbo);
 			glDeleteRenderbuffersOES(1, &fbo_depth);
+#endif
 		}
 	}
-	
+
 	if(texid != -1)
 		glDeleteTextures(1, &texid);
-	
+
 	if(texdata != NULL)
 		delete[] texdata;
 }
@@ -68,7 +75,7 @@ void sgTexture::createTexture(const char *filename, bool mipmaps, bool lock)
 {
 	if(loaded)
 		return;
-	
+
 	sgTextureFiles::sgUncompressedTexture *tex = 0;
 	if(!sgTextureFiles::loadPNG(&tex, filename))
 	{
@@ -78,12 +85,12 @@ void sgTexture::createTexture(const char *filename, bool mipmaps, bool lock)
 				delete[] tex->bytes;
 			delete tex;
 		}
-		
+
 		sgLog("Can´t load texture file: %s", filename);
 		return;
 	}
 
-	width = tex->width;     
+	width = tex->width;
 	height = tex->height;
 
 /*	if(!((width != 0) && !(width & (width - 1))))
@@ -105,11 +112,16 @@ void sgTexture::createTexture(const char *filename, bool mipmaps, bool lock)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+#if defined __IOS__
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 		if(sgRenderer::oglversion <= 1)
 		{
 			glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
 		}
+#else
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
+#endif
 	}else
 	{
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -117,15 +129,26 @@ void sgTexture::createTexture(const char *filename, bool mipmaps, bool lock)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	}
-	
+
 	texdata = tex->bytes;
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, texdata);
+	if(tex->hasalpha)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, texdata);
+		format = GL_RGBA;
+	}
+	else
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, texdata);
+		format = GL_RGB;
+	}
 
 	if(mipmaps && sgRenderer::oglversion > 1)
 	{
+#if defined __IOS__
 		glGenerateMipmap(GL_TEXTURE_2D);
+#endif
 	}
-	
+
 	if(!lock)
 	{
 		if(tex->bytes)
@@ -133,9 +156,9 @@ void sgTexture::createTexture(const char *filename, bool mipmaps, bool lock)
 		texdata = NULL;
 	}
 	delete tex;
-	
+
 	sgResourceManager::addResource(filename, this);
-	
+
 	loaded = true;
 }
 
@@ -143,7 +166,7 @@ void sgTexture::createPVRTexture(const char *filename)
 {
 	if(loaded)
 		return;
-	
+
 	sgTextureFiles::sgPVRTexture *tex = 0;
 	if(!sgTextureFiles::loadPVR(&tex, filename) || tex->mipsizes.size() < 1)
 	{
@@ -153,20 +176,20 @@ void sgTexture::createPVRTexture(const char *filename)
 				delete[] tex->bytes;
 			delete tex;
 		}
-		
+
 		sgLog("Can´t load texture file: %s", filename);
 		return;
 	}
-	
+
 	width = tex->width;
 	height = tex->height;
-	
+
 	unsigned int w = width;
 	unsigned int h = height;
-	
+
 	glGenTextures(1, &texid);
 	glBindTexture(GL_TEXTURE_2D, texid);
-	
+
 	if(tex->mipsizes.size() > 1)
 	{
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -180,31 +203,33 @@ void sgTexture::createPVRTexture(const char *filename)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	}
-	
+
 	unsigned long offset = 0;
 	for(int i = 0; i < tex->mipsizes.size(); i++)
 	{
 		glCompressedTexImage2D(GL_TEXTURE_2D, i, tex->glformat, w, h, 0, tex->mipsizes[i], &tex->bytes[offset]);
 		offset += tex->mipsizes[i];
-		
+
 		w = fmaxf((unsigned int)(w >> 1), 1.0f);
 		h = fmaxf((unsigned int)(h >> 1), 1.0f);
-	}	
-	
+	}
+
+	format = tex->glformat;
+
 	if(tex->bytes)
 		delete[] tex->bytes;
 	delete tex;
-	
+
 	sgResourceManager::addResource(filename, this);
-	
-	loaded = TRUE;
+
+	loaded = true;
 }
 
 void sgTexture::createTexture(float width_, float height_, bool cubemap)
 {
 	if(loaded)
 		return;
-	
+
 	if(cubemap)
 	{
 		textype = GL_TEXTURE_CUBE_MAP;
@@ -214,12 +239,12 @@ void sgTexture::createTexture(float width_, float height_, bool cubemap)
 	}
 	width = width_;
 	height = height_;
-	
+
 	texdata = new unsigned char[width*height*4];
-	
+
 	glGenTextures(1, &texid);
 	glBindTexture(textype, texid);
-	
+
 	if(cubemap)
 	{
 		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, GL_RGBA, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, texdata);
@@ -232,17 +257,19 @@ void sgTexture::createTexture(float width_, float height_, bool cubemap)
 	{
 		glTexImage2D(textype, 0, GL_RGBA, width_, height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, texdata);
 	}
-	
+
+	format = GL_RGBA;
+
 	glTexParameterf(textype, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameterf(textype, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameterf(textype, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameterf(textype, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	
+
 	sgResourceManager::addResource(this);
-	
+
 	delete[] texdata;
 	texdata = 0;
-	
+
 	loaded = true;
 }
 
@@ -250,31 +277,47 @@ void sgTexture::makeRendertarget()
 {
 	if(textype != GL_TEXTURE_2D || fbo != -1)
 		return;
-	
+
 	if(sgRenderer::oglversion > 1)
 	{
+#if defined __IOS__
 		glGenFramebuffers(1, &fbo);
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 		glBindTexture(textype, 0);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texid, 0);
 		glClear(GL_COLOR_BUFFER_BIT);
-		
+
 		glGenRenderbuffers(1, &fbo_depth);
 		glBindRenderbuffer(GL_RENDERBUFFER, fbo_depth);
 //		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8_OES, width, height);
 		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, width, height);
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, fbo_depth);
+#else
+		glGenFramebuffersEXT(1, &fbo);
+		glBindFramebufferEXT(GL_FRAMEBUFFER, fbo);
+		glBindTexture(textype, 0);
+		glFramebufferTexture2DEXT(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texid, 0);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		glGenRenderbuffersEXT(1, &fbo_depth);
+		glBindRenderbufferEXT(GL_RENDERBUFFER, fbo_depth);
+//		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8_OES, width, height);
+		glRenderbufferStorageEXT(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, width, height);
+		glFramebufferRenderbufferEXT(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, fbo_depth);
+#endif
 	}else
 	{
+#if defined __IOS__
 		glGenFramebuffersOES(1, &fbo);
 		glBindFramebufferOES(GL_FRAMEBUFFER_OES, fbo);
 		glBindTexture(GL_TEXTURE_2D, 0);
 		glFramebufferTexture2DOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_TEXTURE_2D, texid, 0);
-		
+
 		glGenRenderbuffersOES(1, &fbo_depth);
 		glBindRenderbufferOES(GL_RENDERBUFFER_OES, fbo_depth);
 		glRenderbufferStorageOES(GL_RENDERBUFFER_OES, GL_DEPTH_COMPONENT16_OES, width, height);
 		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_DEPTH_ATTACHMENT_OES, GL_RENDERBUFFER_OES, fbo_depth);
+#endif
 	}
 }
 
@@ -289,7 +332,7 @@ void sgTexture::setParameteri(unsigned int pname, unsigned int param)
 {
 	if(!loaded)
 		return;
-	
+
 	glBindTexture(textype, texid);
 	glTexParameteri(textype, pname, param);
 }
@@ -299,7 +342,7 @@ sgTexture *sgTexture::getTexture(const char *filename, bool mipmaps, bool lock)
 	sgTexture *tex = (sgTexture*)sgResourceManager::getResource(filename);
 	if(tex != NULL)
 		return tex;
-	
+
 	tex = new sgTexture();
 	std::string fnm(filename);
 	if(fnm.rfind(".png") != std::string::npos || fnm.rfind(".jpg") != std::string::npos || fnm.rfind(".PNG") != std::string::npos || fnm.rfind(".JPG") != std::string::npos)
@@ -327,12 +370,12 @@ void sgTexture::lockPixels()
 {
 	if(texdata != NULL)
 		return;
-	
+
 	glBindTexture(GL_TEXTURE_2D, texid);
-	texdata = new unsigned char[width*height*4];
-	for(int i = 0; i < width*height*4; i++)
+	texdata = new unsigned char[width*height*((format == GL_RGBA)?4:3)];
+	for(int i = 0; i < width*height*((format == GL_RGBA)?4:3); i++)
 		texdata[i] = 0;
-	
+
 /*	bool newfbo = false;
 	if(fbo == -1)
 	{
@@ -358,9 +401,9 @@ void sgTexture::lockPixels()
 			glBindFramebufferOES(GL_FRAMEBUFFER_OES, fbo);
 		}
 	}
-	
+
 	glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, texdata);
-	
+
 	if(newfbo)
 	{
 		if(sgRenderer::oglversion > 1)
@@ -379,7 +422,7 @@ void sgTexture::updatePixels(bool swapped)
 	glBindTexture(GL_TEXTURE_2D, texid);
 //	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, (swapped?GL_BGRA:GL_RGBA), GL_UNSIGNED_BYTE, texdata);
 //	glTexImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, (swapped?GL_BGRA:GL_RGBA), GL_UNSIGNED_BYTE, texdata);
-	glTexImage2D(textype, 0, GL_RGBA, width, height, 0, (swapped?GL_BGRA:GL_RGBA), GL_UNSIGNED_BYTE, texdata);
+	glTexImage2D(textype, 0, format, width, height, 0, (swapped?GL_BGRA:format), GL_UNSIGNED_BYTE, texdata);
 }
 
 
@@ -394,7 +437,7 @@ void sgTexture::setColor(sgColorA color)
 {
 	for(int i = 0; i < width*height; i++)
 	{
-		memcpy(&texdata[i*4], &color.r, 4*sizeof(char));
+		memcpy(&texdata[i*((format == GL_RGBA)?4:3)], &color.r, 4*sizeof(char));
 	}
 }
 
@@ -406,7 +449,7 @@ void sgTexture::setPixel(int x, int y, sgColorA color)
 		x += facx*width;
 	}
 	x %= width;
-	
+
 	if(y < 0)
 	{
 		int facy = -y/height;
@@ -414,11 +457,13 @@ void sgTexture::setPixel(int x, int y, sgColorA color)
 		sgLog("%i, %i", facy, y);
 	}
 	y %= height;
-	
-	texdata[y*width*4+x*4+0] = color.r;
-	texdata[y*width*4+x*4+1] = color.g;
-	texdata[y*width*4+x*4+2] = color.b;
-	texdata[y*width*4+x*4+3] = color.a;
+
+	int bytes = ((format == GL_RGBA)?4:3);
+	texdata[y*width*bytes+x*bytes+0] = color.r;
+	texdata[y*width*bytes+x*bytes+1] = color.g;
+	texdata[y*width*bytes+x*bytes+2] = color.b;
+	if(format = GL_RGBA)
+		texdata[y*width*bytes+x*bytes+3] = color.a;
 }
 
 void sgTexture::setPixels(unsigned char *data, unsigned int offset, unsigned int size)
@@ -434,15 +479,19 @@ sgColorA sgTexture::getPixel(int x, int y)
 		x += facx*width;
 	}
 	x %= width;
-	
+
 	if(y < 0)
 	{
 		int facy = -y/height+1;
 		y += facy*height;
 	}
 	y %= height;
-	
-	return sgColorA(texdata[y*width*4+x*4+0], texdata[y*width*4+x*4+1], texdata[y*width*4+x*4+2], texdata[y*width*4+x*4+3]);
+
+	int bytes = ((format == GL_RGBA)?4:3);
+	if(bytes == 4)
+		return sgColorA(texdata[y*width*bytes+x*bytes+0], texdata[y*width*bytes+x*bytes+1], texdata[y*width*bytes+x*bytes+2], texdata[y*width*bytes+x*bytes+3]);
+	else
+		return sgColorA(texdata[y*width*bytes+x*bytes+0], texdata[y*width*bytes+x*bytes+1], texdata[y*width*bytes+x*bytes+2], 1.0);
 }
 
 sgColorA sgTexture::getPixel(float x, float y)
@@ -455,25 +504,25 @@ sgColorA sgTexture::getPixel(float x, float y)
 	sgColorA col1 = getPixel(posx+1, posy);
 	sgColorA col2 = getPixel(posx, posy+1);
 	sgColorA col3 = getPixel(posx+1, posy+1);
-	
+
 	sgColorA middlex0;
 	middlex0.r = col0.r*facx+col1.r*(1.0-facx);
 	middlex0.g = col0.g*facx+col1.g*(1.0-facx);
 	middlex0.b = col0.b*facx+col1.b*(1.0-facx);
 	middlex0.a = col0.a*facx+col1.a*(1.0-facx);
-	
+
 	sgColorA middlex1;
 	middlex1.r = col2.r*facx+col3.r*(1.0-facx);
 	middlex1.g = col2.g*facx+col3.g*(1.0-facx);
 	middlex1.b = col2.b*facx+col3.b*(1.0-facx);
 	middlex1.a = col2.a*facx+col3.a*(1.0-facx);
-	
+
 	sgColorA middle;
 	middle.r = middlex0.r*facy+middlex1.r*(1.0-facy);
 	middle.g = middlex0.g*facy+middlex1.g*(1.0-facy);
 	middle.b = middlex0.b*facy+middlex1.b*(1.0-facy);
 	middle.a = middlex0.a*facy+middlex1.a*(1.0-facy);
-	
+
 	return middle;
 }
 

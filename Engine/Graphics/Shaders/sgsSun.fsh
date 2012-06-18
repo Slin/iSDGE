@@ -23,7 +23,13 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-precision highp float;
+#ifdef GL_ES
+	precision highp float;
+#else
+	#define lowp
+	#define mediump
+	#define highp
+#endif
 
 uniform lowp sampler2D mTexture0;
 uniform lowp float mAlphaTest;
@@ -33,5 +39,5 @@ varying lowp vec3 light;
 
 void main()
 {
-    gl_FragColor = /*texture2D(mTexture0, texcoord)**/vec4(light, 1.0);
+    gl_FragColor = texture2D(mTexture0, texcoord);//vec4(light, 1.0);
 }

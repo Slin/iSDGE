@@ -30,80 +30,85 @@ sgRendererES1::sgRendererES1()
 {
 	oglversion = 1;
 	msaasamples = 0;
-	
+
 	mainFramebuffer = 0;
 	colorRenderbuffer = 0;
 	depthRenderbuffer = 0;
 	msaaFramebuffer = 0;
 	msaaRenderbuffer = 0;
-	
+
+#if defined __IOS__
 	// Create default framebuffer object. Initializing will be finished by resizeBuffers.
 	glGenFramebuffersOES(1, &mainFramebuffer);
 	glBindFramebufferOES(GL_FRAMEBUFFER_OES, mainFramebuffer);
-	
+
 	glGenRenderbuffersOES(1, &colorRenderbuffer);
 	glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer);
 	glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, colorRenderbuffer);
-	
+
 	glGenRenderbuffersOES(1, &depthRenderbuffer);
 	glBindRenderbufferOES(GL_RENDERBUFFER_OES, depthRenderbuffer);
 	glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_DEPTH_ATTACHMENT_OES, GL_RENDERBUFFER_OES, depthRenderbuffer);
-	
-	
+
+
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	
+
 	glEnable(GL_TEXTURE_2D);
-	
+
 	float amb[4];
 	amb[0] = 1.0; amb[1] = 1.0; amb[2] = 1.0; amb[3] = 1.0;
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, amb);
+#endif
 }
 
 sgRendererES1::~sgRendererES1()
 {
+#if defined __IOS__
 	// Tear down GL
     if(mainFramebuffer)
     {
         glDeleteFramebuffersOES(1, &mainFramebuffer);
         mainFramebuffer = 0;
     }
-	
+
     if(colorRenderbuffer)
     {
         glDeleteRenderbuffersOES(1, &colorRenderbuffer);
         colorRenderbuffer = 0;
     }
-	
-	if(depthRenderbuffer) 
+
+	if(depthRenderbuffer)
 	{
 		glDeleteRenderbuffersOES(1, &depthRenderbuffer);
 		depthRenderbuffer = 0;
 	}
-	
-	if(msaaFramebuffer) 
+
+	if(msaaFramebuffer)
 	{
 		glDeleteFramebuffersOES(1, &msaaFramebuffer);
 		msaaFramebuffer = 0;
 	}
-	
-	if(msaaRenderbuffer) 
+
+	if(msaaRenderbuffer)
 	{
 		glDeleteRenderbuffersOES(1, &msaaRenderbuffer);
 		msaaRenderbuffer = 0;
 	}
+#endif
 }
 
 void sgRendererES1::setMultisampling(unsigned short samples)
 {
+#if defined __IOS__
 	int maxSamplesAllowed;
 	glGetIntegerv(GL_MAX_SAMPLES_APPLE, &maxSamplesAllowed);
 	int samplesToUse = (samples > maxSamplesAllowed) ? maxSamplesAllowed : samples;
-	
+
 	if(msaasamples == samplesToUse || !supportmultisampling)
 		return;
-	
+
 	if(samplesToUse > 0)
 	{
 		if(msaasamples == 0)
@@ -112,16 +117,16 @@ void sgRendererES1::setMultisampling(unsigned short samples)
 			glBindFramebufferOES(GL_FRAMEBUFFER_OES, mainFramebuffer);
 			glBindRenderbufferOES(GL_RENDERBUFFER_OES, depthRenderbuffer);
 			glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_DEPTH_ATTACHMENT_OES, GL_RENDERBUFFER_OES, 0);
-			
+
 			//Create the MSAA framebuffer (offscreen)
 			glGenFramebuffersOES(1, &msaaFramebuffer);
 			glBindFramebufferOES(GL_FRAMEBUFFER_OES, msaaFramebuffer);
-			
+
 			//Create the offscreen MSAA color buffer.
 			glGenRenderbuffersOES(1, &msaaRenderbuffer);
 			glBindRenderbufferOES(GL_RENDERBUFFER_OES, msaaRenderbuffer);
 			glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, msaaRenderbuffer);
-			
+
 			//Attach depthbuffer
 			glBindRenderbufferOES(GL_RENDERBUFFER, depthRenderbuffer);
 			glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_DEPTH_ATTACHMENT_OES, GL_RENDERBUFFER_OES, depthRenderbuffer);
@@ -132,26 +137,27 @@ void sgRendererES1::setMultisampling(unsigned short samples)
 		glBindFramebufferOES(GL_FRAMEBUFFER_OES, msaaFramebuffer);
 		glBindRenderbufferOES(GL_RENDERBUFFER_OES, depthRenderbuffer);
 		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_DEPTH_ATTACHMENT_OES, GL_RENDERBUFFER_OES, 0);
-		
-		if(msaaFramebuffer) 
+
+		if(msaaFramebuffer)
 		{
 			glDeleteFramebuffersOES(1, &msaaFramebuffer);
 			msaaFramebuffer = 0;
 		}
-		
-		if(msaaRenderbuffer) 
+
+		if(msaaRenderbuffer)
 		{
 			glDeleteRenderbuffersOES(1, &msaaRenderbuffer);
 			msaaRenderbuffer = 0;
 		}
-		
+
 		glBindFramebufferOES(GL_FRAMEBUFFER_OES, mainFramebuffer);
 		glBindRenderbufferOES(GL_RENDERBUFFER_OES, depthRenderbuffer);
 		glFramebufferRenderbufferOES(GL_FRAMEBUFFER_OES, GL_DEPTH_ATTACHMENT_OES, GL_RENDERBUFFER_OES, depthRenderbuffer);
 	}
-	
+
 	msaasamples = samplesToUse;
 	resizeBuffers();
+#endif
 }
 
 bool sgRendererES1::resizeBuffers()
@@ -161,7 +167,8 @@ bool sgRendererES1::resizeBuffers()
 	 [context renderbufferStorage:GL_RENDERBUFFER_OES fromDrawable:layer];
 	 glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &backingWidth);
 	 glGetRenderbufferParameterivOES(GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &backingHeight);*/
-	
+
+#if defined __IOS__
 	if(msaasamples == 0)
 	{
 		glBindRenderbufferOES(GL_RENDERBUFFER_OES, depthRenderbuffer);
@@ -170,11 +177,11 @@ bool sgRendererES1::resizeBuffers()
 	{
 		glBindRenderbufferOES(GL_RENDERBUFFER_OES, depthRenderbuffer);
 		glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER_OES, msaasamples, GL_DEPTH_COMPONENT24_OES, backingWidth, backingHeight);
-		
+
 		glBindRenderbufferOES(GL_RENDERBUFFER_OES, msaaRenderbuffer);
 		glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER_OES, msaasamples, GL_RGBA8_OES, backingWidth, backingHeight);
 	}
-	
+
 	if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 	{
 		if(GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT == glCheckFramebufferStatus(GL_FRAMEBUFFER))
@@ -186,14 +193,16 @@ bool sgRendererES1::resizeBuffers()
 		if(GL_FRAMEBUFFER_UNSUPPORTED == glCheckFramebufferStatus(GL_FRAMEBUFFER))
 			sgLog("GL_FRAMEBUFFER_UNSUPPORTED");
 	}
-	
+
 	updateOrientation();
-	
+#endif
+
 	return true;
 }
 
 void sgRendererES1::setMaterial(sgMaterial *mat)
 {
+#if defined __IOS__
 	if(lastmat == mat)
 		return;
 	else if(lastmat != NULL)
@@ -201,11 +210,11 @@ void sgRendererES1::setMaterial(sgMaterial *mat)
 		if(*lastmat == *mat)
 			return;
 	}
-	
+
 	//	glActiveTexture(GL_TEXTURE0);
 	if(mat->textures.size() > 0)
 		glBindTexture(GL_TEXTURE_2D, mat->textures[0]->texid);
-	
+
 	if(mat->culling)
 	{
 		glEnable(GL_CULL_FACE);
@@ -214,7 +223,7 @@ void sgRendererES1::setMaterial(sgMaterial *mat)
 	{
 		glDisable(GL_CULL_FACE);
 	}
-	
+
 	if(mat->blending)
 	{
 		glEnable(GL_BLEND);
@@ -223,11 +232,11 @@ void sgRendererES1::setMaterial(sgMaterial *mat)
 	{
 		glDisable(GL_BLEND);
 	}
-	
+
 	if(mat->lighting)
 	{
 		glEnable(GL_LIGHTING);
-		
+
 		if(mat->colors)
 		{
 			glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, &mat->ambient.r);
@@ -240,7 +249,7 @@ void sgRendererES1::setMaterial(sgMaterial *mat)
 	{
 		glDisable(GL_LIGHTING);
 	}
-	
+
 	if(mat->alphatest)
 	{
 		glEnable(GL_ALPHA_TEST);
@@ -249,7 +258,7 @@ void sgRendererES1::setMaterial(sgMaterial *mat)
 	{
 		glDisable(GL_ALPHA_TEST);
 	}
-	
+
 	if(mat->depthtest)
 	{
 		glEnable(GL_DEPTH_TEST);
@@ -258,17 +267,19 @@ void sgRendererES1::setMaterial(sgMaterial *mat)
 	{
 		glDisable(GL_DEPTH_TEST);
 	}
-	
+
 	lastmat = mat;
+#endif
 }
 
 void sgRendererES1::renderObjects(sgCamera *cam, sgObject *first)
 {
+#if defined __IOS__
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf(cam->matproj.mat);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(cam->matview.mat);
-	
+
 	sgLight *light;
 	unsigned int l = GL_LIGHT0;
 	for(light = first_light->next; light != NULL; light = light->next)
@@ -281,7 +292,7 @@ void sgRendererES1::renderObjects(sgCamera *cam, sgObject *first)
 		glLightf(l, GL_QUADRATIC_ATTENUATION, light->attenuation);
 		l++;
 	}
-	
+
 	sgObject *curr;
 	sgObjectBody *currbod;
 	int i;
@@ -289,7 +300,7 @@ void sgRendererES1::renderObjects(sgCamera *cam, sgObject *first)
 	{
 		if((curr->tag == cam->tag && cam->tag != 0) || curr->culled)
 			continue;
-		
+
 //		curr->updateModel();
 		currbod = curr->currbody;
 		if(curr->sky)
@@ -303,18 +314,18 @@ void sgRendererES1::renderObjects(sgCamera *cam, sgObject *first)
 			glLoadMatrixf(cam->matview.mat);
 		}
 		glMultMatrixf(curr->matmodel.mat);
-		
+
 		for(i = 0; i < currbod->meshs.size(); i++)
 		{
 			if(currbod->meshs[i]->culled)
 				continue;
-			
+
 			setMaterial(currbod->materials[i]);
-			
+
 			glMatrixMode(GL_TEXTURE);
 			glLoadMatrixf(currbod->materials[i]->mattex.mat);
 			glMatrixMode(GL_MODELVIEW);
-			
+
 			if(currbod->meshs[i]->vbo != -1)
 			{
 				glBindBuffer(GL_ARRAY_BUFFER, currbod->meshs[i]->vbo);
@@ -328,7 +339,7 @@ void sgRendererES1::renderObjects(sgCamera *cam, sgObject *first)
 				glNormalPointer(GL_FLOAT, sizeof(sgVertex), &currbod->meshs[i]->vertices+3);
 				glTexCoordPointer(2, GL_FLOAT, sizeof(sgVertex), &currbod->meshs[i]->vertices+6);
 			}
-			   
+
 			if(currbod->meshs[i]->ivbo != -1)
 			{
 				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, currbod->meshs[i]->ivbo);
@@ -338,27 +349,29 @@ void sgRendererES1::renderObjects(sgCamera *cam, sgObject *first)
 			{
 				glDrawElements(GL_TRIANGLES, currbod->meshs[i]->indexnum, GL_UNSIGNED_SHORT, currbod->meshs[i]->indices);
 			}
-			
+
 /*			if(currbod->meshs[i]->vertexformat == 1 || currbod->meshs[i]->vertexformat == 3)
 			{
 				glDisableClientState(GL_COLOR_ARRAY);
 			}*/
 		}
 	}
+#endif
 }
 
 void sgRendererES1::renderPanels(sgPanel *first)
 {
+#if defined __IOS__
 	glViewport(0, 0, backingWidth, backingHeight);
-	
+
 	glDisableClientState(GL_NORMAL_ARRAY);
-	
+
 	glMatrixMode(GL_PROJECTION);
 	sgMatrix4x4 matrix;
 	matrix.makeProjectionOrtho(0, backingWidth, 0, backingHeight, -1, 1);
 	glLoadMatrixf(matrix.mat);
 	glMatrixMode(GL_MODELVIEW);
-	
+
 	glBindBuffer(GL_ARRAY_BUFFER, quadvbo);
 	glVertexPointer(3, GL_FLOAT, 20, 0);
 	glTexCoordPointer(2, GL_FLOAT, 20, (const void*)12);
@@ -389,10 +402,10 @@ void sgRendererES1::renderPanels(sgPanel *first)
 				}
 			}
 		}
-		
+
 		glClearDepthf(1.0f);
 		glClear(GL_DEPTH_BUFFER_BIT);
-		
+
 		for(int i = 0; i < curr->elements.size(); i++)
 		{
 			if(curr->elements[i]->type == 0)
@@ -401,15 +414,15 @@ void sgRendererES1::renderPanels(sgPanel *first)
 					glLoadIdentity();
 				else
 					glLoadMatrixf(matglobal2d.mat);
-				
+
 				//draw image elements
 				img = (sgImage*)curr->elements[i];
 				glTranslatef(curr->pos.x+img->pos.x, curr->pos.y+img->pos.y, 0.0);
 				glScalef(img->size.x, img->size.y, 1.0);
 				glRotatef(360-img->ang, 0.0, 0.0, 1.0);
-				
+
 				setMaterial(img->mat);
-			
+
 				glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 			}else
 			{
@@ -421,31 +434,33 @@ void sgRendererES1::renderPanels(sgPanel *first)
 						glLoadIdentity();
 					else
 						glLoadMatrixf(matglobal2d.mat);
-					
+
 					glTranslatef(curr->pos.x+txt->pos.x+txt->size.x*n, curr->pos.y+txt->pos.y, 0.0);
 					glScalef(txt->size.x, txt->size.y, 1.0);
-					
+
 					glMatrixMode(GL_TEXTURE);
 					glLoadIdentity();
 					glTranslatef((float)txt->str.translatedx[n]*(float)txt->charsize.x/(float)txt->mat->textures[0]->width, (float)txt->str.translatedy[n]*(float)txt->charsize.y/(float)txt->mat->textures[0]->height, 0);
 					glScalef((float)txt->charsize.x/(float)txt->mat->textures[0]->width, (float)txt->charsize.y/(float)txt->mat->textures[0]->height, 1);
-				
+
 					setMaterial(txt->mat);
-				
+
 					glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-					
+
 					glLoadIdentity();
 					glMatrixMode(GL_MODELVIEW);
 				}
 			}
 		}
 	}
-	
+
 	glEnableClientState(GL_NORMAL_ARRAY);
+#endif
 }
 
 void sgRendererES1::render()
 {
+#if defined __IOS__
 	//Clear color buffer
 	if(msaasamples > 0)
 	{
@@ -464,7 +479,7 @@ void sgRendererES1::render()
 	}
 	glClearColor(clearcolor.r, clearcolor.g, clearcolor.b, clearcolor.a);
 	glClear(GL_COLOR_BUFFER_BIT);
-	
+
 	//Draw cameras
 	sgCamera *cam;
 	for(cam = first_cam->next; cam != NULL; cam = cam->next)
@@ -491,40 +506,40 @@ void sgRendererES1::render()
 				}
 			}
 		}
-		
+
 		//Clear depth buffer
 		glClearDepthf(1.0f);
 		glClear(GL_DEPTH_BUFFER_BIT);
-		
+
 		//Update camera
 		cam->matview = matglobal3d*cam->matview;
-		
+
 		//Do view frustum culling
 		culling(cam, first_solid);
-		
+
 		//Draw objects
 		glViewport(cam->screenpos.x, cam->screenpos.y, cam->size.x, cam->size.y);
 		renderObjects(cam, first_sky);
 		renderObjects(cam, first_solid);
 	}
-	
+
 	//Draw panels
 	renderPanels(first_panel);
-	
+
 	if(currfbo != mainFramebuffer)
 	{
 		glBindFramebufferOES(GL_FRAMEBUFFER_OES, mainFramebuffer);
 		currfbo = mainFramebuffer;
 	}
-	
+
 	if(msaasamples > 0)
 	{
 		//Resolve from msaaFramebuffer to resolveFramebuffer
-		glDisable(GL_SCISSOR_TEST);     
+		glDisable(GL_SCISSOR_TEST);
 		glBindFramebufferOES(GL_READ_FRAMEBUFFER_APPLE, msaaFramebuffer);
 		glBindFramebufferOES(GL_DRAW_FRAMEBUFFER_APPLE, mainFramebuffer);
 		glResolveMultisampleFramebufferAPPLE();
-		
+
 		if(supportdiscard)
 		{
 			//discard framebuffer (a simple to use performence boost)
@@ -540,6 +555,7 @@ void sgRendererES1::render()
 			glDiscardFramebufferEXT(GL_FRAMEBUFFER_OES, 1, attachments);
 		}
 	}
-	
+
 	glBindRenderbufferOES(GL_RENDERBUFFER_OES, colorRenderbuffer);
+#endif
 }
