@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 	//Initialize the engine
     sgInit(argc, argv, &events);
 #else
-	sgInit(argc, argv, &events, 1440, 900, true);
+	sgInit(argc, argv, &events);//, 1440, 900, true);
 
 #endif
 }

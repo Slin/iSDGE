@@ -23,7 +23,13 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-precision highp float;
+#ifdef GL_ES
+	precision highp float;
+#else
+	#define lowp
+	#define mediump
+	#define highp
+#endif
 
 uniform sampler2D mTexture0;
 uniform sampler2D mTexture1;
@@ -36,7 +42,7 @@ void main()
 	vec4 color = texture2D(mTexture0, texcoord);
 
 	vec2 coord = reflcoord.xy/reflcoord.z*0.5+0.5;
-	coord.x = 1.0-coord.x;
+	coord.y = 1.0-coord.y;
     vec4 refl = texture2D(mTexture1, coord);
 	
 	gl_FragColor = color*0.6+refl*0.4;

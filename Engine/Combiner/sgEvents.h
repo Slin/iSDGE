@@ -35,19 +35,26 @@ class sgEvents
 {
 	public:
 		/**
+		 *	On pre init.
+		 *	This function is called before initializing the renderer.
+		 * @param pointer to the engines main class
+		 */
+		virtual void onPreInit(sgMain *main);
+
+		/**
 		 *	On init.
 		 *	This function is called just before the first frame is rendered.
 		 * @param pointer to the engines main class
 		 */
 		virtual void onInit(sgMain *main);
-	
+
 		/**
 		 *	On draw.
 		 *	This function is called every frame just before anything gets rendered, before all entities onDraw events.
 		 * @param timestep time in seconds since the last frame was rendered
 		 */
 		virtual void onDraw(float timestep);
-	
+
 		/**
 		 *	On draw late.
 		 *	This function is called every frame just before anything gets rendered, after all entities onDraw events.

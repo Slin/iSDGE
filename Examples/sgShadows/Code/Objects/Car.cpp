@@ -30,4 +30,5 @@ void Car::onDraw(float timestep)
 {
 	ent->obj->rotation -= sgVector3(timestep*30.0f, 0.0, 0.0);
 	ent->obj->position = ent->obj->rotation.rotate(sgVector3(6, 0, 0));
+	ent->obj->updateObject();
 }

@@ -31,4 +31,6 @@ void Jeep::onDraw(float timestep)
 	ent->obj->position += sgVector3(0, 0, 4)*timestep;
 	if(ent->obj->position.z > 10)
 		ent->obj->position.z = -10;
+
+	ent->obj->updateObject();
 }

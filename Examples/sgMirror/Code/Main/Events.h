@@ -39,12 +39,13 @@
 class Events : public sgEvents
 {
 	public:
+		void onPreInit(sgMain *m);
 		void onInit(sgMain *m);
 		void onDrawLate(float timestep);
-		
+
 	private:
 		sgMain *sgmain;
-		
+
 		sgEntity *camera;
 		sgEntity *mirror;
 };

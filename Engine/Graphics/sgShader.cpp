@@ -83,7 +83,7 @@ sgShader *sgShader::getShader(BuiltInShaders shad)
 #if defined __IOS__
 				shader = new sgShader("iSDGE.bundle/sgsTexture.vsh", "iSDGE.bundle/sgsTexture.fsh");
 #else
-				shader = new sgShader("shaders/sgsTexture.vsh", "shaders/sgsTexture.fsh");
+				shader = new sgShader("Shaders/sgsTexture.vsh", "Shaders/sgsTexture.fsh");
 #endif
 				sgResourceManager::addResource("shader_texture", shader);
 			}
@@ -97,7 +97,7 @@ sgShader *sgShader::getShader(BuiltInShaders shad)
 #if defined __IOS__
 				shader = new sgShader("iSDGE.bundle/sgsTexture.vsh", "iSDGE.bundle/sgsTextureDiscard.fsh");
 #else
-				shader = new sgShader("shaders/sgsTexture.vsh", "shaders/sgsTextureDiscard.fsh");
+				shader = new sgShader("Shaders/sgsTexture.vsh", "Shaders/sgsTextureDiscard.fsh");
 #endif
 				sgResourceManager::addResource("shader_texture_discard", shader);
 			}
@@ -111,7 +111,7 @@ sgShader *sgShader::getShader(BuiltInShaders shad)
 #if defined __IOS__
 				shader = new sgShader("iSDGE.bundle/sgsSun.vsh", "iSDGE.bundle/sgsSun.fsh");
 #else
-				shader = new sgShader("shaders/sgsSun.vsh", "shaders/sgsSun.fsh");
+				shader = new sgShader("Shaders/sgsSun.vsh", "Shaders/sgsSun.fsh");
 #endif
 				sgResourceManager::addResource("shader_sun", shader);
 			}
@@ -125,7 +125,7 @@ sgShader *sgShader::getShader(BuiltInShaders shad)
 #if defined __IOS__
 				shader = new sgShader("iSDGE.bundle/sgsLight.vsh", "iSDGE.bundle/sgsLight.fsh");
 #else
-				shader = new sgShader("shaders/sgsLight.vsh", "shaders/sgsLight.fsh");
+				shader = new sgShader("Shaders/sgsLight.vsh", "Shaders/sgsLight.fsh");
 #endif
 				sgResourceManager::addResource("shader_light", shader);
 			}
@@ -139,7 +139,7 @@ sgShader *sgShader::getShader(BuiltInShaders shad)
 #if defined __IOS__
 				shader = new sgShader("iSDGE.bundle/sgsLightmap.vsh", "iSDGE.bundle/sgsLightmap.fsh");
 #else
-				shader = new sgShader("shaders/sgsLightmap.vsh", "shaders/sgsLightmap.fsh");
+				shader = new sgShader("Shaders/sgsLightmap.vsh", "Shaders/sgsLightmap.fsh");
 #endif
 				sgResourceManager::addResource("shader_lightmap", shader);
 			}
@@ -153,7 +153,7 @@ sgShader *sgShader::getShader(BuiltInShaders shad)
 #if defined __IOS__
 				shader = new sgShader("iSDGE.bundle/sgsLightmap.vsh", "iSDGE.bundle/sgsLightmapDiscard.fsh");
 #else
-				shader = new sgShader("shaders/sgsLightmap.vsh", "shaders/sgsLightmapDiscard.fsh");
+				shader = new sgShader("Shaders/sgsLightmap.vsh", "Shaders/sgsLightmapDiscard.fsh");
 #endif
 				sgResourceManager::addResource("shader_lightmap_discard", shader);
 			}
@@ -169,7 +169,7 @@ sgShader *sgShader::getShader(BuiltInShaders shad)
 #if defined __IOS__
 				shader = new sgShader("iSDGE.bundle/sgsShadowvolume.vsh", "iSDGE.bundle/sgsShadowvolume.fsh");
 #else
-				shader = new sgShader("shaders/sgsShadowvolume.vsh", "shaders/sgsShadowvolume.fsh");
+				shader = new sgShader("Shaders/sgsShadowvolume.vsh", "Shaders/sgsShadowvolume.fsh");
 #endif
 				sgResourceManager::addResource("shader_shadowvolume", shader);
 			}
@@ -183,7 +183,7 @@ sgShader *sgShader::getShader(BuiltInShaders shad)
 #if defined __IOS__
 				shader = new sgShader("iSDGE.bundle/sgsShadowquad.vsh", "iSDGE.bundle/sgsShadowquad.fsh");
 #else
-				shader = new sgShader("shaders/sgsShadowquad.vsh", "shaders/sgsShadowquad.fsh");
+				shader = new sgShader("Shaders/sgsShadowquad.vsh", "Shaders/sgsShadowquad.fsh");
 #endif
 				sgResourceManager::addResource("shader_shadowquad", shader);
 			}
@@ -197,7 +197,7 @@ sgShader *sgShader::getShader(BuiltInShaders shad)
 #if defined __IOS__
 				shader = new sgShader("iSDGE.bundle/sgsParticle.vsh", "iSDGE.bundle/sgsParticle.fsh");
 #else
-				shader = new sgShader("shaders/sgsParticle.vsh", "shaders/sgsParticle.fsh");
+				shader = new sgShader("Shaders/sgsParticle.vsh", "Shaders/sgsParticle.fsh");
 #endif
 				sgResourceManager::addResource("shader_particle", shader);
 			}
@@ -212,7 +212,7 @@ sgShader *sgShader::getShader(BuiltInShaders shad)
 #if defined __IOS__
 				shader = new sgShader("iSDGE.bundle/sgsTexture.vsh", "iSDGE.bundle/sgsTexture.fsh");
 #else
-				shader = new sgShader("shaders/sgsTexture.vsh", "shaders/sgsTexture.fsh");
+				shader = new sgShader("Shaders/sgsTexture.vsh", "Shaders/sgsTexture.fsh");
 #endif
 				sgResourceManager::addResource("shader_texture", shader);
 			}

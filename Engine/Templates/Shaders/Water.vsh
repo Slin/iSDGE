@@ -41,8 +41,8 @@ void main()
 {
 	gl_Position = matProjViewModel*vec4(vertPos, 1.0);
 	projpos = gl_Position.xyw;
-	projpos.xy *= vec2(-0.5, 0.5);
-	projpos.xy += projpos.z*0.5;
+//	projpos.xy *= vec2(-0.5, 0.5);
+//	projpos.xy += projpos.z*0.5;
 	worldpos = (matModel*vec4(vertPos, 1.0)).xyz;
 	texcoord.xy = (matTex*vec4(worldpos.xz, 1.0, 1.0)).xy;
 	worldpos *= 0.002;

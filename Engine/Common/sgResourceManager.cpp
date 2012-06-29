@@ -26,7 +26,9 @@
 #include "sgResourceManager.h"
 
 #include <map>
+#include <vector>
 #include <string>
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <cstring>
@@ -41,6 +43,12 @@
 namespace sgResourceManager
 {
 	std::map<std::string*, sgBase*> resources;
+	std::vector<std::string*> paths;
+
+	void addPath(const char *path)
+	{
+		paths.push_back(new std::string(path));
+	}
 
 	const char *getPath(const char *filename, const char *type)
 	{
@@ -101,7 +109,22 @@ namespace sgResourceManager
 
 		return (const char*)ptr;
 #else
-        return filename;
+		for(int i = 0; i < paths.size(); i++)
+		{
+			std::string str(filename);
+			str = *paths[i]+str;
+			std::ifstream in(str.c_str());
+			if(in.good())
+			{
+				char *ptr = new char[str.length()+1];
+				strcpy(ptr, str.c_str());
+				return (const char*)ptr;
+			}
+		}
+
+		char *ptr2 = new char[std::string(filename).length()+1];
+		strcpy(ptr2, filename);
+        return (const char*)ptr2;
 #endif
 	}
 
@@ -175,5 +198,11 @@ namespace sgResourceManager
 			delete it->first;
 			delete it->second;
 		}
+
+		for(int i = 0; i < paths.size(); i++)
+		{
+			delete paths[i];
+		}
+		paths.clear();
 	}
 }

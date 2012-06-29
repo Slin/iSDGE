@@ -25,13 +25,19 @@
 
 #include "SpawnParts.h"
 
-#include <OpenGLES/ES2/gl.h>
+#if defined __IOS__
+	#include <OpenGLES/ES2/gl.h>
+#else
+	#define GLEW_STATIC
+	#include <GL/glew.h>
+	#include <GL/glfw.h>
+#endif
 
 void SpawnParts::onInit(sgEntity *e)
 {
 	ent = e;
 	currtime = 0;
-	
+
 	ent->emitt->material->blendsource = GL_SRC_ALPHA;
 	ent->emitt->material->blenddestination = GL_ONE;
 }
@@ -39,7 +45,7 @@ void SpawnParts::onInit(sgEntity *e)
 void SpawnParts::onDraw(float timestep)
 {
 	currtime += timestep;
-	
+
 	if((currtime-lastparttime) > (0.2) && ent->obj != NULL)
 	{
 		ent->emitt->emitPart((sgParticle*)new TestPart(ent->obj));

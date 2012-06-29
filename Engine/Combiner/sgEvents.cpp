@@ -26,17 +26,22 @@
 #include "sgEvents.h"
 #include "sgMain.h"
 
+void sgEvents::onPreInit(sgMain *main)
+{
+
+}
+
 void sgEvents::onInit(sgMain *main)
 {
-	
+
 }
 
 void sgEvents::onDraw(float timestep)
 {
-	
+
 }
 
 void sgEvents::onDrawLate(float timestep)
 {
-	
+
 }

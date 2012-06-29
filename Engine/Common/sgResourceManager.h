@@ -34,6 +34,13 @@ class sgBase;
 namespace sgResourceManager
 {
 	/**
+	 *	Add path.
+	 *	Add a path to search for files at.
+	 * @param path the path to add
+	 */
+	void addPath(const char *path);
+
+	/**
 	 *	Get path.
 	 *	Get the path of a file in the filesystem.
 	 * @param filename the name of the file without type specifier
@@ -41,7 +48,7 @@ namespace sgResourceManager
 	 * @return the path to the given file
 	 */
 	const char *getPath(const char *filename, const char *type);
-	
+
 	/**
 	 *	Get path.
 	 *	Get the path of a file in the filesystem.
@@ -49,7 +56,7 @@ namespace sgResourceManager
 	 * @return the path to the given file
 	 */
 	const char *getPath(const char *filename);
-	
+
 	/**
 	 *	Get file content.
 	 *	Reads a file and returns its content as a string.
@@ -57,7 +64,7 @@ namespace sgResourceManager
 	 * @return the files content string
 	 */
 	const char *getFileAsString(const char *filepath);
-	
+
 	/**
 	 *	Get resource.
 	 *	Reads a file and returns its content as a string.
@@ -65,7 +72,7 @@ namespace sgResourceManager
 	 * @return pointer to the instance or NULL if there is none
 	 */
 	sgBase *getResource(const char *name);
-	
+
 	/**
 	 *	Add resource.
 	 *	Adds a resource to the ressource manager which will be freed automatically.
@@ -73,21 +80,21 @@ namespace sgResourceManager
 	 * @param res pointer to the resource to add
 	 */
 	void addResource(const char *name, sgBase *res);
-	
+
 	/**
 	 *	Add resource.
 	 *	Adds a resource to the resource manager which will be freed automatically.
 	 * @param res pointer to the resource to add
 	 */
 	void addResource(sgBase *res);
-	
+
 	/**
 	 *	Remove resource.
 	 *	Removes a resource from the resource manager.
 	 * @param res pointer to the resource to remove
 	 */
 	void removeResource(sgBase *res);
-	
+
 	/**
 	 *	Destroy all.
 	 *	Frees all resources.

@@ -28,12 +28,14 @@
 #include "sgResourceManager.h"
 #include "sgDebug.h"
 
-#if defined __IOS__
-	#include <OpenAL/al.h>
-	#include <OpenAL/alc.h>
-#elif defined __WIN32__
-	#include <al.h>
-	#include <alc.h>
+#if defined __OPEN_AL__
+	#if defined __IOS__
+		#include <OpenAL/al.h>
+		#include <OpenAL/alc.h>
+	#elif defined __WIN32__
+		#include <al.h>
+		#include <alc.h>
+	#endif
 #endif
 
 sgSound::sgSound()
@@ -44,7 +46,7 @@ sgSound::sgSound()
 
 sgSound::~sgSound()
 {
-#if defined __IOS__ || defined __WIN32__
+#if (defined __IOS__ || defined __WIN32__) && defined __OPEN_AL__
 	if(sndid != -1)
 		alDeleteBuffers(1, &sndid);
 
@@ -58,7 +60,7 @@ void sgSound::createSound(const char *filename)
 	if(sndid != -1)
 		return;
 
-#if defined __IOS__ || defined __WIN32__
+#if (defined __IOS__ || defined __WIN32__) && defined __OPEN_AL__
 	sgAudioFiles::sgUncompressedAudio *snd = 0;
 	if(!sgAudioFiles::loadAudio(&snd, filename))
 	{

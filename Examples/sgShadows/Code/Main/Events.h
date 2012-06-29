@@ -41,9 +41,10 @@
 class Events : public sgEvents
 {
 	public:
+		void onPreInit(sgMain *m);
 		void onInit(sgMain *m);
 		void onDraw(float timestep);
-		
+
 	private:
 		sgMain *sgmain;
 };

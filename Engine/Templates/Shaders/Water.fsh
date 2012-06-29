@@ -23,7 +23,13 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-precision mediump float;
+#ifdef GL_ES
+	precision mediump float;
+#else
+	#define lowp
+	#define mediump
+	#define highp
+#endif
 
 uniform sampler2D mTexture0;
 uniform sampler2D mTexture1;
@@ -37,7 +43,10 @@ void main()
 {
 	float camdist = distance(viewpos, worldpos);
 	vec4 dis = texture2D(mTexture0, texcoord.xy)-0.5;
-	vec2 reflcoords = projpos.xy/projpos.z;
+	vec2 reflcoords = projpos.xy/projpos.z*0.5+0.5;
+	reflcoords.y = 1.0-reflcoords.y;
 	vec4 color = texture2D(mTexture1, reflcoords+dis.rg);
-	gl_FragColor = mix(color, vec4(0.7333, 0.7843, 0.8549, 1.0), min(camdist, 1.0));
+	color.rgb = mix(color.rgb, vec3(0.7333, 0.7843, 0.8549), min(camdist, 1.0))*0.5;
+	color.a = 0.5;
+	gl_FragColor = color;
 }

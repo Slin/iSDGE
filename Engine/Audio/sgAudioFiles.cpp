@@ -29,23 +29,25 @@
 #include "sgResourceManager.h"
 #include "sgDebug.h"
 
-#if defined __IOS__
-	#include <AudioToolbox/AudioToolbox.h>
-	#include <CoreFoundation/CoreFoundation.h>
-#elif defined __WIN32__
-	#include <al.h>
+#if defined __OPEN_AL__
+	#if defined __IOS__
+		#include <AudioToolbox/AudioToolbox.h>
+		#include <CoreFoundation/CoreFoundation.h>
+	#elif defined __WIN32__
+		#include <al.h>
+	#endif
 #endif
 
 
 namespace sgAudioFiles
 {
-#if defined __WIN32__
+#if defined __WIN32__ && defined __OPEN_AL__
 	CWaves waveparser;
 #endif
 
 	bool loadAudio(sgUncompressedAudio **audio, const char *filename)
 	{
-#if defined __IOS__
+#if defined __IOS__ && defined __OPEN_AL__
 		const char *filepath = sgResourceManager::getPath(filename);
 		CFStringRef pathstring = CFStringCreateWithCString(NULL, filepath, kCFStringEncodingASCII);
 		delete[] filepath;
@@ -143,7 +145,7 @@ namespace sgAudioFiles
 		ExtAudioFileDispose(audiofileobject);
 
 		return true;
-#elif defined __WIN32__
+#elif defined __WIN32__ && defined __OPEN_AL__
 //		ALuint uiBufferID
 //		ALenum eXRAMBufferMode
 

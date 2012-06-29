@@ -32,6 +32,9 @@ sgMain::sgMain(unsigned int oglvers)
 	timestep = 1.0/60.0;
 	currframes = 0;
 
+	if(eventhandler != NULL)
+			eventhandler->onPreInit(this);
+
 	if(oglvers == 1)
 	{
 		renderer = new sgRendererES1;

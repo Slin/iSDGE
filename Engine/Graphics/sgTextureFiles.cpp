@@ -89,8 +89,13 @@ namespace sgTextureFiles
 		int color_type, interlace_type;
 		FILE *fp;
 
-		if ((fp = fopen(filename, "rb")) == NULL)
+		const char *filepath = sgResourceManager::getPath(filename);
+		if ((fp = fopen(filepath, "rb")) == NULL)
+		{
+			delete[] filepath;
 			return false;
+		}
+		delete[] filepath;
 
 		/* Create and initialize the png_struct
 		 * with the desired error handler

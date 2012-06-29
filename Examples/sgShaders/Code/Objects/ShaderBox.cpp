@@ -30,10 +30,14 @@ void ShaderBox::onInit(sgEntity *e)
 {
 	ent = e;
 	counter = 0;
-	
+
 	//Set the shader of the first material (which is the only one in this case)
+#if defined __IOS__
 	ent->obj->body->materials[0]->setShader("iSDGE.bundle/sgsLight.vsh", "ShaderCol.fsh");
-	
+#else
+	ent->obj->body->materials[0]->setShader("Shaders/sgsLight.vsh", "ShaderCol.fsh");
+#endif
+
 	//Add a new parameter of the type float4 to the material
 	param = ent->obj->body->materials[0]->addParameter("color", (void*)(new float[4]));
 }
@@ -41,7 +45,7 @@ void ShaderBox::onInit(sgEntity *e)
 void ShaderBox::onDraw(float timestep)
 {
 	counter += timestep*5.0f;
-	
+
 	//Update the material parameters values
 	((float*)param->parameter)[0] = sin(counter);
 	((float*)param->parameter)[1] = cos(counter);
