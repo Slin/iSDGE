@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="iSDGE" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin\Debug\libiSDGE" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="obj\Debug\" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin\Release\libiSDGE" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option object_output="obj\Release\" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add directory="..\..\Dependencies\GLFW\glfw-2.7.5\include" />
+			<Add directory="..\Graphics" />
+			<Add directory="..\Common" />
+			<Add directory="..\..\Dependencies\GLEW\glew-1.7.0\include" />
+			<Add directory="..\Physics" />
+			<Add directory="..\Input" />
+			<Add directory="..\Audio" />
+			<Add directory="..\Combiner" />
+			<Add directory="..\..\Dependencies\LIBPNG\lpng1510" />
+			<Add directory="..\Templates" />
+			<Add directory="..\OSBindings\Windows\WAV" />
+		</Compiler>
+		<Linker>
+			<Add library="glfw" />
+			<Add library="glu32" />
+			<Add library="gdi32" />
+			<Add library="glew_static" />
+			<Add library="opengl32" />
+			<Add library="png" />
+			<Add library="libz.a" />
+			<Add directory="..\..\Dependencies\GLFW\glfw-2.7.5\lib" />
+			<Add directory="..\..\Dependencies\GLEW\glew-1.7.0\lib" />
+			<Add directory="..\..\Dependencies\ZLIB\zlib-1.2.7" />
+			<Add directory="..\..\Dependencies\LIBPNG\lpng1510" />
+		</Linker>
+		<Unit filename="..\Audio\sgAudioFiles.cpp" />
+		<Unit filename="..\Audio\sgAudioFiles.h" />
+		<Unit filename="..\Audio\sgAudioPlayer.cpp" />
+		<Unit filename="..\Audio\sgAudioPlayer.h" />
+		<Unit filename="..\Audio\sgSound.cpp" />
+		<Unit filename="..\Audio\sgSound.h" />
+		<Unit filename="..\Audio\sgSoundSource.cpp" />
+		<Unit filename="..\Audio\sgSoundSource.h" />
+		<Unit filename="..\Combiner\sgAction.cpp" />
+		<Unit filename="..\Combiner\sgAction.h" />
+		<Unit filename="..\Combiner\sgEntity.cpp" />
+		<Unit filename="..\Combiner\sgEntity.h" />
+		<Unit filename="..\Combiner\sgEvents.cpp" />
+		<Unit filename="..\Combiner\sgEvents.h" />
+		<Unit filename="..\Combiner\sgMain.cpp" />
+		<Unit filename="..\Combiner\sgMain.h" />
+		<Unit filename="..\Common\sgBase.cpp" />
+		<Unit filename="..\Common\sgBase.h" />
+		<Unit filename="..\Common\sgColor.cpp" />
+		<Unit filename="..\Common\sgColor.h" />
+		<Unit filename="..\Common\sgDebug.cpp" />
+		<Unit filename="..\Common\sgDebug.h" />
+		<Unit filename="..\Common\sgMatrix4x4.cpp" />
+		<Unit filename="..\Common\sgMatrix4x4.h" />
+		<Unit filename="..\Common\sgPlane.cpp" />
+		<Unit filename="..\Common\sgPlane.h" />
+		<Unit filename="..\Common\sgQuaternion.cpp" />
+		<Unit filename="..\Common\sgQuaternion.h" />
+		<Unit filename="..\Common\sgResourceManager.cpp" />
+		<Unit filename="..\Common\sgResourceManager.h" />
+		<Unit filename="..\Common\sgTimer.cpp" />
+		<Unit filename="..\Common\sgTimer.h" />
+		<Unit filename="..\Common\sgTools.cpp" />
+		<Unit filename="..\Common\sgTools.h" />
+		<Unit filename="..\Common\sgVector2.cpp" />
+		<Unit filename="..\Common\sgVector2.h" />
+		<Unit filename="..\Common\sgVector3.cpp" />
+		<Unit filename="..\Common\sgVector3.h" />
+		<Unit filename="..\Common\sgVector4.cpp" />
+		<Unit filename="..\Common\sgVector4.h" />
+		<Unit filename="..\Common\sgXML.cpp" />
+		<Unit filename="..\Common\sgXML.h" />
+		<Unit filename="..\Graphics\sgCamera.cpp" />
+		<Unit filename="..\Graphics\sgCamera.h" />
+		<Unit filename="..\Graphics\sgLight.cpp" />
+		<Unit filename="..\Graphics\sgLight.h" />
+		<Unit filename="..\Graphics\sgMaterial.cpp" />
+		<Unit filename="..\Graphics\sgMaterial.h" />
+		<Unit filename="..\Graphics\sgMesh.cpp" />
+		<Unit filename="..\Graphics\sgMesh.h" />
+		<Unit filename="..\Graphics\sgObject.cpp" />
+		<Unit filename="..\Graphics\sgObject.h" />
+		<Unit filename="..\Graphics\sgObjectBody.cpp" />
+		<Unit filename="..\Graphics\sgObjectBody.h" />
+		<Unit filename="..\Graphics\sgObjectFiles.cpp" />
+		<Unit filename="..\Graphics\sgObjectFiles.h" />
+		<Unit filename="..\Graphics\sgPanel.cpp" />
+		<Unit filename="..\Graphics\sgPanel.h" />
+		<Unit filename="..\Graphics\sgParticle.cpp" />
+		<Unit filename="..\Graphics\sgParticle.h" />
+		<Unit filename="..\Graphics\sgParticleEmitter.cpp" />
+		<Unit filename="..\Graphics\sgParticleEmitter.h" />
+		<Unit filename="..\Graphics\sgRenderEvent.cpp" />
+		<Unit filename="..\Graphics\sgRenderEvent.h" />
+		<Unit filename="..\Graphics\sgRenderer.cpp" />
+		<Unit filename="..\Graphics\sgRenderer.h" />
+		<Unit filename="..\Graphics\sgRendererES1.cpp" />
+		<Unit filename="..\Graphics\sgRendererES1.h" />
+		<Unit filename="..\Graphics\sgRendererES2.cpp" />
+		<Unit filename="..\Graphics\sgRendererES2.h" />
+		<Unit filename="..\Graphics\sgShader.cpp" />
+		<Unit filename="..\Graphics\sgShader.h" />
+		<Unit filename="..\Graphics\sgShadowVolume.cpp" />
+		<Unit filename="..\Graphics\sgShadowVolume.h" />
+		<Unit filename="..\Graphics\sgSkeleton.cpp" />
+		<Unit filename="..\Graphics\sgSkeleton.h" />
+		<Unit filename="..\Graphics\sgTexture.cpp" />
+		<Unit filename="..\Graphics\sgTexture.h" />
+		<Unit filename="..\Graphics\sgTextureFiles.cpp" />
+		<Unit filename="..\Graphics\sgTextureFiles.h" />
+		<Unit filename="..\Graphics\sgVertex.h" />
+		<Unit filename="..\Input\sgAccelerometer.cpp" />
+		<Unit filename="..\Input\sgAccelerometer.h" />
+		<Unit filename="..\Input\sgCameraStream.cpp" />
+		<Unit filename="..\Input\sgCameraStream.h" />
+		<Unit filename="..\Input\sgMouse.cpp" />
+		<Unit filename="..\Input\sgMouse.h" />
+		<Unit filename="..\Input\sgTouches.cpp" />
+		<Unit filename="..\Input\sgTouches.h" />
+		<Unit filename="..\OSBindings\Windows\WAV\CWaves.cpp" />
+		<Unit filename="..\OSBindings\Windows\WAV\CWaves.h" />
+		<Unit filename="..\OSBindings\Windows\sgInit.cpp" />
+		<Unit filename="..\OSBindings\Windows\sgInit.h" />
+		<Unit filename="..\Physics\sgCharacterController.cpp" />
+		<Unit filename="..\Physics\sgCharacterController.h" />
+		<Unit filename="..\Physics\sgPhysBody.cpp" />
+		<Unit filename="..\Physics\sgPhysBody.h" />
+		<Unit filename="..\Physics\sgPhysConstraint.cpp" />
+		<Unit filename="..\Physics\sgPhysConstraint.h" />
+		<Unit filename="..\Physics\sgPhysWorld.cpp" />
+		<Unit filename="..\Physics\sgPhysWorld.h" />
+		<Unit filename="..\Templates\CameraFree.cpp" />
+		<Unit filename="..\Templates\CameraFree.h" />
+		<Unit filename="..\Templates\FPSDisplay.cpp" />
+		<Unit filename="..\Templates\FPSDisplay.h" />
+		<Unit filename="..\Templates\Water.cpp" />
+		<Unit filename="..\Templates\Water.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
