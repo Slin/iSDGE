@@ -25,4 +25,4 @@
 
 class sgEvents;
 
-int sgInit(int argc, char *argv[], sgEvents *event, int res_x = 640, int res_y = 480, bool fullscreen = false);
+int sgInit(int argc, char *argv[], sgEvents *event, int res_x = 800, int res_y = 600, bool fullscreen = false);

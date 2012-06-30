@@ -45,4 +45,5 @@ void AutoDoor::onDraw(float timestep)
 		ent->obj->position.y = -0.3;
 	}
 
+	ent->obj->updateObject();
 }

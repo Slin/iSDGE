@@ -54,6 +54,8 @@
 			<Add directory="..\..\Engine\OSBindings\Windows" />
 			<Add directory="Code\Main" />
 			<Add directory="Code\Particles" />
+			<Add directory="..\..\Engine\Physics\Bullet" />
+			<Add directory="..\..\Engine\Physics\Bullet\bullet-2.77\src" />
 		</Compiler>
 		<Linker>
 			<Add library="glfw" />

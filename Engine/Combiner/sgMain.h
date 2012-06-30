@@ -38,9 +38,7 @@
 #include "sgEntity.h"
 #include "sgTimer.h"
 #include "sgPhysWorld.h"
-#if defined __IOS__
-	#include "sgPhysWorldBullet.h"
-#endif
+#include "sgPhysWorldBullet.h"
 #include "sgAudioPlayer.h"
 
 class sgMain

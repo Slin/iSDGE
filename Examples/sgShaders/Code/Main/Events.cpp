@@ -31,7 +31,7 @@
 	#import "sgView.h"
 #endif
 
-//This message will be called before creating the renderer and has to be used to set the paths to the standard shaders
+//This method will be called before creating the renderer and has to be used to set the paths to the standard shaders
 void Events::onPreInit(sgMain *m)
 {
 #if !defined __IOS__

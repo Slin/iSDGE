@@ -36,15 +36,15 @@ int sgInit(int argc, char *argv[], sgEvents *event, int res_x, int res_y, bool f
 
     glfwInit();
 
-//	glfwOpenWindowHint(GLFW_FSAA_SAMPLES, 2);
-    if(!glfwOpenWindow( res_x, res_y, 0, 0, 0, 0, 32, 0, fullscreen?GLFW_FULLSCREEN:GLFW_WINDOW))
+	glfwOpenWindowHint(GLFW_FSAA_SAMPLES, 8);
+    if(!glfwOpenWindow( res_x, res_y, 0, 0, 0, 0, 24, 8, fullscreen?GLFW_FULLSCREEN:GLFW_WINDOW))
     {
         glfwTerminate();
         return 0;
     }
 
-//	printf("Multisampling samples: %i\n", glfwGetWindowParam(GLFW_FSAA_SAMPLES));
-//    glEnable(GL_MULTISAMPLE_ARB);
+	printf("Multisampling samples: %i\n", glfwGetWindowParam(GLFW_FSAA_SAMPLES));
+    glEnable(GL_MULTISAMPLE_ARB);
 
     sgRenderer::backingWidth = res_x;
     sgRenderer::backingHeight = res_y;
