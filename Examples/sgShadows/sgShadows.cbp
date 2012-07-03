@@ -39,6 +39,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="-D__OPEN_AL__" />
 			<Add directory="..\..\Dependencies\GLFW\glfw-2.7.5\include" />
 			<Add directory="..\..\Engine\Graphics" />
 			<Add directory="..\..\Engine\Common" />
@@ -65,6 +66,7 @@
 			<Add library="opengl32" />
 			<Add library="png" />
 			<Add library="libz.a" />
+			<Add library="OpenAL32" />
 			<Add directory="..\..\Dependencies\GLFW\glfw-2.7.5\lib" />
 			<Add directory="..\..\Dependencies\GLEW\glew-1.7.0\lib" />
 			<Add directory="..\..\Dependencies\ZLIB\zlib-1.2.7" />

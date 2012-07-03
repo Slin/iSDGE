@@ -39,6 +39,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="-D__OPEN_AL__" />
 			<Add directory="..\..\Dependencies\GLFW\glfw-2.7.5\include" />
 			<Add directory="..\..\Engine\Graphics" />
 			<Add directory="..\..\Engine\Common" />
@@ -49,7 +50,7 @@
 			<Add directory="..\..\Engine\Combiner" />
 			<Add directory="..\..\Dependencies\LIBPNG\lpng1510" />
 			<Add directory="..\..\Engine\Templates" />
-			<Add directory="D:\Programme\OpenAL 1.1 SDK\include" />
+			<Add directory="..\..\Dependencies\OAL\include" />
 			<Add directory="..\..\Engine\OSBindings\Windows\WAV" />
 			<Add directory="..\..\Engine\OSBindings\Windows" />
 			<Add directory="Code\Main" />
@@ -65,11 +66,12 @@
 			<Add library="opengl32" />
 			<Add library="png" />
 			<Add library="libz.a" />
+			<Add library="OpenAL32" />
 			<Add directory="..\..\Dependencies\GLFW\glfw-2.7.5\lib" />
 			<Add directory="..\..\Dependencies\GLEW\glew-1.7.0\lib" />
 			<Add directory="..\..\Dependencies\ZLIB\zlib-1.2.7" />
 			<Add directory="..\..\Dependencies\LIBPNG\lpng1510" />
-			<Add directory="D:\Programme\OpenAL 1.1 SDK\libs\Win32" />
+			<Add directory="..\..\Dependencies\OAL\libs\Win32" />
 		</Linker>
 		<Unit filename="Code\Main\Events.cpp" />
 		<Unit filename="Code\Main\Events.h" />

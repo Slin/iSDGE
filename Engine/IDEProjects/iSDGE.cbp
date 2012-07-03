@@ -32,6 +32,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="-D__OPEN_AL__" />
 			<Add directory="..\..\Dependencies\GLFW\glfw-2.7.5\include" />
 			<Add directory="..\Graphics" />
 			<Add directory="..\Common" />
@@ -45,6 +46,7 @@
 			<Add directory="..\OSBindings\Windows\WAV" />
 			<Add directory="..\Physics\Bullet" />
 			<Add directory="..\Physics\Bullet\bullet-2.77\src" />
+			<Add directory="..\..\Dependencies\OAL\include" />
 		</Compiler>
 		<Linker>
 			<Add library="glfw" />
@@ -54,10 +56,12 @@
 			<Add library="opengl32" />
 			<Add library="png" />
 			<Add library="libz.a" />
+			<Add library="OpenAL32" />
 			<Add directory="..\..\Dependencies\GLFW\glfw-2.7.5\lib" />
 			<Add directory="..\..\Dependencies\GLEW\glew-1.7.0\lib" />
 			<Add directory="..\..\Dependencies\ZLIB\zlib-1.2.7" />
 			<Add directory="..\..\Dependencies\LIBPNG\lpng1510" />
+			<Add directory="..\..\Dependencies\OAL\libs\Win32" />
 		</Linker>
 		<Unit filename="..\Audio\sgAudioFiles.cpp" />
 		<Unit filename="..\Audio\sgAudioFiles.h" />
