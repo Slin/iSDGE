@@ -27,33 +27,35 @@
 #include "sgTouches.h"
 #include "sgRenderer.h"
 #include "sgDebug.h"
+#include "sgMouse.h"
 
 void Interface::onInit(sgEntity *e)
 {
 	ent = e;
-	
+
 	//Create a static hello world text.
 	ent->pan->addText("Hello World0", sgVector2(12, 18), sgVector2(0, 302), sgVector2(12, 18), "font1.png");
-	
+
 	//Create another text. The same as above, but its string will be updated.
 	angdisp = (sgText*)ent->pan->addText("Angle: 00", sgVector2(12, 18), sgVector2(0, 200), sgVector2(12, 18), "font1.png");
-	
+
 	//Add an image element.
 	logo = (sgImage*)ent->pan->addImage("logo_64.png", sgVector2(350, 200), sgVector2(64, 64));
-	
+
 	//Acess it as the last panel element and set its angle.
 	((sgImage*)ent->pan->elements.back())->ang = 45;
 }
 
 void Interface::onDraw(float timestep)
 {
+#if defined __IOS__
 	//If their is a touch
 	if(sgTouches::touches.size() > 0)
 	{
 		//Place the image element at the touches position and rotate it.
 		logo->pos = sgTouches::touches[0]->position;
 		logo->ang += timestep*100;
-		
+
 		//Display the new angle on our second text element.
 		char *angstr = new char[5];
 		sprintf(angstr, "%.0f0", logo->ang);
@@ -61,4 +63,24 @@ void Interface::onDraw(float timestep)
 		angdisp->str.translate();	//Make it displayable
 		delete[] angstr;
 	}
+#else
+	if(glfwGetMouseButton(GLFW_MOUSE_BUTTON_LEFT))
+	{
+		//Rotate the image element.
+		logo->ang += timestep*100.0f;
+		if(logo->ang >= 360)
+			logo->ang = logo->ang-360;
+
+		//Display the new angle on our second text element.
+		char *angstr = new char[5];
+		sprintf(angstr, "%.0f0", logo->ang);
+		angdisp->str.str = std::string("Angle: ")+std::string(angstr);	//Assign the new string
+		angdisp->str.translate();	//Make it displayable
+		delete[] angstr;
+	}
+
+	//Move the image element with the mouse
+	logo->pos.x += sgMouse::currdir.x;
+	logo->pos.y -= sgMouse::currdir.y;
+#endif
 }

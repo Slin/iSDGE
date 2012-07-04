@@ -44,6 +44,9 @@ typedef struct
 #elif defined __WIN32__
 	LARGE_INTEGER start;
 	LARGE_INTEGER stop;
+#else
+	double start;
+	double stop;
 #endif
 }sgTimerWatch;
 

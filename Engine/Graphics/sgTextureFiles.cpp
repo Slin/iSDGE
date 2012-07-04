@@ -198,7 +198,7 @@ namespace sgTextureFiles
 				return false;
 		}
 		unsigned int row_bytes = png_get_rowbytes(png_ptr, info_ptr);
-		texture->bytes = (unsigned char*) malloc(row_bytes * texture->height);
+		texture->bytes = (unsigned char*)malloc(texture->height*row_bytes);
 
 		png_bytepp row_pointers = png_get_rows(png_ptr, info_ptr);
 

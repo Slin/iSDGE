@@ -25,6 +25,10 @@
 
 #include "sgTimer.h"
 
+#if !defined __IOS__
+	#include <GL/glfw.h>
+#endif
+
 sgTimer::sgTimer()
 {
 /*	timer.start.tv_sec = 0;
@@ -39,6 +43,9 @@ sgTimer::sgTimer()
 	timer.start.QuadPart = 0;
 	timer.stop.QuadPart = 0;
 	QueryPerformanceFrequency(&frequency);
+#else
+	timer.start = 0.0;
+	timer.stop = 0.0;
 #endif
 }
 
@@ -50,6 +57,8 @@ void sgTimer::start( )
 	timer.start = mach_absolute_time();
 #elif defined __WIN32__
 	QueryPerformanceCounter(&timer.start);
+#else
+	timer.start = glfwGetTime();
 #endif
 }
 
@@ -60,6 +69,8 @@ void sgTimer::stop( )
 	timer.stop = mach_absolute_time();
 #elif defined __WIN32__
 	QueryPerformanceCounter(&timer.stop);
+#else
+	timer.stop = glfwGetTime();
 #endif
 }
 
@@ -75,7 +86,7 @@ double sgTimer::getElapsedTime()
 	time.QuadPart = timer.stop.QuadPart - timer.start.QuadPart;
 	double elapsedtime = ((double)time.QuadPart /(double)frequency.QuadPart);
 #else
-    double elapsedtime = 0.03;
+    double elapsedtime = timer.stop-timer.start;
 #endif
 	return elapsedtime;
 }

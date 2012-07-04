@@ -77,6 +77,7 @@ void sgSound::createSound(const char *filename)
 
 	alGenBuffers(1, &sndid);
 
+#if defined __IOS__
 	typedef ALvoid  AL_APIENTRY (*alBufferDataStaticProcPtr) (const ALint bid, ALenum format, ALvoid* data, ALsizei size, ALsizei freq);
 	static alBufferDataStaticProcPtr proc = NULL;
 	if (proc == NULL)
@@ -87,6 +88,9 @@ void sgSound::createSound(const char *filename)
 	{
         proc(sndid, (snd->channelCount > 1)? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, snd->bytes, snd->dataLength, snd->sampleRate);
 	}
+#else
+	alBufferData(sndid, (snd->channelCount > 1)? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, snd->bytes, snd->dataLength, snd->sampleRate);
+#endif
 
 	audiodata = snd->bytes;
 	delete snd;

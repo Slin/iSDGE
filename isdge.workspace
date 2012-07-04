@@ -4,10 +4,12 @@
 		<Project filename="Engine/IDEProjects/iSDGE.cbp" />
 		<Project filename="Examples/sgBase/sgBase.cbp" />
 		<Project filename="Examples/sgMirror/sgMirror.cbp" />
-		<Project filename="Examples/sgTerrain/sgTerrain.cbp" />
+		<Project filename="Examples/sgTerrain/sgTerrain.cbp" active="1" />
 		<Project filename="Examples/sgShadows/sgShadows.cbp" />
-		<Project filename="Examples/sgParticles/sgParticles.cbp" active="1" />
+		<Project filename="Examples/sgParticles/sgParticles.cbp" />
 		<Project filename="Examples/sgShaders/sgShaders.cbp" />
 		<Project filename="Examples/sgPhysics/sgPhysics.cbp" />
+		<Project filename="Examples/sgAudio/sgAudio.cbp" />
+		<Project filename="Examples/sgPanels/sgPanels.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>

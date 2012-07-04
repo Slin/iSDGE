@@ -42,6 +42,7 @@ void Events::onPreInit(sgMain *m)
 	sgResourceManager::addPath("../../../../Media/Textures/");
 	sgResourceManager::addPath("../../../../Media/Logos/");
 	sgResourceManager::addPath("../../../../Media/Shaders/");
+	sgResourceManager::addPath("../../../../Media/Audio/ezekiel_rage/");
 	sgResourceManager::addPath("../../../../Engine/Templates/Shaders/");
 #endif
 }
@@ -85,7 +86,11 @@ void Events::onInit(sgMain *m)
 
 	//Play fire sound
 	emitter->createSndSource();
+#if defined __IOS__
 	unsigned int hndl = emitter->sndsrc->registerSound(sgSound::getSound("fire.caf"));
+#else
+	unsigned int hndl = emitter->sndsrc->registerSound(sgSound::getSound("fire.wav"));
+#endif
 	emitter->sndsrc->playSound(hndl, true);
 }
 

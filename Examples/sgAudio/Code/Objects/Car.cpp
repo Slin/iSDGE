@@ -30,9 +30,13 @@
 void Car::onInit(sgEntity *e)
 {
 	ent = e;
-	
+
 	ent->createSndSource();
+#if defined __IOS__
 	unsigned int hndl = ent->sndsrc->registerSound(sgSound::getSound("engine.caf"));
+#else
+	unsigned int hndl = ent->sndsrc->registerSound(sgSound::getSound("engine.wav"));
+#endif
 	ent->sndsrc->playSound(hndl, true, 5.0, 1.5);
 }
 
@@ -43,4 +47,5 @@ void Car::onDraw(float timestep)
 		ent->obj->position.z = -50.0f;
 	ent->obj->position.z += timestep*20.0f;
 	ent->sndsrc->position = ent->obj->position;
+	ent->obj->updateObject();
 }
