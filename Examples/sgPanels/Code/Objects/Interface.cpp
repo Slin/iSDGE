@@ -54,7 +54,9 @@ void Interface::onDraw(float timestep)
 	{
 		//Place the image element at the touches position and rotate it.
 		logo->pos = sgTouches::touches[0]->position;
-		logo->ang += timestep*100;
+		logo->ang += timestep*100.0f;
+		if(logo->ang >= 360)
+			logo->ang = logo->ang-360;
 
 		//Display the new angle on our second text element.
 		char *angstr = new char[5];
@@ -66,11 +68,6 @@ void Interface::onDraw(float timestep)
 #else
 	if(glfwGetMouseButton(GLFW_MOUSE_BUTTON_LEFT))
 	{
-		//Rotate the image element.
-		logo->ang += timestep*100.0f;
-		if(logo->ang >= 360)
-			logo->ang = logo->ang-360;
-
 		//Display the new angle on our second text element.
 		char *angstr = new char[5];
 		sprintf(angstr, "%.0f0", logo->ang);

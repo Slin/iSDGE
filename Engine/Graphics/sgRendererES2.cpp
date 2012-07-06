@@ -1252,9 +1252,13 @@ void sgRendererES2::render()
 #endif
 		glClear(GL_COLOR_BUFFER_BIT|GL_STENCIL_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
-		//Update camera
-		cam->matview = matglobal3d*cam->matview;
-		cam->matinvview = cam->matinvview*matglobal3d;
+        if(cam->updated == true)
+        {
+			//Update camera
+			cam->matview = matglobal3d*cam->matview;
+			cam->matinvview = cam->matinvview*matglobal3d;
+			cam->updated = false;
+		}
 
 		if(event != NULL)
 			event->onDrawCam(cam, this);

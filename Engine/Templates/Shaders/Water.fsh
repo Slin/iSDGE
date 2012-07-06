@@ -44,7 +44,11 @@ void main()
 	float camdist = distance(viewpos, worldpos);
 	vec4 dis = texture2D(mTexture0, texcoord.xy)-0.5;
 	vec2 reflcoords = projpos.xy/projpos.z*0.5+0.5;
+#ifdef GL_ES
+    reflcoords.x = 1.0-reflcoords.x;
+#else
 	reflcoords.y = 1.0-reflcoords.y;
+#endif
 	vec4 color = texture2D(mTexture1, reflcoords+dis.rg);
 	color.rgb = mix(color.rgb, vec3(0.7333, 0.7843, 0.8549), min(camdist, 1.0))*0.5;
 	color.a = 0.5;

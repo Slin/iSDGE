@@ -42,10 +42,10 @@
 		293AC7D7137EB24400403584 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 293AC7D6137EB24400403584 /* AudioToolbox.framework */; };
 		2944FEF913E35B29007C28C4 /* iSDGE.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2944FEF513E35A62007C28C4 /* iSDGE.bundle */; };
 		2952EEAE117A6F90006FAB6F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2952EEAD117A6F90006FAB6F /* CoreGraphics.framework */; };
-		295CBF5C1215861700F1F941 /* Events.mm in Sources */ = {isa = PBXBuildFile; fileRef = 295CBF5A1215861700F1F941 /* Events.mm */; };
 		295CBF5D1215861700F1F941 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295CBF5B1215861700F1F941 /* main.cpp */; };
 		295CBF69121587B300F1F941 /* Car.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295CBF67121587B300F1F941 /* Car.cpp */; };
 		29D7EB5B117CFABF0091D933 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 29D7EB5A117CFABF0091D933 /* Entitlements.plist */; };
+		C05186A715A6E8780065D4C9 /* Events.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C05186A615A6E8780065D4C9 /* Events.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,12 +86,12 @@
 		2944FEF513E35A62007C28C4 /* iSDGE.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iSDGE.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		2952EEAD117A6F90006FAB6F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		295CBF591215861700F1F941 /* Events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Events.h; sourceTree = "<group>"; };
-		295CBF5A1215861700F1F941 /* Events.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Events.mm; sourceTree = "<group>"; };
 		295CBF5B1215861700F1F941 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		295CBF67121587B300F1F941 /* Car.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Car.cpp; sourceTree = "<group>"; };
 		295CBF68121587B300F1F941 /* Car.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Car.h; sourceTree = "<group>"; };
 		295CBF8C12158A9600F1F941 /* sgAudio-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "sgAudio-Info.plist"; sourceTree = "<group>"; };
 		29D7EB5A117CFABF0091D933 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
+		C05186A615A6E8780065D4C9 /* Events.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = Events.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,8 +216,8 @@
 		295CBF581215861700F1F941 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				C05186A615A6E8780065D4C9 /* Events.cpp */,
 				295CBF591215861700F1F941 /* Events.h */,
-				295CBF5A1215861700F1F941 /* Events.mm */,
 				295CBF5B1215861700F1F941 /* main.cpp */,
 			);
 			path = Main;
@@ -360,9 +360,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				295CBF5C1215861700F1F941 /* Events.mm in Sources */,
 				295CBF5D1215861700F1F941 /* main.cpp in Sources */,
 				295CBF69121587B300F1F941 /* Car.cpp in Sources */,
+				C05186A715A6E8780065D4C9 /* Events.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -413,6 +413,7 @@
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_PREPROCESSOR_DEFINITIONS = __IOS__;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "../../Engine/Physics/Bullet/bullet-2.77/src";
@@ -448,7 +449,10 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					__IOS__,
+					DEBUG,
+				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "../../Engine/Physics/Bullet/bullet-2.77/src";
@@ -465,6 +469,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_PREPROCESSOR_DEFINITIONS = __IOS__;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "../../Engine/Physics/Bullet/bullet-2.77/src";

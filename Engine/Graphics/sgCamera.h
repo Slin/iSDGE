@@ -232,6 +232,12 @@ class sgCamera
 		float frustumradius;
 	
 		/**
+		 *	Updated.
+		 *	Identicates if the camera had just been updated during the last frame.
+		 */
+		bool updated;
+	
+		/**
 		 *	Previous.
 		 *	Pointer to the previous camera within the cameras list or NULL if there is none.
 		 */

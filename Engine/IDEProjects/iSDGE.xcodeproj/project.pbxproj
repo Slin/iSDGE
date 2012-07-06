@@ -266,6 +266,11 @@
 		29D0635F13C9DC5600C001B2 /* Bullet-C-Api.h in Headers */ = {isa = PBXBuildFile; fileRef = 2904ECDD13C9DB5800E04491 /* Bullet-C-Api.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		29F0100A142A3F340008FF12 /* sgSkeleton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29F01008142A3F320008FF12 /* sgSkeleton.cpp */; };
 		29F0100B142A3F340008FF12 /* sgSkeleton.h in Headers */ = {isa = PBXBuildFile; fileRef = 29F01009142A3F330008FF12 /* sgSkeleton.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C006C4D515A5CF38004FB83C /* sgMouse.cpp in Headers */ = {isa = PBXBuildFile; fileRef = C079C11515A5C42A00EC37E6 /* sgMouse.cpp */; settings = {ATTRIBUTES = (Public, ); }; };
+		C05186AD15A6E96F0065D4C9 /* PhysicsObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C05186AB15A6E96F0065D4C9 /* PhysicsObject.cpp */; };
+		C05186AE15A6E96F0065D4C9 /* PhysicsObject.h in Headers */ = {isa = PBXBuildFile; fileRef = C05186AC15A6E96F0065D4C9 /* PhysicsObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C079C11615A5C42A00EC37E6 /* sgMouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C079C11515A5C42A00EC37E6 /* sgMouse.cpp */; };
+		C079C11815A5C43A00EC37E6 /* sgMouse.h in Headers */ = {isa = PBXBuildFile; fileRef = C079C11715A5C43A00EC37E6 /* sgMouse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -716,6 +721,10 @@
 		29D0635713C9DC3200C001B2 /* vectormath */ = {isa = PBXFileReference; lastKnownFileType = folder; path = vectormath; sourceTree = "<group>"; };
 		29F01008142A3F320008FF12 /* sgSkeleton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgSkeleton.cpp; sourceTree = "<group>"; };
 		29F01009142A3F330008FF12 /* sgSkeleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgSkeleton.h; sourceTree = "<group>"; };
+		C05186AB15A6E96F0065D4C9 /* PhysicsObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PhysicsObject.cpp; sourceTree = "<group>"; };
+		C05186AC15A6E96F0065D4C9 /* PhysicsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsObject.h; sourceTree = "<group>"; };
+		C079C11515A5C42A00EC37E6 /* sgMouse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgMouse.cpp; sourceTree = "<group>"; };
+		C079C11715A5C43A00EC37E6 /* sgMouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgMouse.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1327,6 +1336,8 @@
 		29338BCB13C9B533007FC59F /* Input */ = {
 			isa = PBXGroup;
 			children = (
+				C079C11715A5C43A00EC37E6 /* sgMouse.h */,
+				C079C11515A5C42A00EC37E6 /* sgMouse.cpp */,
 				29338BCC13C9B533007FC59F /* sgAccelerometer.cpp */,
 				29338BCD13C9B533007FC59F /* sgAccelerometer.h */,
 				29338BCE13C9B533007FC59F /* sgCameraStream.cpp */,
@@ -1432,6 +1443,8 @@
 		29338D4F13C9B533007FC59F /* Templates */ = {
 			isa = PBXGroup;
 			children = (
+				C05186AB15A6E96F0065D4C9 /* PhysicsObject.cpp */,
+				C05186AC15A6E96F0065D4C9 /* PhysicsObject.h */,
 				29338D5013C9B533007FC59F /* CameraFree.cpp */,
 				29338D5113C9B533007FC59F /* CameraFree.h */,
 				29338D5213C9B533007FC59F /* FPSDisplay.cpp */,
@@ -1466,7 +1479,9 @@
 				29338D6513C9B534007FC59F /* sgSound.h in Headers */,
 				29338D6913C9B534007FC59F /* sgSoundSource.h in Headers */,
 				29338D6D13C9B534007FC59F /* sgAction.h in Headers */,
+				C05186AE15A6E96F0065D4C9 /* PhysicsObject.h in Headers */,
 				29338D7113C9B534007FC59F /* sgEntity.h in Headers */,
+				C079C11815A5C43A00EC37E6 /* sgMouse.h in Headers */,
 				29338D7513C9B534007FC59F /* sgEvents.h in Headers */,
 				29338D7913C9B534007FC59F /* sgMain.h in Headers */,
 				29338D7D13C9B534007FC59F /* sgBase.h in Headers */,
@@ -1476,6 +1491,7 @@
 				29338D8D13C9B534007FC59F /* sgPlane.h in Headers */,
 				29338D9113C9B534007FC59F /* sgQuaternion.h in Headers */,
 				29338D9513C9B534007FC59F /* sgResourceManager.h in Headers */,
+				C006C4D515A5CF38004FB83C /* sgMouse.cpp in Headers */,
 				29338D9913C9B534007FC59F /* sgTimer.h in Headers */,
 				29338D9D13C9B534007FC59F /* sgTools.h in Headers */,
 				29338DA113C9B534007FC59F /* sgVector2.h in Headers */,
@@ -1808,6 +1824,8 @@
 				2904EF2E13C9DB5A00E04491 /* btQuickprof.cpp in Sources */,
 				2904EF3213C9DB5A00E04491 /* btSerializer.cpp in Sources */,
 				29F0100A142A3F340008FF12 /* sgSkeleton.cpp in Sources */,
+				C079C11615A5C42A00EC37E6 /* sgMouse.cpp in Sources */,
+				C05186AD15A6E96F0065D4C9 /* PhysicsObject.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1867,8 +1885,8 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					__IOS__,
 					"DEBUG=1",
-					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -1888,6 +1906,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = __IOS__;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1963,6 +1982,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = __IOS__;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;

@@ -103,6 +103,7 @@ void sgCamera::updateCamera()
 	
 	matinvview.makeTranslate(position);
 	matinvview.rotate(rotation);
+	updated = true;
 }
 
 void sgCamera::updateFrustum()

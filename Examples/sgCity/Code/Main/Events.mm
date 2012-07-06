@@ -77,6 +77,7 @@ void Events::onInit(sgMain *m)
 	ent->obj->position.y = -0.1;
 	ent->obj->body->materials[0]->setTexture(-1, ground);
 	ent->obj->body->materials[0]->mattex.makeScale(sgVector3(50, 50, 50));
+	ent->obj->updateObject();
 	
 	//Generate brick texture
 	sgTexture *bricks = sgTexture::getTexture(128, 128);
@@ -97,6 +98,7 @@ void Events::onInit(sgMain *m)
 	ent->obj->body->cloneMaterial(0);
 	ent->obj->body->materials[0]->setTexture(0, bricks);
 	ent->obj->body->materials[0]->mattex.makeScale(sgVector3(100, 40, 20));
+	ent->obj->updateObject();
 	
 	//Generate window texture
 	sgTexture *windows = sgTexture::getTexture(128, 128);
@@ -117,6 +119,7 @@ void Events::onInit(sgMain *m)
 	ent->obj->body->cloneMaterial(0);
 	ent->obj->body->materials[0]->setTexture(0, windows);
 	ent->obj->body->materials[0]->mattex.makeScale(sgVector3(8, 20, 8));
+	ent->obj->updateObject();
 }
 
 //Called every frame, just before drawing

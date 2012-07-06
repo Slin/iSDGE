@@ -42,7 +42,11 @@ void main()
 	vec4 color = texture2D(mTexture0, texcoord);
 
 	vec2 coord = reflcoord.xy/reflcoord.z*0.5+0.5;
+#ifdef GL_ES
+    coord.x = 1.0-coord.x;
+#else
 	coord.y = 1.0-coord.y;
+#endif
     vec4 refl = texture2D(mTexture1, coord);
 	
 	gl_FragColor = color*0.6+refl*0.4;

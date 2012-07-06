@@ -26,7 +26,6 @@
 		292FFC4012159C61003564EE /* sky_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 292FFC1F12159C61003564EE /* sky_up.png */; };
 		292FFC4112159C61003564EE /* tiles.png in Resources */ = {isa = PBXBuildFile; fileRef = 292FFC2012159C61003564EE /* tiles.png */; };
 		292FFC4212159C61003564EE /* wall.png in Resources */ = {isa = PBXBuildFile; fileRef = 292FFC2112159C61003564EE /* wall.png */; };
-		292FFC801215A7E1003564EE /* Events.mm in Sources */ = {isa = PBXBuildFile; fileRef = 292FFC771215A7E1003564EE /* Events.mm */; };
 		292FFC811215A7E1003564EE /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 292FFC781215A7E1003564EE /* main.cpp */; };
 		292FFC821215A7E1003564EE /* Car.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 292FFC7A1215A7E1003564EE /* Car.cpp */; };
 		292FFC831215A7E1003564EE /* Jeep.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 292FFC7C1215A7E1003564EE /* Jeep.cpp */; };
@@ -46,6 +45,7 @@
 		29F1841312AB1AA800B7F5F2 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29F1840B12AB1AA800B7F5F2 /* Icon-Small@2x.png */; };
 		29F1841412AB1AA800B7F5F2 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 29F1840C12AB1AA800B7F5F2 /* Icon.png */; };
 		29F1841512AB1AA800B7F5F2 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29F1840D12AB1AA800B7F5F2 /* Icon@2x.png */; };
+		C006C4D815A5D162004FB83C /* Events.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C006C4D715A5D162004FB83C /* Events.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,7 +70,6 @@
 		292FFC2012159C61003564EE /* tiles.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiles.png; sourceTree = "<group>"; };
 		292FFC2112159C61003564EE /* wall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wall.png; sourceTree = "<group>"; };
 		292FFC761215A7E1003564EE /* Events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Events.h; sourceTree = "<group>"; };
-		292FFC771215A7E1003564EE /* Events.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Events.mm; sourceTree = "<group>"; };
 		292FFC781215A7E1003564EE /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		292FFC7A1215A7E1003564EE /* Car.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Car.cpp; sourceTree = "<group>"; };
 		292FFC7B1215A7E1003564EE /* Car.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Car.h; sourceTree = "<group>"; };
@@ -94,6 +93,7 @@
 		29F1840B12AB1AA800B7F5F2 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
 		29F1840C12AB1AA800B7F5F2 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		29F1840D12AB1AA800B7F5F2 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		C006C4D715A5D162004FB83C /* Events.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = Events.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,8 +199,8 @@
 		292FFC751215A7E1003564EE /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				C006C4D715A5D162004FB83C /* Events.cpp */,
 				292FFC761215A7E1003564EE /* Events.h */,
-				292FFC771215A7E1003564EE /* Events.mm */,
 				292FFC781215A7E1003564EE /* main.cpp */,
 			);
 			path = Main;
@@ -378,11 +378,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				292FFC801215A7E1003564EE /* Events.mm in Sources */,
 				292FFC811215A7E1003564EE /* main.cpp in Sources */,
 				292FFC821215A7E1003564EE /* Car.cpp in Sources */,
 				292FFC831215A7E1003564EE /* Jeep.cpp in Sources */,
 				292FFC841215A7E1003564EE /* Rotate.cpp in Sources */,
+				C006C4D815A5D162004FB83C /* Events.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -446,6 +446,7 @@
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Nils Daumann";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_PREPROCESSOR_DEFINITIONS = __IOS__;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "../../Engine/Physics/Bullet/bullet-2.77/src/**";
@@ -492,7 +493,10 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DEBUGGING_SYMBOLS = default;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					__IOS__,
+					DEBUG,
+				);
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -510,6 +514,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_PREPROCESSOR_DEFINITIONS = __IOS__;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "../../Engine/Physics/Bullet/bullet-2.77/src/**";
