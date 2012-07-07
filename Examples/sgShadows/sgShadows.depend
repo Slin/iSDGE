@@ -1,0 +1,797 @@
+# depslib dependency file v1.0
+1341491406 source:/mnt/hgfs/Dev/iSDGE/Examples/sgShadows/Code/Main/Events.cpp
+	"Events.h"
+	"sgResourceManager.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Examples/sgShadows/Code/Main/Events.h
+	"sgEvents.h"
+	"sgMain.h"
+	"sgDebug.h"
+	"CameraFree.h"
+	"Rotate.h"
+	"Car.h"
+	"Jeep.h"
+	"FPSDisplay.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Combiner/sgEvents.h
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Combiner/sgMain.h
+	"sgRenderer.h"
+	"sgRendererES1.h"
+	"sgRendererES2.h"
+	"sgTouches.h"
+	"sgAccelerometer.h"
+	"sgMouse.h"
+	"sgCameraStream.h"
+	"sgEvents.h"
+	"sgAction.h"
+	"sgEntity.h"
+	"sgTimer.h"
+	"sgPhysWorld.h"
+	"sgPhysWorldBullet.h"
+	"sgAudioPlayer.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Graphics/sgRenderer.h
+	<vector>
+	<OpenGLES/ES1/gl.h>
+	<OpenGLES/ES1/glext.h>
+	<OpenGLES/ES2/gl.h>
+	<OpenGLES/ES2/glext.h>
+	<GL/glew.h>
+	<GL/glfw.h>
+	"sgObjectFiles.h"
+	"sgObject.h"
+	"sgPanel.h"
+	"sgLight.h"
+	"sgCamera.h"
+	"sgParticleEmitter.h"
+	"sgTexture.h"
+	"sgShader.h"
+	"sgMaterial.h"
+	"sgVertex.h"
+	"sgMesh.h"
+	"sgObjectBody.h"
+	"sgMatrix4x4.h"
+	"sgColor.h"
+	"sgRenderEvent.h"
+	"sgTimer.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Dependencies/GLEW/glew-1.7.0/include/GL/glew.h
+	<stddef.h>
+	<inttypes.h>
+	<stdint.h>
+	<inttypes.h>
+	<OpenGL/glu.h>
+	<GL/glu.h>
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Dependencies/GLFW/glfw-2.7.5/include/GL/glfw.h
+	<OpenGL/gl3.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL3/gl3.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Graphics/sgObjectFiles.h
+	<vector>
+	<string>
+	"sgVertex.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Graphics/sgVertex.h
+	"sgVector4.h"
+	"sgVector3.h"
+	"sgVector2.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Common/sgVector4.h
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Common/sgVector3.h
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Common/sgVector2.h
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Graphics/sgObject.h
+	<vector>
+	<string>
+	"sgBase.h"
+	"sgVector4.h"
+	"sgVector3.h"
+	"sgVector2.h"
+	"sgMatrix4x4.h"
+	"sgQuaternion.h"
+	"sgObjectBody.h"
+	"sgSkeleton.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Common/sgBase.h
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Common/sgMatrix4x4.h
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Common/sgQuaternion.h
+	"sgVector3.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Graphics/sgObjectBody.h
+	<vector>
+	<string>
+	"sgBase.h"
+	"sgVector4.h"
+	"sgVector3.h"
+	"sgVector2.h"
+	"sgMatrix4x4.h"
+	"sgQuaternion.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Graphics/sgSkeleton.h
+	"sgBase.h"
+	"sgVector4.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Graphics/sgPanel.h
+	<vector>
+	<string>
+	"sgVector2.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Graphics/sgLight.h
+	"sgColor.h"
+	"sgVector4.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Common/sgColor.h
+
+1341567005 /mnt/hgfs/Dev/iSDGE/Engine/Graphics/sgCamera.h
+	"sgMatrix4x4.h"
+	"sgVector4.h"
+	"sgVector3.h"
+	"sgVector2.h"
+	"sgQuaternion.h"
+	"sgPlane.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Common/sgPlane.h
+	"sgVector3.h"
+	"sgVector4.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Graphics/sgParticleEmitter.h
+	<vector>
+	<string>
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Graphics/sgTexture.h
+	"sgBase.h"
+	<OpenGLES/ES1/gl.h>
+	<OpenGLES/ES1/glext.h>
+	<OpenGLES/ES2/gl.h>
+	<OpenGLES/ES2/glext.h>
+	<CoreGraphics/CoreGraphics.h>
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Graphics/sgShader.h
+	"sgBase.h"
+	<string>
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Graphics/sgMaterial.h
+	<vector>
+	<string>
+	"sgBase.h"
+	"sgColor.h"
+	"sgMatrix4x4.h"
+	"sgShader.h"
+	"sgTexture.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Graphics/sgMesh.h
+	"sgBase.h"
+	"sgVector4.h"
+	"sgVertex.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Graphics/sgRenderEvent.h
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Common/sgTimer.h
+	<mach/mach.h>
+	<mach/mach_time.h>
+	<windows.h>
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Graphics/sgRendererES1.h
+	"sgRenderer.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Graphics/sgRendererES2.h
+	"sgRenderer.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Input/sgTouches.h
+	<vector>
+	"sgVector2.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Input/sgAccelerometer.h
+	"sgVector3.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Input/sgMouse.h
+	"sgVector2.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Input/sgCameraStream.h
+	"sgTexture.h"
+	<CoreVideo/CoreVideo.h>
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Combiner/sgAction.h
+	"sgEntity.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Combiner/sgEntity.h
+	"sgMaterial.h"
+	"sgObject.h"
+	"sgCamera.h"
+	"sgLight.h"
+	"sgPanel.h"
+	"sgParticleEmitter.h"
+	"sgPhysBody.h"
+	"sgSoundSource.h"
+	"sgVector4.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/sgPhysBody.h
+	"sgVector3.h"
+	"sgQuaternion.h"
+	"sgPhysConstraint.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/sgPhysConstraint.h
+	"sgVector3.h"
+	"sgQuaternion.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Audio/sgSoundSource.h
+	"sgVector3.h"
+	<vector>
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/sgPhysWorld.h
+	"sgPhysBody.h"
+	"sgPhysConstraint.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/sgPhysWorldBullet.h
+	"btBulletDynamicsCommon.h"
+	"sgPhysWorld.h"
+	<vector>
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/btBulletDynamicsCommon.h
+	"btBulletCollisionCommon.h"
+	"BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h"
+	"BulletDynamics/Dynamics/btContinuousDynamicsWorld.h"
+	"BulletDynamics/Dynamics/btSimpleDynamicsWorld.h"
+	"BulletDynamics/Dynamics/btRigidBody.h"
+	"BulletDynamics/ConstraintSolver/btPoint2PointConstraint.h"
+	"BulletDynamics/ConstraintSolver/btHingeConstraint.h"
+	"BulletDynamics/ConstraintSolver/btConeTwistConstraint.h"
+	"BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h"
+	"BulletDynamics/ConstraintSolver/btSliderConstraint.h"
+	"BulletDynamics/ConstraintSolver/btGeneric6DofSpringConstraint.h"
+	"BulletDynamics/ConstraintSolver/btUniversalConstraint.h"
+	"BulletDynamics/ConstraintSolver/btHinge2Constraint.h"
+	"BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h"
+	"BulletDynamics/Vehicle/btRaycastVehicle.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/btBulletCollisionCommon.h
+	"BulletCollision/CollisionDispatch/btCollisionWorld.h"
+	"BulletCollision/CollisionDispatch/btCollisionObject.h"
+	"BulletCollision/CollisionShapes/btBoxShape.h"
+	"BulletCollision/CollisionShapes/btSphereShape.h"
+	"BulletCollision/CollisionShapes/btCapsuleShape.h"
+	"BulletCollision/CollisionShapes/btCylinderShape.h"
+	"BulletCollision/CollisionShapes/btConeShape.h"
+	"BulletCollision/CollisionShapes/btStaticPlaneShape.h"
+	"BulletCollision/CollisionShapes/btConvexHullShape.h"
+	"BulletCollision/CollisionShapes/btTriangleMesh.h"
+	"BulletCollision/CollisionShapes/btConvexTriangleMeshShape.h"
+	"BulletCollision/CollisionShapes/btBvhTriangleMeshShape.h"
+	"BulletCollision/CollisionShapes/btTriangleMeshShape.h"
+	"BulletCollision/CollisionShapes/btTriangleIndexVertexArray.h"
+	"BulletCollision/CollisionShapes/btCompoundShape.h"
+	"BulletCollision/CollisionShapes/btTetrahedronShape.h"
+	"BulletCollision/CollisionShapes/btEmptyShape.h"
+	"BulletCollision/CollisionShapes/btMultiSphereShape.h"
+	"BulletCollision/CollisionShapes/btUniformScalingShape.h"
+	"BulletCollision/CollisionDispatch/btSphereSphereCollisionAlgorithm.h"
+	"BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h"
+	"BulletCollision/CollisionDispatch/btCollisionDispatcher.h"
+	"BulletCollision/BroadphaseCollision/btSimpleBroadphase.h"
+	"BulletCollision/BroadphaseCollision/btAxisSweep3.h"
+	"BulletCollision/BroadphaseCollision/btMultiSapBroadphase.h"
+	"BulletCollision/BroadphaseCollision/btDbvtBroadphase.h"
+	"LinearMath/btQuaternion.h"
+	"LinearMath/btTransform.h"
+	"LinearMath/btDefaultMotionState.h"
+	"LinearMath/btQuickprof.h"
+	"LinearMath/btIDebugDraw.h"
+	"LinearMath/btSerializer.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionDispatch/btCollisionWorld.h
+	"LinearMath/btVector3.h"
+	"LinearMath/btTransform.h"
+	"btCollisionObject.h"
+	"btCollisionDispatcher.h"
+	"BulletCollision/BroadphaseCollision/btOverlappingPairCache.h"
+	"LinearMath/btAlignedObjectArray.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/LinearMath/btVector3.h
+	"btScalar.h"
+	"btMinMax.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/LinearMath/btScalar.h
+	<math.h>
+	<stdlib.h>
+	<cstdlib>
+	<cfloat>
+	<float.h>
+	<ppcintrinsics.h>
+	<emmintrin.h>
+	<assert.h>
+	<assert.h>
+	<spu_printf.h>
+	<assert.h>
+	<emmintrin.h>
+	<assert.h>
+	<assert.h>
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/LinearMath/btMinMax.h
+	"LinearMath/btScalar.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/LinearMath/btTransform.h
+	"btMatrix3x3.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/LinearMath/btMatrix3x3.h
+	"btVector3.h"
+	"btQuaternion.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/LinearMath/btQuaternion.h
+	"btVector3.h"
+	"btQuadWord.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/LinearMath/btQuadWord.h
+	"btScalar.h"
+	"btMinMax.h"
+	<altivec.h>
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionDispatch/btCollisionObject.h
+	"LinearMath/btTransform.h"
+	"LinearMath/btMotionState.h"
+	"LinearMath/btAlignedAllocator.h"
+	"LinearMath/btAlignedObjectArray.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/LinearMath/btMotionState.h
+	"btTransform.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/LinearMath/btAlignedAllocator.h
+	"btScalar.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/LinearMath/btAlignedObjectArray.h
+	"btScalar.h"
+	"btAlignedAllocator.h"
+	<memory.h>
+	<string.h>
+	<new>
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionDispatch/btCollisionDispatcher.h
+	"BulletCollision/BroadphaseCollision/btDispatcher.h"
+	"BulletCollision/NarrowPhaseCollision/btPersistentManifold.h"
+	"BulletCollision/CollisionDispatch/btManifoldResult.h"
+	"BulletCollision/BroadphaseCollision/btBroadphaseProxy.h"
+	"LinearMath/btAlignedObjectArray.h"
+	"btCollisionCreateFunc.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/BroadphaseCollision/btDispatcher.h
+	"LinearMath/btScalar.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/NarrowPhaseCollision/btPersistentManifold.h
+	"LinearMath/btVector3.h"
+	"LinearMath/btTransform.h"
+	"btManifoldPoint.h"
+	"LinearMath/btAlignedAllocator.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/NarrowPhaseCollision/btManifoldPoint.h
+	"LinearMath/btVector3.h"
+	"LinearMath/btTransformUtil.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/LinearMath/btTransformUtil.h
+	"btTransform.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionDispatch/btManifoldResult.h
+	"BulletCollision/NarrowPhaseCollision/btPersistentManifold.h"
+	"BulletCollision/NarrowPhaseCollision/btDiscreteCollisionDetectorInterface.h"
+	"LinearMath/btTransform.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/NarrowPhaseCollision/btDiscreteCollisionDetectorInterface.h
+	"LinearMath/btTransform.h"
+	"LinearMath/btVector3.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/BroadphaseCollision/btBroadphaseProxy.h
+	"LinearMath/btScalar.h"
+	"LinearMath/btVector3.h"
+	"LinearMath/btAlignedAllocator.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionDispatch/btCollisionCreateFunc.h
+	"LinearMath/btAlignedObjectArray.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/BroadphaseCollision/btOverlappingPairCache.h
+	"btBroadphaseInterface.h"
+	"btBroadphaseProxy.h"
+	"btOverlappingPairCallback.h"
+	"LinearMath/btAlignedObjectArray.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/BroadphaseCollision/btBroadphaseInterface.h
+	"btBroadphaseProxy.h"
+	"LinearMath/btVector3.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/BroadphaseCollision/btOverlappingPairCallback.h
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionShapes/btBoxShape.h
+	"btPolyhedralConvexShape.h"
+	"btCollisionMargin.h"
+	"BulletCollision/BroadphaseCollision/btBroadphaseProxy.h"
+	"LinearMath/btVector3.h"
+	"LinearMath/btMinMax.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionShapes/btPolyhedralConvexShape.h
+	"LinearMath/btMatrix3x3.h"
+	"btConvexInternalShape.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionShapes/btConvexInternalShape.h
+	"btConvexShape.h"
+	"LinearMath/btAabbUtil2.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionShapes/btConvexShape.h
+	"btCollisionShape.h"
+	"LinearMath/btVector3.h"
+	"LinearMath/btTransform.h"
+	"LinearMath/btMatrix3x3.h"
+	"btCollisionMargin.h"
+	"LinearMath/btAlignedAllocator.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionShapes/btCollisionShape.h
+	"LinearMath/btTransform.h"
+	"LinearMath/btVector3.h"
+	"LinearMath/btMatrix3x3.h"
+	"BulletCollision/BroadphaseCollision/btBroadphaseProxy.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionShapes/btCollisionMargin.h
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/LinearMath/btAabbUtil2.h
+	"btTransform.h"
+	"btVector3.h"
+	"btMinMax.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionShapes/btSphereShape.h
+	"btConvexInternalShape.h"
+	"BulletCollision/BroadphaseCollision/btBroadphaseProxy.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionShapes/btCapsuleShape.h
+	"btConvexInternalShape.h"
+	"BulletCollision/BroadphaseCollision/btBroadphaseProxy.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionShapes/btCylinderShape.h
+	"btBoxShape.h"
+	"BulletCollision/BroadphaseCollision/btBroadphaseProxy.h"
+	"LinearMath/btVector3.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionShapes/btConeShape.h
+	"btConvexInternalShape.h"
+	"BulletCollision/BroadphaseCollision/btBroadphaseProxy.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionShapes/btStaticPlaneShape.h
+	"btConcaveShape.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionShapes/btConcaveShape.h
+	"btCollisionShape.h"
+	"BulletCollision/BroadphaseCollision/btBroadphaseProxy.h"
+	"btTriangleCallback.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionShapes/btTriangleCallback.h
+	"LinearMath/btVector3.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionShapes/btConvexHullShape.h
+	"btPolyhedralConvexShape.h"
+	"BulletCollision/BroadphaseCollision/btBroadphaseProxy.h"
+	"LinearMath/btAlignedObjectArray.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionShapes/btTriangleMesh.h
+	"btTriangleIndexVertexArray.h"
+	"LinearMath/btVector3.h"
+	"LinearMath/btAlignedObjectArray.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionShapes/btTriangleIndexVertexArray.h
+	"btStridingMeshInterface.h"
+	"LinearMath/btAlignedObjectArray.h"
+	"LinearMath/btScalar.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionShapes/btStridingMeshInterface.h
+	"LinearMath/btVector3.h"
+	"btTriangleCallback.h"
+	"btConcaveShape.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionShapes/btConvexTriangleMeshShape.h
+	"btPolyhedralConvexShape.h"
+	"BulletCollision/BroadphaseCollision/btBroadphaseProxy.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionShapes/btBvhTriangleMeshShape.h
+	"btTriangleMeshShape.h"
+	"btOptimizedBvh.h"
+	"LinearMath/btAlignedAllocator.h"
+	"btTriangleInfoMap.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionShapes/btTriangleMeshShape.h
+	"btConcaveShape.h"
+	"btStridingMeshInterface.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionShapes/btOptimizedBvh.h
+	"BulletCollision/BroadphaseCollision/btQuantizedBvh.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/BroadphaseCollision/btQuantizedBvh.h
+	<stdio.h>
+	<stdlib.h>
+	"LinearMath/btVector3.h"
+	"LinearMath/btAlignedAllocator.h"
+	"LinearMath/btAlignedAllocator.h"
+	"LinearMath/btAlignedObjectArray.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionShapes/btTriangleInfoMap.h
+	"LinearMath/btHashMap.h"
+	"LinearMath/btSerializer.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/LinearMath/btHashMap.h
+	"btAlignedObjectArray.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/LinearMath/btSerializer.h
+	"btScalar.h"
+	"btStackAlloc.h"
+	"btHashMap.h"
+	<memory.h>
+	<string.h>
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/LinearMath/btStackAlloc.h
+	"btScalar.h"
+	"btAlignedAllocator.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionShapes/btCompoundShape.h
+	"btCollisionShape.h"
+	"LinearMath/btVector3.h"
+	"LinearMath/btTransform.h"
+	"LinearMath/btMatrix3x3.h"
+	"btCollisionMargin.h"
+	"LinearMath/btAlignedObjectArray.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionShapes/btTetrahedronShape.h
+	"btPolyhedralConvexShape.h"
+	"BulletCollision/BroadphaseCollision/btBroadphaseProxy.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionShapes/btEmptyShape.h
+	"btConcaveShape.h"
+	"LinearMath/btVector3.h"
+	"LinearMath/btTransform.h"
+	"LinearMath/btMatrix3x3.h"
+	"btCollisionMargin.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionShapes/btMultiSphereShape.h
+	"btConvexInternalShape.h"
+	"BulletCollision/BroadphaseCollision/btBroadphaseProxy.h"
+	"LinearMath/btAlignedObjectArray.h"
+	"LinearMath/btAabbUtil2.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionShapes/btUniformScalingShape.h
+	"btConvexShape.h"
+	"BulletCollision/BroadphaseCollision/btBroadphaseProxy.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionDispatch/btSphereSphereCollisionAlgorithm.h
+	"btActivatingCollisionAlgorithm.h"
+	"BulletCollision/BroadphaseCollision/btBroadphaseProxy.h"
+	"BulletCollision/CollisionDispatch/btCollisionCreateFunc.h"
+	"btCollisionDispatcher.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionDispatch/btActivatingCollisionAlgorithm.h
+	"BulletCollision/BroadphaseCollision/btCollisionAlgorithm.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/BroadphaseCollision/btCollisionAlgorithm.h
+	"LinearMath/btScalar.h"
+	"LinearMath/btAlignedObjectArray.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionDispatch/btDefaultCollisionConfiguration.h
+	"btCollisionConfiguration.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/CollisionDispatch/btCollisionConfiguration.h
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/BroadphaseCollision/btSimpleBroadphase.h
+	"btOverlappingPairCache.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/BroadphaseCollision/btAxisSweep3.h
+	"LinearMath/btVector3.h"
+	"btOverlappingPairCache.h"
+	"btBroadphaseInterface.h"
+	"btBroadphaseProxy.h"
+	"btOverlappingPairCallback.h"
+	"btDbvtBroadphase.h"
+	<stdio.h>
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/BroadphaseCollision/btDbvtBroadphase.h
+	"BulletCollision/BroadphaseCollision/btDbvt.h"
+	"BulletCollision/BroadphaseCollision/btOverlappingPairCache.h"
+	"LinearMath/btQuickprof.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/BroadphaseCollision/btDbvt.h
+	"LinearMath/btAlignedObjectArray.h"
+	"LinearMath/btVector3.h"
+	"LinearMath/btTransform.h"
+	"LinearMath/btAabbUtil2.h"
+	<emmintrin.h>
+	<memory.h>
+	<string.h>
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/LinearMath/btQuickprof.h
+	<stdio.h>
+	"btScalar.h"
+	"btAlignedAllocator.h"
+	<new>
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletCollision/BroadphaseCollision/btMultiSapBroadphase.h
+	"btBroadphaseInterface.h"
+	"LinearMath/btAlignedObjectArray.h"
+	"btOverlappingPairCache.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/LinearMath/btDefaultMotionState.h
+	"btMotionState.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/LinearMath/btIDebugDraw.h
+	"btVector3.h"
+	"btTransform.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.h
+	"btDynamicsWorld.h"
+	"LinearMath/btAlignedObjectArray.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletDynamics/Dynamics/btDynamicsWorld.h
+	"BulletCollision/CollisionDispatch/btCollisionWorld.h"
+	"BulletDynamics/ConstraintSolver/btContactSolverInfo.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletDynamics/ConstraintSolver/btContactSolverInfo.h
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletDynamics/Dynamics/btContinuousDynamicsWorld.h
+	"btDiscreteDynamicsWorld.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletDynamics/Dynamics/btSimpleDynamicsWorld.h
+	"btDynamicsWorld.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletDynamics/Dynamics/btRigidBody.h
+	"LinearMath/btAlignedObjectArray.h"
+	"LinearMath/btTransform.h"
+	"BulletCollision/BroadphaseCollision/btBroadphaseProxy.h"
+	"BulletCollision/CollisionDispatch/btCollisionObject.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletDynamics/ConstraintSolver/btPoint2PointConstraint.h
+	"LinearMath/btVector3.h"
+	"btJacobianEntry.h"
+	"btTypedConstraint.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletDynamics/ConstraintSolver/btJacobianEntry.h
+	"LinearMath/btVector3.h"
+	"BulletDynamics/Dynamics/btRigidBody.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletDynamics/ConstraintSolver/btTypedConstraint.h
+	"LinearMath/btScalar.h"
+	"btSolverConstraint.h"
+	"BulletCollision/NarrowPhaseCollision/btPersistentManifold.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletDynamics/ConstraintSolver/btSolverConstraint.h
+	"LinearMath/btVector3.h"
+	"LinearMath/btMatrix3x3.h"
+	"btJacobianEntry.h"
+	"btSolverBody.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletDynamics/ConstraintSolver/btSolverBody.h
+	"LinearMath/btVector3.h"
+	"LinearMath/btMatrix3x3.h"
+	"BulletDynamics/Dynamics/btRigidBody.h"
+	"LinearMath/btAlignedAllocator.h"
+	"LinearMath/btTransformUtil.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletDynamics/ConstraintSolver/btHingeConstraint.h
+	"LinearMath/btVector3.h"
+	"btJacobianEntry.h"
+	"btTypedConstraint.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletDynamics/ConstraintSolver/btConeTwistConstraint.h
+	"LinearMath/btVector3.h"
+	"btJacobianEntry.h"
+	"btTypedConstraint.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.h
+	"LinearMath/btVector3.h"
+	"btJacobianEntry.h"
+	"btTypedConstraint.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletDynamics/ConstraintSolver/btSliderConstraint.h
+	"LinearMath/btVector3.h"
+	"btJacobianEntry.h"
+	"btTypedConstraint.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletDynamics/ConstraintSolver/btGeneric6DofSpringConstraint.h
+	"LinearMath/btVector3.h"
+	"btTypedConstraint.h"
+	"btGeneric6DofConstraint.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletDynamics/ConstraintSolver/btUniversalConstraint.h
+	"LinearMath/btVector3.h"
+	"btTypedConstraint.h"
+	"btGeneric6DofConstraint.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletDynamics/ConstraintSolver/btHinge2Constraint.h
+	"LinearMath/btVector3.h"
+	"btTypedConstraint.h"
+	"btGeneric6DofSpringConstraint.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.h
+	"btConstraintSolver.h"
+	"btContactConstraint.h"
+	"btSolverBody.h"
+	"btSolverConstraint.h"
+	"btTypedConstraint.h"
+	"BulletCollision/NarrowPhaseCollision/btManifoldPoint.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletDynamics/ConstraintSolver/btConstraintSolver.h
+	"LinearMath/btScalar.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletDynamics/ConstraintSolver/btContactConstraint.h
+	"LinearMath/btVector3.h"
+	"btJacobianEntry.h"
+	"btTypedConstraint.h"
+	"BulletCollision/NarrowPhaseCollision/btPersistentManifold.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletDynamics/Vehicle/btRaycastVehicle.h
+	"BulletDynamics/Dynamics/btRigidBody.h"
+	"BulletDynamics/ConstraintSolver/btTypedConstraint.h"
+	"btVehicleRaycaster.h"
+	"LinearMath/btAlignedObjectArray.h"
+	"btWheelInfo.h"
+	"BulletDynamics/Dynamics/btActionInterface.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletDynamics/Vehicle/btVehicleRaycaster.h
+	"LinearMath/btVector3.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletDynamics/Vehicle/btWheelInfo.h
+	"LinearMath/btVector3.h"
+	"LinearMath/btTransform.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Physics/Bullet/bullet-2.77/src/BulletDynamics/Dynamics/btActionInterface.h
+	"LinearMath/btScalar.h"
+	"btRigidBody.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Audio/sgAudioPlayer.h
+	"sgSound.h"
+	"sgSoundSource.h"
+	<vector>
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Audio/sgSound.h
+	"sgBase.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Common/sgDebug.h
+	<cstdio>
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Templates/CameraFree.h
+	<cmath>
+	"sgAction.h"
+	"sgTouches.h"
+	"sgAccelerometer.h"
+	"sgMouse.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Examples/sgShadows/Code/Objects/Rotate.h
+	"sgAction.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Examples/sgShadows/Code/Objects/Car.h
+	"sgAction.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Examples/sgShadows/Code/Objects/Jeep.h
+	"sgAction.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Templates/FPSDisplay.h
+	"sgAction.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/Common/sgResourceManager.h
+
+1341491406 source:/mnt/hgfs/Dev/iSDGE/Examples/sgShadows/Code/Main/main.cpp
+	"sgInit.h"
+	"Events.h"
+
+1341491406 /mnt/hgfs/Dev/iSDGE/Engine/OSBindings/Windows/sgInit.h
+
+1341491406 source:/mnt/hgfs/Dev/iSDGE/Examples/sgShadows/Code/Objects/Car.cpp
+	"Car.h"
+	"sgVector3.h"
+
+1341491406 source:/mnt/hgfs/Dev/iSDGE/Examples/sgShadows/Code/Objects/Jeep.cpp
+	"Jeep.h"
+	"sgVector3.h"
+
+1341491406 source:/mnt/hgfs/Dev/iSDGE/Examples/sgShadows/Code/Objects/Rotate.cpp
+	"Rotate.h"
+	"sgVector3.h"
+

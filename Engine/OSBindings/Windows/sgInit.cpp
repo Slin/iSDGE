@@ -69,7 +69,7 @@ int sgInit(int argc, char *argv[], sgEvents *event, int res_x, int res_y, bool f
     {
     	glfwGetMousePos(&mouse_x, &mouse_y);
 		glfwSetMousePos(res_x*0.5, res_y*0.5);
-		sgMouse::currdir = sgVector2(mouse_x-res_x*0.5, mouse_y-res_y*0.5)*0.1;
+		sgMouse::currdir = sgVector2(mouse_x-res_x*0.5, mouse_y-res_y*0.5);
 		sgMouse::currpos = sgVector2(mouse_x, mouse_y);
 
         sgmain->drawView();

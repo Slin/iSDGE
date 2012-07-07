@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_file>
 	<Workspace title="Workspace">
-		<Project filename="Engine/IDEProjects/iSDGE.cbp" active="1" />
+		<Project filename="Engine/IDEProjects/iSDGE.cbp" />
 		<Project filename="Examples/sgBase/sgBase.cbp" />
 		<Project filename="Examples/sgMirror/sgMirror.cbp" />
 		<Project filename="Examples/sgTerrain/sgTerrain.cbp" />
 		<Project filename="Examples/sgShadows/sgShadows.cbp" />
-		<Project filename="Examples/sgParticles/sgParticles.cbp" />
+		<Project filename="Examples/sgParticles/sgParticles.cbp" active="1" />
 		<Project filename="Examples/sgShaders/sgShaders.cbp" />
 		<Project filename="Examples/sgPhysics/sgPhysics.cbp" />
 		<Project filename="Examples/sgAudio/sgAudio.cbp" />

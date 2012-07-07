@@ -230,8 +230,8 @@ void CameraFree::onDraw(float timestep)
 #else
 	toll.y = glfwGetKey('W')-glfwGetKey('S');
 	toll.x = glfwGetKey('D')-glfwGetKey('A');
-
-	sgVector3 rot(sgMouse::currdir.x, 0.0f, sgMouse::currdir.y);
+	toll *= 1+glfwGetKey(GLFW_KEY_LSHIFT);
+	sgVector3 rot(sgMouse::currdir.x+(glfwGetKey(GLFW_KEY_RIGHT)-glfwGetKey(GLFW_KEY_LEFT))*3.0, 0.0f, sgMouse::currdir.y+(glfwGetKey(GLFW_KEY_DOWN)-glfwGetKey(GLFW_KEY_UP))*3.0);
 	ent->cam->rotation -= rot*timestep;
 #endif
 
