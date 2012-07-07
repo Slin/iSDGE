@@ -14,7 +14,6 @@
 		2923F8FE13C913EC00228AE9 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2923F8FD13C913EC00228AE9 /* OpenAL.framework */; };
 		2923F90213C9140500228AE9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2923F90113C9140500228AE9 /* AudioToolbox.framework */; };
 		2952EEAE117A6F90006FAB6F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2952EEAD117A6F90006FAB6F /* CoreGraphics.framework */; };
-		295CBF5C1215861700F1F941 /* Events.mm in Sources */ = {isa = PBXBuildFile; fileRef = 295CBF5A1215861700F1F941 /* Events.mm */; };
 		295CBF5D1215861700F1F941 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295CBF5B1215861700F1F941 /* main.cpp */; };
 		295CBF69121587B300F1F941 /* Rotate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295CBF67121587B300F1F941 /* Rotate.cpp */; };
 		29656CF3144E11330098C566 /* procTexture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29656CF1144E11330098C566 /* procTexture.cpp */; };
@@ -38,6 +37,7 @@
 		29F182E612AB13C000B7F5F2 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29F182DE12AB13C000B7F5F2 /* Icon-Small@2x.png */; };
 		29F182E712AB13C000B7F5F2 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 29F182DF12AB13C000B7F5F2 /* Icon.png */; };
 		29F182E812AB13C000B7F5F2 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29F182E012AB13C000B7F5F2 /* Icon@2x.png */; };
+		C0F9053115A86128009ED312 /* Events.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C0F9053015A86128009ED312 /* Events.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,7 +50,6 @@
 		2923F90113C9140500228AE9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		2952EEAD117A6F90006FAB6F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		295CBF591215861700F1F941 /* Events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Events.h; sourceTree = "<group>"; };
-		295CBF5A1215861700F1F941 /* Events.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Events.mm; sourceTree = "<group>"; };
 		295CBF5B1215861700F1F941 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		295CBF67121587B300F1F941 /* Rotate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Rotate.cpp; sourceTree = "<group>"; };
 		295CBF68121587B300F1F941 /* Rotate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rotate.h; sourceTree = "<group>"; };
@@ -78,6 +77,7 @@
 		29F182DE12AB13C000B7F5F2 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
 		29F182DF12AB13C000B7F5F2 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		29F182E012AB13C000B7F5F2 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		C0F9053015A86128009ED312 /* Events.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = Events.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,12 +119,12 @@
 		295CBF581215861700F1F941 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				C0F9053015A86128009ED312 /* Events.cpp */,
 				297D5F7A1450B9BE007500CC /* procBuilding.cpp */,
 				297D5F7B1450B9BE007500CC /* procBuilding.h */,
 				29656CF1144E11330098C566 /* procTexture.cpp */,
 				29656CF2144E11330098C566 /* procTexture.h */,
 				295CBF591215861700F1F941 /* Events.h */,
-				295CBF5A1215861700F1F941 /* Events.mm */,
 				295CBF5B1215861700F1F941 /* main.cpp */,
 			);
 			path = Main;
@@ -314,11 +314,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				295CBF5C1215861700F1F941 /* Events.mm in Sources */,
 				295CBF5D1215861700F1F941 /* main.cpp in Sources */,
 				295CBF69121587B300F1F941 /* Rotate.cpp in Sources */,
 				29656CF3144E11330098C566 /* procTexture.cpp in Sources */,
 				297D5F7C1450B9BE007500CC /* procBuilding.cpp in Sources */,
+				C0F9053115A86128009ED312 /* Events.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
