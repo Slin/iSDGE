@@ -71,7 +71,7 @@
 			<Add directory="..\..\Dependencies\GLEW\glew-1.7.0\lib" />
 			<Add directory="..\..\Dependencies\ZLIB\zlib-1.2.7" />
 			<Add directory="..\..\Dependencies\LIBPNG\lpng1510" />
-			<Add directory="D:\Programme\OpenAL 1.1 SDK\libs\Win32" />
+			<Add directory="..\..\Dependencies\OAL\libs\Win32" />
 		</Linker>
 		<Unit filename="Code\Main\Events.cpp" />
 		<Unit filename="Code\Main\Events.h" />

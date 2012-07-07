@@ -28,37 +28,55 @@
 #include "procTexture.h"
 #include "procBuilding.h"
 
-//Has to be included, if you want to enable multitouch
-#import "sgView.h"
+#include "sgResourceManager.h"
+
+#if defined __IOS__
+	//Has to be included, if you want to enable multitouch
+	#import "sgView.h"
+#endif
+
+
+//This message will be called before creating the renderer and has to be used to set the paths to the standard shaders
+void Events::onPreInit(sgMain *m)
+{
+#if !defined __IOS__
+	//path to the default shaders
+	sgResourceManager::addPath("../../../../Engine/Graphics/");
+	sgResourceManager::addPath("../../../../Engine/Templates/Shaders/");
+	sgResourceManager::addPath("../../../../Media/Textures/");
+#endif
+}
 
 //This method will be called directly after initializing the engine and is meant to be used to initialize your project in
 void Events::onInit(sgMain *m)
 {
 	sgmain = m;
-    
+
+#if defined __IOS__
 	//Activate multitouch support
 	[sgView view].multipleTouchEnabled = true;
-	
+
 	//Set device orientation
 	sgmain->setOrientation(2);
-	
+#endif
+
 	//Activate multisampling
 	sgmain->renderer->setMultisampling(4);
-	
+
 	//Create sun at default position
 	sgmain->renderer->first_light->createLight();
-	
+
 	//create the FPS display
 	sgmain->first_ent->createPanEntity((sgAction*)new FPSDisplay);
-	
+
 	//Create the camera
 	sgEntity *cam = sgmain->first_ent->createCamEntity((sgAction*)new CameraFree);
 	cam->cam->position = sgVector3(0.0f, 10.0f, 0.0f);
 	cam->cam->rotation = sgVector3(0.0f, 0.0f, -90.0f);
-	
+
 	//Create skycube
 	sgmain->first_ent->createSkyCubeEntity("sky_right.png", "sky_back.png", "sky_left.png", "sky_front.png", "sky_down.png", "sky_up.png");
-	
+
 	//Generate ground texture
 	sgTexture *ground = sgTexture::getTexture(128, 128);
 	ground->lockPixels();
@@ -68,7 +86,7 @@ void Events::onInit(sgMain *m)
 	ground->setParameteri(GL_TEXTURE_WRAP_S, GL_REPEAT);
 	ground->setParameteri(GL_TEXTURE_WRAP_T, GL_REPEAT);
 	ground->generateMipmaps();
-	
+
 	//Create the ground
 	sgEntity *ent = sgmain->first_ent->createObjEntity("box");
 	ent->obj->scale.x *= 50;
@@ -78,7 +96,7 @@ void Events::onInit(sgMain *m)
 	ent->obj->body->materials[0]->setTexture(-1, ground);
 	ent->obj->body->materials[0]->mattex.makeScale(sgVector3(50, 50, 50));
 	ent->obj->updateObject();
-	
+
 	//Generate brick texture
 	sgTexture *bricks = sgTexture::getTexture(128, 128);
 	bricks->lockPixels();
@@ -89,7 +107,7 @@ void Events::onInit(sgMain *m)
 	bricks->setParameteri(GL_TEXTURE_WRAP_S, GL_REPEAT);
 	bricks->setParameteri(GL_TEXTURE_WRAP_T, GL_REPEAT);
 	bricks->generateMipmaps();
-	
+
 	//Create a building
 	ent = sgmain->first_ent->createEmptyObjEntity();
 	ent->obj->position.y += 10.0;
@@ -99,7 +117,7 @@ void Events::onInit(sgMain *m)
 	ent->obj->body->materials[0]->setTexture(0, bricks);
 	ent->obj->body->materials[0]->mattex.makeScale(sgVector3(100, 40, 20));
 	ent->obj->updateObject();
-	
+
 	//Generate window texture
 	sgTexture *windows = sgTexture::getTexture(128, 128);
 	windows->lockPixels();
@@ -109,7 +127,7 @@ void Events::onInit(sgMain *m)
 	windows->setParameteri(GL_TEXTURE_WRAP_S, GL_REPEAT);
 	windows->setParameteri(GL_TEXTURE_WRAP_T, GL_REPEAT);
 	windows->generateMipmaps();
-	
+
 	//Create another building
 	ent = sgmain->first_ent->createEmptyObjEntity();
 	ent->obj->position.y += 15.0;
@@ -125,5 +143,5 @@ void Events::onInit(sgMain *m)
 //Called every frame, just before drawing
 void Events::onDraw(float timestep)
 {
-	
+
 }

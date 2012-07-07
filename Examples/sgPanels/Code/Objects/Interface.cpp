@@ -37,7 +37,7 @@ void Interface::onInit(sgEntity *e)
 	ent->pan->addText("Hello World0", sgVector2(12, 18), sgVector2(0, 302), sgVector2(12, 18), "font1.png");
 
 	//Create another text. The same as above, but its string will be updated.
-	angdisp = (sgText*)ent->pan->addText("Angle: 00", sgVector2(12, 18), sgVector2(0, 200), sgVector2(12, 18), "font1.png");
+	angdisp = (sgText*)ent->pan->addText("Angle: 000", sgVector2(12, 18), sgVector2(0, 200), sgVector2(12, 18), "font1.png");
 
 	//Add an image element.
 	logo = (sgImage*)ent->pan->addImage("logo_64.png", sgVector2(350, 200), sgVector2(64, 64));

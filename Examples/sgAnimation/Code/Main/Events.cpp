@@ -24,9 +24,12 @@
 //	THE SOFTWARE.
 
 #include "Events.h"
+#include "sgResourceManager.h"
 
-//Has to be included, if you want to enable multitouch
-#import "sgView.h"
+#if defined __IOS__
+	//Has to be included, if you want to enable multitouch
+	#import "sgView.h"
+#endif
 
 #include "sgDebug.h"
 #include "CameraFree.h"
@@ -34,34 +37,49 @@
 
 #include "AnimTest.h"
 
+//This message will be called before creating the renderer and has to be used to set the paths to the standard shaders
+void Events::onPreInit(sgMain *m)
+{
+#if !defined __IOS__
+	//path to the default shaders
+	sgResourceManager::addPath("../../../../Engine/Graphics/");
+
+	sgResourceManager::addPath("../../../../Media/Models/lasse/scifiroom/");
+	sgResourceManager::addPath("../../../../Media/Textures/");
+	sgResourceManager::addPath("../../../../Engine/Templates/Shaders/");
+#endif
+}
+
 //This method will be called directly after initializing the engine and is meant to be used to initialize your project in
 void Events::onInit(sgMain *m)
 {
 	sgmain = m;
-	
+
+#if defined __IOS__
 	//Activate multitouch support
 	[sgView view].multipleTouchEnabled = true;
-	
+
 	//Set device orientation
 	sgmain->setOrientation(2);
-	
+#endif
+
 	//Activate multisampling
 	sgmain->renderer->setMultisampling(4);
-	
+
 	//Create sun at default position
 	sgmain->renderer->first_light->createLight();
-	
+
 	//create the FPS display
 	sgmain->first_ent->createPanEntity((sgAction*)new FPSDisplay);
-	
+
 	//Create the camera
 	sgEntity *cam = sgmain->first_ent->createCamEntity((sgAction*)new CameraFree);
 	cam->cam->position = sgVector3(0.0f, 5.0f, 5.0f);
 	cam->cam->rotation = sgVector3(0.0f, 0.0f, -45.0f);
-	
+
 	//Create skycube
 //	sgmain->first_ent->createSkyCubeEntity("sky_right.png", "sky_back.png", "sky_left.png", "sky_front.png", "sky_down.png", "sky_up.png");
-	
+
 	//Create the ground
 /*	sgEntity *ent = sgmain->first_ent->createObjEntity("box");
 	ent->obj->scale.x *= 10;
@@ -70,14 +88,14 @@ void Events::onInit(sgMain *m)
 	ent->obj->position.y = -0.1;
 	ent->obj->body->materials[0]->setTexture(-1, "sand.png");
 	ent->obj->body->materials[0]->mattex.makeScale(sgVector3(10, 10, 10));*/
-	
+
 	sgEntity *ent = sgmain->first_ent->createObjEntity("space_room.sgm");
 	ent->obj->body->materials[0]->setShader(sgShader::BIS_LIGHTMAP);
 	ent->obj->body->materials[1]->setShader(sgShader::BIS_LIGHTMAP);
-	
+
 	ent = sgmain->first_ent->createObjEntity("door1.sgm");
 	ent->obj->body->materials[0]->setShader(sgShader::BIS_LIGHTMAP);
-	
+
 	//Create a moving car
 /*	ent = sgmain->first_ent->createObjEntity("animationsbloecke.sgm", (sgAction*)new AnimTest);
 	ent->obj->body->materials[0]->setShader(sgShader::BIS_SUN);
@@ -100,5 +118,5 @@ void Events::onInit(sgMain *m)
 //Called every frame, just before drawing
 void Events::onDraw(float timestep)
 {
-	
+
 }
