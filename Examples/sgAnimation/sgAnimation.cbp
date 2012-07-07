@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="sgAnimation" />
+		<Option execution_dir="D:\Dev\Projects\iSDGE\Engine\IDEProjects\" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin\Debug\iSDGE" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin\Debug" />
+				<Option object_output="obj\Debug\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add library="..\..\Engine\IDEProjects\bin\Debug\libiSDGE.a" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin\Release\iSDGE" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin\Release" />
+				<Option object_output="obj\Release\" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="..\..\Engine\IDEProjects\bin\Release\libiSDGE.a" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-D__OPEN_AL__" />
+			<Add directory="..\..\Dependencies\GLFW\glfw-2.7.5\include" />
+			<Add directory="..\..\Engine\Graphics" />
+			<Add directory="..\..\Engine\Common" />
+			<Add directory="..\..\Dependencies\GLEW\glew-1.7.0\include" />
+			<Add directory="..\..\Engine\Physics" />
+			<Add directory="..\..\Engine\Input" />
+			<Add directory="..\..\Engine\Audio" />
+			<Add directory="..\..\Engine\Combiner" />
+			<Add directory="..\..\Dependencies\LIBPNG\lpng1510" />
+			<Add directory="..\..\Engine\Templates" />
+			<Add directory="..\..\Dependencies\OAL\include" />
+			<Add directory="..\..\Engine\OSBindings\Windows\WAV" />
+			<Add directory="..\..\Engine\OSBindings\Windows" />
+			<Add directory="Code\Main" />
+			<Add directory="Code\Objects" />
+			<Add directory="..\..\Engine\Physics\Bullet" />
+			<Add directory="..\..\Engine\Physics\Bullet\bullet-2.77\src" />
+		</Compiler>
+		<Linker>
+			<Add library="glfw" />
+			<Add library="glu32" />
+			<Add library="gdi32" />
+			<Add library="glew_static" />
+			<Add library="opengl32" />
+			<Add library="png" />
+			<Add library="libz.a" />
+			<Add library="OpenAL32" />
+			<Add directory="..\..\Dependencies\GLFW\glfw-2.7.5\lib" />
+			<Add directory="..\..\Dependencies\GLEW\glew-1.7.0\lib" />
+			<Add directory="..\..\Dependencies\ZLIB\zlib-1.2.7" />
+			<Add directory="..\..\Dependencies\LIBPNG\lpng1510" />
+			<Add directory="..\..\Dependencies\OAL\libs\Win32" />
+		</Linker>
+		<Unit filename="Code\Main\Events.cpp" />
+		<Unit filename="Code\Main\Events.h" />
+		<Unit filename="Code\Main\main.cpp" />
+		<Unit filename="Code\Objects\AnimTest.cpp" />
+		<Unit filename="Code\Objects\AnimTest.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
