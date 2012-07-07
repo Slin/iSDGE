@@ -54,12 +54,12 @@
 		2953F425145344A90033983E /* roomlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 2953F3EE145344A90033983E /* roomlight.png */; };
 		2953F428145346220033983E /* tiles.png in Resources */ = {isa = PBXBuildFile; fileRef = 2953F426145346220033983E /* tiles.png */; };
 		2953F429145346220033983E /* wall.png in Resources */ = {isa = PBXBuildFile; fileRef = 2953F427145346220033983E /* wall.png */; };
-		295CBF5C1215861700F1F941 /* Events.mm in Sources */ = {isa = PBXBuildFile; fileRef = 295CBF5A1215861700F1F941 /* Events.mm */; };
 		295CBF5D1215861700F1F941 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295CBF5B1215861700F1F941 /* main.cpp */; };
 		295CBF69121587B300F1F941 /* AnimTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295CBF67121587B300F1F941 /* AnimTest.cpp */; };
 		296D1DE61429133F003308A5 /* animationsbloecke.sgm in Resources */ = {isa = PBXBuildFile; fileRef = 296D1DE41429133F003308A5 /* animationsbloecke.sgm */; };
 		296D1DE71429133F003308A5 /* dogtexklein.png in Resources */ = {isa = PBXBuildFile; fileRef = 296D1DE51429133F003308A5 /* dogtexklein.png */; };
 		29CAC53B142B78CB003DBECD /* 3bones.sgm in Resources */ = {isa = PBXBuildFile; fileRef = 29CAC53A142B78CB003DBECD /* 3bones.sgm */; };
+		C0F9053415A861D7009ED312 /* Events.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C0F9053315A861D7009ED312 /* Events.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -112,7 +112,6 @@
 		2953F426145346220033983E /* tiles.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiles.png; sourceTree = "<group>"; };
 		2953F427145346220033983E /* wall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wall.png; sourceTree = "<group>"; };
 		295CBF591215861700F1F941 /* Events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Events.h; sourceTree = "<group>"; };
-		295CBF5A1215861700F1F941 /* Events.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Events.mm; sourceTree = "<group>"; };
 		295CBF5B1215861700F1F941 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		295CBF67121587B300F1F941 /* AnimTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AnimTest.cpp; sourceTree = "<group>"; };
 		295CBF68121587B300F1F941 /* AnimTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnimTest.h; sourceTree = "<group>"; };
@@ -120,6 +119,7 @@
 		296D1DE51429133F003308A5 /* dogtexklein.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dogtexklein.png; path = Media/dogtexklein.png; sourceTree = SOURCE_ROOT; };
 		296D1DE8142914DF003308A5 /* sgAnimation-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "sgAnimation-Info.plist"; sourceTree = "<group>"; };
 		29CAC53A142B78CB003DBECD /* 3bones.sgm */ = {isa = PBXFileReference; lastKnownFileType = file; name = 3bones.sgm; path = Media/3bones.sgm; sourceTree = SOURCE_ROOT; };
+		C0F9053315A861D7009ED312 /* Events.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = Events.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -310,8 +310,8 @@
 		295CBF581215861700F1F941 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				C0F9053315A861D7009ED312 /* Events.cpp */,
 				295CBF591215861700F1F941 /* Events.h */,
-				295CBF5A1215861700F1F941 /* Events.mm */,
 				295CBF5B1215861700F1F941 /* main.cpp */,
 			);
 			path = Main;
@@ -467,9 +467,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				295CBF5C1215861700F1F941 /* Events.mm in Sources */,
 				295CBF5D1215861700F1F941 /* main.cpp in Sources */,
 				295CBF69121587B300F1F941 /* AnimTest.cpp in Sources */,
+				C0F9053415A861D7009ED312 /* Events.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
