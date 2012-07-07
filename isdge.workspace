@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_file>
 	<Workspace title="Workspace">
-		<Project filename="Engine/IDEProjects/iSDGE.cbp" />
-		<Project filename="Examples/sgBase/sgBase.cbp" active="1" />
+		<Project filename="Engine/IDEProjects/iSDGE.cbp" active="1" />
+		<Project filename="Examples/sgBase/sgBase.cbp" />
 		<Project filename="Examples/sgMirror/sgMirror.cbp" />
 		<Project filename="Examples/sgTerrain/sgTerrain.cbp" />
 		<Project filename="Examples/sgShadows/sgShadows.cbp" />
