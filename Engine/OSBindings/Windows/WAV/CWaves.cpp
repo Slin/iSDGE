@@ -22,6 +22,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+#if defined __WIN32__
+
 #include "CWaves.h"
 #include <ks.h>
 #include <ksmedia.h>
@@ -694,3 +696,5 @@ char *CWaves::GetErrorString(WAVERESULT wr, char *szErrorString, unsigned long n
 	szErrorString[nSizeOfErrorString-1] = '\0';
 	return szErrorString;
 }
+
+#endif

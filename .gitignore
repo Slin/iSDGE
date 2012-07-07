@@ -9,3 +9,11 @@
 /Examples/sgPhysics/build
 /DerivedData/
 Examples/sgBase/Base.xcodeproj/project.xcworkspace/xcuserdata/nils_daumann.xcuserdatad/
+Examples/sgTerrain/bin/
+Examples/sgTerrain/obj/
+Examples/sgMirror/bin/
+Examples/sgMirror/obj/
+Engine/IDEProjects/bin/
+Engine/IDEProjects/obj/
+Examples/sgBase/bin/
+Examples/sgBase/obj/
