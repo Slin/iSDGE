@@ -23,3 +23,16 @@ Examples/sgShadows/bin/
 Examples/sgShadows/obj/
 *.depend
 *.layout
+Engine/IDEProjects/iSDGE.depend
+Examples/sgAnimation/bin/
+Examples/sgAnimation/obj/
+Examples/sgAudio/bin/
+Examples/sgAudio/obj/
+Examples/sgCity/bin/
+Examples/sgCity/obj/
+Examples/sgPanels/bin/
+Examples/sgPanels/obj/
+Examples/sgPhysics/bin/
+Examples/sgPhysics/obj/
+Examples/sgShaders/bin/
+Examples/sgShaders/obj/
