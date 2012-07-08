@@ -21,3 +21,5 @@ Examples/sgParticles/bin/
 Examples/sgParticles/obj/
 Examples/sgShadows/bin/
 Examples/sgShadows/obj/
+*.depend
+*.layout
