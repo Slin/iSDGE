@@ -81,11 +81,11 @@ void sgMain::drawView()
 	sgEntity *nextent;
 	for(sgEntity *it = first_ent->next; it != NULL; it = nextent)
 	{
-		nextent = it->next;
 		if(it->act != NULL)
 		{
 			it->act->onDraw(timestep);
 		}
+		nextent = it->next;
 	}
 
 	if(eventhandler != NULL && currframes > 0)
@@ -93,11 +93,11 @@ void sgMain::drawView()
 
 	for(sgEntity *it = first_ent->next; it != NULL; it = nextent)
 	{
-		nextent = it->next;
 		if(it->act != NULL)
 		{
 			it->act->onDrawLate(timestep);
 		}
+		nextent = it->next;
 	}
 
 	physworld->update(timestep);

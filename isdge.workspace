@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_file>
 	<Workspace title="Workspace">
-		<Project filename="Engine/IDEProjects/iSDGE.cbp" />
+		<Project filename="Engine/IDEProjects/iSDGE.cbp" active="1" />
 		<Project filename="Examples/sgBase/sgBase.cbp" />
 		<Project filename="Examples/sgMirror/sgMirror.cbp" />
 		<Project filename="Examples/sgTerrain/sgTerrain.cbp" />
@@ -12,6 +12,6 @@
 		<Project filename="Examples/sgAudio/sgAudio.cbp" />
 		<Project filename="Examples/sgPanels/sgPanels.cbp" />
 		<Project filename="Examples/sgCity/sgCity.cbp" />
-		<Project filename="Examples/sgAnimation/sgAnimation.cbp" active="1" />
+		<Project filename="Examples/sgAnimation/sgAnimation.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>

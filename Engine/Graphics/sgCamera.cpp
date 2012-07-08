@@ -32,27 +32,27 @@
 sgCamera::sgCamera(sgCamera *p, sgCamera *n)
 {
 	rendertarget = NULL;
-	
+
 	size = sgVector2(100, 100);
 	aspect = 1;
 	arc = 70;
 	clipnear = 0.1;
 	clipfar = 500.0;
 	updateProj();
-	
+
 	tag = 0;
 	lodshift = 0.0;
-	
+
 	fogcolor = 1.0;
 	fogstartend = 0.75; //deactivate fog
-	
+
 	prev = p;
 	next = n;
 	if(next)
 	{
 		next->prev = this;
 	}
-	
+
 	updateCamera();
 }
 
@@ -67,7 +67,7 @@ sgVector3 sgCamera::camToWorld(sgVector3 dir)
 	sgVector4 vec(dir.x, dir.y, dir.z, 1.0);
 	vec = matinvproj*vec;
 	vec /= vec.w;
-	
+
 	sgVector3 temp = vec;
 	temp = matinvview*temp;
 	return temp;
@@ -78,10 +78,10 @@ sgVector3 sgCamera::worldToCam(sgVector3 dir)
 	sgMatrix4x4 tempmat = matproj*matview;
 	sgVector4 vec(dir.x, dir.y, dir.z, 1.0);
 	vec = tempmat*vec;
-	
+
 	if(vec.w != 0)
 		vec /= vec.w;
-	
+
 	sgVector3 temp = vec;
 	return temp;
 }
@@ -90,7 +90,7 @@ void sgCamera::updateProj()
 {
 	matproj.makeProjectionPersp(arc, aspect, clipnear, clipfar);
 	matinvproj.makeInvProjectionPersp(arc, aspect, clipnear, clipfar);
-	
+
 //	sgMatrix4x4 test = matproj*matinvview;
 //	sgLog("%f\t%f\t%f\t%f\n%f\t%f\t%f\t%f\n%f\t%f\t%f\t%f\n%f\t%f\t%f\t%f", test.mat[0], test.mat[1], test.mat[2], test.mat[3], test.mat[4], test.mat[5], test.mat[6], test.mat[7], test.mat[8], test.mat[9], test.mat[10], test.mat[11], test.mat[12], test.mat[13], test.mat[14], test.mat[15]);
 }
@@ -100,7 +100,7 @@ void sgCamera::updateCamera()
 	matview = rotation.getMatrix();
 	matview.transpose();
 	matview.translate(position*(-1));
-	
+
 	matinvview.makeTranslate(position);
 	matinvview.rotate(rotation);
 	updated = true;
@@ -112,7 +112,7 @@ void sgCamera::updateFrustum()
 	sgVector3 pos3 = camToWorld(sgVector3(-1.0, -1.0, 1.0));
 	sgVector3 pos5 = camToWorld(sgVector3(1.0, 1.0, 1.0));
 	sgVector3 pos6 = camToWorld(sgVector3(1.0, -1.0, 1.0));
-	
+
 	sgVector3 vmax;
 	sgVector3 vmin;
 	vmax.x = fmax(position.x, fmax(pos2.x, fmax(pos3.x, fmax(pos5.x, pos6.x))));
@@ -121,16 +121,16 @@ void sgCamera::updateFrustum()
 	vmin.x = fmin(position.x, fmin(pos2.x, fmin(pos3.x, fmin(pos5.x, pos6.x))));
 	vmin.y = fmin(position.y, fmin(pos2.y, fmin(pos3.y, fmin(pos5.y, pos6.y))));
 	vmin.z = fmin(position.z, fmin(pos2.z, fmin(pos3.z, fmin(pos5.z, pos6.z))));
-	
+
 	frustumcenter = vmax+vmin;
 	frustumcenter *= 0.5;
 	frustumradius = frustumcenter.dist(vmax);
-	
+
 	plleft.setPlane(position, pos2, pos3);
 	plright.setPlane(position, pos5, pos6);
 	pltop.setPlane(position, camToWorld(sgVector3(-1.0, 1.0, 1.0)), camToWorld(sgVector3(1.0, 1.0, 1.0)));
 	pldown.setPlane(position, camToWorld(sgVector3(-1.0, -1.0, 1.0)), camToWorld(sgVector3(1.0, -1.0, 1.0)));
-	
+
 //		sgVector3 dir = camToWorld(sgVector3(-1.0, 1.0, 1.0));
 //		sgLog("X: %f, Y: %f, Z: %f", dir.x, dir.y, dir.z);
 }
@@ -139,19 +139,19 @@ bool sgCamera::inFrustum(sgVector4 &sphere)
 {
 	if(frustumcenter.dist(sphere) > frustumradius+sphere.w)
 		return false;
-	
+
 	if(plleft.dist(sphere) > sphere.w)
 		return false;
-	
+
 	if(plright.dist(sphere) < -sphere.w)
 		return false;
-	
+
 	if(pltop.dist(sphere) < -sphere.w)
 		return false;
-	
+
 	if(pldown.dist(sphere) > sphere.w)
 		return false;
-	
+
 	return true;
 }
 
@@ -161,21 +161,21 @@ void sgCamera::destroy()
 		prev->next = next;
 	else
 		return;
-	
+
 	if(next)
 		next->prev = prev;
-	
+
 	delete this;
 }
 
 void sgCamera::destroyAll()
 {
+	sgCamera *ntemp = next;
+	sgCamera *ptemp = prev;
 	destroy();
-	
-	if(next)
-		next->destroyAll();
-	if(prev)
-		prev->destroyAll();
-	else
-		next = 0;
+
+	if(ntemp)
+		ntemp->destroyAll();
+	if(ptemp)
+		ptemp->destroyAll();
 }

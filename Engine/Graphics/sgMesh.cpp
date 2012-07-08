@@ -75,10 +75,14 @@ sgMesh::~sgMesh()
 	if(ivbo1 != -1)
 		glDeleteBuffers(1, &ivbo1);
 
-	free(vertices);
-	delete[] indices;
-	delete[] bonematrices;
-	delete[] boneindices;
+	if(vertices != NULL)
+		free(vertices);
+	if(indices != NULL)
+		delete[] indices;
+	if(bonematrices != NULL)
+		delete[] bonematrices;
+	if(boneindices != NULL)
+		delete[] boneindices;
 }
 
 void sgMesh::generateVBO(bool dyn)

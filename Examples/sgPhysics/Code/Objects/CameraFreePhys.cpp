@@ -111,10 +111,14 @@ void CameraFreePhys::onDraw(float timestep)
 	sgVector3 rot(sgMouse::currdir.x, 0.0f, sgMouse::currdir.y);
 	ent->cam->rotation -= rot*timestep;
 
-/*	if(glfwGetKey(GLFW_KEY_SPACE))
+	if(glfwGetKey(GLFW_KEY_SPACE))
 	{
 		shake = 10.0;
-	}*/
+	}
+	else
+	{
+		shake = 0.0;
+	}
 
 	if(glfwGetMouseButton(GLFW_MOUSE_BUTTON_LEFT))
 	{

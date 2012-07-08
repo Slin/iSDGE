@@ -70,21 +70,21 @@ void sgLight::destroy()
 		prev->next = next;
 	else
 		return;
-	
+
 	if(next)
 		next->prev = prev;
-	
+
 	delete this;
 }
 
 void sgLight::destroyAll()
 {
+	sgLight *ntemp = next;
+	sgLight *ptemp = prev;
 	destroy();
-	
-	if(next)
-		next->destroyAll();
-	if(prev)
-		prev->destroyAll();
-	else
-		next = 0;
+
+	if(ntemp)
+		ntemp->destroyAll();
+	if(ptemp)
+		ptemp->destroyAll();
 }

@@ -224,9 +224,15 @@ sgShadowVolume::sgShadowVolume(sgObject *obj, unsigned int lod)
 sgShadowVolume::~sgShadowVolume()
 {
 	if(mesh->vertices != NULL)
+	{
 		delete[] mesh->vertices;
+		mesh->vertices = NULL;
+	}
 	if(mesh->indices != NULL)
+	{
 		delete[] mesh->indices;
+		mesh->indices = NULL;
+	}
 
 	delete mesh;
 	mesh = NULL;

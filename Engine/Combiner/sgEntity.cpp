@@ -37,9 +37,9 @@ sgEntity::sgEntity(sgEntity* p, sgEntity *n, sgMain *m)
 	{
 		next->prev = this;
 	}
-	
+
 	sgmain = m;
-	
+
 	obj = NULL;
 	cam = NULL;
 	light = NULL;
@@ -54,28 +54,28 @@ sgEntity::~sgEntity()
 {
 	if(act != NULL)
 		act->onDestroy();
-	
+
 	if(obj != NULL)
 		obj->destroy();
-	
+
 	if(cam != NULL)
 		cam->destroy();
-	
+
 	if(light != NULL)
 		light->destroy();
-	
+
 	if(pan != NULL)
 		pan->destroy();
-	
+
 	if(emitt != NULL)
 		emitt->destroy();
-	
+
 	if(body != NULL)
 		body->destroy();
-	
+
 	if(sndsrc != NULL)
 		sndsrc->destroy();
-	
+
 	act = NULL;
 	obj = NULL;
 	cam = NULL;
@@ -121,7 +121,7 @@ sgEntity *sgEntity::createTerrainEntity(const char *hmp, unsigned int xverts, un
 {
 	if(xverts == 0 || zverts == 0)
 		return NULL;
-	
+
 	next = new sgEntity(this, next, sgmain);
 	next->createTerrain(hmp, xverts, zverts, xchunks, zchunks, lodsteps, hmpscale);
 	next->createAction(a);
@@ -180,7 +180,7 @@ void sgEntity::createEmptyObj()
 {
 	if(obj != NULL)
 		return;
-	
+
 	obj = sgmain->renderer->first_solid->createObject();
 }
 
@@ -188,7 +188,7 @@ void sgEntity::createObj(const char *name, unsigned long flags)
 {
 	if(obj != NULL)
 		return;
-	
+
 	obj = sgmain->renderer->first_solid->createObject(name, flags);
 }
 
@@ -196,10 +196,10 @@ void sgEntity::createTerrain(const char *hmp, unsigned int xverts, unsigned int 
 {
 	if(obj != NULL)
 		return;
-	
+
 	if(xverts == 0 || zverts == 0)
 		return;
-	
+
 	obj = sgmain->renderer->first_solid->createTerrain(xverts, zverts, xchunks, zchunks, lodsteps, hmp, hmpscale);
 }
 
@@ -207,9 +207,9 @@ void sgEntity::createSkyCube(const char *right, const char *back, const char *le
 {
 	if(obj != NULL)
 		return;
-	
+
 	obj = sgmain->renderer->first_sky->createObject("skycube");
-	
+
 	obj->body->materials[0]->setTexture(-1, right, false);
 	obj->body->materials[0]->depthtest = false;
 	obj->body->materials[0]->textures[0]->setParameteri(GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -241,9 +241,9 @@ void sgEntity::createCam()
 {
 	if(cam != NULL)
 		return;
-	
+
 	cam = sgmain->renderer->first_cam->createCamera();
-	
+
 	cam->size = sgVector2(sgRenderer::backingWidth, sgRenderer::backingHeight);
 	cam->aspect = cam->size.x/cam->size.y;
 	cam->updateProj();
@@ -253,7 +253,7 @@ void sgEntity::createLight()
 {
 	if(light != NULL)
 		return;
-	
+
 	light = sgmain->renderer->first_light->createLight();
 }
 
@@ -261,7 +261,7 @@ void sgEntity::createPan()
 {
 	if(pan != NULL)
 		return;
-	
+
 	pan = sgmain->renderer->first_panel->createPanel();
 }
 
@@ -269,7 +269,7 @@ void sgEntity::createEmitter(const char *texfile)
 {
 	if(emitt != NULL)
 		return;
-	
+
 	emitt = sgmain->renderer->first_partemitter->createEmitter(texfile);
 }
 
@@ -277,9 +277,9 @@ void sgEntity::createPhysBody(sgPhysBody::eShape shape, float mass, sgVector3 si
 {
 	if(body != NULL || obj == NULL)
 		return;
-	
+
 	body = sgmain->physworld->getRigidBody(shape, obj->position, obj->rotation, size);
-	
+
 	if(shape == sgPhysBody::ES_MESH)
 	{
 		sgMesh *mesh;
@@ -292,7 +292,7 @@ void sgEntity::createPhysBody(sgPhysBody::eShape shape, float mass, sgVector3 si
 			}
 		}
 	}
-	
+
 	body->init(mass, this);
 }
 
@@ -300,7 +300,7 @@ void sgEntity::createSndSource()
 {
 	if(sndsrc != NULL)
 		return;
-	
+
 	sndsrc = sgmain->audioplayer->first_sndsource->createSoundSource();
 }
 
@@ -308,7 +308,7 @@ void sgEntity::createAction(sgAction *a)
 {
 	if(act != NULL)
 		return;
-	
+
 	act = a;
 	if(act != NULL)
 		act->onInit(this);
@@ -320,21 +320,21 @@ void sgEntity::destroy()
 		prev->next = next;
 	else
 		return;
-	
+
 	if(next)
 		next->prev = prev;
-	
+
 	delete this;
 }
 
 void sgEntity::destroyAll()
 {
+	sgEntity *ntemp = next;
+	sgEntity *ptemp = prev;
 	destroy();
-	
-	if(next)
-		next->destroyAll();
-	if(prev)
-		prev->destroyAll();
-	else
-		next = 0;
+
+	if(ntemp)
+		ntemp->destroyAll();
+	if(ptemp)
+		ptemp->destroyAll();
 }
