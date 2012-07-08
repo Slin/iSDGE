@@ -79,5 +79,8 @@ int sgInit(int argc, char *argv[], sgEvents *event, int res_x, int res_y, bool f
         running = !glfwGetKey(GLFW_KEY_ESC) && glfwGetWindowParam(GLFW_OPENED);
     }
 
+	delete sgmain;
     glfwTerminate();
+
+    return 0;
 }

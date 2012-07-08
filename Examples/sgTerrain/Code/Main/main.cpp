@@ -32,9 +32,9 @@ int main(int argc, char *argv[])
 {
 #if defined __IOS__
 	//Initialize the engine
-    sgInit(argc, argv, &events);
+    return sgInit(argc, argv, &events);
 #else
-	sgInit(argc, argv, &events);//, 1440, 900, true);
+	return sgInit(argc, argv, &events);//, 1440, 900, true);
 
 #endif
 }

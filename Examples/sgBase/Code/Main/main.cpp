@@ -31,5 +31,5 @@ Events events;
 int main(int argc, char *argv[])
 {
 	//Initialize the engine
-    sgInit(argc, argv, &events);
+    return sgInit(argc, argv, &events);
 }
