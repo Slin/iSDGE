@@ -29,22 +29,14 @@
 #include "sgResourceManager.h"
 #include "sgDebug.h"
 
-#if defined __OPEN_AL__
-	#if defined __IOS__
-		#include <AudioToolbox/AudioToolbox.h>
-		#include <CoreFoundation/CoreFoundation.h>
-	#elif defined __WIN32__
-		#include <al.h>
-	#endif
+#if defined __IOS__ && defined __OPEN_AL__
+	#include <AudioToolbox/AudioToolbox.h>
+	#include <CoreFoundation/CoreFoundation.h>
 #endif
 
 
 namespace sgAudioFiles
 {
-#if defined __WIN32__ && defined __OPEN_AL__
-	CWaves waveparser;
-#endif
-
 	bool loadAudio(sgUncompressedAudio **audio, const char *filename)
 	{
 #if defined __IOS__ && defined __OPEN_AL__
@@ -114,6 +106,7 @@ namespace sgAudioFiles
 		*audio = new sgUncompressedAudio;
 
 		// Read all the data into memory
+		(*audio)->bitsPerSample = theOutputFormat.mBitsPerChannel;
 		(*audio)->dataLength = (unsigned long)theFileLengthInFrames*theOutputFormat.mBytesPerFrame;
 		(*audio)->bytes = new unsigned char[(*audio)->dataLength];
 		if((*audio)->bytes)
@@ -145,44 +138,95 @@ namespace sgAudioFiles
 		ExtAudioFileDispose(audiofileobject);
 
 		return true;
-#elif defined __WIN32__ && defined __OPEN_AL__
-//		ALuint uiBufferID
-//		ALenum eXRAMBufferMode
-
-		WAVEID			WaveID;
-/*		ALint			iDataSize, iFrequency;
-		ALenum			eBufferFormat;
-		ALchar			*pData;*/
+#elif defined __OPEN_AL__
+		//Local Declarations
+		FILE* soundFile = NULL;
+		WAVE_Format wave_format;
+		RIFF_Header riff_header;
+		WAVE_Data wave_data;
+		unsigned char* data;
 
 		const char *filepath = sgResourceManager::getPath(filename);
-		if(SUCCEEDED(waveparser.LoadWaveFile(filepath, &WaveID)))
-		{
-			*audio = new sgUncompressedAudio;
-			if((SUCCEEDED(waveparser.GetWaveSize(WaveID, &((*audio)->dataLength)))) &&
-				(SUCCEEDED(waveparser.GetWaveData(WaveID, (void**)&((*audio)->bytes)))) &&
-				(SUCCEEDED(waveparser.GetWaveFrequency(WaveID, (unsigned long*)&((*audio)->sampleRate)))) &&
-				(SUCCEEDED(waveparser.GetWaveALBufferFormat(WaveID, &alGetEnumValue, (unsigned long*)&((*audio)->channelCount)))))
-			{
-				(*audio)->channelCount = 1;
-/*				// Set XRAM Mode (if application)
-				if(eaxSetBufferMode && eXRAMBufferMode)
-					eaxSetBufferMode(1, &uiBufferID, eXRAMBufferMode);
-					alGetError();
-				alBufferData(uiBufferID, eBufferFormat, pData, iDataSize, iFrequency);
-				if(alGetError() == AL_NO_ERROR)
-				{
-					waveparser.DeleteWaveFile(WaveID);
-					delete[] filepath;
-					return true;
-				}*/
-//				waveparser.DeleteWaveFile(WaveID);
-				delete[] filepath;
-				return true;
-			}
-		}
-		waveparser.DeleteWaveFile(WaveID);
+		soundFile = fopen(filepath, "rb");
 		delete[] filepath;
-		return false;
+		if(!soundFile)
+		{
+			sgLog("Could not open audio file: %s", filename);
+			return false;
+		}
+
+		// Read in the first chunk into the struct
+		fread(&riff_header, sizeof(RIFF_Header), 1, soundFile);
+
+		//check for RIFF and WAVE tag in memeory
+		if((riff_header.chunkID[0] != 'R' ||
+			riff_header.chunkID[1] != 'I' ||
+			riff_header.chunkID[2] != 'F' ||
+			riff_header.chunkID[3] != 'F') &&
+			(riff_header.format[0] != 'W' ||
+			riff_header.format[1] != 'A' ||
+			riff_header.format[2] != 'V' ||
+			riff_header.format[3] != 'E'))
+			{
+				sgLog("Invalid RIFF or WAVE Header: %s", filename);
+				fclose(soundFile);
+				return false;
+			}
+
+		//Read in the 2nd chunk for the wave info
+		fread(&wave_format, sizeof(WAVE_Format), 1, soundFile);
+
+		//check for fmt tag in memory
+		if(wave_format.subChunkID[0] != 'f' ||
+			wave_format.subChunkID[1] != 'm' ||
+			wave_format.subChunkID[2] != 't' ||
+			wave_format.subChunkID[3] != ' ')
+			{
+				sgLog("Invalid Wave Format: %s", filename);
+				fclose(soundFile);
+				return false;
+			}
+
+		//check for extra parameters;
+		if(wave_format.subChunkSize > 16)
+			fseek(soundFile, sizeof(short), SEEK_CUR);
+
+		//Read in the the last byte of data before the sound file
+		fread(&wave_data, sizeof(WAVE_Data), 1, soundFile);
+
+		//check for data tag in memory
+		if(wave_data.subChunkID[0] != 'd' ||
+			wave_data.subChunkID[1] != 'a' ||
+			wave_data.subChunkID[2] != 't' ||
+			wave_data.subChunkID[3] != 'a')
+			{
+				sgLog("Invalid data header: %s", filename);
+				fclose(soundFile);
+				return false;
+			}
+
+		//Allocate memory for data
+		data = new unsigned char[wave_data.subChunk2Size];
+
+		// Read in the sound data into the soundData variable
+		if(!fread(data, wave_data.subChunk2Size, 1, soundFile))
+		{
+			sgLog("Error loading WAVE data into struct: %s", filename);
+			fclose(soundFile);
+			return false;
+		}
+
+		*audio = new sgUncompressedAudio;
+
+		(*audio)->channelCount = wave_format.numChannels;
+		(*audio)->sampleRate = wave_format.sampleRate;
+		(*audio)->dataLength = wave_data.subChunk2Size;
+		(*audio)->bytes = data;
+		(*audio)->bitsPerSample = wave_format.bitsPerSample;
+
+		//clean up and return true if successful
+		fclose(soundFile);
+		return true;
 #else
 		return false;
 #endif

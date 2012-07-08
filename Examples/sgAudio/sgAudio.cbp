@@ -62,15 +62,15 @@
 			<Add library="glfw" />
 			<Add library="glu32" />
 			<Add library="gdi32" />
-			<Add library="glew_static" />
+			<Add library="GLEW" />
 			<Add library="opengl32" />
 			<Add library="png" />
 			<Add library="libz.a" />
 			<Add library="OpenAL32" />
-			<Add directory="..\..\Dependencies\GLFW\glfw-2.7.5\lib" />
-			<Add directory="..\..\Dependencies\GLEW\glew-1.7.0\lib" />
-			<Add directory="..\..\Dependencies\ZLIB\zlib-1.2.7" />
-			<Add directory="..\..\Dependencies\LIBPNG\lpng1510" />
+			<Add directory="..\..\Dependencies\GLFW\glfw-2.7.5\lib\win" />
+			<Add directory="..\..\Dependencies\GLEW\glew-1.7.0\lib\win" />
+			<Add directory="..\..\Dependencies\ZLIB\zlib-1.2.7\win" />
+			<Add directory="..\..\Dependencies\LIBPNG\lpng1510\win" />
 			<Add directory="..\..\Dependencies\OAL\libs\Win32" />
 		</Linker>
 		<Unit filename="Code\Main\Events.cpp" />

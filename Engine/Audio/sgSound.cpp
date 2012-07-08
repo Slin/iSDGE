@@ -32,7 +32,7 @@
 	#if defined __IOS__
 		#include <OpenAL/al.h>
 		#include <OpenAL/alc.h>
-	#elif defined __WIN32__
+	#else
 		#include <al.h>
 		#include <alc.h>
 	#endif
@@ -46,7 +46,7 @@ sgSound::sgSound()
 
 sgSound::~sgSound()
 {
-#if (defined __IOS__ || defined __WIN32__) && defined __OPEN_AL__
+#if defined __OPEN_AL__
 	if(sndid != -1)
 		alDeleteBuffers(1, &sndid);
 
@@ -60,7 +60,7 @@ void sgSound::createSound(const char *filename)
 	if(sndid != -1)
 		return;
 
-#if (defined __IOS__ || defined __WIN32__) && defined __OPEN_AL__
+#if defined __OPEN_AL__
 	sgAudioFiles::sgUncompressedAudio *snd = 0;
 	if(!sgAudioFiles::loadAudio(&snd, filename))
 	{
@@ -76,7 +76,21 @@ void sgSound::createSound(const char *filename)
 	}
 
 	alGenBuffers(1, &sndid);
-
+	ALenum format = 0;
+	if(snd->channelCount == 1)
+	{
+		if(snd->bitsPerSample == 8 )
+			format = AL_FORMAT_MONO8;
+		else if(snd->bitsPerSample == 16)
+			format = AL_FORMAT_MONO16;
+	}
+	else if(snd->channelCount == 2)
+	{
+		if(snd->bitsPerSample == 8 )
+			format = AL_FORMAT_STEREO8;
+		else if(snd->bitsPerSample == 16)
+			format = AL_FORMAT_STEREO16;
+	}
 #if defined __IOS__
 	typedef ALvoid  AL_APIENTRY (*alBufferDataStaticProcPtr) (const ALint bid, ALenum format, ALvoid* data, ALsizei size, ALsizei freq);
 	static alBufferDataStaticProcPtr proc = NULL;
@@ -86,10 +100,10 @@ void sgSound::createSound(const char *filename)
     }
     if(proc)
 	{
-        proc(sndid, (snd->channelCount > 1)? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, snd->bytes, snd->dataLength, snd->sampleRate);
+        proc(sndid, format, snd->bytes, snd->dataLength, snd->sampleRate);
 	}
 #else
-	alBufferData(sndid, (snd->channelCount > 1)? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16, snd->bytes, snd->dataLength, snd->sampleRate);
+	alBufferData(sndid, format, snd->bytes, snd->dataLength, snd->sampleRate);
 #endif
 
 	audiodata = snd->bytes;
