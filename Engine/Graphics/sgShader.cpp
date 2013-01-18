@@ -29,6 +29,9 @@
 #if defined __IOS__
 	#include <OpenGLES/ES2/gl.h>
 	#include <OpenGLES/ES2/glext.h>
+#elif defined __ANDROID__
+	#include <GLES2/gl2.h>
+	#include <GLES2/gl2ext.h>
 #else
 	#define GLEW_STATIC
 	#include <GL/glew.h>
@@ -40,12 +43,12 @@
 
 sgShader::sgShader()
 {
-	program = -1;
+	program = 0;
 }
 
 sgShader::sgShader(const char *vsfilename, const char *fsfilename)
 {
-	program = -1;
+	program = 0;
 	create(vsfilename, fsfilename);
 	maxlights = 2;
 }
@@ -241,18 +244,18 @@ bool sgShader::compileShader(GLuint *shader, GLenum type, const char *filepath)
 	delete[] source;
 
 	GLint logLength;
-	glGetShaderiv(*shader, GL_INFO_LOG_LENGTH, &logLength);
-	if(logLength > 0)
-	{
-		GLchar *log = (GLchar *)malloc(logLength);
-		glGetShaderInfoLog(*shader, logLength, &logLength, log);
-		sgLog("%s: Shader compile log:\n %s", filepath, log);
-		free(log);
-	}
-
 	glGetShaderiv(*shader, GL_COMPILE_STATUS, &status);
-	if(status == 0)
+	if(status != GL_TRUE)
 	{
+		glGetShaderiv(*shader, GL_INFO_LOG_LENGTH, &logLength);
+		if(logLength > 0)
+		{
+			GLchar *log = (GLchar *)malloc(logLength);
+			glGetShaderInfoLog(*shader, logLength, &logLength, log);
+			sgLog("%s: Shader compile log:\n %s", filepath, log);
+			free(log);
+		}
+		
 		glDeleteShader(*shader);
 		return false;
 	}
@@ -267,22 +270,23 @@ bool sgShader::linkProgram(GLuint prog)
 	glLinkProgram(prog);
 
 	GLint logLength;
-	glGetProgramiv(prog, GL_INFO_LOG_LENGTH, &logLength);
-	if(logLength > 0)
-	{
-		GLchar *log = (GLchar *)malloc(logLength);
-		glGetProgramInfoLog(prog, logLength, &logLength, log);
-#if defined (DEBUG)
-		sgLog("%s and %s: Program link log:\n %s", vsfile.c_str(), fsfile.c_str(), log);
-#else
-		sgLog("Program link log:\n %s", log);
-#endif
-		free(log);
-	}
-
 	glGetProgramiv(prog, GL_LINK_STATUS, &status);
-	if(status == 0)
+	if(status != GL_TRUE)
+	{
+		glGetProgramiv(prog, GL_INFO_LOG_LENGTH, &logLength);
+		if(logLength > 0)
+		{
+			GLchar *log = (GLchar *)malloc(logLength);
+			glGetProgramInfoLog(prog, logLength, &logLength, log);
+#if defined (DEBUG)
+			sgLog("%s and %s: Program link log:\n %s", vsfile.c_str(), fsfile.c_str(), log);
+#else
+			sgLog("Program link log:\n %s", log);
+#endif
+			free(log);
+		}
 		return false;
+	}
 
 	return true;
 }
@@ -292,18 +296,19 @@ bool sgShader::validateProgram()
 	GLint logLength, status;
 
 	glValidateProgram(program);
-	glGetProgramiv(program, GL_INFO_LOG_LENGTH, &logLength);
-	if(logLength > 0)
-	{
-		GLchar *log = (GLchar *)malloc(logLength);
-		glGetProgramInfoLog(program, logLength, &logLength, log);
-		sgLog("Program validate log:\n%s", log);
-		free(log);
-	}
-
 	glGetProgramiv(program, GL_VALIDATE_STATUS, &status);
-	if(status == 0)
+	if(status != GL_TRUE)
+	{
+		glGetProgramiv(program, GL_INFO_LOG_LENGTH, &logLength);
+		if(logLength > 0)
+		{
+			GLchar *log = (GLchar *)malloc(logLength);
+			glGetProgramInfoLog(program, logLength, &logLength, log);
+			sgLog("Program validate log:\n%s", log);
+			free(log);
+		}
 		return false;
+	}
 
 	return true;
 }
@@ -349,7 +354,7 @@ void sgShader::getEngineUniforms()
 
 bool sgShader::create(const char *vsfilename, const char *fsfilename)
 {
-	if(program != -1)
+	if(program != 0)
 		return false;
 
 #if defined (DEBUG)
@@ -357,7 +362,7 @@ bool sgShader::create(const char *vsfilename, const char *fsfilename)
 	fsfile = std::string(fsfilename);
 #endif
 
-	GLuint vertShader, fragShader = -1;
+	GLuint vertShader, fragShader = 0;
 	const char *vertShaderPathname, *fragShaderPathname;
 
 	// Create shader program
@@ -397,14 +402,14 @@ bool sgShader::create(const char *vsfilename, const char *fsfilename)
 		if(program)
 		{
 			glDeleteProgram(program);
-			program = -1;
+			program = 0;
 		}
 
-		if(vertShader != -1)
+		if(vertShader != 0)
 		{
 			glDeleteShader(vertShader);
 		}
-		if(fragShader != -1)
+		if(fragShader != 0)
 		{
 			glDeleteShader(fragShader);
 		}
@@ -412,13 +417,13 @@ bool sgShader::create(const char *vsfilename, const char *fsfilename)
 		return false;
 	}
 
-	if(vertShader != -1)
+	if(vertShader != 0)
 	{
 		glDetachShader(program, vertShader);
 		glDeleteShader(vertShader);
 	}
 
-	if(fragShader != -1)
+	if(fragShader != 0)
 	{
 		glDetachShader(program, fragShader);
 		glDeleteShader(fragShader);
@@ -434,7 +439,7 @@ void sgShader::destroy()
 	if(program)
 	{
 		glDeleteProgram(program);
-		program = -1;
+		program = 0;
 	}
 
 	sgResourceManager::removeResource(this);

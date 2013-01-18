@@ -30,6 +30,9 @@
 	#include <OpenGLES/ES1/glext.h>
 	#include <OpenGLES/ES2/gl.h>
 	#include <OpenGLES/ES2/glext.h>
+#elif defined __ANDROID__
+	#include <GLES2/gl2.h>
+	#include <GLES2/gl2ext.h>
 #else
 	#define GLEW_STATIC
 	#include <GL/glew.h>

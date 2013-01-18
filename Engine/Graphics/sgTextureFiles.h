@@ -64,6 +64,10 @@ namespace sgTextureFiles
 		unsigned char* bytes;
 	};
 
+#if defined __ANDROID__
+	void loadZIP(const char* path);
+#endif
+
 	/**
 	 *	Load png.
 	 *	Loads a png texture file.

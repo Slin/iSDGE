@@ -112,14 +112,13 @@ void sgTexture::createTexture(const char *filename, bool mipmaps, bool lock)
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-#if defined __IOS__
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+#if defined __IOS__
 		if(sgRenderer::oglversion <= 1)
 		{
 			glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
 		}
-#else
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+#elif !defined __ANDROID__
 		glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
 #endif
 	}else
@@ -144,7 +143,7 @@ void sgTexture::createTexture(const char *filename, bool mipmaps, bool lock)
 
 	if(mipmaps && sgRenderer::oglversion > 1)
 	{
-#if defined __IOS__
+#if defined __IOS__ || defined __ANDROID__
 		glGenerateMipmap(GL_TEXTURE_2D);
 #endif
 	}
@@ -280,7 +279,7 @@ void sgTexture::makeRendertarget()
 
 	if(sgRenderer::oglversion > 1)
 	{
-#if defined __IOS__
+#if defined __IOS__ || defined __ANDROID__
 		glGenFramebuffers(1, &fbo);
 		glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 		glBindTexture(textype, 0);
@@ -422,7 +421,11 @@ void sgTexture::updatePixels(bool swapped)
 	glBindTexture(GL_TEXTURE_2D, texid);
 //	glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, (swapped?GL_BGRA:GL_RGBA), GL_UNSIGNED_BYTE, texdata);
 //	glTexImage2D(GL_TEXTURE_2D, 0, 0, 0, width, height, (swapped?GL_BGRA:GL_RGBA), GL_UNSIGNED_BYTE, texdata);
+#if !defined __ANDROID__
 	glTexImage2D(textype, 0, format, width, height, 0, (swapped?GL_BGRA:format), GL_UNSIGNED_BYTE, texdata);
+#else
+	glTexImage2D(textype, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, texdata);
+#endif
 }
 
 

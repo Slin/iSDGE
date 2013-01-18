@@ -38,7 +38,9 @@
 #include "sgEntity.h"
 #include "sgTimer.h"
 #include "sgPhysWorld.h"
+#if defined __BULLET__
 #include "sgPhysWorldBullet.h"
+#endif
 #include "sgAudioPlayer.h"
 
 class sgMain

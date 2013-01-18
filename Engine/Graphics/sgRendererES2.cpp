@@ -782,7 +782,7 @@ void sgRendererES2::renderPanels(sgPanel *first)
 
 		if(curr->rendertarget != NULL && currfbo != curr->rendertarget->fbo)
 		{
-#if defined __IOS__
+#if defined __IOS__ || defined __ANDROID__
 			glBindFramebuffer(GL_FRAMEBUFFER, curr->rendertarget->fbo);
 #else
 			glBindFramebufferEXT(GL_FRAMEBUFFER, curr->rendertarget->fbo);
@@ -807,6 +807,12 @@ void sgRendererES2::renderPanels(sgPanel *first)
 					currfbo = mainFramebuffer;
 				}
 			}
+#elif defined __ANDROID__
+			if(currfbo != 0)
+			{
+				glBindFramebuffer(GL_FRAMEBUFFER, NULL);
+				currfbo = NULL;
+			}
 #else
 			if(currfbo != NULL)
 			{
@@ -816,8 +822,10 @@ void sgRendererES2::renderPanels(sgPanel *first)
 #endif
 		}
 
-#if defined __IOS__
+#if defined __IOS__ || defined __ANDROID__
 		glClearDepthf(1.0f);
+#else
+		glClearDepth(1.0f);
 #endif
 		glClear(GL_DEPTH_BUFFER_BIT);
 
@@ -1197,6 +1205,9 @@ void sgRendererES2::render()
 			currfbo = mainFramebuffer;
 		}
 	}
+#elif defined __ANDROID__
+	glBindFramebuffer(GL_FRAMEBUFFER, NULL);
+	currfbo = NULL;
 #else
 	glBindFramebufferEXT(GL_FRAMEBUFFER, NULL);
 	currfbo = NULL;
@@ -1212,12 +1223,13 @@ void sgRendererES2::render()
 	{
 		if(cam->rendertarget != NULL && currfbo != cam->rendertarget->fbo)
 		{
-#if defined __IOS__
+#if defined __IOS__ || defined __ANDROID__
 			glBindFramebuffer(GL_FRAMEBUFFER, cam->rendertarget->fbo);
 #else
 			glBindFramebufferEXT(GL_FRAMEBUFFER, cam->rendertarget->fbo);
 #endif
 			currfbo = cam->rendertarget->fbo;
+			glClear(GL_COLOR_BUFFER_BIT);
 		}else
 		{
 #if defined __IOS__
@@ -1236,21 +1248,24 @@ void sgRendererES2::render()
 					currfbo = mainFramebuffer;
 				}
 			}
+#elif defined __ANDROID__
+			glBindFramebuffer(GL_FRAMEBUFFER, NULL);
+			currfbo = NULL;
 #else
 			glBindFramebufferEXT(GL_FRAMEBUFFER, NULL);
 			currfbo = NULL;
 #endif
 		}
-
+		
 		//Clear depth and stencil buffer
 		glDepthMask(GL_TRUE);
 		glClearStencil(0);
-#if defined __IOS__
+#if defined __IOS__ || defined __ANDROID__
 		glClearDepthf(1.0f);
 #else
 		glClearDepth(1.0f);
 #endif
-		glClear(GL_COLOR_BUFFER_BIT|GL_STENCIL_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+		glClear(/*GL_COLOR_BUFFER_BIT|*/GL_STENCIL_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
         if(cam->updated == true)
         {
@@ -1297,6 +1312,12 @@ void sgRendererES2::render()
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, mainFramebuffer);
 		currfbo = mainFramebuffer;
+	}
+#elif defined __ANDROID__
+	if(currfbo != 0)
+	{
+		glBindFramebuffer(GL_FRAMEBUFFER, NULL);
+		currfbo = NULL;
 	}
 #else
 	if(currfbo != NULL)

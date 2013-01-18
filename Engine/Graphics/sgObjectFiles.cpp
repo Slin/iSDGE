@@ -37,12 +37,47 @@
 	#include <cstring>
 #endif
 
+#if defined __ANDROID__
+	#include <zip.h>
+#endif
+
 namespace sgObjectFiles
 {
+#if defined __ANDROID__
+	zip *ZIPArchive = NULL;
+	void loadZIP(const char* path)
+	{
+		sgLog("Loading APK %s", path);
+		ZIPArchive = zip_open(path, 0, NULL);
+		if(ZIPArchive == NULL)
+		{
+			sgLog("Error loading APK");
+			return;
+		}
+
+		//Just for debug, print APK contents
+		int numFiles = zip_get_num_files(ZIPArchive);
+		for(int i=0; i<numFiles; i++)
+		{
+			const char* name = zip_get_name(ZIPArchive, i, 0);
+			if(name == NULL)
+			{
+				sgLog("Error reading zip file name at index %i : %s", zip_strerror(ZIPArchive));
+				return;
+			}
+			sgLog("File %i : %s\n", i, name);
+		}
+	}
+#endif
+
 	bool loadSGM(sgObjectContainer *obj, const char *filename, unsigned long flags)
 	{
 		const char *filepath = sgResourceManager::getPath(filename);
+#if defined __ANDROID__
+		zip_file *file = zip_fopen(ZIPArchive, filepath, 0);
+#else
 		FILE *file = fopen(filepath, "rb");
+#endif
 		delete[] filepath;
 		if(!file)
 		{
@@ -51,7 +86,11 @@ namespace sgObjectFiles
 		}
 
 		unsigned char version_id;
+#if defined __ANDROID__
+		zip_fread(file, &version_id, 1);
+#else
 		fread(&version_id, 1, 1, file);
+#endif
 		if(version_id != 1)
 		{
 			sgLog("The file format is out of date or not supported: %s", filename);
@@ -60,19 +99,39 @@ namespace sgObjectFiles
 
 		//Get materials
 		unsigned char countmats = 0;
+#if defined __ANDROID__
+		zip_fread(file, &countmats, 1);
+#else
 		fread(&countmats, 1, 1, file);
+#endif
 		sgSGMMaterial* materials = new sgSGMMaterial[countmats];
 		for(unsigned int i = 0; i < countmats; i++)
 		{
+#if defined __ANDROID__
+			zip_fread(file, &materials[i].id_, 1);
+#else
 			fread(&materials[i].id_, 1, 1, file);
+#endif
 			unsigned char texcount = 0;
+#if defined __ANDROID__
+			zip_fread(file, &texcount, 1);
+#else
 			fread(&texcount, 1, 1, file);
+#endif
 			for(unsigned int n = 0; n < texcount; n++)
 			{
 				unsigned short lentexfilename;
+#if defined __ANDROID__
+				zip_fread(file, &lentexfilename, 2);
+#else
 				fread(&lentexfilename, 2, 1, file);
+#endif
 				char *texfilename = new char[lentexfilename];
+#if defined __ANDROID__
+				zip_fread(file, texfilename, lentexfilename);
+#else
 				fread(texfilename, 1, lentexfilename, file);
+#endif
 				materials[i].texnames.push_back(std::string(texfilename));
 				delete[] texfilename;
 			}
@@ -80,13 +139,25 @@ namespace sgObjectFiles
 
 		//Get meshes
 		unsigned char countmeshs = 0;
+#if defined __ANDROID__
+		zip_fread(file, &countmeshs, 1);
+#else
 		fread(&countmeshs, 1, 1, file);
+#endif
 		sgSGMMesh* meshes = new sgSGMMesh[countmeshs];
 		for(int i = 0; i < countmeshs; i++)
 		{
+#if defined __ANDROID__
+			zip_fread(file, &meshes[i].id_, 1);
+#else
 			fread(&meshes[i].id_, 1, 1, file);
+#endif
 			unsigned char matid = 0;
+#if defined __ANDROID__
+			zip_fread(file, &matid, 1);
+#else
 			fread(&matid, 1, 1, file);
+#endif
 
 			for(unsigned int n = 0; n < countmats; n++)
 			{
@@ -98,15 +169,35 @@ namespace sgObjectFiles
 			}
 
 			unsigned short numverts = 0;
+#if defined __ANDROID__
+			zip_fread(file, &numverts, 2);
+#else
 			fread(&numverts, 2, 1, file);
+#endif
 			unsigned char uvcount = 0;
+#if defined __ANDROID__
+			zip_fread(file, &uvcount, 1);
+#else
 			fread(&uvcount, 1, 1, file);
+#endif
 			unsigned char datacount = 0;
+#if defined __ANDROID__
+			zip_fread(file, &datacount, 1);
+#else
 			fread(&datacount, 1, 1, file);
+#endif
 			unsigned char hastangent = 0;
+#if defined __ANDROID__
+			zip_fread(file, &hastangent, 1);
+#else
 			fread(&hastangent, 1, 1, file);
+#endif
 			unsigned char bonecount = 0;
+#if defined __ANDROID__
+			zip_fread(file, &bonecount, 1);
+#else
 			fread(&bonecount, 1, 1, file);
+#endif
 
 			meshes[i].vtxsize = 8;
 			meshes[i].vtxfeatures = sgVertex::POSITION|sgVertex::NORMAL|sgVertex::UV0;
@@ -130,7 +221,11 @@ namespace sgObjectFiles
 				meshes[i].vtxfeatures |= sgVertex::BONES;
 				meshes[i].vtxsize += 8;
 				meshes[i].bonemapping = new unsigned short[bonecount];
+#if defined __ANDROID__
+				zip_fread(file, meshes[i].bonemapping, bonecount*2);
+#else
 				fread(meshes[i].bonemapping, 2, bonecount, file);
+#endif
 			}
 
 			//Vertexdata
@@ -139,11 +234,19 @@ namespace sgObjectFiles
 
 			if((flags & GEN_TANGENT) == 0)
 			{
+#if defined __ANDROID__
+				zip_fread(file, meshes[i].vertices, meshes[i].vtxsize*numverts*4);
+#else
 				fread(meshes[i].vertices, 4, meshes[i].vtxsize*numverts, file);
+#endif
 			}else
 			{
 				float *vertdatasrc = new float[meshes[i].vtxsize*numverts];
+#if defined __ANDROID__
+				zip_fread(file, vertdatasrc, meshes[i].vtxsize*numverts*4);
+#else
 				fread(vertdatasrc, 4, meshes[i].vtxsize*numverts, file);
+#endif
 				float *vertdatatarget = meshes[i].vertices;
 
 				for(int n = 0; n < numverts; n++)
@@ -153,25 +256,49 @@ namespace sgObjectFiles
 			}
 
 			//Indices
+#if defined __ANDROID__
+			zip_fread(file, &meshes[i].indexnum, 2);
+#else
 			fread(&meshes[i].indexnum, 2, 1, file);
+#endif
 			meshes[i].indices = new unsigned short[meshes[i].indexnum];
+#if defined __ANDROID__
+			zip_fread(file, meshes[i].indices, meshes[i].indexnum*2);
+#else
 			fread(meshes[i].indices, 2, meshes[i].indexnum, file);
+#endif
 		}
 
 		//Animations
 		unsigned char hasanimations = 0;
+#if defined __ANDROID__
+		zip_fread(file, &hasanimations, 1);
+#else
 		fread(&hasanimations, 1, 1, file);
+#endif
 		if(hasanimations)
 		{
 			unsigned short lenanimfilename = 0;
+#if defined __ANDROID__
+			zip_fread(file, &lenanimfilename, 2);
+#else
 			fread(&lenanimfilename, 2, 1, file);
+#endif
 			char *animfilename = new char[lenanimfilename];
+#if defined __ANDROID__
+			zip_fread(file, animfilename, lenanimfilename);
+#else
 			fread(animfilename, 1, lenanimfilename, file);
+#endif
 			printf("Animation filename: %s\n", animfilename);
 			//meshesstd::string(animfilename);
 		}
 
+#if defined __ANDROID__
+		zip_fclose(file);
+#else
 		fclose(file);
+#endif
 
 		for(int meshnum = 0; meshnum < countmeshs; meshnum++)
 		{

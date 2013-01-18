@@ -69,6 +69,9 @@ namespace sgObjectFiles
 		unsigned short *bonemapping;
 	};
 
+#if defined __ANDROID__
+	void loadZIP(const char* path);
+#endif
 
 	/**
 	 *	Load sgm.

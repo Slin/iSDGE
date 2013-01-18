@@ -32,6 +32,7 @@
 #endif
 
 #include "CameraFreePhys.h"
+#include "CameraFree.h"
 #include "FPSDisplay.h"
 #include "AutoDoor.h"
 #include "PhysicsObject.h"
@@ -63,6 +64,8 @@ void Events::onInit(sgMain *m)
 
 	//Set device orientation
 	sgmain->setOrientation(2);
+#elif defined __ANDROID__
+	sgmain->setOrientation(3);
 #endif
 
 	//Activate multisampling
@@ -76,7 +79,11 @@ void Events::onInit(sgMain *m)
 	te->createPhysBody(sgPhysBody::ES_BOX, 1.0);
 
 	//Create the camera
+#if !defined __ANDROID__
 	cam = sgmain->first_ent->createCamEntity((sgAction*)new CameraFreePhys);
+#else
+	cam = sgmain->first_ent->createCamEntity((sgAction*)new CameraFree);
+#endif
 
 	//Create sun at default position
 //	sgmain->renderer->first_light->createLight();

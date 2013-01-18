@@ -26,6 +26,8 @@
 #include "CameraFree.h"
 #include "sgMain.h"
 
+#include "sgDebug.h"
+
 #include <cstdio>
 
 CameraFree::CameraFree(float sp, bool acc)
@@ -120,7 +122,7 @@ void CameraFree::onDraw(float timestep)
 	timestep *= 16.0f;
 	sgVector2 toll;
 
-#if defined __IOS__
+#if defined __IOS__ || defined __ANDROID__
     if(acccontrol)
     {
         if(sgAccelerometer::curracc.x > 0.1f || sgAccelerometer::curracc.x < -0.1f)
@@ -149,7 +151,7 @@ void CameraFree::onDraw(float timestep)
             toll.y = 1.0;
     }else
     {
-		float halfheight = ent->sgmain->renderer->backingHeight/ent->sgmain->renderer->scaleFactor*0.5;
+		float halfheight = (float)ent->sgmain->renderer->backingHeight/ent->sgmain->renderer->scaleFactor*0.5;
         if(sgTouches::touches.size() > 0)
         {
             if(lefttouchstart.x <= 0.1 && lefttouchstart.y <= 0.1)

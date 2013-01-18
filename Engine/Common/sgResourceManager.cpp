@@ -35,6 +35,8 @@
 
 #if defined __IOS__
     #include <CoreFoundation/CoreFoundation.h>
+#elif defined __ANDROID__
+	#include <zip.h>
 #endif
 
 #include "sgBase.h"
@@ -44,6 +46,33 @@ namespace sgResourceManager
 {
 	std::map<std::string*, sgBase*> resources;
 	std::vector<std::string*> paths;
+
+#if defined __ANDROID__
+	zip *ZIPArchive = NULL;
+	void loadZIP(const char* path)
+	{
+		sgLog("Loading APK %s", path);
+		ZIPArchive = zip_open(path, 0, NULL);
+		if(ZIPArchive == NULL)
+		{
+			sgLog("Error loading APK");
+			return;
+		}
+
+		//Just for debug, print APK contents
+/*		int numFiles = zip_get_num_files(ZIPArchive);
+		for(int i=0; i<numFiles; i++)
+		{
+			const char* name = zip_get_name(ZIPArchive, i, 0);
+			if(name == NULL)
+			{
+				sgLog("Error reading zip file name at index %i : %s", zip_strerror(ZIPArchive));
+				return;
+			}
+			sgLog("File %i : %s\n", i, name);
+		}*/
+	}
+#endif
 
 	void addPath(const char *path)
 	{
@@ -108,6 +137,12 @@ namespace sgResourceManager
 		}
 
 		return (const char*)ptr;
+#elif defined __ANDROID__
+		std::string fnm("assets/");
+		fnm += std::string(filename);
+		char *ptr = new char[fnm.length()+1];
+		strcpy(ptr, fnm.c_str());
+		return (const char*)ptr;
 #else
 		for(int i = 0; i < paths.size(); i++)
 		{
@@ -130,6 +165,16 @@ namespace sgResourceManager
 
 	const char *getFileAsString(const char *filepath)
 	{
+#if defined __ANDROID__
+		zip_file *file = zip_fopen(ZIPArchive, filepath, 0);
+		char *buff = (char*)malloc(1000000);
+		int bytes = zip_fread(file, buff, 1000000);
+		zip_fclose(file);
+		char *ptr = new char[bytes];
+		strcpy(ptr, buff);
+		free(buff);
+		return (const char*)ptr;
+#else
 		std::string buf("");
 		std::string line("");
 		std::ifstream in(filepath);
@@ -145,6 +190,7 @@ namespace sgResourceManager
 		ptr[buf.length()] = '\0';
 
 		return (const char*)ptr;
+#endif
 	}
 
 	sgBase *getResource(const char *name)

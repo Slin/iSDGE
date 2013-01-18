@@ -33,6 +33,10 @@ class sgBase;
  */
 namespace sgResourceManager
 {
+#if defined __ANDROID__
+	void loadZIP(const char* path);
+#endif
+
 	/**
 	 *	Add path.
 	 *	Add a path to search for files at.

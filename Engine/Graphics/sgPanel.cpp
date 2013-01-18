@@ -27,10 +27,13 @@
 
 #include "sgMaterial.h"
 
-#if !defined __IOS__
+#if !defined __IOS__ && !defined __ANDROID__
 	#define GLEW_STATIC
 	#include <GL/glew.h>
 	#include <GL/glfw.h>
+#elif defined __ANDROID__
+	#include <GLES2/gl2.h>
+	#include <GLES2/gl2ext.h>
 #endif
 
 void sgDisplayString::translate()

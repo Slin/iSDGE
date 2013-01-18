@@ -27,20 +27,24 @@
 #define __SGTIMER_H__
 
 #if defined __IOS__
-    //#include <sys/time.h>
     #include <mach/mach.h>
     #include <mach/mach_time.h>
+#elif defined __ANDROID__
+	#include <sys/time.h>
 #elif defined __WIN32__
 	#include <windows.h>
+#else
+	#include <GL/glfw.h>
 #endif
 
 typedef struct
 {
-/*	timeval start;
-	timeval stop;*/
 #if defined __IOS__
 	unsigned long long int start;
 	unsigned long long int stop;
+#elif defined __ANDROID__
+	timeval start;
+	timeval stop;
 #elif defined __WIN32__
 	LARGE_INTEGER start;
 	LARGE_INTEGER stop;

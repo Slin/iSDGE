@@ -25,20 +25,16 @@
 
 #include "sgTimer.h"
 
-#if !defined __IOS__
-	#include <GL/glfw.h>
-#endif
-
 sgTimer::sgTimer()
 {
-/*	timer.start.tv_sec = 0;
-	timer.start.tv_usec = 0;
-	timer.stop.tv_sec = 0;
-	timer.stop.tv_usec = 0;*/
-
 #if defined __IOS__
 	mach_timebase_info(&timebase);
 	timer.start = mach_absolute_time();
+#elif defined __ANDROID__
+	timer.start.tv_sec = 0;
+	timer.start.tv_usec = 0;
+	timer.stop.tv_sec = 0;
+	timer.stop.tv_usec = 0;
 #elif defined __WIN32__
 	timer.start.QuadPart = 0;
 	timer.stop.QuadPart = 0;
@@ -51,10 +47,10 @@ sgTimer::sgTimer()
 
 void sgTimer::start( )
 {
-//	gettimeofday(&timer.start, NULL);
-
 #if defined __IOS__
 	timer.start = mach_absolute_time();
+#elif defined __ANDROID__
+	gettimeofday(&timer.start, NULL);
 #elif defined __WIN32__
 	QueryPerformanceCounter(&timer.start);
 #else
@@ -64,9 +60,10 @@ void sgTimer::start( )
 
 void sgTimer::stop( )
 {
-//	gettimeofday(&timer.stop, NULL);
 #if defined __IOS__
 	timer.stop = mach_absolute_time();
+#elif defined __ANDROID__
+	gettimeofday(&timer.stop, NULL);
 #elif defined __WIN32__
 	QueryPerformanceCounter(&timer.stop);
 #else
@@ -77,10 +74,11 @@ void sgTimer::stop( )
 
 double sgTimer::getElapsedTime()
 {
-/*	double elapsedtime = timer.stop.tv_sec-timer.start.tv_sec;
-	elapsedtime += (timer.stop.tv_usec-timer.start.tv_usec)/1000000.0f;*/
 #if defined __IOS__
 	double elapsedtime = (double)(timer.stop-timer.start)*(double)timebase.numer/(double)timebase.denom/1000000000.0f;
+#elif defined __ANDROID__
+	double elapsedtime = timer.stop.tv_sec-timer.start.tv_sec;
+	elapsedtime += (timer.stop.tv_usec-timer.start.tv_usec)/1000000.0f;
 #elif defined __WIN32__
 	LARGE_INTEGER time;
 	time.QuadPart = timer.stop.QuadPart - timer.start.QuadPart;

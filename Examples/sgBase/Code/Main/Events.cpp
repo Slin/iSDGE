@@ -61,6 +61,10 @@ void Events::onInit(sgMain *m)
 	sgmain->renderer->setMultisampling(4);
 #endif
 
+#if defined __ANDROID__
+		sgmain->setOrientation(3);
+#endif
+
 	//Create sun at default position
 	sgmain->renderer->first_light->createLight();
 

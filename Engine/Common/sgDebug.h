@@ -28,6 +28,7 @@
 
 #include <cstdio>
 
+#if !defined __ANDROID__
 #define sgLog(...) printf(__VA_ARGS__);printf("\n")
 
 #define glError() { \
@@ -37,6 +38,18 @@ fprintf(stderr, "glError: %u caught at %s:%u\n", err, __FILE__, __LINE__); \
 err = glGetError(); \
 } \
 }
+#else
+#include <android/log.h>
+#define sgLog(...) __android_log_print(ANDROID_LOG_INFO   , "isdge", __VA_ARGS__)
+
+#define glError() { \
+unsigned int err = glGetError(); \
+while (err != GL_NO_ERROR) { \
+__android_log_print(ANDROID_LOG_ERROR   , "isdge", "glError: %u caught at %s:%u\n", err, __FILE__, __LINE__) \
+err = glGetError(); \
+} \
+}
+#endif
 
 
 namespace sgDebug

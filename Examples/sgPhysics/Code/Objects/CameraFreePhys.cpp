@@ -40,7 +40,7 @@ void CameraFreePhys::onDraw(float timestep)
 	timestep *= 16.0f;
 
 	sgVector2 toll;
-#if defined __IOS__
+#if defined __IOS__ || defined __ANDROID__
 	if(sgAccelerometer::curracc.x > 0.1f || sgAccelerometer::curracc.x < -0.1f)
 	{
 		toll.x = sgAccelerometer::curracc.x;
@@ -163,7 +163,7 @@ void CameraFreePhys::onDraw(float timestep)
 	}
 #endif
 
-#if defined __IOS__
+#if defined __IOS__ || defined __ANDROID__
 	if(sgTouches::touches.size() == 3 && counter < 35)
 #else
 	if(glfwGetMouseButton(GLFW_MOUSE_BUTTON_RIGHT) && counter < 500)

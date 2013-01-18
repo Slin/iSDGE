@@ -23,7 +23,7 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-#import "sgMatrix4x4.h"
+#include "sgMatrix4x4.h"
 
 #include <cmath>
 #include <cstring>

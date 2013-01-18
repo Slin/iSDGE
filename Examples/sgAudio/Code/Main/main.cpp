@@ -25,11 +25,26 @@
 
 #include "sgInit.h"
 #include "Events.h"
+#include "sgResourceManager.h"
+#include "sgTextureFiles.h"
 
 Events events;
 
-int main(int argc, char *argv[])
-{
-	//Initialize the engine
-    sgInit(argc, argv, &events);
-}
+#if !defined __ANDROID__
+	int main(int argc, char *argv[])
+	{
+		//Initialize the engine
+	    return sgInit(argc, argv, &events);
+	}
+#else
+	#include <jni.h>
+	extern "C"
+	{
+	    JNIEXPORT void JNICALL Java_com_android_isdge_ISDGELib_sgInit(JNIEnv * env, jobject obj,  jint width, jint height);
+	};
+
+	JNIEXPORT void JNICALL Java_com_android_isdge_ISDGELib_sgInit(JNIEnv * env, jobject obj,  jint width, jint height)
+	{
+	    sgInit(&events, width, height);
+	}
+#endif

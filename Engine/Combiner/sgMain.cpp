@@ -43,7 +43,11 @@ sgMain::sgMain(unsigned int oglvers)
 		renderer = new sgRendererES2;
 	}
 
+#if defined __BULLET__
 	physworld = new sgPhysWorldBullet;
+#else
+	physworld = new sgPhysWorld;
+#endif
 	audioplayer = new sgAudioPlayer;
 
 	setOrientation(0);

@@ -32,6 +32,11 @@
 
 #if defined __IOS__
 	#include "CoreFoundation/CoreFoundation.h"
+#elif defined __ANDROID__
+	#include <zip.h>
+	#include <png.h>
+	#include <cstdlib>
+	#include <cstring>
 #else
 	#include <png.h>
 	#include <cstdlib>
@@ -39,6 +44,7 @@
 #endif
 
 #define PVR_TEXTURE_FLAG_TYPE_MASK  0xff
+
 
 namespace sgTextureFiles
 {
@@ -52,6 +58,39 @@ namespace sgTextureFiles
 		kPVRTextureFlagTypePVRTC_2_GL = 24,
 		kPVRTextureFlagTypePVRTC_4_GL
 	};
+
+#if defined __ANDROID__
+	zip *ZIPArchive = NULL;
+	void loadZIP(const char* path)
+	{
+		sgLog("Loading APK %s", path);
+		ZIPArchive = zip_open(path, 0, NULL);
+		if(ZIPArchive == NULL)
+		{
+			sgLog("Error loading APK");
+			return;
+		}
+
+		//Just for debug, print APK contents
+		int numFiles = zip_get_num_files(ZIPArchive);
+		for(int i=0; i<numFiles; i++)
+		{
+			const char* name = zip_get_name(ZIPArchive, i, 0);
+			if(name == NULL)
+			{
+				sgLog("Error reading zip file name at index %i : %s", zip_strerror(ZIPArchive));
+				return;
+			}
+			sgLog("File %i : %s\n", i, name);
+		}
+	}
+
+	void png_zip_read(png_structp png, png_bytep data, png_size_t size)
+	{
+		zip_file* zfp = (zip_file*)png_get_io_ptr(png);
+		zip_fread(zfp, data, size);
+	}
+#endif
 
 	bool loadPNG(sgUncompressedTexture **tex, const char *filename)
 	{
@@ -80,6 +119,193 @@ namespace sgTextureFiles
 
 		CFRelease(textureContext);
 		CGImageRelease(textureImage);
+
+		return true;
+#elif defined __ANDROID__
+		const char *filepath = sgResourceManager::getPath(filename);
+		zip_file *file = zip_fopen(ZIPArchive, filepath, 0);
+		sgLog("file %s.", filepath);
+		delete[] filepath;
+		if(!file)
+		{
+			sgLog("file does not exist.");
+			return false;
+		}
+
+		//header for testing if it is a png
+		png_byte header[8];
+
+		//read the header
+		zip_fread(file, header, 8);
+
+		//test if png
+		int is_png = !png_sig_cmp(header, 0, 8);
+		if(!is_png)
+		{
+			sgLog("file header.");
+			zip_fclose(file);
+			return false;
+		}
+
+		//create png struct
+		png_structp png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL,
+		NULL, NULL);
+		if(!png_ptr)
+		{
+			zip_fclose(file);
+			sgLog("file ptr.");
+			return false;
+		}
+
+		//create png info struct
+		png_infop info_ptr = png_create_info_struct(png_ptr);
+		if(!info_ptr)
+		{
+			sgLog("file info.");
+			png_destroy_read_struct(&png_ptr, (png_infopp) NULL, (png_infopp) NULL);
+			zip_fclose(file);
+			return false;
+		}
+
+		//create png info struct
+		png_infop end_info = png_create_info_struct(png_ptr);
+		if(!end_info)
+		{
+			sgLog("file ent info.");
+			png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp) NULL);
+			zip_fclose(file);
+			return false;
+		}
+
+		//png error stuff, not sure libpng man suggests this.
+		if(setjmp(png_jmpbuf(png_ptr)))
+		{
+			sgLog("read_fn.");
+			zip_fclose(file);
+			png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
+			return false;
+		}
+
+		//init png reading
+		//png_init_io(png_ptr, fp);
+		png_set_read_fn(png_ptr, (png_voidp)file, png_zip_read);
+
+		if(setjmp(png_jmpbuf(png_ptr)))
+		{
+			sgLog("sig_bytes.");
+			return false;
+		}
+
+		//let libpng know you already read the first 8 bytes
+		png_set_sig_bytes(png_ptr, 8);
+
+		if(setjmp(png_jmpbuf(png_ptr)))
+		{
+			sgLog("read_info.");
+			return false;
+		}
+
+		// read all the info up to the image data
+		png_read_info(png_ptr, info_ptr);
+
+		//variables to pass to get info
+		int bit_depth, color_type;
+		png_uint_32 twidth, theight;
+
+		if(setjmp(png_jmpbuf(png_ptr)))
+		{
+			sgLog("IHDR.");
+			return false;
+		}
+
+		// get info about png
+		png_get_IHDR(png_ptr, info_ptr, &twidth, &theight, &bit_depth, &color_type, NULL, NULL, NULL);
+
+		*tex = new sgUncompressedTexture;
+		sgUncompressedTexture *texture = *tex;
+		texture->bytes = NULL;
+
+		//update width and height based on png info
+		texture->width = twidth;
+		texture->height = theight;
+
+		if(setjmp(png_jmpbuf(png_ptr)))
+		{
+			sgLog("update_info.");
+			return false;
+		}
+
+		// Update the png info struct.
+		png_read_update_info(png_ptr, info_ptr);
+
+		if(setjmp(png_jmpbuf(png_ptr)))
+		{
+			sgLog("get_rows.");
+			return false;
+		}
+
+		// Row size in bytes.
+		int rowbytes = png_get_rowbytes(png_ptr, info_ptr);
+
+		// Allocate the image_data as a big block, to be given to opengl
+		unsigned char *image_data = (unsigned char*)malloc(rowbytes * theight);
+		if(!image_data)
+		{
+			sgLog("file memory.");
+			//clean up memory and close stuff
+			png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
+			zip_fclose(file);
+			delete tex;
+			return false;
+		}
+
+		//row_pointers is for pointing to image_data for reading the png with libpng
+		png_bytep *row_pointers = new png_bytep[theight];
+		if(!row_pointers)
+		{
+			sgLog("file data.");
+			//clean up memory and close stuff
+			png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
+			free(image_data);
+			zip_fclose(file);
+			delete tex;
+			return false;
+		}
+		// set the individual row_pointers to point at the correct offsets of image_data
+		for(int i = 0; i < theight; ++i)
+			row_pointers[i] = image_data + i * rowbytes;
+
+		if(setjmp(png_jmpbuf(png_ptr)))
+		{
+			sgLog("read_image.");
+			return false;
+		}
+
+		//read the png into image_data through row_pointers
+		png_read_image(png_ptr, row_pointers);
+
+		switch(png_get_color_type(png_ptr, info_ptr))
+		{
+			case PNG_COLOR_TYPE_RGBA:
+				texture->hasalpha = true;
+				break;
+			case PNG_COLOR_TYPE_RGB:
+				texture->hasalpha = false;
+				break;
+			default:
+//				std::cout << "Color type " << info_ptr->color_type << " not supported" << std::endl;
+				delete tex;
+				sgLog("file color.");
+				png_destroy_read_struct(&png_ptr, &info_ptr, NULL);
+				zip_fclose(file);
+				return false;
+		}
+
+		texture->bytes = image_data;
+		png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
+		//delete[] image_data;
+		delete[] row_pointers;
+		zip_fclose(file);
 
 		return true;
 #else
