@@ -24,6 +24,7 @@
 //	THE SOFTWARE.
 
 //#define ISDGE_CAMERA_SUPPORT
+//#define ISDGE_COMPASS_SUPPORT
 
 #import <UIKit/UIKit.h>
 

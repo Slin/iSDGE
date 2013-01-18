@@ -50,6 +50,7 @@
  // Implement loadView to create a view hierarchy programmatically, without using a nib.
  - (void)loadView
  {
+	 [super loadView];
 	 sgView *view = [[sgView alloc] initWithFrame:[UIScreen mainScreen].applicationFrame];
 	 self.view = view;
 	 [view release];
@@ -140,14 +141,12 @@
 }
  
 
-
-/*
  // Override to allow orientations other than the default portrait orientation.
- - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
- // Return YES for supported orientations
- return (interfaceOrientation == UIInterfaceOrientationPortrait);
- }
- */
+ - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+	// Return YES for supported orientations
+	return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
 
 
 - (void)didReceiveMemoryWarning {

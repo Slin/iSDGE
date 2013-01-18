@@ -132,7 +132,7 @@ void Events::onInit(sgMain *m)
 	ent = sgmain->first_ent->createEmptyObjEntity();
 	ent->obj->position.y += 15.0;
 	ent->obj->position.z += 15.0;
-	procBuilding::genBuilding(ent->obj, sgVector3(5.0, 15.0, 5.0), 1, 1, 1, procBuilding::ET_RECTANGLE);
+	procBuilding::genBuilding(ent->obj, sgVector3(5.0, 15.0, 5.0), 3, 1, 1, procBuilding::ET_RECTANGLE);
 	ent->obj->calcCullSphere();
 	ent->obj->body->cloneMaterial(0);
 	ent->obj->body->materials[0]->setTexture(0, windows);

@@ -37,7 +37,8 @@
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	viewController = [[sgViewController alloc] init];
 	
-	[window addSubview:viewController.view];
+//	[window setRootViewController: viewController];
+	[window addSubview: viewController.view];
 	[window makeKeyAndVisible];
 	
     return YES;

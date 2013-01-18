@@ -35,10 +35,10 @@ namespace procBuilding
 		obj->body->makeObject("box");
 		obj->scale = size;
 		
-/*		for(;steps > 0; steps--)
+		for(;steps > 0; steps--)
 		{
 			obj->body->makeObject("box");
-			obj->scale = size;
-		}*/
+			obj->scale = size/steps;
+		}
 	}
 }
