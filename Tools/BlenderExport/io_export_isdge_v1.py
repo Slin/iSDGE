@@ -4,9 +4,8 @@
 bl_info = {
 	'name': 'iSDGE model format (.sgm)',
 	'author': 'Nils Daumann',
-	'blender': (2, 5, 9),
-	'api': 35622,
-	'version': '10',
+	'blender': (2, 6, 5),
+	'version': '11',
 	'description': 'Exports an object in iSDGEs .sgm file format.',
 	'category': 'Import-Export',
 	'location': 'File -> Export -> iSDGE model (.sgm)'}
@@ -204,9 +203,10 @@ class c_object(object):
 		if len(ArmatureList) > 1:
 			print("only one armature per object supported: possible messed up bone assignements")
 
+		obj.update(calc_tessface=True)
 		triangles = []
 		#generate vertices and triangles
-		for i, face in enumerate(obj.faces):
+		for i, face in enumerate(obj.polygons):
 			images = []
 			for tex in obj.uv_textures:
 				imgpath = tex.data[i].image.filepath
@@ -222,7 +222,7 @@ class c_object(object):
 			verts = []
 			for n, vertind in enumerate(face.vertices):
 				uvs = []
-				for tex in obj.uv_textures:
+				for tex in obj.tessface_uv_textures:
 					uvs.append((round(tex.data[i].uv[n][0], 6), 1.0-round(tex.data[i].uv[n][1], 6)))
 				color = None
 				if len(obj.vertex_colors) > 0:

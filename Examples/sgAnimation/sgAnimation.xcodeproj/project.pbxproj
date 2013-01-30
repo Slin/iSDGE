@@ -59,6 +59,9 @@
 		296D1DE61429133F003308A5 /* animationsbloecke.sgm in Resources */ = {isa = PBXBuildFile; fileRef = 296D1DE41429133F003308A5 /* animationsbloecke.sgm */; };
 		296D1DE71429133F003308A5 /* dogtexklein.png in Resources */ = {isa = PBXBuildFile; fileRef = 296D1DE51429133F003308A5 /* dogtexklein.png */; };
 		29CAC53B142B78CB003DBECD /* 3bones.sgm in Resources */ = {isa = PBXBuildFile; fileRef = 29CAC53A142B78CB003DBECD /* 3bones.sgm */; };
+		C0329D0B16B89E7800FADD3A /* test.sgm in Resources */ = {isa = PBXBuildFile; fileRef = C0329D0916B89E3E00FADD3A /* test.sgm */; };
+		C0329D0C16B89E7A00FADD3A /* Female_body_diffuse.png in Resources */ = {isa = PBXBuildFile; fileRef = C0329D0816B89E3E00FADD3A /* Female_body_diffuse.png */; };
+		C0EC612416B8AFF700764F02 /* Female_eye_diffuse.png in Resources */ = {isa = PBXBuildFile; fileRef = C0EC612316B8AFF700764F02 /* Female_eye_diffuse.png */; };
 		C0F9053415A861D7009ED312 /* Events.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C0F9053315A861D7009ED312 /* Events.cpp */; };
 /* End PBXBuildFile section */
 
@@ -119,6 +122,9 @@
 		296D1DE51429133F003308A5 /* dogtexklein.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dogtexklein.png; path = Media/dogtexklein.png; sourceTree = SOURCE_ROOT; };
 		296D1DE8142914DF003308A5 /* sgAnimation-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "sgAnimation-Info.plist"; sourceTree = "<group>"; };
 		29CAC53A142B78CB003DBECD /* 3bones.sgm */ = {isa = PBXFileReference; lastKnownFileType = file; name = 3bones.sgm; path = Media/3bones.sgm; sourceTree = SOURCE_ROOT; };
+		C0329D0816B89E3E00FADD3A /* Female_body_diffuse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Female_body_diffuse.png; path = Media/Female_body_diffuse.png; sourceTree = SOURCE_ROOT; };
+		C0329D0916B89E3E00FADD3A /* test.sgm */ = {isa = PBXFileReference; lastKnownFileType = file; name = test.sgm; path = Media/test.sgm; sourceTree = SOURCE_ROOT; };
+		C0EC612316B8AFF700764F02 /* Female_eye_diffuse.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Female_eye_diffuse.png; path = Media/Female_eye_diffuse.png; sourceTree = SOURCE_ROOT; };
 		C0F9053315A861D7009ED312 /* Events.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = Events.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -152,6 +158,9 @@
 		293AC6BB137E8ECA00403584 /* Media */ = {
 			isa = PBXGroup;
 			children = (
+				C0EC612316B8AFF700764F02 /* Female_eye_diffuse.png */,
+				C0329D0816B89E3E00FADD3A /* Female_body_diffuse.png */,
+				C0329D0916B89E3E00FADD3A /* test.sgm */,
 				2953F3B0145344A90033983E /* lasse */,
 				2953F3D4145344A90033983E /* modelcheap */,
 				2953F3D8145344A90033983E /* psionic */,
@@ -427,8 +436,10 @@
 				293AC7B2137E8ECB00403584 /* font1.png in Resources */,
 				293AC7B8137E8ECB00403584 /* sand.png in Resources */,
 				296D1DE61429133F003308A5 /* animationsbloecke.sgm in Resources */,
+				C0329D0C16B89E7A00FADD3A /* Female_body_diffuse.png in Resources */,
 				296D1DE71429133F003308A5 /* dogtexklein.png in Resources */,
 				29CAC53B142B78CB003DBECD /* 3bones.sgm in Resources */,
+				C0329D0B16B89E7800FADD3A /* test.sgm in Resources */,
 				2953F3FF145344A90033983E /* kiste.sgm in Resources */,
 				2953F400145344A90033983E /* kiste_diffuse.png in Resources */,
 				2953F401145344A90033983E /* kiste_normal.png in Resources */,
@@ -457,6 +468,7 @@
 				2953F425145344A90033983E /* roomlight.png in Resources */,
 				2953F428145346220033983E /* tiles.png in Resources */,
 				2953F429145346220033983E /* wall.png in Resources */,
+				C0EC612416B8AFF700764F02 /* Female_eye_diffuse.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
