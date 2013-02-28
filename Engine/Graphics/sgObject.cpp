@@ -70,9 +70,9 @@ sgObject::~sgObject()
 
 	if(body != NULL)
 		body->destroyAll();
-
-//	if(currbody != NULL)
-//		currbody->destroy();	//Probably not good...
+	
+	if(skeleton != NULL)
+		delete skeleton;
 }
 
 sgObject *sgObject::createObject()
@@ -89,6 +89,8 @@ sgObject *sgObject::createObject(const char *name, unsigned long flags)
 	next->body = new sgObjectBody;
 	next->body->makeObject(name, flags);
 	next->currbody = next->body;
+	sgObjectContainer *cont = (sgObjectContainer*)sgResourceManager::getResource(name);
+	next->skeleton = cont->skeleton;
 	next->calcCullSphere();
 	next->updateObject();
 	return next;

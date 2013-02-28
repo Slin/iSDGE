@@ -225,6 +225,7 @@ void sgMatrix4x4::makeProjectionPersp(float arc, float aspect, float clipnear, f
 	mat[10] = -(clipfar+clipnear)/(clipfar-clipnear);
 	mat[11] = -1;
 	mat[14] = -(2*clipfar*clipnear)/(clipfar-clipnear);
+	mat[15] = 0.0f;
 }
 
 void sgMatrix4x4::makeInvProjectionPersp(float arc, float aspect, float clipnear, float clipfar)

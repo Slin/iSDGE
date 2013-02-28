@@ -28,6 +28,70 @@
 
 #include "sgBase.h"
 #include "sgVector4.h"
+#include "sgVector3.h"
+#include "sgQuaternion.h"
+#include "sgMatrix4x4.h"
+#include <vector>
+#include <string>
+#include <map>
+
+
+class sgAnimationBone
+{
+public:
+	sgAnimationBone(sgAnimationBone *prev, sgAnimationBone *next, const float frametime, const sgVector3 &pos, const sgVector3 &scal, const sgQuaternion &rot);
+	
+	float time;
+	
+	sgVector3 position;
+	sgVector3 scale;
+	sgQuaternion rotation;
+	
+	sgAnimationBone *nextframe;
+	sgAnimationBone *prevframe;
+};
+
+class sgAnimation : public sgBase
+{
+	public:
+		sgAnimation(const std::string &animname);
+		~sgAnimation();
+	
+		std::string name;
+		std::map<int, sgAnimationBone*> bones;
+};
+
+class sgBone
+{
+	public:
+		sgBone(sgVector3 &pos, std::string bonename, bool root);
+		
+		void init(sgBone *parent = 0);
+		void update(sgBone *parent = 0, float timestep = 0.01f);
+	
+		void setAnimation(sgAnimationBone *anim);
+		
+		sgMatrix4x4 relbasematrix;
+		sgMatrix4x4 invbasematrix;
+		
+		sgVector3 position;
+		sgQuaternion rotation;
+		sgVector3 scale;
+		
+		sgMatrix4x4 finalmatrix;
+		
+		std::string name;
+		bool isroot;
+	
+		std::vector<sgBone*> children;
+		std::vector<int> tempchildren;
+	
+		sgAnimationBone *currframe;
+		sgAnimationBone *nextframe;
+	
+		float currtime;
+		float timediff;
+};
 
 /**
  * Skeleton class. Responsible for skeletal animations.
@@ -41,6 +105,12 @@ class sgSkeleton : public sgBase
 		 */
 		sgSkeleton();
 	
+		void init();
+		void update(float timestep);
+		void setAnimation(const std::string &animname);
+	
+		std::vector<sgBone> bones;
+		std::map<std::string, sgAnimation*> animations;
 		float *matrices;
 };
 

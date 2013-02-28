@@ -78,7 +78,7 @@ void Events::onInit(sgMain *m)
 	cam->cam->rotation = sgVector3(0.0f, 0.0f, -45.0f);
 
 	//Create skycube
-//	sgmain->first_ent->createSkyCubeEntity("sky_right.png", "sky_back.png", "sky_left.png", "sky_front.png", "sky_down.png", "sky_up.png");
+	sgmain->first_ent->createSkyCubeEntity("sky_right.png", "sky_back.png", "sky_left.png", "sky_front.png", "sky_down.png", "sky_up.png");
 
 	//Create the ground
 /*	sgEntity *ent = sgmain->first_ent->createObjEntity("box");
@@ -89,34 +89,83 @@ void Events::onInit(sgMain *m)
 	ent->obj->body->materials[0]->setTexture(-1, "sand.png");
 	ent->obj->body->materials[0]->mattex.makeScale(sgVector3(10, 10, 10));*/
 
-	sgEntity *ent = sgmain->first_ent->createObjEntity("space_room.sgm");
-	ent->obj->body->materials[0]->setShader(sgShader::BIS_LIGHTMAP);
-	ent->obj->body->materials[1]->setShader(sgShader::BIS_LIGHTMAP);
+	sgEntity *ent = sgmain->first_ent->createObjEntity("sponza.sgm");
+	ent->obj->scale = 0.1f;
+	ent->obj->rotation = sgVector3(0.0f, 0.0f, -90.0f);
+	ent->obj->updateObject();
+	ent->obj->body->materials[4]->alphatest = true;
+	ent->obj->body->materials[4]->culling = false;
+	ent->obj->body->materials[4]->alphatestvalue = 0.9f;
+	ent->obj->body->materials[4]->setShader(sgShader::BIS_TEXTURE_DISCARD);
+	ent->obj->body->materials[10]->alphatest = true;
+	ent->obj->body->materials[10]->culling = false;
+	ent->obj->body->materials[10]->alphatestvalue = 0.9f;
+	ent->obj->body->materials[10]->setShader(sgShader::BIS_TEXTURE_DISCARD);
+	ent->obj->body->materials[19]->alphatest = true;
+	ent->obj->body->materials[19]->culling = false;
+	ent->obj->body->materials[19]->alphatestvalue = 0.9f;
+	ent->obj->body->materials[19]->setShader(sgShader::BIS_TEXTURE_DISCARD);
+/*	ent->obj->body->materials[0]->setShader(sgShader::BIS_LIGHTMAP);
+	ent->obj->body->materials[1]->setShader(sgShader::BIS_LIGHTMAP);*/
 
-	ent = sgmain->first_ent->createObjEntity("door1.sgm");
-	ent->obj->body->materials[0]->setShader(sgShader::BIS_LIGHTMAP);
+//	ent = sgmain->first_ent->createObjEntity("test.sgm");
+//	ent->obj->body->materials[0]->setShader(sgShader::BIS_LIGHTMAP);
 
 	//Create a moving car
-/*	ent = sgmain->first_ent->createObjEntity("animationsbloecke.sgm", (sgAction*)new AnimTest);
-	ent->obj->body->materials[0]->setShader(sgShader::BIS_SUN);
-	ent->obj->skeleton = new sgSkeleton();
-	ent->obj->skeleton->matrices = new float[16*3];
-	sgMatrix4x4 mat1;
-	sgMatrix4x4 mat2;
-	sgMatrix4x4 mat3;
-	mat1.makeRotate(sgVector3(45.0, 45.0, 0.0));
-	mat1.translate(sgVector3(0.0, 5.0, 0.0));
-	mat2.makeRotate(sgVector3(45.0, 0.0, 0.0));
-	mat2.translate(sgVector3(0.0, 5.0, 0.0));
-	mat3.makeRotate(sgVector3(0.0, 60.0, 0.0));
-	mat3.translate(sgVector3(0.0, 3.0, 0.0));
-	memcpy(ent->obj->skeleton->matrices, mat1.mat, 16*sizeof(float));
-	memcpy(ent->obj->skeleton->matrices+16, mat2.mat, 16*sizeof(float));
-	memcpy(ent->obj->skeleton->matrices+32, mat3.mat, 16*sizeof(float));*/
+	ent = sgmain->first_ent->createObjEntity("mini_knight.sgm", (sgAction*)new AnimTest);
+	ent->obj->position = sgVector3(0.0, 10.0, 0.0);
+	ent->obj->updateObject();
+	ent->obj->body->materials[0]->setShader("anim.vsh", "anim.fsh");
+	ent->obj->skeleton->init();
+	ent->obj->skeleton->update(0.0f);
+	skeleton = ent->obj->skeleton;
+	
+	
+	skeleton->animations.insert(std::pair<std::string, sgAnimation*>(std::string("hard"), new sgAnimation(std::string("hard"))));
+	
+	sgAnimationBone *animbone = new sgAnimationBone(0, 0, 0.0f, sgVector3(0.0f, 0.0f, 0.0f), sgVector3(1.0f, 1.0f, 1.0f), sgQuaternion(sgVector3(0.0f, 0.0f, 0.0f)));
+	animbone->nextframe = new sgAnimationBone(animbone, 0, 1.0f, sgVector3(0.0f, 0.0f, 0.0f), sgVector3(1.0f, 1.0f, 1.0f), sgQuaternion(sgVector4(1.0f, 0.0f, 0.0f, 45.0f)));
+	animbone->nextframe->nextframe = new sgAnimationBone(animbone->nextframe, animbone, 2.0f, sgVector3(0.0f, 0.0f, 0.0f), sgVector3(1.0f, 1.0f, 1.0f), sgQuaternion(sgVector3(0.0f, 0.0f, 0.0f)));
+	animbone->nextframe->prevframe = animbone->nextframe->nextframe;
+	animbone->prevframe = animbone->nextframe->nextframe;
+	skeleton->animations[std::string("hard")]->bones.insert(std::pair<int, sgAnimationBone*>(0, animbone));
+	
+	animbone = new sgAnimationBone(0, 0, 0.0f, sgVector3(0.0f, 0.0f, 0.0f), sgVector3(1.0f, 1.0f, 1.0f), sgQuaternion(sgVector3(0.0f, 0.0f, 0.0f)));
+	animbone->nextframe = new sgAnimationBone(animbone, 0, 1.0f, sgVector3(0.0f, 1.0f, 0.0f), sgVector3(1.0f, 1.0f, 1.0f), sgQuaternion(sgVector4(1.0f, 0.0f, 0.0f, 45.0f)));
+	animbone->nextframe->nextframe = new sgAnimationBone(animbone->nextframe, animbone, 2.0f, sgVector3(0.0f, 0.0f, 0.0f), sgVector3(1.0f, 1.0f, 1.0f), sgQuaternion(sgVector3(0.0f, 0.0f, 0.0f)));
+	animbone->nextframe->prevframe = animbone->nextframe->nextframe;
+	animbone->prevframe = animbone->nextframe->nextframe;
+	skeleton->animations[std::string("hard")]->bones.insert(std::pair<int, sgAnimationBone*>(1, animbone));
+	
+	animbone = new sgAnimationBone(0, 0, 0.0f, sgVector3(0.0f, 0.0f, 0.0f), sgVector3(1.0f, 1.0f, 1.0f), sgQuaternion(sgVector3(0.0f, 0.0f, 0.0f)));
+	animbone->nextframe = new sgAnimationBone(animbone, 0, 1.0f, sgVector3(0.0f, 1.0f, 0.0f), sgVector3(1.0f, 1.0f, 1.0f), sgQuaternion(sgVector4(1.0f, 0.0f, 0.0f, 45.0f)));
+	animbone->nextframe->nextframe = new sgAnimationBone(animbone->nextframe, animbone, 2.0f, sgVector3(0.0f, 0.0f, 0.0f), sgVector3(1.0f, 1.0f, 1.0f), sgQuaternion(sgVector3(0.0f, 0.0f, 0.0f)));
+	animbone->nextframe->prevframe = animbone->nextframe->nextframe;
+	animbone->prevframe = animbone->nextframe->nextframe;
+	skeleton->animations[std::string("hard")]->bones.insert(std::pair<int, sgAnimationBone*>(2, animbone));
+	
+	
+	skeleton->setAnimation(std::string("test"));
+	
+	
+	sgAnimationBone *bone = skeleton->animations[std::string("test")]->bones[2];
+	sgAnimationBone *temp = bone;
+	while(temp != bone->prevframe)
+	{
+		printf("%f, %f, %f\n", temp->position.x, temp->position.y, temp->position.z);
+		temp = temp->nextframe;
+	}
+//	temp->position.makeIdentity();
 }
 
 //Called every frame, just before drawing
 void Events::onDraw(float timestep)
 {
-
+/*	static float rot1 = 0.0f;
+	static float rot2 = 0.0f;
+	rot1 += timestep*20.0f;
+	rot2 = sin(rot1*0.1f)*30.0f;
+	skeleton->bones[0].rotation = sgVector3(rot1, 0.0, 0.0);
+	skeleton->bones[1].rotation = sgVector3(0.0, rot2, 0.0);*/
+	skeleton->update(timestep*24.0f);
 }

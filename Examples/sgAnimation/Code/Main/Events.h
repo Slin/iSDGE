@@ -28,7 +28,7 @@
 
 #include "sgEvents.h"
 #include "sgMain.h"
-
+#include "sgSkeleton.h"
 
 class Events : public sgEvents
 {
@@ -39,6 +39,7 @@ class Events : public sgEvents
 
 	private:
 		sgMain *sgmain;
+		sgSkeleton *skeleton;
 };
 
 #endif

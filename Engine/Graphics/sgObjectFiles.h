@@ -63,7 +63,7 @@ namespace sgObjectFiles
 		unsigned char vtxsize;
 		
 		unsigned short vertexnum;
-		unsigned short indexnum;
+		unsigned int indexnum;
 		float *vertices;
 		unsigned short *indices;
 		unsigned short *bonemapping;

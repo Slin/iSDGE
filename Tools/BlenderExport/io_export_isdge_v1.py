@@ -5,14 +5,15 @@ bl_info = {
 	'name': 'iSDGE model format (.sgm)',
 	'author': 'Nils Daumann',
 	'blender': (2, 6, 5),
-	'version': '11',
+	'version': '1.2',
 	'description': 'Exports an object in iSDGEs .sgm file format.',
 	'category': 'Import-Export',
 	'location': 'File -> Export -> iSDGE model (.sgm)'}
 
-#################################
-#Structure of exported files
-#################################
+############################################################
+#Structure of exported mesh files (.sgm)
+############################################################
+#(magic number - uint32 - 352658064 - not yet implemented)
 #version - uint8 - 1
 #number of materials - uint8
 #material id - uint8
@@ -32,12 +33,39 @@ bl_info = {
 #	interleaved vertex data - float32
 #		- position, normal, uvN, color, tangents, weights, mesh bones
 #
-#	number of indices - uint16
+#	number of indices - uint32
 #	indices - uint16
 #
 #has animation - uint8 0 if not, 1 otherwize
 #	animfilename length - uint16
 #	animfilename - char*animfilename length
+
+############################################################
+#Structure of exported animation files (.sga)
+############################################################
+#magic number - uint32 - 383405658
+#version - uint8 - 1
+#skeleton name length - uint16
+#skeleton name - char*skeleton name length
+#
+#number of bones - uint16
+#	bone name length - uint16
+#	bone name - char*bone name length
+#	bone position xyz - float32*3
+#	bone is a root (does not have a parent) - uint8 0 if not, 1 otherwize
+#	bone number of children - uint16
+#		child index within this list of bones - uint16
+#
+#number of animations - uint16
+#	anim name length - uint16
+#	anim name - char*anim name length
+#	number of effected bones - uint16
+#		skeleton bone id - uint16
+#		number of frames for that bone - uint32
+#			time - float
+#			position xyz - 3*float
+#			scale xyz - 3*float
+#			rotation xyzw (quaternion) - 4*float
 
 #################################
 #Changelog
@@ -57,6 +85,14 @@ bl_info = {
 #Known Problems:
 #-every face has 3 vertices, which causes more vertex data then needed
 ##
+#################################
+##V1.1 2013/01/15
+#-works with blender 2.6.5
+#-fixed problem with vertices being exported for every face
+#-number of indices is now 32bit, which solves problems with most larger meshs
+#Known Problems:
+#-crashes on exporting vertex colors
+##
 
 #################################
 #ToDO
@@ -67,6 +103,10 @@ bl_info = {
 #-automatic converting of texture files to the desired format
 #-export of more complex material setups
 #(-support for morph animations)
+#-magic number
+#-possibility to store 32bit indices
+#-remove bone mapping
+
 
 
 #################################
@@ -76,6 +116,8 @@ import os
 import bpy
 import struct
 import math
+import mathutils
+from mathutils import Matrix
 
 
 #Container classes for a better overview
@@ -115,7 +157,7 @@ class c_mesh(object):
 			for trivert in tri.vertices:
 				check = 0
 				for i, vert in enumerate(self.vertices):
-					if vert == trivert:
+					if vert.position == trivert.position and vert.uvs == trivert.uvs:#vert == trivert:
 						ind.append(i)
 						check = 1
 						break
@@ -199,7 +241,7 @@ class c_object(object):
 		ArmatureList = [Modifier for Modifier in objparent.modifiers if Modifier.type == "ARMATURE"]
 		if ArmatureList:
 			self.hasbones = True
-			self.animname = ArmatureList[0].object.data.name+".sga"
+#			self.animname = ArmatureList[0].object.data.name+".sga"
 		if len(ArmatureList) > 1:
 			print("only one armature per object supported: possible messed up bone assignements")
 
@@ -228,15 +270,8 @@ class c_object(object):
 				if len(obj.vertex_colors) > 0:
 					alpha = 1.0
 					if len(obj.vertex_colors) > 1:
-						alpha = obj.vertex_colors[1].data[i].color1[0]
-					if n == 0:
-						color = (obj.vertex_colors[0].data[i].color1[0], obj.vertex_colors[0].data[i].color1[1], obj.vertex_colors[0].data[i].color1[2], alpha)
-					if n == 1:
-						color = (obj.vertex_colors[0].data[i].color2[0], obj.vertex_colors[0].data[i].color2[1], obj.vertex_colors[0].data[i].color2[2], alpha)
-					if n == 2:
-						color = (obj.vertex_colors[0].data[i].color3[0], obj.vertex_colors[0].data[i].color3[1], obj.vertex_colors[0].data[i].color3[2], alpha)
-					if n == 3:
-						color = (obj.vertex_colors[0].data[i].color4[0], obj.vertex_colors[0].data[i].color4[1], obj.vertex_colors[0].data[i].color4[2], alpha)
+						alpha = obj.vertex_colors[1].data[i].color.r
+					color = (obj.vertex_colors[0].data[i].color.r, obj.vertex_colors[0].data[i].color.g, obj.vertex_colors[0].data[i].color.b, alpha)
 				
 				position = (-obj.vertices[vertind].co.x, obj.vertices[vertind].co.z, obj.vertices[vertind].co.y)
 				normal = (-obj.vertices[vertind].normal.x, obj.vertices[vertind].normal.z, obj.vertices[vertind].normal.y)
@@ -251,7 +286,7 @@ class c_object(object):
 							print("more then four groups assigned to vertex: loss of data")
 							break
 						weights[g] = group.weight
-						bones[g] = group.group
+						bones[g] = ArmatureList[0].object.data.bones.find(objparent.vertex_groups[group.group].name)
 				
 				verts.append(c_vertex(vertind, position, uvs, color, normal, weights, bones))
 				verts[-1].weights = weights	#hacky as the above line should already do this, but for some reason does not...
@@ -347,12 +382,12 @@ class c_object(object):
 						foundbone = 0
 						for bli, lbone in enumerate(bonelist):
 							if vbone == lbone:
-								mesh.vertices[vi].bones[vbi] = bli
+								#mesh.vertices[vi].bones[vbi] = bli
 								foundbone = 1
 								break
 						if foundbone == 0:
 							bonelist.append(vbone)
-							mesh.vertices[vi].bones[vbi] = len(bonelist)-1
+							#mesh.vertices[vi].bones[vbi] = len(bonelist)-1
 				print("write bone mapping")
 				file.write(struct.pack('<B', len(bonelist))) #number of bones
 				for bone in bonelist:
@@ -392,7 +427,7 @@ class c_object(object):
 			print("finished writing interleaved vertex data")
 			
 			print("write indices")
-			file.write(struct.pack('<H', len(mesh.indices)))
+			file.write(struct.pack('<I', len(mesh.indices)))
 			for ind in mesh.indices:
 				bindata = struct.pack('<H', ind)
 				file.write(bindata)
@@ -408,93 +443,161 @@ class c_object(object):
 		file.close()
 
 
-#################################
-#Writing the file
-#################################
-#def exportobject(filename, context):
-	
-#   bpy.ops.object.mode_set(mode='OBJECT')
-#   obj = c_object(context.object.data)
-#   obj.write(filename)
-	
-	
-#   for i, modi in enumerate(context.object.modifiers):
-#   if modi.type == 'ARMATURE':
-#   print("write armature")
-			
-#   modi.object.data.pose_position = 'REST'
-#   file.write("\t<armature name=\"%s\">\n" % modi.object.data.name)
-#   for i, bone in enumerate(modi.object.data.bones):
-#   for parnum, parent in enumerate(modi.object.data.bones):
-#   if parent == bone.parent:
-#   break
-#   elif parnum == (len(modi.object.data.bones)-1):
-#   parnum = -1
-				
-#   file.write("\t\t<name=\"%s\" bone id=\"%i\" parent=\"%i\">\n" % (bone.name, (i+1), (parnum+1)))
-#   file.write("\t\t\t<abshead>%f %f %f</abshead>\n" % (bone.head_local.x, bone.head_local.y, bone.head_local.z))
-#   file.write("\t\t\t<abstail>%f %f %f</abstail>\n" % (bone.tail_local.x, bone.tail_local.y, bone.tail_local.z))
-				
-#   for n, mat in enumerate(weight_dict):
-#   iseffected = 0
-#   for ind in weight_dict[mat]:
-#   for group in context.object.data.vertices[ind[0]].groups:
-#	if context.object.vertex_groups[group.group].name == bone.name:
-#		iseffected += 1
-					
-#   if iseffected > 0:
-#   file.write("\t\t\t<vertices mesh=\"%i\">" % n)
-#   for ind in weight_dict[mat]:
-#	for group in context.object.data.vertices[ind[0]].groups:
-#		if context.object.vertex_groups[group.group].name == bone.name:
-#			file.write("%i %f " % (ind[1], group.weight))
-#   file.write("</vertices>\n")
-				
-#   file.write("\t\t</bone>\n")
-#   file.write("\t</armature>\n\n")
-	
-#   print("write animations")
-#   modi.object.data.pose_position = 'POSE'
-#   for act in bpy.data.actions:
-#   actinuse = 0
-				
-#   for group in act.groups:
-#   for bone in modi.object.data.bones:
-#   if group.name == bone.name:
-#	actinuse = 1
-#	break
-#   if actinuse == 1:
-#   break
-#   if not len(act.fcurves):
-#   actinuse = 0
-				
-#   if actinuse == 1:
-#   keyframes = []
-#   for group in act.groups:
-#   for fc in group.channels:
-#	for kf in fc.keyframe_points:
-#		if int(kf.co[0]) not in keyframes:
-#			keyframes.append(int(kf.co[0]))
-					
-#   framemin, framemax = act.frame_range
-#   start_frame = int(framemin)
-#   end_frame = int(framemax)
-#   scene_frames = range(start_frame, end_frame+1)
-#   frame_count = len(scene_frames)
-#   file.write("\t<animation name=\"%s\" duration=\"%i\">\n" % (act.name, frame_count))
-#   for bone in modi.object.data.bones:
-#   file.write("\t\t<bone name=\"%s\">" % bone.name)
-#   for f in keyframes:
-#	context.scene.frame_set(f)
-#	file.write("%i %f %f %f %f %f %f " % (f, bone.head.x, bone.head.y, bone.head.z, bone.tail.x, bone.tail.y, bone.tail.z))
-#   file.write("\t\t</bone>\n")
-					
-#   file.write("\t</animation>\n")
-			
-#   break
-			
+class c_boneframe(object):
+	__slots__ = 'time', 'position', 'scale', 'rotation'
+	def __init__(self, time, position, scale, rotation):
+		self.time = time
+		self.position = position
+		self.scale = scale
+		self.rotation = rotation
 
-	
+class c_animation(object):
+	__slots__ = 'name', 'length', 'frames'
+	def __init__(self, name):
+		self.name = name
+		self.frames = {}
+
+class c_bone(object):
+	__slots__ = 'name', 'children', 'position', 'isroot'
+	def __init__(self, name, position, isroot):
+		self.name = name
+		self.children = []
+		self.position = position
+		self.isroot = isroot;
+
+
+class c_armature(object):
+	__slots__ = 'name', 'bones', 'animations'
+	def __init__(self, objparent):
+		self.name = 'empty'
+		self.bones = []
+		self.animations = []
+
+		ArmatureList = [Modifier for Modifier in objparent.modifiers if Modifier.type == "ARMATURE"]
+		if ArmatureList:
+			self.name = ArmatureList[0].object.data.name
+		else:
+			return
+		armature = ArmatureList[0].object
+		#get skeleton data
+		for bone in armature.data.bones:
+			b = c_bone(bone.name, armature.matrix_world*bone.head_local, False if bone.parent else True)	#add bone
+			for child in bone.children:
+				b.children.append(armature.data.bones.find(child.name))
+			self.bones.append(b)
+
+		#get animation frames
+		frame_current = bpy.context.scene.frame_current
+		anim = c_animation("test")
+		for frame in range(bpy.context.scene.frame_start, bpy.context.scene.frame_end + 1):
+			bpy.context.scene.frame_set(frame)
+			for i, bone in enumerate(armature.pose.bones):
+				index = armature.data.bones.find(bone.bone.name)
+				"""
+				trans = Matrix.Translation(bone.bone.head_local)
+				itrans = Matrix.Translation(-bone.bone.head_local)
+				if bone.parent:
+					mat_final = itrans*bone.parent.bone.matrix_local*bone.parent.matrix.inverted()*bone.matrix*bone.bone.matrix_local*trans
+				else:
+					mat_final = itrans*bone.matrix*bone.bone.matrix_local.inverted()*trans
+				pos, rot, scal = mat_final.decompose()
+				"""
+
+				local_matrix = bone.matrix
+				if bone.parent is not None:
+					local_matrix = bone.parent.matrix.inverted() * local_matrix
+				pos, rot, scal = local_matrix.decompose()
+
+				rot = bone.bone.matrix.to_quaternion()*bone.rotation_quaternion
+				"""
+				pos = bone.head
+				if bone.parent is not None:
+					pos = bone.head-bone.parent.head
+					local_matrix = bone.matrix_channel
+					if bone.parent is not None:
+						local_matrix = bone.parent.matrix_channel.inverted() * local_matrix
+					pos = local_matrix.to_3x3().inverted()*pos
+				"""
+				#if bone.parent:
+				#	pos = (-bone.location[0], bone.location[1], -bone.location[2])
+				#else:
+				#	pos = (-bone.location[0], bone.location[2], bone.location[1])
+				pos = (-bone.location[0], bone.location[2], bone.location[1])
+
+				temp = rot.to_axis_angle()
+				temp = mathutils.Quaternion((-temp[0].x, temp[0].z, temp[0].y), temp[1])
+				rot = (temp[1], temp[2], temp[3], temp[0])
+				boneframe = c_boneframe(frame-bpy.context.scene.frame_start, pos, scal, rot)
+				if frame == bpy.context.scene.frame_start:
+					anim.frames[index] = []
+				(anim.frames[index]).append(boneframe)
+
+		self.animations.append(anim)
+		bpy.context.scene.frame_set(frame)
+
+
+	def write(self, filename):
+		"""
+		file = open(filename, 'w')
+		file.write(self.name+"\n")
+		file.write("\nskeleton:")
+		for bone in self.bones:
+			file.write(bone.name+"\n")
+			file.write("pos: %f %f %f\n" % (-bone.position[0], bone.position[2], bone.position[1]))
+			file.write("child count: %i children:" % len(bone.children))
+			for child in bone.children:
+				file.write("%i " % child)
+			file.write("\n")
+
+		file.write("\nanimations:\n")
+		file.write("count: %i\n" % len(self.animations))
+		for anim in self.animations:
+			file.write("name: "+anim.name+"\n")
+			file.write("bone count: %i\n" % len(anim.frames))
+			for i, boneframes in anim.frames.items():
+				file.write("skeleton bone id: %i\n" % i)
+				file.write("bone frame count: %i\n" % len(boneframes))
+				for frame in boneframes:
+					file.write("time: %f\n" % frame.time)
+					file.write("pos: %f %f %f\n" % (-frame.position[0], frame.position[2], frame.position[1]))
+					file.write("scale: %f %f %f\n" % (frame.scale[0], frame.scale[2], frame.scale[1]))
+					file.write("rot: %f %f %f %f\n" % (frame.rotation[0], frame.rotation[1], frame.rotation[2], frame.rotation[3]))
+					#print(frame.rotation)
+		file.close()
+		"""
+		file = open(filename, 'wb')
+		file.write(struct.pack('<L', 383405658))	#magic number
+		file.write(struct.pack('<B', 1))	#file type version (1)
+		file.write(struct.pack('<H', len(self.name)+1))
+		file.write(struct.pack('<%is'%(len(self.name)+1), self.name.encode('ascii', 'replace')))
+		file.write(struct.pack('<H', len(self.bones)))
+		for bone in self.bones:
+			file.write(struct.pack('<H', len(bone.name)+1))
+			file.write(struct.pack('<%is'%(len(bone.name)+1), bone.name.encode('ascii', 'replace')))
+			bindata = struct.pack('<fff', -bone.position[0], bone.position[2], bone.position[1])
+			file.write(bindata)
+			file.write(struct.pack('<B', 1 if bone.isroot else 0))
+			file.write(struct.pack('<H', len(bone.children)))
+			for child in bone.children:
+				file.write(struct.pack('<H', child))
+
+		file.write(struct.pack('<H', len(self.animations)))
+		for anim in self.animations:
+			file.write(struct.pack('<H', len(anim.name)+1))
+			file.write(struct.pack('<%is'%(len(anim.name)+1), anim.name.encode('ascii', 'replace')))
+			file.write(struct.pack('<H', len(anim.frames)))
+			for i, boneframes in anim.frames.items():
+				file.write(struct.pack('<H', i))
+				file.write(struct.pack('<L', len(boneframes)))
+				for frame in boneframes:
+					file.write(struct.pack('<f', frame.time))
+					bindata = struct.pack('<fff', frame.position[0], frame.position[1], frame.position[2])
+					file.write(bindata)
+					bindata = struct.pack('<fff', frame.scale[0], frame.scale[2], frame.scale[1])
+					file.write(bindata)
+					bindata = struct.pack('<ffff', frame.rotation[0], frame.rotation[1], frame.rotation[2], frame.rotation[3])
+					file.write(bindata)
+		file.close()
 
 
 #################################
@@ -527,8 +630,11 @@ class ExportSGM(bpy.types.Operator):
 		bpy.ops.object.mode_set(mode='OBJECT')
 		print("start exporting .sgm file")
 		obj = c_object(context.object, context.object.data, self.exptangents, self.expshadow, self.texextension)
+		obj.animname = os.path.basename(self.properties.filepath[0:len(self.properties.filepath)-4]+".sga")
 		obj.write(self.properties.filepath, self.exptextures, self.exptangents, self.expshadow)
 		print("finished exporting .sgm file")
+		arm = c_armature(context.object)
+		arm.write(self.properties.filepath[0:len(self.properties.filepath)-4]+".sga")
 		return {'FINISHED'}
 
 	def invoke(self, context, event):

@@ -153,7 +153,7 @@ namespace sgObjectFiles
 			}
 
 			//Indices
-			fread(&meshes[i].indexnum, 2, 1, file);
+			fread(&meshes[i].indexnum, 4, 1, file);
 			meshes[i].indices = new unsigned short[meshes[i].indexnum];
 			fread(meshes[i].indices, 2, meshes[i].indexnum, file);
 		}
@@ -161,17 +161,151 @@ namespace sgObjectFiles
 		//Animations
 		unsigned char hasanimations = 0;
 		fread(&hasanimations, 1, 1, file);
+		char *animfilename = 0;
 		if(hasanimations)
 		{
 			unsigned short lenanimfilename = 0;
 			fread(&lenanimfilename, 2, 1, file);
-			char *animfilename = new char[lenanimfilename];
+			animfilename = new char[lenanimfilename];
 			fread(animfilename, 1, lenanimfilename, file);
 			printf("Animation filename: %s\n", animfilename);
 			//meshesstd::string(animfilename);
 		}
 
 		fclose(file);
+		
+		//load skeleton from .sga file
+		if(hasanimations)
+		{
+			filepath = sgResourceManager::getPath(animfilename);
+			file = fopen(filepath, "rb");
+			delete[] filepath;
+			if(!file)
+			{
+				sgLog("Could not open file: %s", animfilename);
+				return false;
+			}
+			
+			unsigned long int magic;
+			fread(&magic, 4, 1, file);
+			if(magic != 383405658)
+			{
+				sgLog("The file format is not supported: %s", animfilename);
+				return false;
+			}
+			
+			unsigned char version_id;
+			fread(&version_id, 1, 1, file);
+			if(version_id != 1)
+			{
+				sgLog("The file format is out of date or not supported: %s", animfilename);
+				return false;
+			}
+			
+			unsigned short lenskeletonname;
+			fread(&lenskeletonname, 2, 1, file);
+			char *skeletonname = new char[lenskeletonname];
+			fread(skeletonname, 1, lenskeletonname, file);
+			delete[] skeletonname;
+			
+			obj->skeleton = new sgSkeleton();
+			
+			unsigned short numbones;
+			fread(&numbones, 2, 1, file);
+			
+			for(int i = 0; i < numbones; i++)
+			{
+				unsigned short lenbonename;
+				fread(&lenbonename, 2, 1, file);
+				char *bonename = new char[lenbonename];
+				fread(bonename, 1, lenbonename, file);
+				
+				sgVector3 bonepos;
+				fread(&bonepos.x, 4, 3, file);
+				
+				unsigned char isroot;
+				fread(&isroot, 1, 1, file);
+				
+				sgBone bone(bonepos, bonename, isroot);
+				
+				unsigned short numchildren;
+				fread(&numchildren, 2, 1, file);
+				
+				unsigned short *children = new unsigned short[numchildren];
+				for(int n = 0; n < numchildren; n++)
+				{
+					fread(&(children[n]), 2, 1, file);
+					bone.tempchildren.push_back(children[n]);
+				}
+				delete[] children;
+				delete[] bonename;
+				
+				obj->skeleton->bones.push_back(bone);
+			}
+			
+			unsigned short numanims;
+			fread(&numanims, 2, 1, file);
+			for(int i = 0; i < numanims; i++)
+			{
+				unsigned short lenanimname;
+				fread(&lenanimname, 2, 1, file);
+				char *animname = new char[lenanimname];
+				fread(animname, 1, lenanimname, file);
+				sgAnimation *anim = new sgAnimation(animname);
+				//todo: add filename to animname
+				sgResourceManager::addResource(animname, anim);
+				obj->skeleton->animations.insert(std::pair<std::string, sgAnimation*>(animname, anim));
+				delete[] animname;
+				
+				unsigned short numanimbones;
+				fread(&numanimbones, 2, 1, file);
+				for(int n = 0; n < numanimbones; n++)
+				{
+					unsigned short boneid;
+					fread(&boneid, 2, 1, file);
+					
+					sgAnimationBone *animbone = 0;
+					
+					unsigned long numframes;
+					fread(&numframes, 4, 1, file);
+					for(int k = 0; k < numframes; k++)
+					{
+						float frametime;
+						fread(&frametime, 4, 1, file);
+						
+						sgVector3 framepos;
+						fread(&framepos.x, 4, 3, file);
+						
+						sgVector3 framescal;
+						fread(&framescal.x, 4, 3, file);
+						
+						sgQuaternion framerot;
+						fread(&framerot.x, 4, 4, file);
+						
+						animbone = new sgAnimationBone(animbone, 0, frametime, framepos, framescal, framerot);
+					}
+					sgAnimationBone *lastbone = animbone;
+					while(animbone->prevframe != 0)
+					{
+						animbone->prevframe->nextframe = animbone;
+						animbone = animbone->prevframe;
+					}
+					animbone->prevframe = lastbone;
+					lastbone->nextframe = animbone;
+					anim->bones.insert(std::pair<int, sgAnimationBone*>(boneid, animbone));
+				}
+			}
+			fclose(file);
+			
+			obj->skeleton->matrices = new float[16*obj->skeleton->bones.size()];
+			for(int i = 0; i < obj->skeleton->bones.size(); i++)
+			{
+				for(int n = 0; n < obj->skeleton->bones[i].tempchildren.size(); n++)
+				{
+					obj->skeleton->bones[i].children.push_back(&(obj->skeleton->bones[obj->skeleton->bones[i].tempchildren[n]]));
+				}
+			}
+		}
 
 		for(int meshnum = 0; meshnum < countmeshs; meshnum++)
 		{

@@ -547,7 +547,7 @@ void sgRendererES2::renderObjects(sgCamera *cam, std::vector<sgObject*> &objs)
 			}
 			if(curr->skeleton != NULL && currbod->materials[i]->shader->matbones != -1)
 			{
-				glUniformMatrix4fv(currbod->materials[i]->shader->matbones, maxbones, GL_FALSE, curr->skeleton->matrices);
+				glUniformMatrix4fv(currbod->materials[i]->shader->matbones, curr->skeleton->bones.size(), GL_FALSE, curr->skeleton->matrices);
 			}
 
 			setMaterial(currbod->materials[i]);
@@ -616,12 +616,13 @@ void sgRendererES2::renderObjects(sgCamera *cam, std::vector<sgObject*> &objs)
 						glEnableVertexAttribArray(currbod->materials[i]->shader->boneweights);
 						glVertexAttribPointer(currbod->materials[i]->shader->boneweights, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize*sizeof(float), (const void*)featureloc);
 					}
+					featureloc += 16;
 					if(currbod->materials[i]->shader->boneindices != -1)
 					{
 						glEnableVertexAttribArray(currbod->materials[i]->shader->boneindices);
 						glVertexAttribPointer(currbod->materials[i]->shader->boneindices, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize*sizeof(float), (const void*)featureloc);
 					}
-					featureloc += 32;
+					featureloc += 16;
 				}
 			}else
 			{
