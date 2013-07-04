@@ -701,11 +701,17 @@ void sgRendererES2::renderObjects(sgCamera *cam, std::vector<sgObject*> &objs)
 			if(currbod->meshs[i]->ivbo != -1)
 			{
 				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, currbod->meshs[i]->ivbo);
-				glDrawElements(GL_TRIANGLES, currbod->meshs[i]->indexnum, GL_UNSIGNED_SHORT, 0);
+				if(currbod->meshs[i]->indexsize == 2)
+					glDrawElements(GL_TRIANGLES, currbod->meshs[i]->indexnum, GL_UNSIGNED_SHORT, 0);
+				else
+					glDrawElements(GL_TRIANGLES, currbod->meshs[i]->indexnum, GL_UNSIGNED_INT, 0);
 			}else
 			{
 				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-				glDrawElements(GL_TRIANGLES, currbod->meshs[i]->indexnum, GL_UNSIGNED_SHORT, currbod->meshs[i]->indices);
+				if(currbod->meshs[i]->indexsize == 2)
+					glDrawElements(GL_TRIANGLES, currbod->meshs[i]->indexnum, GL_UNSIGNED_SHORT, currbod->meshs[i]->indices);
+				else
+					glDrawElements(GL_TRIANGLES, currbod->meshs[i]->indexnum, GL_UNSIGNED_INT, currbod->meshs[i]->indices);
 			}
 
 			if((currbod->meshs[i]->vtxfeatures & sgVertex::POSITION) > 0)

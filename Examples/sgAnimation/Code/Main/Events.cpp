@@ -80,92 +80,93 @@ void Events::onInit(sgMain *m)
 	//Create skycube
 	sgmain->first_ent->createSkyCubeEntity("sky_right.png", "sky_back.png", "sky_left.png", "sky_front.png", "sky_down.png", "sky_up.png");
 
-	//Create the ground
-/*	sgEntity *ent = sgmain->first_ent->createObjEntity("box");
-	ent->obj->scale.x *= 10;
-	ent->obj->scale.y *= 0.1;
-	ent->obj->scale.z *= 10;
-	ent->obj->position.y = -0.1;
-	ent->obj->body->materials[0]->setTexture(-1, "sand.png");
-	ent->obj->body->materials[0]->mattex.makeScale(sgVector3(10, 10, 10));*/
-
 	sgEntity *ent = sgmain->first_ent->createObjEntity("sponza.sgm");
 	ent->obj->scale = 0.1f;
 	ent->obj->rotation = sgVector3(0.0f, 0.0f, -90.0f);
 	ent->obj->updateObject();
-	ent->obj->body->materials[4]->alphatest = true;
-	ent->obj->body->materials[4]->culling = false;
-	ent->obj->body->materials[4]->alphatestvalue = 0.9f;
-	ent->obj->body->materials[4]->setShader(sgShader::BIS_TEXTURE_DISCARD);
-	ent->obj->body->materials[10]->alphatest = true;
-	ent->obj->body->materials[10]->culling = false;
-	ent->obj->body->materials[10]->alphatestvalue = 0.9f;
-	ent->obj->body->materials[10]->setShader(sgShader::BIS_TEXTURE_DISCARD);
-	ent->obj->body->materials[19]->alphatest = true;
-	ent->obj->body->materials[19]->culling = false;
-	ent->obj->body->materials[19]->alphatestvalue = 0.9f;
-	ent->obj->body->materials[19]->setShader(sgShader::BIS_TEXTURE_DISCARD);
-/*	ent->obj->body->materials[0]->setShader(sgShader::BIS_LIGHTMAP);
-	ent->obj->body->materials[1]->setShader(sgShader::BIS_LIGHTMAP);*/
+	ent->obj->body->materials[5]->alphatest = true;
+	ent->obj->body->materials[5]->culling = false;
+	ent->obj->body->materials[5]->alphatestvalue = 0.9f;
+	ent->obj->body->materials[5]->setShader(sgShader::BIS_TEXTURE_DISCARD);
+	ent->obj->body->materials[6]->alphatest = true;
+	ent->obj->body->materials[6]->culling = false;
+	ent->obj->body->materials[6]->alphatestvalue = 0.9f;
+	ent->obj->body->materials[6]->setShader(sgShader::BIS_TEXTURE_DISCARD);
+	ent->obj->body->materials[17]->alphatest = true;
+	ent->obj->body->materials[17]->culling = false;
+	ent->obj->body->materials[17]->alphatestvalue = 0.9f;
+	ent->obj->body->materials[17]->setShader(sgShader::BIS_TEXTURE_DISCARD);
 
-//	ent = sgmain->first_ent->createObjEntity("test.sgm");
-//	ent->obj->body->materials[0]->setShader(sgShader::BIS_LIGHTMAP);
-
-	//Create a moving car
-	ent = sgmain->first_ent->createObjEntity("mini_knight.sgm", (sgAction*)new AnimTest);
-	ent->obj->position = sgVector3(0.0, 10.0, 0.0);
+	ent = sgmain->first_ent->createObjEntity("simplegirl.sgm");
+	ent->obj->position = sgVector3(5.0, -1.7, 0.0);
+	ent->obj->scale = 1.0f;
 	ent->obj->updateObject();
+	
 	ent->obj->body->materials[0]->setShader("anim.vsh", "anim.fsh");
 	ent->obj->skeleton->init();
-	ent->obj->skeleton->update(0.0f);
+	ent->obj->skeleton = ent->obj->skeleton;
+	ent->obj->skeleton->setAnimation(std::string("cammina"));
 	skeleton = ent->obj->skeleton;
 	
+	//Create a zombie
+	ent = sgmain->first_ent->createObjEntity("new_thin_zombie.sgm", (sgAction*)new AnimTest);
+	ent->obj->position = sgVector3(0.0, -1.7, 0.0);
+	ent->obj->scale = 1.0f;
+	ent->obj->updateObject();
 	
-	skeleton->animations.insert(std::pair<std::string, sgAnimation*>(std::string("hard"), new sgAnimation(std::string("hard"))));
+	ent = sgmain->first_ent->createObjEntity("new_thin_zombie.sgm", (sgAction*)new AnimTest);
+	ent->obj->position = sgVector3(2.0, -1.7, 0.0);
+	ent->obj->scale = 1.0f;
+	ent->obj->updateObject();
 	
-	sgAnimationBone *animbone = new sgAnimationBone(0, 0, 0.0f, sgVector3(0.0f, 0.0f, 0.0f), sgVector3(1.0f, 1.0f, 1.0f), sgQuaternion(sgVector3(0.0f, 0.0f, 0.0f)));
-	animbone->nextframe = new sgAnimationBone(animbone, 0, 1.0f, sgVector3(0.0f, 0.0f, 0.0f), sgVector3(1.0f, 1.0f, 1.0f), sgQuaternion(sgVector4(1.0f, 0.0f, 0.0f, 45.0f)));
-	animbone->nextframe->nextframe = new sgAnimationBone(animbone->nextframe, animbone, 2.0f, sgVector3(0.0f, 0.0f, 0.0f), sgVector3(1.0f, 1.0f, 1.0f), sgQuaternion(sgVector3(0.0f, 0.0f, 0.0f)));
-	animbone->nextframe->prevframe = animbone->nextframe->nextframe;
-	animbone->prevframe = animbone->nextframe->nextframe;
-	skeleton->animations[std::string("hard")]->bones.insert(std::pair<int, sgAnimationBone*>(0, animbone));
+	ent = sgmain->first_ent->createObjEntity("new_thin_zombie.sgm", (sgAction*)new AnimTest);
+	ent->obj->position = sgVector3(-2.0, -1.7, 0.0);
+	ent->obj->scale = 1.0f;
+	ent->obj->updateObject();
 	
-	animbone = new sgAnimationBone(0, 0, 0.0f, sgVector3(0.0f, 0.0f, 0.0f), sgVector3(1.0f, 1.0f, 1.0f), sgQuaternion(sgVector3(0.0f, 0.0f, 0.0f)));
-	animbone->nextframe = new sgAnimationBone(animbone, 0, 1.0f, sgVector3(0.0f, 1.0f, 0.0f), sgVector3(1.0f, 1.0f, 1.0f), sgQuaternion(sgVector4(1.0f, 0.0f, 0.0f, 45.0f)));
-	animbone->nextframe->nextframe = new sgAnimationBone(animbone->nextframe, animbone, 2.0f, sgVector3(0.0f, 0.0f, 0.0f), sgVector3(1.0f, 1.0f, 1.0f), sgQuaternion(sgVector3(0.0f, 0.0f, 0.0f)));
-	animbone->nextframe->prevframe = animbone->nextframe->nextframe;
-	animbone->prevframe = animbone->nextframe->nextframe;
-	skeleton->animations[std::string("hard")]->bones.insert(std::pair<int, sgAnimationBone*>(1, animbone));
+	ent = sgmain->first_ent->createObjEntity("new_thin_zombie.sgm", (sgAction*)new AnimTest);
+	ent->obj->position = sgVector3(4.0, -1.7, 0.0);
+	ent->obj->scale = 1.0f;
+	ent->obj->updateObject();
 	
-	animbone = new sgAnimationBone(0, 0, 0.0f, sgVector3(0.0f, 0.0f, 0.0f), sgVector3(1.0f, 1.0f, 1.0f), sgQuaternion(sgVector3(0.0f, 0.0f, 0.0f)));
-	animbone->nextframe = new sgAnimationBone(animbone, 0, 1.0f, sgVector3(0.0f, 1.0f, 0.0f), sgVector3(1.0f, 1.0f, 1.0f), sgQuaternion(sgVector4(1.0f, 0.0f, 0.0f, 45.0f)));
-	animbone->nextframe->nextframe = new sgAnimationBone(animbone->nextframe, animbone, 2.0f, sgVector3(0.0f, 0.0f, 0.0f), sgVector3(1.0f, 1.0f, 1.0f), sgQuaternion(sgVector3(0.0f, 0.0f, 0.0f)));
-	animbone->nextframe->prevframe = animbone->nextframe->nextframe;
-	animbone->prevframe = animbone->nextframe->nextframe;
-	skeleton->animations[std::string("hard")]->bones.insert(std::pair<int, sgAnimationBone*>(2, animbone));
+	ent = sgmain->first_ent->createObjEntity("new_thin_zombie.sgm", (sgAction*)new AnimTest);
+	ent->obj->position = sgVector3(-4.0, -1.7, 0.0);
+	ent->obj->scale = 1.0f;
+	ent->obj->updateObject();
 	
+/*	ent = sgmain->first_ent->createObjEntity("new_thin_zombie.sgm", (sgAction*)new AnimTest);
+	ent->obj->position = sgVector3(0.0, -1.7, 2.0);
+	ent->obj->scale = 1.0f;
+	ent->obj->updateObject();
 	
-	skeleton->setAnimation(std::string("test"));
+	ent = sgmain->first_ent->createObjEntity("new_thin_zombie.sgm", (sgAction*)new AnimTest);
+	ent->obj->position = sgVector3(0.0, -1.7, -2.0);
+	ent->obj->scale = 1.0f;
+	ent->obj->updateObject();
 	
+	ent = sgmain->first_ent->createObjEntity("new_thin_zombie.sgm", (sgAction*)new AnimTest);
+	ent->obj->position = sgVector3(0.0, -1.7, 4.0);
+	ent->obj->scale = 1.0f;
+	ent->obj->updateObject();
 	
-	sgAnimationBone *bone = skeleton->animations[std::string("test")]->bones[2];
-	sgAnimationBone *temp = bone;
-	while(temp != bone->prevframe)
-	{
-		printf("%f, %f, %f\n", temp->position.x, temp->position.y, temp->position.z);
-		temp = temp->nextframe;
-	}
-//	temp->position.makeIdentity();
+	ent = sgmain->first_ent->createObjEntity("new_thin_zombie.sgm", (sgAction*)new AnimTest);
+	ent->obj->position = sgVector3(0.0, -1.7, -4.0);
+	ent->obj->scale = 1.0f;
+	ent->obj->updateObject();
+	
+	ent = sgmain->first_ent->createObjEntity("new_thin_zombie.sgm", (sgAction*)new AnimTest);
+	ent->obj->position = sgVector3(2.0, -1.7, 2.0);
+	ent->obj->scale = 1.0f;
+	ent->obj->updateObject();
+	
+	ent = sgmain->first_ent->createObjEntity("new_thin_zombie.sgm", (sgAction*)new AnimTest);
+	ent->obj->position = sgVector3(2.0, -1.7, -2.0);
+	ent->obj->scale = 1.0f;
+	ent->obj->updateObject();*/
 }
 
 //Called every frame, just before drawing
 void Events::onDraw(float timestep)
 {
-/*	static float rot1 = 0.0f;
-	static float rot2 = 0.0f;
-	rot1 += timestep*20.0f;
-	rot2 = sin(rot1*0.1f)*30.0f;
-	skeleton->bones[0].rotation = sgVector3(rot1, 0.0, 0.0);
-	skeleton->bones[1].rotation = sgVector3(0.0, rot2, 0.0);*/
 	skeleton->update(timestep*24.0f);
 }

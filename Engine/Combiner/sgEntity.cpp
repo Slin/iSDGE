@@ -288,7 +288,10 @@ void sgEntity::createPhysBody(sgPhysBody::eShape shape, float mass, sgVector3 si
 			mesh = obj->body->meshs[n];
 			for(int i = 0; i < mesh->indexnum; i += 3)
 			{
-				body->addFace(sgVector3(&mesh->vertices[mesh->indices[i+0]*mesh->vtxsize+0]), sgVector3(&mesh->vertices[mesh->indices[i+1]*mesh->vtxsize+0]), sgVector3(&mesh->vertices[mesh->indices[i+2]*mesh->vtxsize+0]));
+				if(mesh->indexsize == 2)
+					body->addFace(sgVector3(&mesh->vertices[((unsigned short*)mesh->indices)[i+0]*mesh->vtxsize+0]), sgVector3(&mesh->vertices[((unsigned short*)mesh->indices)[i+1]*mesh->vtxsize+0]), sgVector3(&mesh->vertices[((unsigned short*)mesh->indices)[i+2]*mesh->vtxsize+0]));
+				else
+					body->addFace(sgVector3(&mesh->vertices[((unsigned long*)mesh->indices)[i+0]*mesh->vtxsize+0]), sgVector3(&mesh->vertices[((unsigned long*)mesh->indices)[i+1]*mesh->vtxsize+0]), sgVector3(&mesh->vertices[((unsigned long*)mesh->indices)[i+2]*mesh->vtxsize+0]));
 			}
 		}
 	}

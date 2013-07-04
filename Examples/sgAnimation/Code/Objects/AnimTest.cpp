@@ -29,11 +29,41 @@
 void AnimTest::onInit(sgEntity *e)
 {
 	ent = e;
+	time = (rand()%100)/20.0f;
+	curr = rand()%4;
 	
+	ent->obj->body->materials[0]->setShader("anim.vsh", "anim.fsh");
+	ent->obj->skeleton->init();
+	ent->obj->skeleton = ent->obj->skeleton;
+	
+	if(curr == 0)
+		ent->obj->skeleton->setAnimation(std::string("idle"));
+	if(curr == 1)
+		ent->obj->skeleton->setAnimation(std::string("walk"));
+	if(curr == 2)
+		ent->obj->skeleton->setAnimation(std::string("attack3"));
+	if(curr == 3)
+		ent->obj->skeleton->setAnimation(std::string("run"));
 }
 
 //This method is called every frame, just before drawing for each object with this action attached
 void AnimTest::onDraw(float timestep)
 {
-	
+	time += timestep;
+	if(time > 5.0f)
+	{
+		curr += 1;
+		if(curr > 3)
+			curr = 0;
+		time = 0.0f;
+		if(curr == 0)
+			ent->obj->skeleton->setAnimation(std::string("idle"));
+		if(curr == 1)
+			ent->obj->skeleton->setAnimation(std::string("walk"));
+		if(curr == 2)
+			ent->obj->skeleton->setAnimation(std::string("attack3"));
+		if(curr == 3)
+			ent->obj->skeleton->setAnimation(std::string("run"));
+	}
+	ent->obj->skeleton->update(timestep*24.0f);
 }

@@ -1,9 +1,9 @@
 //
-//	AnimTest.h
-//	Engine
+//	Shader.vsh
+//	iSDGE
 //
-//	Created by Nils Daumann on 20.09.11.
-//	Copyright (c) 2011 Nils Daumann
+//	Created by Nils Daumann on 16.04.10.
+//	Copyright (c) 2010 Nils Daumann
 
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
 //	of this software and associated documentation files (the "Software"), to deal
@@ -23,19 +23,31 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-#ifndef __ANIMTEST_H__
-#define __ANIMTEST_H__
+attribute vec3 vertPos;
+attribute vec3 vertColor;
+attribute vec2 vertTexcoord0;
+attribute vec4 vertBoneWeights;
+attribute vec4 vertBoneIndices;
 
-#include "sgAction.h"
+uniform mat4 matProjViewModel;
+uniform float Time;
+uniform mat4 matBones[60];
 
-class AnimTest : public sgAction
+varying vec2 texcoord;
+varying vec4 weights;
+varying vec4 bones;
+
+void main()
 {
-	public:
-		void onInit(sgEntity *e);
-		void onDraw(float timestep);
+	texcoord = vertTexcoord0;
+	weights = vertBoneWeights;
+	bones = vertBoneIndices;
 	
-	float time;
-	int curr;
-};
-
-#endif
+	vec4 pos1 = matBones[int(vertBoneIndices.x)]*vec4(vertPos, 1.0);
+	vec4 pos2 = matBones[int(vertBoneIndices.y)]*vec4(vertPos, 1.0);
+	vec4 pos3 = matBones[int(vertBoneIndices.z)]*vec4(vertPos, 1.0);
+	vec4 pos4 = matBones[int(vertBoneIndices.w)]*vec4(vertPos, 1.0);
+	vec4 pos = pos1*vertBoneWeights.x+pos2*vertBoneWeights.y+pos3*vertBoneWeights.z+pos4*vertBoneWeights.w;
+	pos.w = 1.0;
+	gl_Position = matProjViewModel*pos;
+}

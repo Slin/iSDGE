@@ -49,6 +49,14 @@ namespace sgObjectFiles
 			sgLog("Could not open file: %s", filename);
 			return false;
 		}
+		
+		unsigned long int magic;
+		fread(&magic, 4, 1, file);
+		if(magic != 352658064)
+		{
+			sgLog("The file format is not supported: %s", filename);
+			return false;
+		}
 
 		unsigned char version_id;
 		fread(&version_id, 1, 1, file);
@@ -105,8 +113,8 @@ namespace sgObjectFiles
 			fread(&datacount, 1, 1, file);
 			unsigned char hastangent = 0;
 			fread(&hastangent, 1, 1, file);
-			unsigned char bonecount = 0;
-			fread(&bonecount, 1, 1, file);
+			unsigned char hasbones = 0;
+			fread(&hasbones, 1, 1, file);
 
 			meshes[i].vtxsize = 8;
 			meshes[i].vtxfeatures = sgVertex::POSITION|sgVertex::NORMAL|sgVertex::UV0;
@@ -125,12 +133,10 @@ namespace sgObjectFiles
 				meshes[i].vtxfeatures |= sgVertex::COLOR;
 				meshes[i].vtxsize += 4;
 			}
-			if(bonecount > 0)
+			if(hasbones > 0)
 			{
 				meshes[i].vtxfeatures |= sgVertex::BONES;
 				meshes[i].vtxsize += 8;
-				meshes[i].bonemapping = new unsigned short[bonecount];
-				fread(meshes[i].bonemapping, 2, bonecount, file);
 			}
 
 			//Vertexdata
@@ -154,8 +160,13 @@ namespace sgObjectFiles
 
 			//Indices
 			fread(&meshes[i].indexnum, 4, 1, file);
-			meshes[i].indices = new unsigned short[meshes[i].indexnum];
-			fread(meshes[i].indices, 2, meshes[i].indexnum, file);
+			fread(&meshes[i].indexsize, 1, 1, file);
+			
+			if(meshes[i].indexsize == 2)
+				meshes[i].indices = new unsigned short[meshes[i].indexnum];
+			else
+				meshes[i].indices = new unsigned long[meshes[i].indexnum];
+			fread(meshes[i].indices, meshes[i].indexsize, meshes[i].indexnum, file);
 		}
 
 		//Animations
@@ -168,12 +179,10 @@ namespace sgObjectFiles
 			fread(&lenanimfilename, 2, 1, file);
 			animfilename = new char[lenanimfilename];
 			fread(animfilename, 1, lenanimfilename, file);
-			printf("Animation filename: %s\n", animfilename);
-			//meshesstd::string(animfilename);
 		}
 
 		fclose(file);
-		
+		obj->skeleton = NULL;
 		//load skeleton from .sga file
 		if(hasanimations)
 		{
@@ -209,6 +218,7 @@ namespace sgObjectFiles
 			delete[] skeletonname;
 			
 			obj->skeleton = new sgSkeleton();
+			sgResourceManager::addResource(obj->skeleton);
 			
 			unsigned short numbones;
 			fread(&numbones, 2, 1, file);
@@ -252,8 +262,8 @@ namespace sgObjectFiles
 				char *animname = new char[lenanimname];
 				fread(animname, 1, lenanimname, file);
 				sgAnimation *anim = new sgAnimation(animname);
-				//todo: add filename to animname
-				sgResourceManager::addResource(animname, anim);
+				std::string resname = std::string(animfilename)+std::string(animname);
+				sgResourceManager::addResource(resname.c_str(), anim);
 				obj->skeleton->animations.insert(std::pair<std::string, sgAnimation*>(animname, anim));
 				delete[] animname;
 				
@@ -297,14 +307,7 @@ namespace sgObjectFiles
 			}
 			fclose(file);
 			
-			obj->skeleton->matrices = new float[16*obj->skeleton->bones.size()];
-			for(int i = 0; i < obj->skeleton->bones.size(); i++)
-			{
-				for(int n = 0; n < obj->skeleton->bones[i].tempchildren.size(); n++)
-				{
-					obj->skeleton->bones[i].children.push_back(&(obj->skeleton->bones[obj->skeleton->bones[i].tempchildren[n]]));
-				}
-			}
+			obj->skeleton->matrices = NULL;
 		}
 
 		for(int meshnum = 0; meshnum < countmeshs; meshnum++)
@@ -318,6 +321,7 @@ namespace sgObjectFiles
 			mesh_->vertices = meshes[meshnum].vertices;
 
 			mesh_->indexnum = meshes[meshnum].indexnum;
+			mesh_->indexsize = meshes[meshnum].indexsize;
 			mesh_->indices = meshes[meshnum].indices;
 
 			if((flags & GEN_TANGENT) > 0)

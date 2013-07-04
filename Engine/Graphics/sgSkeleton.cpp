@@ -76,6 +76,22 @@ sgBone::sgBone(sgVector3 &pos, std::string bonename, bool root)
 	currtime = 0.0f;
 }
 
+sgBone::sgBone(const sgBone &other)
+{
+	relbasematrix = other.relbasematrix;
+	invbasematrix = other.invbasematrix;
+	position = other.position;
+	rotation = other.rotation;
+	scale = other.scale;
+	finalmatrix = other.finalmatrix;
+	name = other.name;
+	isroot = other.isroot;
+	tempchildren = other.tempchildren;
+	currframe = 0;
+	nextframe = 0;
+	currtime = 0.0f;
+}
+
 void sgBone::init(sgBone *parent)
 {
 	for(int i = 0; i < children.size(); i++)
@@ -138,11 +154,35 @@ void sgBone::setAnimation(sgAnimationBone *animbone)
 
 sgSkeleton::sgSkeleton()
 {
+	matrices = NULL;
+}
 
+sgSkeleton::sgSkeleton(sgSkeleton *skeleton)
+{
+	bones = skeleton->bones;
+	animations = skeleton->animations;
+	matrices = NULL;
+}
+
+sgSkeleton::~sgSkeleton()
+{
+	delete[] matrices;
 }
 
 void sgSkeleton::init()
 {
+	if(matrices != NULL)
+		return;
+	
+	for(int i = 0; i < bones.size(); i++)
+	{
+		for(int n = 0; n < bones[i].tempchildren.size(); n++)
+		{
+			bones[i].children.push_back(&(bones[bones[i].tempchildren[n]]));
+		}
+	}
+	
+	matrices = new float[16*bones.size()];
 	for(int i = 0; i < bones.size(); i++)
 	{
 		if(bones[i].isroot)
@@ -165,7 +205,6 @@ void sgSkeleton::update(float timestep)
 	for(int i = 0; i < bones.size(); i++)
 	{
 		memcpy(matrices+16*i, &bones[i].finalmatrix, 16*sizeof(float));
-//		printf("\n%f %f %f %f\n%f %f %f %f\n%f %f %f %f\n%f %f %f %f\n", matrices[i*16+0], matrices[i*16+1], matrices[i*16+2], matrices[i*16+3], matrices[i*16+4], matrices[i*16+5], matrices[i*16+6], matrices[i*16+7], matrices[i*16+8], matrices[i*16+9], matrices[i*16+10], matrices[i*16+11], matrices[i*16+12], matrices[i*16+13], matrices[i*16+14], matrices[i*16+15]);
 	}
 }
 

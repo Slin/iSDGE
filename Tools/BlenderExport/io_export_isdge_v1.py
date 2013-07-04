@@ -13,7 +13,7 @@ bl_info = {
 ############################################################
 #Structure of exported mesh files (.sgm)
 ############################################################
-#(magic number - uint32 - 352658064 - not yet implemented)
+#magic number - uint32 - 352658064
 #version - uint8 - 1
 #number of materials - uint8
 #material id - uint8
@@ -27,16 +27,16 @@ bl_info = {
 #	number of vertices - uint16
 #	texcoord count - uint8
 #	texdata count - uint8
-#	has tangents - uint8 0 if not, 1 otherwize
-#	bone count - uint8
-#		mapping to armature bones with mesh bone as index - uint16
+#	has tangents - uint8 0 if not, 1 otherwise
+#	has bones - uint8 0 if not, 1 otherwise
 #	interleaved vertex data - float32
-#		- position, normal, uvN, color, tangents, weights, mesh bones
+#		- position, normal, uvN, color, tangents, weights, bone indices
 #
 #	number of indices - uint32
-#	indices - uint16
+#	index size - uint8, usually 2 or 4 bytes
+#	indices - index size
 #
-#has animation - uint8 0 if not, 1 otherwize
+#has animation - uint8 0 if not, 1 otherwise
 #	animfilename length - uint16
 #	animfilename - char*animfilename length
 
@@ -52,7 +52,7 @@ bl_info = {
 #	bone name length - uint16
 #	bone name - char*bone name length
 #	bone position xyz - float32*3
-#	bone is a root (does not have a parent) - uint8 0 if not, 1 otherwize
+#	bone is a root (does not have a parent) - uint8 0 if not, 1 otherwise
 #	bone number of children - uint16
 #		child index within this list of bones - uint16
 #
@@ -93,19 +93,26 @@ bl_info = {
 #Known Problems:
 #-crashes on exporting vertex colors
 ##
+#################################
+##V1.2 2013/03/05
+#-added magic number
+#-removed bone mapping
+#-bone indices and weights are correctly exported
+#-rest bones and animations can be exported
+#-support for 32 bit indices
+#Known Problems:
+#-crashes on exporting vertex colors
+#-scaled armatures and different origin of model and armature are problematic
+##
 
 #################################
 #ToDO
 #################################
-#-automatic export of the linked armatures animations
 #-export of more than one texture per mesh for things like normalmaps
 #-generation and export of shadow volume data, which otherwize is done on model loading in iSDGE
 #-automatic converting of texture files to the desired format
 #-export of more complex material setups
 #(-support for morph animations)
-#-magic number
-#-possibility to store 32bit indices
-#-remove bone mapping
 
 
 
@@ -119,11 +126,10 @@ import math
 import mathutils
 from mathutils import Matrix
 
-
 #Container classes for a better overview
 class c_vertex(object):
 	__slots__ = 'blendindex', 'position', 'uvs', 'color', 'normal', 'tangent', 'weights', 'bones'
-	def __init__(self, blendindex, position = (0, 0, 0), uvs = [], color = None, normal = (0, 0, 0), tangent = (0, 0, 0, 0), weights = [0, 0, 0, 0], bones = [0, 0, 0, 0]):
+	def __init__(self, blendindex, position = (0, 0, 0), uvs = [], color = None, normal = (0, 0, 0), tangent = (0, 0, 0, 0), weights = (0, 0, 0, 0), bones = (0, 0, 0, 0)):
 		self.blendindex = blendindex	#index within the blender mesh
 		self.position = position
 		self.uvs = uvs
@@ -251,15 +257,18 @@ class c_object(object):
 		for i, face in enumerate(obj.polygons):
 			images = []
 			for tex in obj.uv_textures:
-				imgpath = tex.data[i].image.filepath
-				img = imgpath.split('/')
-				img = img[len(img)-1]
-				img = img.split('\\')
-				img = img[len(img)-1]
-				if texextension != 'keep':
-					img = img[:-3]
-					img += texextension
-				images.append((tex.data[i].image.name, img))
+				if tex.data[i].image:
+					imgpath = tex.data[i].image.filepath
+					img = imgpath.split('/')
+					img = img[len(img)-1]
+					img = img.split('\\')
+					img = img[len(img)-1]
+					if texextension != 'keep':
+						img = img[:-3]
+						img += texextension
+					images.append((tex.data[i].image.name, img))
+				else:
+					images.append(("default", "default."+texextension))
 			
 			verts = []
 			for n, vertind in enumerate(face.vertices):
@@ -273,22 +282,29 @@ class c_object(object):
 						alpha = obj.vertex_colors[1].data[i].color.r
 					color = (obj.vertex_colors[0].data[i].color.r, obj.vertex_colors[0].data[i].color.g, obj.vertex_colors[0].data[i].color.b, alpha)
 				
-				position = (-obj.vertices[vertind].co.x, obj.vertices[vertind].co.z, obj.vertices[vertind].co.y)
-				normal = (-obj.vertices[vertind].normal.x, obj.vertices[vertind].normal.z, obj.vertices[vertind].normal.y)
-				
-				#get vertex weights and group indices, group indices will later be replaced by bone indices
+				position = (obj.vertices[vertind].co.x, obj.vertices[vertind].co.y, obj.vertices[vertind].co.z)
+				normal = (obj.vertices[vertind].normal.x, obj.vertices[vertind].normal.y, obj.vertices[vertind].normal.z)
+
+				#get vertex weights and bone indices
 				weights = [0, 0, 0, 0]
 				bones = [0, 0, 0, 0]
 				if self.hasbones == True:
-					groups = []
-					for g, group in enumerate(obj.vertices[vertind].groups):
+					groups = sorted(obj.vertices[vertind].groups, key=lambda item: item.weight, reverse=True)
+
+					sumweights = 0
+					for g, group in enumerate(groups):
+						if g > 3:
+							break
+						sumweights += group.weight
+
+					for g, group in enumerate(groups):
 						if g > 3:
 							print("more then four groups assigned to vertex: loss of data")
 							break
-						weights[g] = group.weight
+						weights[g] = group.weight/sumweights
 						bones[g] = ArmatureList[0].object.data.bones.find(objparent.vertex_groups[group.group].name)
 				
-				verts.append(c_vertex(vertind, position, uvs, color, normal, weights, bones))
+				verts.append(c_vertex(vertind, position, uvs, color, normal))
 				verts[-1].weights = weights	#hacky as the above line should already do this, but for some reason does not...
 				verts[-1].bones = bones
 			
@@ -299,19 +315,6 @@ class c_object(object):
 				tri2 = [verts[0], verts[2], verts[3]]
 				triangles.append(c_triangle(tri1, images))
 				triangles.append(c_triangle(tri2, images))
-		
-		if self.hasbones == True:
-			for b, bone in enumerate(ArmatureList[0].object.data.bones):
-				for group in objparent.vertex_groups:
-					if bone.name == group.name:
-						for tri in triangles:
-							i = 0
-							while i < 3:
-								for e, bid in enumerate(tri.vertices[i].bones):
-									if bid == group.index:
-										tri.vertices[i].bones[e] = b
-								i += 1
-						break
 		
 		#generate meshs
 		self.meshs = []
@@ -336,10 +339,11 @@ class c_object(object):
 				mesh.gentangents()
 	
 	
-	def write(self, filename, exptextures, exptangents, expshadow):
+	def write(self, filename, exptextures, exptangents, expshadow, expanimations):
 		print("open or create file")
 		file = open(filename, 'wb')
 
+		file.write(struct.pack('<L', 352658064))
 		print("write file format version number: 1")
 		file.write(struct.pack('<B', 1))
 		
@@ -375,33 +379,17 @@ class c_object(object):
 				file.write(struct.pack('<B', 0)) #does not have tangents
 				
 			if self.hasbones == True:
-				print("generate bone mapping")
-				bonelist = []
-				for vi, vertex in enumerate(mesh.vertices):
-					for vbi, vbone in enumerate(vertex.bones):
-						foundbone = 0
-						for bli, lbone in enumerate(bonelist):
-							if vbone == lbone:
-								#mesh.vertices[vi].bones[vbi] = bli
-								foundbone = 1
-								break
-						if foundbone == 0:
-							bonelist.append(vbone)
-							#mesh.vertices[vi].bones[vbi] = len(bonelist)-1
-				print("write bone mapping")
-				file.write(struct.pack('<B', len(bonelist))) #number of bones
-				for bone in bonelist:
-					file.write(struct.pack('<H', bone))
+				file.write(struct.pack('<B', 1)) #has bones
 			else:
 				file.write(struct.pack('<B', 0)) #does not have bones (number of bones is 0)
 			
 			print("write interleaved vertex data")
 			
 			for vertex in mesh.vertices:
-				bindata = struct.pack('<fff', vertex.position[0], vertex.position[1], vertex.position[2])
+				bindata = struct.pack('<fff', -vertex.position[0], vertex.position[2], vertex.position[1])
 				file.write(bindata)
 				
-				bindata = struct.pack('<fff', vertex.normal[0], vertex.normal[1], vertex.normal[2])
+				bindata = struct.pack('<fff', -vertex.normal[0], vertex.normal[2], vertex.normal[1])
 				file.write(bindata)
 
 				set = 0
@@ -415,7 +403,7 @@ class c_object(object):
 					file.write(bindata)
 				
 				if exptangents == True:
-					bindata = struct.pack('<ffff', vertex.tangent[0], vertex.tangent[1], vertex.tangent[2], vertex.tangent[3])
+					bindata = struct.pack('<ffff', -vertex.tangent[0], vertex.tangent[2], vertex.tangent[1], vertex.tangent[3])
 					file.write(bindata)
 					
 				if self.hasbones == True:
@@ -428,12 +416,18 @@ class c_object(object):
 			
 			print("write indices")
 			file.write(struct.pack('<I', len(mesh.indices)))
+			maxval = max(mesh.indices)
+			if maxval > 65535:
+				file.write(struct.pack('<B', 4))
+			else:
+				file.write(struct.pack('<B', 2))
+
 			for ind in mesh.indices:
 				bindata = struct.pack('<H', ind)
 				file.write(bindata)
 				
-		print("write animation")
-		if self.hasbones == True:
+		print("write animation reference")
+		if self.hasbones == True and expanimations == True:
 			file.write(struct.pack('<B', 1)) #has animations
 			file.write(struct.pack('<H', len(self.animname)+1))
 			file.write(struct.pack('<%is'%(len(self.animname)+1), self.animname.encode('ascii', 'replace')))
@@ -486,54 +480,39 @@ class c_armature(object):
 				b.children.append(armature.data.bones.find(child.name))
 			self.bones.append(b)
 
+		vertspacemat = mathutils.Matrix.Identity(4)
+		vertspacemat[0][0] = -1
+		vertspacemat[1][1] = 0
+		vertspacemat[1][2] = 1
+		vertspacemat[2][2] = 0
+		vertspacemat[2][1] = 1
+
 		#get animation frames
 		frame_current = bpy.context.scene.frame_current
-		anim = c_animation("test")
-		for frame in range(bpy.context.scene.frame_start, bpy.context.scene.frame_end + 1):
-			bpy.context.scene.frame_set(frame)
-			for i, bone in enumerate(armature.pose.bones):
-				index = armature.data.bones.find(bone.bone.name)
-				"""
-				trans = Matrix.Translation(bone.bone.head_local)
-				itrans = Matrix.Translation(-bone.bone.head_local)
-				if bone.parent:
-					mat_final = itrans*bone.parent.bone.matrix_local*bone.parent.matrix.inverted()*bone.matrix*bone.bone.matrix_local*trans
-				else:
-					mat_final = itrans*bone.matrix*bone.bone.matrix_local.inverted()*trans
-				pos, rot, scal = mat_final.decompose()
-				"""
+		for action in bpy.data.actions:
+			armature.animation_data.action = action
+			anim = c_animation(action.name)
+			for frame in range(int(action.frame_range[0]), int(action.frame_range[1])):
+				bpy.context.scene.frame_set(frame)
+				for i, bone in enumerate(armature.pose.bones):
+					index = armature.data.bones.find(bone.bone.name)
+					
+					trans = Matrix.Translation(vertspacemat*bone.bone.head_local)
+					itrans = Matrix.Translation(vertspacemat*(-bone.bone.head_local))
+					if bone.parent:
+						mat_final = itrans*vertspacemat*bone.parent.bone.matrix_local*(vertspacemat*bone.parent.matrix).inverted()*vertspacemat*bone.matrix*(vertspacemat*bone.bone.matrix_local).inverted()*trans
+					else:
+						mat_final = itrans*vertspacemat*bone.matrix*(vertspacemat*bone.bone.matrix_local).inverted()*trans
+					pos, rot, scal = mat_final.decompose()
 
-				local_matrix = bone.matrix
-				if bone.parent is not None:
-					local_matrix = bone.parent.matrix.inverted() * local_matrix
-				pos, rot, scal = local_matrix.decompose()
+					rot = (rot[1], rot[2], rot[3], rot[0])
+					boneframe = c_boneframe(frame-action.frame_range[0], pos, scal, rot)
+					if frame == action.frame_range[0]:
+						anim.frames[index] = []
+					(anim.frames[index]).append(boneframe)
 
-				rot = bone.bone.matrix.to_quaternion()*bone.rotation_quaternion
-				"""
-				pos = bone.head
-				if bone.parent is not None:
-					pos = bone.head-bone.parent.head
-					local_matrix = bone.matrix_channel
-					if bone.parent is not None:
-						local_matrix = bone.parent.matrix_channel.inverted() * local_matrix
-					pos = local_matrix.to_3x3().inverted()*pos
-				"""
-				#if bone.parent:
-				#	pos = (-bone.location[0], bone.location[1], -bone.location[2])
-				#else:
-				#	pos = (-bone.location[0], bone.location[2], bone.location[1])
-				pos = (-bone.location[0], bone.location[2], bone.location[1])
-
-				temp = rot.to_axis_angle()
-				temp = mathutils.Quaternion((-temp[0].x, temp[0].z, temp[0].y), temp[1])
-				rot = (temp[1], temp[2], temp[3], temp[0])
-				boneframe = c_boneframe(frame-bpy.context.scene.frame_start, pos, scal, rot)
-				if frame == bpy.context.scene.frame_start:
-					anim.frames[index] = []
-				(anim.frames[index]).append(boneframe)
-
-		self.animations.append(anim)
-		bpy.context.scene.frame_set(frame)
+			self.animations.append(anim)
+		bpy.context.scene.frame_set(frame_current)
 
 
 	def write(self, filename):
@@ -593,7 +572,7 @@ class c_armature(object):
 					file.write(struct.pack('<f', frame.time))
 					bindata = struct.pack('<fff', frame.position[0], frame.position[1], frame.position[2])
 					file.write(bindata)
-					bindata = struct.pack('<fff', frame.scale[0], frame.scale[2], frame.scale[1])
+					bindata = struct.pack('<fff', frame.scale[0], frame.scale[1], frame.scale[2])
 					file.write(bindata)
 					bindata = struct.pack('<ffff', frame.rotation[0], frame.rotation[1], frame.rotation[2], frame.rotation[3])
 					file.write(bindata)
@@ -624,6 +603,7 @@ class ExportSGM(bpy.types.Operator):
 			default='png',
 			)
 	exptangents = BoolProperty(name="Export tangents", description="Generate tangents for the model to use for example tangent space normal mapping.", default=False)
+	expanimations = BoolProperty(name="Export animations", description="Export animation data in an additional file and reference it in the object.", default=True)
 	expshadow = False #BoolProperty(name="Export shadow", description="Prepare the mesh for shadow volume rendering to speed up loading.", default=False)
 	
 	def execute(self, context):
@@ -631,10 +611,13 @@ class ExportSGM(bpy.types.Operator):
 		print("start exporting .sgm file")
 		obj = c_object(context.object, context.object.data, self.exptangents, self.expshadow, self.texextension)
 		obj.animname = os.path.basename(self.properties.filepath[0:len(self.properties.filepath)-4]+".sga")
-		obj.write(self.properties.filepath, self.exptextures, self.exptangents, self.expshadow)
+		obj.write(self.properties.filepath, self.exptextures, self.exptangents, self.expshadow, self.expanimations)
 		print("finished exporting .sgm file")
-		arm = c_armature(context.object)
-		arm.write(self.properties.filepath[0:len(self.properties.filepath)-4]+".sga")
+		if obj.hasbones and self.expanimations:
+			print("start exporting .sga file")
+			arm = c_armature(context.object)
+			arm.write(self.properties.filepath[0:len(self.properties.filepath)-4]+".sga")
+			print("finished exporting .sga file")
 		return {'FINISHED'}
 
 	def invoke(self, context, event):

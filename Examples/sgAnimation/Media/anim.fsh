@@ -1,9 +1,9 @@
 //
-//	AnimTest.h
-//	Engine
+//	Shader.fsh
+//	iSDGE
 //
-//	Created by Nils Daumann on 20.09.11.
-//	Copyright (c) 2011 Nils Daumann
+//	Created by Nils Daumann on 16.04.10.
+//	Copyright (c) 2010 Nils Daumann
 
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
 //	of this software and associated documentation files (the "Software"), to deal
@@ -23,19 +23,15 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-#ifndef __ANIMTEST_H__
-#define __ANIMTEST_H__
+precision mediump float;
 
-#include "sgAction.h"
+uniform sampler2D mTexture0;
 
-class AnimTest : public sgAction
+varying vec2 texcoord;
+varying vec4 weights;
+varying vec4 bones;
+
+void main()
 {
-	public:
-		void onInit(sgEntity *e);
-		void onDraw(float timestep);
-	
-	float time;
-	int curr;
-};
-
-#endif
+    gl_FragColor = texture2D(mTexture0, texcoord);
+}

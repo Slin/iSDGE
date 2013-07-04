@@ -160,10 +160,16 @@ class sgMesh : public sgBase
 		unsigned int indexnum;
 	
 		/**
+		 *	Index size.
+		 *	The size of each mesh index in bytes.
+		 */
+		unsigned int indexsize;
+	
+		/**
 		 *	Index array.
 		 *	Pointer to the meshs array of indices.
 		 */
-		unsigned short *indices;
+		void *indices;
 	
 		/**
 		 *	VBO id.

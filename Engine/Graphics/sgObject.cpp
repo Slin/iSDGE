@@ -90,7 +90,8 @@ sgObject *sgObject::createObject(const char *name, unsigned long flags)
 	next->body->makeObject(name, flags);
 	next->currbody = next->body;
 	sgObjectContainer *cont = (sgObjectContainer*)sgResourceManager::getResource(name);
-	next->skeleton = cont->skeleton;
+	if(cont != NULL && cont->skeleton != NULL)
+		next->skeleton = new sgSkeleton(cont->skeleton);
 	next->calcCullSphere();
 	next->updateObject();
 	return next;

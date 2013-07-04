@@ -65,6 +65,7 @@ class sgBone
 {
 	public:
 		sgBone(sgVector3 &pos, std::string bonename, bool root);
+		sgBone(const sgBone &other);
 		
 		void init(sgBone *parent = 0);
 		void update(sgBone *parent = 0, float timestep = 0.01f);
@@ -104,6 +105,9 @@ class sgSkeleton : public sgBase
 		 *	Creates a skeleton.
 		 */
 		sgSkeleton();
+		sgSkeleton(sgSkeleton *skeleton);
+	
+		~sgSkeleton();
 	
 		void init();
 		void update(float timestep);
