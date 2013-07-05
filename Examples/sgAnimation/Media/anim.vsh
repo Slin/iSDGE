@@ -1,8 +1,8 @@
 //
-//	Events.h
-//	Engine
+//	Shader.vsh
+//	iSDGE
 //
-//	Created by Nils Daumann on 01.05.10.
+//	Created by Nils Daumann on 16.04.10.
 //	Copyright (c) 2010 Nils Daumann
 
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,23 +23,31 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-#ifndef __EVENTS_H__
-#define __EVENTS_H__
+attribute vec3 vertPos;
+attribute vec3 vertColor;
+attribute vec2 vertTexcoord0;
+attribute vec4 vertBoneWeights;
+attribute vec4 vertBoneIndices;
 
-#include "sgEvents.h"
-#include "sgMain.h"
-#include "sgSkeleton.h"
+uniform mat4 matProjViewModel;
+uniform float Time;
+uniform mat4 matBones[60];
 
-class Events : public sgEvents
+varying vec2 texcoord;
+varying vec4 weights;
+varying vec4 bones;
+
+void main()
 {
-	public:
-		void onPreInit(sgMain *m);
-		void onInit(sgMain *m);
-		void onDraw(float timestep);
-
-	private:
-		sgMain *sgmain;
-		sgSkeleton *skeleton;
-};
-
-#endif
+	texcoord = vertTexcoord0;
+	weights = vertBoneWeights;
+	bones = vertBoneIndices;
+	
+	vec4 pos1 = matBones[int(vertBoneIndices.x)]*vec4(vertPos, 1.0);
+	vec4 pos2 = matBones[int(vertBoneIndices.y)]*vec4(vertPos, 1.0);
+	vec4 pos3 = matBones[int(vertBoneIndices.z)]*vec4(vertPos, 1.0);
+	vec4 pos4 = matBones[int(vertBoneIndices.w)]*vec4(vertPos, 1.0);
+	vec4 pos = pos1*vertBoneWeights.x+pos2*vertBoneWeights.y+pos3*vertBoneWeights.z+pos4*vertBoneWeights.w;
+	pos.w = 1.0;
+	gl_Position = matProjViewModel*pos;
+}

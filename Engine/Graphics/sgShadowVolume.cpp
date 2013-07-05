@@ -112,28 +112,33 @@ sgShadowVolume::sgShadowVolume(sgObject *obj, unsigned int lod)
 	unsigned int realn = 0;
 	for(int i = 0; i < lodstep->meshs.size(); i++)
 	{
+		if(lodstep->meshs[i]->indexsize == 4)
+		{
+			printf("shadows don´t support objects with 32 bit indices (todo)");
+			return;
+		}
 		unsigned int n = 0;
 		for(n = 0; n < lodstep->meshs[i]->indexnum; n += 3)
 		{
 			tempedge1.verts = vertices;
-			tempedge1.vert1 = lodstep->meshs[i]->indices[n+0]+vertexnum;
-			tempedge1.vert2 = lodstep->meshs[i]->indices[n+1]+vertexnum;
+			tempedge1.vert1 = ((unsigned short*)lodstep->meshs[i]->indices)[n+0]+vertexnum;
+			tempedge1.vert2 = ((unsigned short*)lodstep->meshs[i]->indices)[n+1]+vertexnum;
 			tempedge1.counter1 = 1;
 			tempedge1.counter2 = 0;
 
 			tempedge2.verts = vertices;
-			tempedge2.vert1 = lodstep->meshs[i]->indices[n+1]+vertexnum;
-			tempedge2.vert2 = lodstep->meshs[i]->indices[n+2]+vertexnum;
+			tempedge2.vert1 = ((unsigned short*)lodstep->meshs[i]->indices)[n+1]+vertexnum;
+			tempedge2.vert2 = ((unsigned short*)lodstep->meshs[i]->indices)[n+2]+vertexnum;
 			tempedge2.counter1 = 1;
 			tempedge2.counter2 = 0;
 
 			tempedge3.verts = vertices;
-			tempedge3.vert1 = lodstep->meshs[i]->indices[n+2]+vertexnum;
-			tempedge3.vert2 = lodstep->meshs[i]->indices[n+0]+vertexnum;
+			tempedge3.vert1 = ((unsigned short*)lodstep->meshs[i]->indices)[n+2]+vertexnum;
+			tempedge3.vert2 = ((unsigned short*)lodstep->meshs[i]->indices)[n+0]+vertexnum;
 			tempedge3.counter1 = 1;
 			tempedge3.counter2 = 0;
 
-			calculateFaceNormal(&faces[realn], &vertices[lodstep->meshs[i]->indices[n]+vertexnum], &vertices[lodstep->meshs[i]->indices[n+2]+vertexnum], &vertices[lodstep->meshs[i]->indices[n+1]+vertexnum]);
+			calculateFaceNormal(&faces[realn], &vertices[((unsigned short*)lodstep->meshs[i]->indices)[n]+vertexnum], &vertices[((unsigned short*)lodstep->meshs[i]->indices)[n+2]+vertexnum], &vertices[((unsigned short*)lodstep->meshs[i]->indices)[n+1]+vertexnum]);
 			faces[realn].flipped1 = false;
 			faces[realn].flipped2 = false;
 			faces[realn].flipped3 = false;

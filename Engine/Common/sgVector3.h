@@ -238,6 +238,15 @@ class sgVector3
 		void makeIdentity();
 	
 		/**
+		 *	Make Lerp.
+		 *	Sets the vector to the given linear interpolation between the given vectors.
+		 * @param vec1 the vector to interpolate from
+		 * @parem vec2 the vector to interpolate to
+		 * @param blend the blend state between the two vectors (range 0 to 1)
+		 */
+		void makeLerp(const sgVector3 &vec1, const sgVector3 &vec2, float blend);
+	
+		/**
 		 *	Normalize.
 		 *	Keeps the vectors direction, but sets its length to 1.
 		 */

@@ -78,45 +78,95 @@ void Events::onInit(sgMain *m)
 	cam->cam->rotation = sgVector3(0.0f, 0.0f, -45.0f);
 
 	//Create skycube
-//	sgmain->first_ent->createSkyCubeEntity("sky_right.png", "sky_back.png", "sky_left.png", "sky_front.png", "sky_down.png", "sky_up.png");
+	sgmain->first_ent->createSkyCubeEntity("sky_right.png", "sky_back.png", "sky_left.png", "sky_front.png", "sky_down.png", "sky_up.png");
 
-	//Create the ground
-/*	sgEntity *ent = sgmain->first_ent->createObjEntity("box");
-	ent->obj->scale.x *= 10;
-	ent->obj->scale.y *= 0.1;
-	ent->obj->scale.z *= 10;
-	ent->obj->position.y = -0.1;
-	ent->obj->body->materials[0]->setTexture(-1, "sand.png");
-	ent->obj->body->materials[0]->mattex.makeScale(sgVector3(10, 10, 10));*/
+	sgEntity *ent = sgmain->first_ent->createObjEntity("sponza.sgm");
+	ent->obj->scale = 0.1f;
+	ent->obj->rotation = sgVector3(0.0f, 0.0f, -90.0f);
+	ent->obj->updateObject();
+	ent->obj->body->materials[5]->alphatest = true;
+	ent->obj->body->materials[5]->culling = false;
+	ent->obj->body->materials[5]->alphatestvalue = 0.9f;
+	ent->obj->body->materials[5]->setShader(sgShader::BIS_TEXTURE_DISCARD);
+	ent->obj->body->materials[6]->alphatest = true;
+	ent->obj->body->materials[6]->culling = false;
+	ent->obj->body->materials[6]->alphatestvalue = 0.9f;
+	ent->obj->body->materials[6]->setShader(sgShader::BIS_TEXTURE_DISCARD);
+	ent->obj->body->materials[17]->alphatest = true;
+	ent->obj->body->materials[17]->culling = false;
+	ent->obj->body->materials[17]->alphatestvalue = 0.9f;
+	ent->obj->body->materials[17]->setShader(sgShader::BIS_TEXTURE_DISCARD);
 
-	sgEntity *ent = sgmain->first_ent->createObjEntity("space_room.sgm");
-	ent->obj->body->materials[0]->setShader(sgShader::BIS_LIGHTMAP);
-	ent->obj->body->materials[1]->setShader(sgShader::BIS_LIGHTMAP);
-
-	ent = sgmain->first_ent->createObjEntity("door1.sgm");
-	ent->obj->body->materials[0]->setShader(sgShader::BIS_LIGHTMAP);
-
-	//Create a moving car
-/*	ent = sgmain->first_ent->createObjEntity("animationsbloecke.sgm", (sgAction*)new AnimTest);
-	ent->obj->body->materials[0]->setShader(sgShader::BIS_SUN);
-	ent->obj->skeleton = new sgSkeleton();
-	ent->obj->skeleton->matrices = new float[16*3];
-	sgMatrix4x4 mat1;
-	sgMatrix4x4 mat2;
-	sgMatrix4x4 mat3;
-	mat1.makeRotate(sgVector3(45.0, 45.0, 0.0));
-	mat1.translate(sgVector3(0.0, 5.0, 0.0));
-	mat2.makeRotate(sgVector3(45.0, 0.0, 0.0));
-	mat2.translate(sgVector3(0.0, 5.0, 0.0));
-	mat3.makeRotate(sgVector3(0.0, 60.0, 0.0));
-	mat3.translate(sgVector3(0.0, 3.0, 0.0));
-	memcpy(ent->obj->skeleton->matrices, mat1.mat, 16*sizeof(float));
-	memcpy(ent->obj->skeleton->matrices+16, mat2.mat, 16*sizeof(float));
-	memcpy(ent->obj->skeleton->matrices+32, mat3.mat, 16*sizeof(float));*/
+	ent = sgmain->first_ent->createObjEntity("simplegirl.sgm");
+	ent->obj->position = sgVector3(5.0, -1.7, 0.0);
+	ent->obj->scale = 1.0f;
+	ent->obj->updateObject();
+	
+	ent->obj->body->materials[0]->setShader("anim.vsh", "anim.fsh");
+	ent->obj->skeleton->init();
+	ent->obj->skeleton = ent->obj->skeleton;
+	ent->obj->skeleton->setAnimation(std::string("cammina"));
+	skeleton = ent->obj->skeleton;
+	
+	//Create a zombie
+	ent = sgmain->first_ent->createObjEntity("new_thin_zombie.sgm", (sgAction*)new AnimTest);
+	ent->obj->position = sgVector3(0.0, -1.7, 0.0);
+	ent->obj->scale = 1.0f;
+	ent->obj->updateObject();
+	
+	ent = sgmain->first_ent->createObjEntity("new_thin_zombie.sgm", (sgAction*)new AnimTest);
+	ent->obj->position = sgVector3(2.0, -1.7, 0.0);
+	ent->obj->scale = 1.0f;
+	ent->obj->updateObject();
+	
+	ent = sgmain->first_ent->createObjEntity("new_thin_zombie.sgm", (sgAction*)new AnimTest);
+	ent->obj->position = sgVector3(-2.0, -1.7, 0.0);
+	ent->obj->scale = 1.0f;
+	ent->obj->updateObject();
+	
+	ent = sgmain->first_ent->createObjEntity("new_thin_zombie.sgm", (sgAction*)new AnimTest);
+	ent->obj->position = sgVector3(4.0, -1.7, 0.0);
+	ent->obj->scale = 1.0f;
+	ent->obj->updateObject();
+	
+	ent = sgmain->first_ent->createObjEntity("new_thin_zombie.sgm", (sgAction*)new AnimTest);
+	ent->obj->position = sgVector3(-4.0, -1.7, 0.0);
+	ent->obj->scale = 1.0f;
+	ent->obj->updateObject();
+	
+/*	ent = sgmain->first_ent->createObjEntity("new_thin_zombie.sgm", (sgAction*)new AnimTest);
+	ent->obj->position = sgVector3(0.0, -1.7, 2.0);
+	ent->obj->scale = 1.0f;
+	ent->obj->updateObject();
+	
+	ent = sgmain->first_ent->createObjEntity("new_thin_zombie.sgm", (sgAction*)new AnimTest);
+	ent->obj->position = sgVector3(0.0, -1.7, -2.0);
+	ent->obj->scale = 1.0f;
+	ent->obj->updateObject();
+	
+	ent = sgmain->first_ent->createObjEntity("new_thin_zombie.sgm", (sgAction*)new AnimTest);
+	ent->obj->position = sgVector3(0.0, -1.7, 4.0);
+	ent->obj->scale = 1.0f;
+	ent->obj->updateObject();
+	
+	ent = sgmain->first_ent->createObjEntity("new_thin_zombie.sgm", (sgAction*)new AnimTest);
+	ent->obj->position = sgVector3(0.0, -1.7, -4.0);
+	ent->obj->scale = 1.0f;
+	ent->obj->updateObject();
+	
+	ent = sgmain->first_ent->createObjEntity("new_thin_zombie.sgm", (sgAction*)new AnimTest);
+	ent->obj->position = sgVector3(2.0, -1.7, 2.0);
+	ent->obj->scale = 1.0f;
+	ent->obj->updateObject();
+	
+	ent = sgmain->first_ent->createObjEntity("new_thin_zombie.sgm", (sgAction*)new AnimTest);
+	ent->obj->position = sgVector3(2.0, -1.7, -2.0);
+	ent->obj->scale = 1.0f;
+	ent->obj->updateObject();*/
 }
 
 //Called every frame, just before drawing
 void Events::onDraw(float timestep)
 {
-
+	skeleton->update(timestep*24.0f);
 }

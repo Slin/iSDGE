@@ -1,8 +1,8 @@
 //
-//	Events.h
-//	Engine
+//	Shader.fsh
+//	iSDGE
 //
-//	Created by Nils Daumann on 01.05.10.
+//	Created by Nils Daumann on 16.04.10.
 //	Copyright (c) 2010 Nils Daumann
 
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,23 +23,15 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-#ifndef __EVENTS_H__
-#define __EVENTS_H__
+precision mediump float;
 
-#include "sgEvents.h"
-#include "sgMain.h"
-#include "sgSkeleton.h"
+uniform sampler2D mTexture0;
 
-class Events : public sgEvents
+varying vec2 texcoord;
+varying vec4 weights;
+varying vec4 bones;
+
+void main()
 {
-	public:
-		void onPreInit(sgMain *m);
-		void onInit(sgMain *m);
-		void onDraw(float timestep);
-
-	private:
-		sgMain *sgmain;
-		sgSkeleton *skeleton;
-};
-
-#endif
+    gl_FragColor = texture2D(mTexture0, texcoord);
+}

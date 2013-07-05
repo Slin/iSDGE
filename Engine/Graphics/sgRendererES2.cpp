@@ -547,7 +547,7 @@ void sgRendererES2::renderObjects(sgCamera *cam, std::vector<sgObject*> &objs)
 			}
 			if(curr->skeleton != NULL && currbod->materials[i]->shader->matbones != -1)
 			{
-				glUniformMatrix4fv(currbod->materials[i]->shader->matbones, maxbones, GL_FALSE, curr->skeleton->matrices);
+				glUniformMatrix4fv(currbod->materials[i]->shader->matbones, curr->skeleton->bones.size(), GL_FALSE, curr->skeleton->matrices);
 			}
 
 			setMaterial(currbod->materials[i]);
@@ -616,12 +616,13 @@ void sgRendererES2::renderObjects(sgCamera *cam, std::vector<sgObject*> &objs)
 						glEnableVertexAttribArray(currbod->materials[i]->shader->boneweights);
 						glVertexAttribPointer(currbod->materials[i]->shader->boneweights, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize*sizeof(float), (const void*)featureloc);
 					}
+					featureloc += 16;
 					if(currbod->materials[i]->shader->boneindices != -1)
 					{
 						glEnableVertexAttribArray(currbod->materials[i]->shader->boneindices);
 						glVertexAttribPointer(currbod->materials[i]->shader->boneindices, 4, GL_FLOAT, 0, currbod->meshs[i]->vtxsize*sizeof(float), (const void*)featureloc);
 					}
-					featureloc += 32;
+					featureloc += 16;
 				}
 			}else
 			{
@@ -700,11 +701,17 @@ void sgRendererES2::renderObjects(sgCamera *cam, std::vector<sgObject*> &objs)
 			if(currbod->meshs[i]->ivbo != -1)
 			{
 				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, currbod->meshs[i]->ivbo);
-				glDrawElements(GL_TRIANGLES, currbod->meshs[i]->indexnum, GL_UNSIGNED_SHORT, 0);
+				if(currbod->meshs[i]->indexsize == 2)
+					glDrawElements(GL_TRIANGLES, currbod->meshs[i]->indexnum, GL_UNSIGNED_SHORT, 0);
+				else
+					glDrawElements(GL_TRIANGLES, currbod->meshs[i]->indexnum, GL_UNSIGNED_INT, 0);
 			}else
 			{
 				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-				glDrawElements(GL_TRIANGLES, currbod->meshs[i]->indexnum, GL_UNSIGNED_SHORT, currbod->meshs[i]->indices);
+				if(currbod->meshs[i]->indexsize == 2)
+					glDrawElements(GL_TRIANGLES, currbod->meshs[i]->indexnum, GL_UNSIGNED_SHORT, currbod->meshs[i]->indices);
+				else
+					glDrawElements(GL_TRIANGLES, currbod->meshs[i]->indexnum, GL_UNSIGNED_INT, currbod->meshs[i]->indices);
 			}
 
 			if((currbod->meshs[i]->vtxfeatures & sgVertex::POSITION) > 0)

@@ -57,6 +57,7 @@ sgObjectBody *sgObjectBody::makeObject(const char *name, unsigned long flags)
 	}
 
 	cont = new sgObjectContainer;
+	cont->skeleton = NULL;
 
 	if(std::string(name).compare(std::string("box")) == 0)
 	{
@@ -66,12 +67,13 @@ sgObjectBody *sgObjectBody::makeObject(const char *name, unsigned long flags)
 		mesh->vtxsize = 8;
 		mesh->vertexnum = 36;
 		mesh->indexnum = 36;
+		mesh->indexsize = 2;
 
 		mesh->vertices = new float[mesh->vertexnum*mesh->vtxsize];
 		mesh->indices = new unsigned short[mesh->indexnum];
 
 		for(int i = 0; i < mesh->indexnum; i++)
-			mesh->indices[i] = mesh->indexnum-i-1;
+			((unsigned short*)mesh->indices)[i] = mesh->indexnum-i-1;
 
 		//left
 		mesh->vertices[0*mesh->vtxsize+0] = -1.0f;	//pos x
@@ -325,12 +327,13 @@ sgObjectBody *sgObjectBody::makeObject(const char *name, unsigned long flags)
 		mesh->vtxsize = 8;
 		mesh->vertexnum = 6;
 		mesh->indexnum = 6;
+		mesh->indexsize = 2;
 
 		mesh->vertices = new float[mesh->vertexnum*mesh->vtxsize];
 		mesh->indices = new unsigned short[mesh->indexnum];
 
 		for(int i = 0; i < mesh->indexnum; i++)
-			mesh->indices[i] = i;
+			((unsigned short*)mesh->indices)[i] = i;
 
 		//left
 		mesh->vertices[0*mesh->vtxsize+0] = -1.0f;
@@ -380,12 +383,13 @@ sgObjectBody *sgObjectBody::makeObject(const char *name, unsigned long flags)
 		mesh->vtxsize = 8;
 		mesh->vertexnum = 6;
 		mesh->indexnum = 6;
+		mesh->indexsize = 2;
 
 		mesh->vertices = new float[mesh->vertexnum*mesh->vtxsize];
 		mesh->indices = new unsigned short[mesh->indexnum];
 
 		for(int i = 0; i < mesh->indexnum; i++)
-			mesh->indices[i] = i;
+			((unsigned short*)mesh->indices)[i] = i;
 
 		//back
 		mesh->vertices[0*mesh->vtxsize+0] = 1.0f;
@@ -435,12 +439,13 @@ sgObjectBody *sgObjectBody::makeObject(const char *name, unsigned long flags)
 		mesh->vtxsize = 8;
 		mesh->vertexnum = 6;
 		mesh->indexnum = 6;
+		mesh->indexsize = 2;
 
 		mesh->vertices = new float[mesh->vertexnum*mesh->vtxsize];
 		mesh->indices = new unsigned short[mesh->indexnum];
 
 		for(int i = 0; i < mesh->indexnum; i++)
-			mesh->indices[i] = i;
+			((unsigned short*)mesh->indices)[i] = i;
 
 		//right
 		mesh->vertices[0*mesh->vtxsize+0] = 1.0f;
@@ -490,12 +495,13 @@ sgObjectBody *sgObjectBody::makeObject(const char *name, unsigned long flags)
 		mesh->vtxsize = 8;
 		mesh->vertexnum = 6;
 		mesh->indexnum = 6;
+		mesh->indexsize = 2;
 
 		mesh->vertices = new float[mesh->vertexnum*mesh->vtxsize];
 		mesh->indices = new unsigned short[mesh->indexnum];
 
 		for(int i = 0; i < mesh->indexnum; i++)
-			mesh->indices[i] = i;
+			((unsigned short*)mesh->indices)[i] = i;
 
 		//front
 		mesh->vertices[0*mesh->vtxsize+0] = -1.0f;
@@ -545,12 +551,13 @@ sgObjectBody *sgObjectBody::makeObject(const char *name, unsigned long flags)
 		mesh->vtxsize = 8;
 		mesh->vertexnum = 6;
 		mesh->indexnum = 6;
+		mesh->indexsize = 2;
 
 		mesh->vertices = new float[mesh->vertexnum*mesh->vtxsize];
 		mesh->indices = new unsigned short[mesh->indexnum];
 
 		for(int i = 0; i < mesh->indexnum; i++)
-			mesh->indices[i] = i;
+			((unsigned short*)mesh->indices)[i] = i;
 
 		//bottom
 		mesh->vertices[0*mesh->vtxsize+0] = -1.0f;
@@ -600,12 +607,13 @@ sgObjectBody *sgObjectBody::makeObject(const char *name, unsigned long flags)
 		mesh->vtxsize = 8;
 		mesh->vertexnum = 6;
 		mesh->indexnum = 6;
+		mesh->indexsize = 2;
 
 		mesh->vertices = new float[mesh->vertexnum*mesh->vtxsize];
 		mesh->indices = new unsigned short[mesh->indexnum];
 
 		for(int i = 0; i < mesh->indexnum; i++)
-			mesh->indices[i] = i;
+			((unsigned short*)mesh->indices)[i] = i;
 
 		//top
 		mesh->vertices[0*mesh->vtxsize+0] = 1.0f;
@@ -684,6 +692,7 @@ void sgObjectBody::addTerrainPlane(unsigned int xverts, unsigned int zverts, sgV
 	mesh->vtxsize = 8;
 	mesh->vertexnum = xverts*zverts;
 	mesh->indexnum = 3*2*(xverts-1)*(zverts-1);
+	mesh->indexsize = 2;
 	if(addborder)
 	{
 		mesh->vertexnum += 2*(xverts+zverts);
@@ -700,14 +709,14 @@ void sgObjectBody::addTerrainPlane(unsigned int xverts, unsigned int zverts, sgV
 			continue;
 		}
 
-		mesh->indices[face*3+0] = i%xverts+((int)(i/xverts))*xverts;
-		mesh->indices[face*3+1] = i+xverts+1;
-		mesh->indices[face*3+2] = i+xverts;
+		((unsigned short*)mesh->indices)[face*3+0] = i%xverts+((int)(i/xverts))*xverts;
+		((unsigned short*)mesh->indices)[face*3+1] = i+xverts+1;
+		((unsigned short*)mesh->indices)[face*3+2] = i+xverts;
 		face++;
 
-		mesh->indices[face*3+0] = i%xverts+((int)(i/xverts))*xverts;
-		mesh->indices[face*3+1] = i%xverts+((int)(i/xverts))*xverts+1;
-		mesh->indices[face*3+2] = i+xverts+1;
+		((unsigned short*)mesh->indices)[face*3+0] = i%xverts+((int)(i/xverts))*xverts;
+		((unsigned short*)mesh->indices)[face*3+1] = i%xverts+((int)(i/xverts))*xverts+1;
+		((unsigned short*)mesh->indices)[face*3+2] = i+xverts+1;
 		face++;
 	}
 
@@ -818,14 +827,14 @@ void sgObjectBody::addTerrainPlane(unsigned int xverts, unsigned int zverts, sgV
 		for(int x = 0; x < xverts-1; x++)
 		{
 			//top row
-			mesh->indices[face*3+0] = x*zverts;
-			mesh->indices[face*3+1] = (x+1)*zverts;
-			mesh->indices[face*3+2] = startverts+x;
+			((unsigned short*)mesh->indices)[face*3+0] = x*zverts;
+			((unsigned short*)mesh->indices)[face*3+1] = (x+1)*zverts;
+			((unsigned short*)mesh->indices)[face*3+2] = startverts+x;
 			face++;
 
-			mesh->indices[face*3+0] = (x+1)*zverts;
-			mesh->indices[face*3+1] = startverts+x+1;
-			mesh->indices[face*3+2] = startverts+x;
+			((unsigned short*)mesh->indices)[face*3+0] = (x+1)*zverts;
+			((unsigned short*)mesh->indices)[face*3+1] = startverts+x+1;
+			((unsigned short*)mesh->indices)[face*3+2] = startverts+x;
 			face++;
 
 			//copy position
@@ -843,14 +852,14 @@ void sgObjectBody::addTerrainPlane(unsigned int xverts, unsigned int zverts, sgV
 			mesh->vertices[(startverts+x)*mesh->vtxsize+7] = mesh->vertices[x*zverts*mesh->vtxsize+7];
 
 			//bottom row
-			mesh->indices[face*3+0] = (x+1)*zverts+zverts-1;
-			mesh->indices[face*3+1] = x*zverts+zverts-1;
-			mesh->indices[face*3+2] = startverts+xverts+x;
+			((unsigned short*)mesh->indices)[face*3+0] = (x+1)*zverts+zverts-1;
+			((unsigned short*)mesh->indices)[face*3+1] = x*zverts+zverts-1;
+			((unsigned short*)mesh->indices)[face*3+2] = startverts+xverts+x;
 			face++;
 
-			mesh->indices[face*3+0] = startverts+xverts+x+1;
-			mesh->indices[face*3+1] = (x+1)*zverts+zverts-1;
-			mesh->indices[face*3+2] = startverts+xverts+x;
+			((unsigned short*)mesh->indices)[face*3+0] = startverts+xverts+x+1;
+			((unsigned short*)mesh->indices)[face*3+1] = (x+1)*zverts+zverts-1;
+			((unsigned short*)mesh->indices)[face*3+2] = startverts+xverts+x;
 			face++;
 
 			//copy position
@@ -899,14 +908,14 @@ void sgObjectBody::addTerrainPlane(unsigned int xverts, unsigned int zverts, sgV
 		for(int y = 0; y < zverts-1; y++)
 		{
 			//left row
-			mesh->indices[face*3+0] = y+1;
-			mesh->indices[face*3+1] = y;
-			mesh->indices[face*3+2] = startverts+2*xverts+y;
+			((unsigned short*)mesh->indices)[face*3+0] = y+1;
+			((unsigned short*)mesh->indices)[face*3+1] = y;
+			((unsigned short*)mesh->indices)[face*3+2] = startverts+2*xverts+y;
 			face++;
 
-			mesh->indices[face*3+0] = startverts+2*xverts+y+1;
-			mesh->indices[face*3+1] = y+1;
-			mesh->indices[face*3+2] = startverts+2*xverts+y;
+			((unsigned short*)mesh->indices)[face*3+0] = startverts+2*xverts+y+1;
+			((unsigned short*)mesh->indices)[face*3+1] = y+1;
+			((unsigned short*)mesh->indices)[face*3+2] = startverts+2*xverts+y;
 			face++;
 
 			//copy position
@@ -924,14 +933,14 @@ void sgObjectBody::addTerrainPlane(unsigned int xverts, unsigned int zverts, sgV
 			mesh->vertices[(startverts+2*xverts+y)*mesh->vtxsize+7] = mesh->vertices[y*mesh->vtxsize+7];
 
 			//right row
-			mesh->indices[face*3+0] = (xverts-1)*zverts+y;
-			mesh->indices[face*3+1] = (xverts-1)*zverts+y+1;
-			mesh->indices[face*3+2] = startverts+2*xverts+zverts+y;
+			((unsigned short*)mesh->indices)[face*3+0] = (xverts-1)*zverts+y;
+			((unsigned short*)mesh->indices)[face*3+1] = (xverts-1)*zverts+y+1;
+			((unsigned short*)mesh->indices)[face*3+2] = startverts+2*xverts+zverts+y;
 			face++;
 
-			mesh->indices[face*3+0] = (xverts-1)*zverts+y+1;
-			mesh->indices[face*3+1] = startverts+2*xverts+zverts+y+1;
-			mesh->indices[face*3+2] = startverts+2*xverts+zverts+y;
+			((unsigned short*)mesh->indices)[face*3+0] = (xverts-1)*zverts+y+1;
+			((unsigned short*)mesh->indices)[face*3+1] = startverts+2*xverts+zverts+y+1;
+			((unsigned short*)mesh->indices)[face*3+2] = startverts+2*xverts+zverts+y;
 			face++;
 
 			//copy position

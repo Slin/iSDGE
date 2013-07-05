@@ -118,7 +118,7 @@ void sgMesh::generateVBO(bool dyn)
 
 		glGenBuffers(1, &ivbo0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ivbo0);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexnum*sizeof(unsigned short), indices, GL_STATIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexnum*indexsize, indices, GL_STATIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		vbo = vbo0;
 		ivbo = ivbo0;
@@ -131,7 +131,7 @@ void sgMesh::generateVBO(bool dyn)
 
 		glGenBuffers(1, &ivbo0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ivbo0);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexnum*sizeof(unsigned short), indices, GL_DYNAMIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexnum*indexsize, indices, GL_DYNAMIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 		glGenBuffers(1, &vbo1);
@@ -141,7 +141,7 @@ void sgMesh::generateVBO(bool dyn)
 
 		glGenBuffers(1, &ivbo1);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ivbo1);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexnum*sizeof(unsigned short), indices, GL_DYNAMIC_DRAW);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexnum*indexsize, indices, GL_DYNAMIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		vbo = vbo0;
 		ivbo = ivbo0;
@@ -165,7 +165,7 @@ void sgMesh::updateVBO()
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 		glBindBuffer(GL_ARRAY_BUFFER, ivbo0);
-		glBufferSubData(GL_ARRAY_BUFFER, 0, indexnum*sizeof(unsigned short), indices);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, indexnum*indexsize, indices);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}else
 	{
@@ -177,7 +177,7 @@ void sgMesh::updateVBO()
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 		glBindBuffer(GL_ARRAY_BUFFER, ivbo1);
-		glBufferSubData(GL_ARRAY_BUFFER, 0, indexnum*sizeof(unsigned short), indices);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, indexnum*indexsize, indices);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 }
@@ -203,7 +203,10 @@ void sgMesh::calculateNormals()
 	//Calculate the normal of each vertex
 	for(i = 0; i < indexnum; i += 3)
 	{
-		calculateFaceNormal((sgVertex*)(vertices+indices[i]*vtxsize), (sgVertex*)(vertices+indices[i+2]*vtxsize), (sgVertex*)(vertices+indices[i+1]*vtxsize));
+		if(indexsize == 2)
+			calculateFaceNormal((sgVertex*)(vertices+((unsigned short*)indices)[i]*vtxsize), (sgVertex*)(vertices+((unsigned short*)indices)[i+2]*vtxsize), (sgVertex*)(vertices+((unsigned short*)indices)[i+1]*vtxsize));
+		else
+			calculateFaceNormal((sgVertex*)(vertices+((unsigned long*)indices)[i]*vtxsize), (sgVertex*)(vertices+((unsigned long*)indices)[i+2]*vtxsize), (sgVertex*)(vertices+((unsigned long*)indices)[i+1]*vtxsize));
 	}
 
 	//Normalize all normals
@@ -261,7 +264,10 @@ void sgMesh::calculateTangents()
 	//Calculate the tangent of each vertex
 	for(i = 0; i < indexnum; i += 3)
 	{
-		calculateFaceTangent((sgVertex*)(vertices+indices[i]*vtxsize), (sgVertex*)(vertices+indices[i+2]*vtxsize), (sgVertex*)(vertices+indices[i+1]*vtxsize), (sgVector3*)(vertices+indices[i]*vtxsize+tangentoffset), (sgVector3*)(vertices+indices[i+2]*vtxsize+tangentoffset), (sgVector3*)(vertices+indices[i+1]*vtxsize+tangentoffset), &bitangents[indices[i]], &bitangents[indices[i+2]], &bitangents[indices[i+1]]);
+		if(indexsize == 2)
+			calculateFaceTangent((sgVertex*)(vertices+((unsigned short*)indices)[i]*vtxsize), (sgVertex*)(vertices+((unsigned short*)indices)[i+2]*vtxsize), (sgVertex*)(vertices+((unsigned short*)indices)[i+1]*vtxsize), (sgVector3*)(vertices+((unsigned short*)indices)[i]*vtxsize+tangentoffset), (sgVector3*)(vertices+((unsigned short*)indices)[i+2]*vtxsize+tangentoffset), (sgVector3*)(vertices+((unsigned short*)indices)[i+1]*vtxsize+tangentoffset), &bitangents[((unsigned short*)indices)[i]], &bitangents[((unsigned short*)indices)[i+2]], &bitangents[((unsigned short*)indices)[i+1]]);
+		else
+			calculateFaceTangent((sgVertex*)(vertices+((unsigned long*)indices)[i]*vtxsize), (sgVertex*)(vertices+((unsigned long*)indices)[i+2]*vtxsize), (sgVertex*)(vertices+((unsigned long*)indices)[i+1]*vtxsize), (sgVector3*)(vertices+((unsigned long*)indices)[i]*vtxsize+tangentoffset), (sgVector3*)(vertices+((unsigned long*)indices)[i+2]*vtxsize+tangentoffset), (sgVector3*)(vertices+((unsigned long*)indices)[i+1]*vtxsize+tangentoffset), &bitangents[((unsigned long*)indices)[i]], &bitangents[((unsigned long*)indices)[i+2]], &bitangents[((unsigned long*)indices)[i+1]]);
 	}
 
 	//Normalize all tangents

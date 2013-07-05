@@ -63,10 +63,10 @@ namespace sgObjectFiles
 		unsigned char vtxsize;
 		
 		unsigned short vertexnum;
-		unsigned short indexnum;
+		unsigned int indexnum;
+		unsigned char indexsize;
 		float *vertices;
-		unsigned short *indices;
-		unsigned short *bonemapping;
+		void *indices;
 	};
 
 #if defined __ANDROID__

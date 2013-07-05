@@ -35,6 +35,7 @@
 #include "sgVector2.h"
 #include "sgMatrix4x4.h"
 #include "sgQuaternion.h"
+#include "sgSkeleton.h"
 
 //class sgMesh;
 class sgTexture;
@@ -49,6 +50,7 @@ class sgObjectContainer : public sgBase
 	public:
 		std::vector<sgMesh*>meshs;
 		std::vector<sgMaterial*>materials;
+		sgSkeleton *skeleton;
 };
 
 /**

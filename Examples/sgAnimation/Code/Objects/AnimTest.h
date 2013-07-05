@@ -33,6 +33,9 @@ class AnimTest : public sgAction
 	public:
 		void onInit(sgEntity *e);
 		void onDraw(float timestep);
+	
+	float time;
+	int curr;
 };
 
 #endif

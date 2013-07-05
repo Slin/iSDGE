@@ -267,6 +267,14 @@ void sgVector3::makeIdentity()
 	z = 0.0;
 }
 
+void sgVector3::makeLerp(const sgVector3 &vec1, const sgVector3 &vec2, float blend)
+{
+	float invblend = 1.0f-blend;
+	x = vec1.x*invblend+vec2.x*blend;
+	y = vec1.y*invblend+vec2.y*blend;
+	z = vec1.z*invblend+vec2.z*blend;
+}
+
 float sgVector3::length()
 {
 	return sqrt(x*x+y*y+z*z);
