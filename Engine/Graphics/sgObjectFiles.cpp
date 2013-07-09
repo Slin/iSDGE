@@ -321,7 +321,7 @@ namespace sgObjectFiles
 			filepath = sgResourceManager::getPath(animfilename);
 			
 #if defined __ANDROID__
-			zip_fopen(ZIPArchive, filepath, 0);
+			file = zip_fopen(ZIPArchive, filepath, 0);
 #else
 			file = fopen(filepath, "rb");
 #endif
@@ -340,7 +340,7 @@ namespace sgObjectFiles
 #endif
 			if(magic != 383405658)
 			{
-				sgLog("The file format is not supported: %s", animfilename);
+				sgLog("The file format is not supported: %s, %li", animfilename, magic);
 				return false;
 			}
 			

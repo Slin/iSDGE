@@ -48,7 +48,6 @@ sgObjectBody *sgObjectBody::makeObject(const char *name, unsigned long flags)
 	sgObjectContainer *cont = (sgObjectContainer*)sgResourceManager::getResource(name);
 	if(cont != NULL)
 	{
-		sgLog("cont != NULL\n");
 		for(int i = 0; i < cont->meshs.size(); i++)
 		{
 			meshs.push_back(cont->meshs[i]);
@@ -57,7 +56,6 @@ sgObjectBody *sgObjectBody::makeObject(const char *name, unsigned long flags)
 		return this;
 	}
 
-	sgLog("not yet loaded\n");
 	cont = new sgObjectContainer;
 	cont->skeleton = NULL;
 
@@ -666,7 +664,6 @@ sgObjectBody *sgObjectBody::makeObject(const char *name, unsigned long flags)
 		found = filename.rfind(".sgm");
 		if(found != std::string::npos)
 		{
-			sgLog("load file\n");
 			if(!sgObjectFiles::loadSGM(cont, filename.c_str(), flags))
 			{
 				sgLog("Can´t load object file: %s", filename.c_str());
