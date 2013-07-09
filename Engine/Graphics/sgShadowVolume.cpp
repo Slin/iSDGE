@@ -228,17 +228,6 @@ sgShadowVolume::sgShadowVolume(sgObject *obj, unsigned int lod)
 
 sgShadowVolume::~sgShadowVolume()
 {
-	if(mesh->vertices != NULL)
-	{
-		delete[] mesh->vertices;
-		mesh->vertices = NULL;
-	}
-	if(mesh->indices != NULL)
-	{
-		delete[] mesh->indices;
-		mesh->indices = NULL;
-	}
-
 	delete mesh;
 	mesh = NULL;
 
@@ -352,8 +341,12 @@ void sgShadowVolume::update(sgLight *firstlight)
 	if(mesh->vertices != NULL)
 		delete[] mesh->vertices;
 	if(mesh->indices != NULL)
-		delete[] mesh->indices;
+	{
+		unsigned short *ind = static_cast<unsigned short*>(mesh->indices);
+		delete ind;
+	}
 
+	mesh->indexsize = 2;
 	mesh->vertexnum = edgnum*4;
 	mesh->indexnum = edgnum*6;
 	mesh->vertices = (float*)volvertices;

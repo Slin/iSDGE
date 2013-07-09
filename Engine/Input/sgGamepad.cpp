@@ -1,8 +1,8 @@
 //
-//	sgBase.cpp
-//	iSDGE
+//	sgAccelerometer.cpp
+//	Engine
 //
-//	Created by Nils Daumann on 17.04.10.
+//	Created by Nils Daumann on 18.04.10.
 //	Copyright (c) 2010 Nils Daumann
 
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,21 +23,14 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-#include "sgBase.h"
-#include "sgResourceManager.h"
+#include "sgGamepad.h"
 
-sgBase::sgBase()
+namespace sgGamepad
 {
+	sgVector2 leftjoy;
+	sgVector2 rightjoy;
+	float righttrigger;
+	float lefttrigger;
 	
-}
-
-void sgBase::destroy()
-{
-	sgResourceManager::removeResource(this);
-	delete this;
-}
-
-void sgBase::recreate(const char *filename)
-{
-	
+	bool keys[20];
 }

@@ -40,6 +40,7 @@
 sgTexture::sgTexture()
 {
 	loaded = false;
+	mipmaps = false;
 	fbo = -1;
 	texid = -1;
 	texdata = NULL;
@@ -73,8 +74,26 @@ sgTexture::~sgTexture()
 
 void sgTexture::createTexture(const char *filename, bool mipmaps, bool lock)
 {
+	std::string fnm(filename);
+	if(fnm.rfind(".png") != std::string::npos || fnm.rfind(".jpg") != std::string::npos || fnm.rfind(".PNG") != std::string::npos || fnm.rfind(".JPG") != std::string::npos)
+	{
+		createPNGTexture(filename, mipmaps, lock);
+	}else if(fnm.rfind(".pvr") != std::string::npos || fnm.rfind(".PVR") != std::string::npos)
+	{
+		createPVRTexture(filename);
+	}
+	else
+	{
+		sgLog("File ending unsupported: %s\n", fnm.c_str());
+	}
+}
+
+void sgTexture::createPNGTexture(const char *filename, bool mipmaps, bool lock)
+{
 	if(loaded)
 		return;
+	
+	this->mipmaps = mipmaps;
 
 	sgTextureFiles::sgUncompressedTexture *tex = 0;
 	if(!sgTextureFiles::loadPNG(&tex, filename))
@@ -346,7 +365,7 @@ sgTexture *sgTexture::getTexture(const char *filename, bool mipmaps, bool lock)
 	std::string fnm(filename);
 	if(fnm.rfind(".png") != std::string::npos || fnm.rfind(".jpg") != std::string::npos || fnm.rfind(".PNG") != std::string::npos || fnm.rfind(".JPG") != std::string::npos)
 	{
-		tex->createTexture(filename, mipmaps, lock);
+		tex->createPNGTexture(filename, mipmaps, lock);
 	}else if(fnm.rfind(".pvr") != std::string::npos || fnm.rfind(".PVR") != std::string::npos)
 	{
 		tex->createPVRTexture(filename);
@@ -533,4 +552,31 @@ void sgTexture::destroy()
 {
 	sgResourceManager::removeResource(this);
 	delete this;
+}
+
+void sgTexture::recreate(const char *filename)
+{
+	if(filename != NULL)
+	{
+		bool locked = (texdata != NULL);
+		if(texdata != NULL)
+		{
+			delete[] texdata;
+			texdata = NULL;
+		}
+	
+		loaded = false;
+		createTexture(filename, mipmaps, locked);
+	}
+	else
+	{
+		loaded = false;
+		createTexture(width, height, textype == GL_TEXTURE_CUBE_MAP);
+	}
+	
+	if(fbo != -1)
+	{
+		fbo = -1;
+		makeRendertarget();
+	}
 }

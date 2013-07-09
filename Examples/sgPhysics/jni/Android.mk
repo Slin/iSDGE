@@ -37,6 +37,7 @@ LOCAL_CFLAGS += -I$(LOCAL_PATH)/Objects
 
 # Defines
 LOCAL_CFLAGS += -D__ANDROID__
+LOCAL_CFLAGS += -D__OUYA__
 
 
 # Source

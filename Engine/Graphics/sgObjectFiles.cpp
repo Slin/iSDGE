@@ -86,7 +86,11 @@ namespace sgObjectFiles
 		}
 		
 		unsigned long int magic;
+#if defined __ANDROID__
+		zip_fread(file, &magic, 4);
+#else
 		fread(&magic, 4, 1, file);
+#endif
 		if(magic != 352658064)
 		{
 			sgLog("The file format is not supported: %s", filename);
@@ -202,7 +206,7 @@ namespace sgObjectFiles
 #endif
 			unsigned char hasbones = 0;
 #if defined __ANDROID__
-			zip_fread(file, &bonecount, 1);
+			zip_fread(file, &hasbones, 1);
 #else
 			fread(&hasbones, 1, 1, file);
 #endif
@@ -241,7 +245,8 @@ namespace sgObjectFiles
 #else
 				fread(meshes[i].vertices, 4, meshes[i].vtxsize*numverts, file);
 #endif
-			}else
+			}
+			else
 			{
 				float *vertdatasrc = new float[meshes[i].vtxsize*numverts];
 #if defined __ANDROID__
@@ -259,24 +264,24 @@ namespace sgObjectFiles
 
 			//Indices
 #if defined __ANDROID__
-	zip_fread(file, &meshes[i].indexnum, 4);
-	zip_fread(file, &meshes[i].indexsize, 1);
+			zip_fread(file, &meshes[i].indexnum, 4);
+			zip_fread(file, &meshes[i].indexsize, 1);
 #else
 			fread(&meshes[i].indexnum, 4, 1, file);
 			fread(&meshes[i].indexsize, 1, 1, file);
-			
 #endif
-if(meshes[i].indexsize == 2)
-			meshes[i].indices = new unsigned short[meshes[i].indexnum];
-else
-meshes[i].indices = new unsigned long[meshes[i].indexnum];
+
+			if(meshes[i].indexsize == 2)
+				meshes[i].indices = new unsigned short[meshes[i].indexnum];
+			else
+				meshes[i].indices = new unsigned long[meshes[i].indexnum];
 
 #if defined __ANDROID__
 			zip_fread(file, meshes[i].indices, meshes[i].indexnum*meshes[i].indexsize);
 #else
 			fread(meshes[i].indices, meshes[i].indexsize, meshes[i].indexnum, file);
 #endif
-		}
+		} //loop through meshs
 
 		//Animations
 		unsigned char hasanimations = 0;
@@ -285,7 +290,8 @@ meshes[i].indices = new unsigned long[meshes[i].indexnum];
 #else
 		fread(&hasanimations, 1, 1, file);
 #endif
-char *animfilename = 0;
+		
+		char *animfilename = 0;
 		if(hasanimations)
 		{
 			unsigned short lenanimfilename = 0;
@@ -300,8 +306,6 @@ char *animfilename = 0;
 #else
 			fread(animfilename, 1, lenanimfilename, file);
 #endif
-
-
 		}
 
 #if defined __ANDROID__
@@ -315,7 +319,12 @@ char *animfilename = 0;
 		if(hasanimations)
 		{
 			filepath = sgResourceManager::getPath(animfilename);
+			
+#if defined __ANDROID__
+			zip_fopen(ZIPArchive, filepath, 0);
+#else
 			file = fopen(filepath, "rb");
+#endif
 			delete[] filepath;
 			if(!file)
 			{
@@ -324,7 +333,11 @@ char *animfilename = 0;
 			}
 			
 			unsigned long int magic;
+#if defined __ANDROID__
+			zip_fread(file, &magic, 4);
+#else
 			fread(&magic, 4, 1, file);
+#endif
 			if(magic != 383405658)
 			{
 				sgLog("The file format is not supported: %s", animfilename);
@@ -332,7 +345,11 @@ char *animfilename = 0;
 			}
 			
 			unsigned char version_id;
+#if defined __ANDROID__
+			zip_fread(file, &version_id, 1);
+#else
 			fread(&version_id, 1, 1, file);
+#endif
 			if(version_id != 1)
 			{
 				sgLog("The file format is out of date or not supported: %s", animfilename);
@@ -340,39 +357,75 @@ char *animfilename = 0;
 			}
 			
 			unsigned short lenskeletonname;
+#if defined __ANDROID__
+			zip_fread(file, &lenskeletonname, 2);
+#else
 			fread(&lenskeletonname, 2, 1, file);
+#endif
 			char *skeletonname = new char[lenskeletonname];
+#if defined __ANDROID__
+			zip_fread(file, skeletonname, lenskeletonname);
+#else
 			fread(skeletonname, 1, lenskeletonname, file);
+#endif
 			delete[] skeletonname;
 			
 			obj->skeleton = new sgSkeleton();
 			sgResourceManager::addResource(obj->skeleton);
 			
 			unsigned short numbones;
+#if defined __ANDROID__
+			zip_fread(file, &numbones, 2);
+#else
 			fread(&numbones, 2, 1, file);
+#endif
 			
 			for(int i = 0; i < numbones; i++)
 			{
 				unsigned short lenbonename;
+#if defined __ANDROID__
+				zip_fread(file, &lenbonename, 2);
+#else
 				fread(&lenbonename, 2, 1, file);
+#endif
 				char *bonename = new char[lenbonename];
+#if defined __ANDROID__
+				zip_fread(file, bonename, lenbonename);
+#else
 				fread(bonename, 1, lenbonename, file);
-				
+#endif
+
 				sgVector3 bonepos;
+#if defined __ANDROID__
+				zip_fread(file, &bonepos.x, 4*3);
+#else
 				fread(&bonepos.x, 4, 3, file);
+#endif
 				
 				unsigned char isroot;
+#if defined __ANDROID__
+				zip_fread(file, &isroot, 1);
+#else
 				fread(&isroot, 1, 1, file);
+#endif
 				
 				sgBone bone(bonepos, bonename, isroot);
 				
 				unsigned short numchildren;
+#if defined __ANDROID__
+				zip_fread(file, &numchildren, 2);
+#else
 				fread(&numchildren, 2, 1, file);
+#endif
 				
 				unsigned short *children = new unsigned short[numchildren];
 				for(int n = 0; n < numchildren; n++)
 				{
+#if defined __ANDROID__
+					zip_fread(file, &(children[n]), 2);
+#else
 					fread(&(children[n]), 2, 1, file);
+#endif
 					bone.tempchildren.push_back(children[n]);
 				}
 				delete[] children;
@@ -382,13 +435,28 @@ char *animfilename = 0;
 			}
 			
 			unsigned short numanims;
+#if defined __ANDROID__
+			zip_fread(file, &numanims, 2);
+#else
 			fread(&numanims, 2, 1, file);
+#endif
+			
 			for(int i = 0; i < numanims; i++)
 			{
 				unsigned short lenanimname;
+#if defined __ANDROID__
+				zip_fread(file, &lenanimname, 2);
+#else
 				fread(&lenanimname, 2, 1, file);
+#endif
+				
 				char *animname = new char[lenanimname];
+#if defined __ANDROID__
+				zip_fread(file, animname, lenanimname);
+#else
 				fread(animname, 1, lenanimname, file);
+#endif
+				
 				sgAnimation *anim = new sgAnimation(animname);
 				std::string resname = std::string(animfilename)+std::string(animname);
 				sgResourceManager::addResource(resname.c_str(), anim);
@@ -396,29 +464,59 @@ char *animfilename = 0;
 				delete[] animname;
 				
 				unsigned short numanimbones;
+#if defined __ANDROID__
+				zip_fread(file, &numanimbones, 2);
+#else
 				fread(&numanimbones, 2, 1, file);
+#endif
+				
 				for(int n = 0; n < numanimbones; n++)
 				{
 					unsigned short boneid;
+#if defined __ANDROID__
+					zip_fread(file, &boneid, 2);
+#else
 					fread(&boneid, 2, 1, file);
+#endif
 					
 					sgAnimationBone *animbone = 0;
 					
 					unsigned long numframes;
+#if defined __ANDROID__
+					zip_fread(file, &numframes, 4);
+#else
 					fread(&numframes, 4, 1, file);
+#endif
+					
 					for(int k = 0; k < numframes; k++)
 					{
 						float frametime;
+#if defined __ANDROID__
+						zip_fread(file, &frametime, 4);
+#else
 						fread(&frametime, 4, 1, file);
+#endif
 						
 						sgVector3 framepos;
+#if defined __ANDROID__
+						zip_fread(file, &framepos.x, 4*3);
+#else
 						fread(&framepos.x, 4, 3, file);
+#endif
 						
 						sgVector3 framescal;
+#if defined __ANDROID__
+						zip_fread(file, &framescal.x, 4*3);
+#else
 						fread(&framescal.x, 4, 3, file);
+#endif
 						
 						sgQuaternion framerot;
+#if defined __ANDROID__
+						zip_fread(file, &framerot.x, 4*4);
+#else
 						fread(&framerot.x, 4, 4, file);
+#endif
 						
 						animbone = new sgAnimationBone(animbone, 0, frametime, framepos, framescal, framerot);
 					}
@@ -433,9 +531,14 @@ char *animfilename = 0;
 					anim->bones.insert(std::pair<int, sgAnimationBone*>(boneid, animbone));
 				}
 			}
+#if defined __ANDROID__
+			zip_fclose(file);
+#else
 			fclose(file);
+#endif
 			
 			obj->skeleton->matrices = NULL;
+		}
 
 
 		for(int meshnum = 0; meshnum < countmeshs; meshnum++)

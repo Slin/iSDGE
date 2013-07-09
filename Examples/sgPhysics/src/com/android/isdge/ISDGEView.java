@@ -39,6 +39,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.InputDevice;
 
 import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGLConfig;
@@ -329,6 +330,7 @@ class ISDGEView extends GLSurfaceView {
         }
 
         public void onSurfaceChanged(GL10 gl, int width, int height) {
+            Log.i("restart", "sgInit");
             ISDGELib.sgInit(width, height);
         }
 
@@ -339,19 +341,24 @@ class ISDGEView extends GLSurfaceView {
 
     public boolean onTouchEvent(MotionEvent event)
     {
+        float rx = event.getDevice().getMotionRange(MotionEvent.AXIS_X).getRange();
+        float ry = event.getDevice().getMotionRange(MotionEvent.AXIS_Y).getRange();
+        int x = (int)(rx-(float)event.getX());
+        int y = (int)(ry-(float)event.getY());
+
         switch(event.getAction())
         {
             case MotionEvent.ACTION_DOWN:
-            ISDGELib.sgTouchBegan((int)event.getX(), (int)event.getY());
+            ISDGELib.sgTouchBegan(x, y);
             break;
 
             case MotionEvent.ACTION_MOVE:
-            ISDGELib.sgTouchMoved((int)event.getX(), (int)event.getY());
+            ISDGELib.sgTouchMoved(x, y);
             break;
 
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-            ISDGELib.sgTouchEnded((int)event.getX(), (int)event.getY());
+            ISDGELib.sgTouchEnded(x, y);
             break;
 
             default:

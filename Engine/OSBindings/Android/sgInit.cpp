@@ -28,6 +28,7 @@
 #include "sgEvents.h"
 #include "sgResourceManager.h"
 #include "sgTextureFiles.h"
+#include "sgDebug.h"
 #include <cstdio>
 #include <jni.h>
 
@@ -35,13 +36,20 @@ sgMain *sgmain = NULL;
 
 int sgInit(sgEvents *event, int res_x, int res_y)
 {
-	sgMain::eventhandler = event;
+	if(sgmain == NULL)
+	{
+		sgMain::eventhandler = event;
 
-    sgRenderer::backingWidth = res_x;
-    sgRenderer::backingHeight = res_y;
+    	sgRenderer::backingWidth = res_x;
+    	sgRenderer::backingHeight = res_y;
 
-	//Initialize the renderer
-	sgmain = new sgMain(2);
+		//Initialize the renderer
+		sgmain = new sgMain(2);
+	}
+	else
+	{
+		sgResourceManager::recreateAll();
+	}
 
     return 0;
 }
@@ -54,6 +62,8 @@ void sgDraw()
 void sgDestroy()
 {
     delete sgmain;
+    sgmain = NULL;
+    sgResourceManager::destroyAll();
 }
 
 extern "C"
@@ -61,6 +71,11 @@ extern "C"
     JNIEXPORT void JNICALL Java_com_android_isdge_ISDGELib_sgDraw(JNIEnv * env, jobject obj);
 	JNIEXPORT void JNICALL Java_com_android_isdge_ISDGELib_sgDestroy(JNIEnv * env, jobject obj);
 	JNIEXPORT void JNICALL Java_com_android_isdge_ISDGELib_sgSetAPK(JNIEnv * env, jobject obj, jstring path);
+	JNIEXPORT void JNICALL Java_com_android_isdge_ISDGELib_sgSetGamepadKey(JNIEnv * env, jobject obj, jint key, jboolean state);
+	JNIEXPORT void JNICALL Java_com_android_isdge_ISDGELib_sgGamepadLeftJoy(JNIEnv * env, jobject obj, jfloat posx, jfloat posy);
+	JNIEXPORT void JNICALL Java_com_android_isdge_ISDGELib_sgGamepadRightJoy(JNIEnv * env, jobject obj, jfloat posx, jfloat posy);
+	JNIEXPORT void JNICALL Java_com_android_isdge_ISDGELib_sgGamepadLeftTrigger(JNIEnv * env, jobject obj, jfloat val);
+	JNIEXPORT void JNICALL Java_com_android_isdge_ISDGELib_sgGamepadRightTrigger(JNIEnv * env, jobject obj, jfloat val);
 	JNIEXPORT void JNICALL Java_com_android_isdge_ISDGELib_sgTouchBegan(JNIEnv * env, jobject obj, jint posx, jint posy);
 	JNIEXPORT void JNICALL Java_com_android_isdge_ISDGELib_sgTouchMoved(JNIEnv * env, jobject obj, jint posx, jint posy);
 	JNIEXPORT void JNICALL Java_com_android_isdge_ISDGELib_sgTouchEnded(JNIEnv * env, jobject obj, jint posx, jint posy);
@@ -86,7 +101,34 @@ JNIEXPORT void JNICALL Java_com_android_isdge_ISDGELib_sgSetAPK(JNIEnv * env, jo
 }
 
 
-//Handle player input
+//Handle gamepad input
+JNIEXPORT void JNICALL Java_com_android_isdge_ISDGELib_sgSetGamepadKey(JNIEnv * env, jobject obj, jint key, jboolean state)
+{
+	int ckey = key;
+	sgGamepad::keys[ckey] = state;
+}
+
+JNIEXPORT void JNICALL Java_com_android_isdge_ISDGELib_sgGamepadLeftJoy(JNIEnv * env, jobject obj, jfloat posx, jfloat posy)
+{
+	sgGamepad::leftjoy = sgVector2(posx, posy);
+}
+
+JNIEXPORT void JNICALL Java_com_android_isdge_ISDGELib_sgGamepadRightJoy(JNIEnv * env, jobject obj, jfloat posx, jfloat posy)
+{
+	sgGamepad::rightjoy = sgVector2(posx, posy);
+}
+
+JNIEXPORT void JNICALL Java_com_android_isdge_ISDGELib_sgGamepadLeftTrigger(JNIEnv * env, jobject obj, jfloat val)
+{
+	sgGamepad::lefttrigger = val;
+}
+
+JNIEXPORT void JNICALL Java_com_android_isdge_ISDGELib_sgGamepadRightTrigger(JNIEnv * env, jobject obj, jfloat val)
+{
+	sgGamepad::righttrigger = val;
+}
+
+//Handle touch input
 JNIEXPORT void JNICALL Java_com_android_isdge_ISDGELib_sgTouchBegan(JNIEnv * env, jobject obj, jint posx, jint posy)
 {
 	switch(sgmain->orientation)
@@ -142,26 +184,4 @@ JNIEXPORT void JNICALL Java_com_android_isdge_ISDGELib_sgTouchMoved(JNIEnv * env
 JNIEXPORT void JNICALL Java_com_android_isdge_ISDGELib_sgTouchEnded(JNIEnv * env, jobject obj, jint posx, jint posy)
 {
 	sgTouches::removeTouch(sgTouches::touches.size()-1);
-/*	switch([sgView main]->orientation)
-	{
-		case 0:
-			sgTouches::updateTouch(i, sgVector2(sgRenderer::backingWidth/sgRenderer::scaleFactor-posx, posy), sgVector2(sgRenderer::backingWidth/sgRenderer::scaleFactor-posx, posy), sgVector2(posx, posy));
-			break;
-			
-		case 1:
-			sgTouches::updateTouch(i, sgVector2(posx, sgRenderer::backingHeight/sgRenderer::scaleFactor-posy), sgVector2(posx, sgRenderer::backingHeight/sgRenderer::scaleFactor-posy), sgVector2(posx, posy));
-			break;
-			
-		case 2:
-			sgTouches::updateTouch(i, sgVector2(sgRenderer::backingHeight/sgRenderer::scaleFactor-posy, sgRenderer::backingWidth/sgRenderer::scaleFactor-posx), sgVector2(sgRenderer::backingHeight/sgRenderer::scaleFactor-posy, sgRenderer::backingWidth/sgRenderer::scaleFactor-posx), sgVector2(posx, posy));
-			break;
-			
-		case 3:
-			sgTouches::updateTouch(i, sgVector2(posy, posx), sgVector2(posy, posx), sgVector2(posx, posy));
-			break;
-			
-		default:
-			sgTouches::updateTouch(i, sgVector2(sgRenderer::backingWidth/sgRenderer::scaleFactor-posx, posy), sgVector2(sgRenderer::backingWidth/sgRenderer::scaleFactor-posx, posy), sgVector2(posx, posy));
-			break;
-	}*/
 }

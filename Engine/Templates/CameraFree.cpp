@@ -122,7 +122,7 @@ void CameraFree::onDraw(float timestep)
 	timestep *= 16.0f;
 	sgVector2 toll;
 
-#if defined __IOS__ || defined __ANDROID__
+#if defined __IOS__ || defined __ANDROID__ && !defined(__OUYA__)
     if(acccontrol)
     {
         if(sgAccelerometer::curracc.x > 0.1f || sgAccelerometer::curracc.x < -0.1f)
@@ -229,6 +229,19 @@ void CameraFree::onDraw(float timestep)
             lefttouchstart = sgVector2();
         }
     }
+#elif defined(__OUYA__)
+	toll.y = -sgGamepad::leftjoy.y;
+	toll.x = sgGamepad::leftjoy.x;
+	
+	sgVector3 rot(sgGamepad::rightjoy.x*10.0, 0.0f, sgGamepad::rightjoy.y*10.0);
+	
+	if(toll.length() < 0.2f)
+		toll = 0.0f;
+	
+	if(rot.length() < 1.0f)
+		rot = 0.0f;
+	
+	ent->cam->rotation -= rot*timestep;
 #else
 	toll.y = glfwGetKey('W')-glfwGetKey('S');
 	toll.x = glfwGetKey('D')-glfwGetKey('A');

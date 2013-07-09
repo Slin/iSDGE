@@ -1,8 +1,8 @@
 //
-//	sgBase.cpp
-//	iSDGE
+//	sgAccelerometer.h
+//	Engine
 //
-//	Created by Nils Daumann on 17.04.10.
+//	Created by Nils Daumann on 18.04.10.
 //	Copyright (c) 2010 Nils Daumann
 
 //	Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,21 +23,32 @@
 //	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //	THE SOFTWARE.
 
-#include "sgBase.h"
-#include "sgResourceManager.h"
+#ifndef __SGGAMEPAD_H__
+#define __SGGAMEPAD_H__
 
-sgBase::sgBase()
+#include "sgVector2.h"
+
+/**
+ * Accelerometer namespace. Handles the accelerometer.
+ */
+namespace sgGamepad
 {
+	/**
+	 *	Current absolute acceleration.
+	 *	The current absolute values provided by the accelerometer, without device rotation.
+	 */
+	extern sgVector2 leftjoy;
 	
-}
-
-void sgBase::destroy()
-{
-	sgResourceManager::removeResource(this);
-	delete this;
-}
-
-void sgBase::recreate(const char *filename)
-{
+	/**
+	 *	Current acceleration.
+	 *	The current values provided by the accelerometer.
+	 */
+	extern sgVector2 rightjoy;
 	
+	extern float lefttrigger;
+	extern float righttrigger;
+	
+	extern bool keys[20];
 }
+
+#endif

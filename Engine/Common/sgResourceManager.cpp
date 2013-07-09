@@ -244,11 +244,21 @@ namespace sgResourceManager
 			delete it->first;
 			delete it->second;
 		}
+		resources.clear();
 
 		for(int i = 0; i < paths.size(); i++)
 		{
 			delete paths[i];
 		}
 		paths.clear();
+	}
+	
+	void recreateAll()
+	{
+		std::map<std::string*, sgBase*>::iterator it;
+		for(it = resources.begin(); it != resources.end(); it++)
+		{
+			it->second->recreate(it->first->c_str());
+		}
 	}
 }

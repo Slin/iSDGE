@@ -51,6 +51,7 @@ LOCAL_CFLAGS += -I$(LOCAL_PATH)/../Dependencies/LIBZIP
 # Defines
 LOCAL_CFLAGS += -D__ANDROID__
 LOCAL_CFLAGS += -D__BULLET__
+LOCAL_CFLAGS += -D__OUYA__
 
 
 # COMMON
@@ -94,6 +95,7 @@ LOCAL_SRC_FILES += Input/sgAccelerometer.cpp
 LOCAL_SRC_FILES += Input/sgCameraStream.cpp
 LOCAL_SRC_FILES += Input/sgMouse.cpp
 LOCAL_SRC_FILES += Input/sgTouches.cpp
+LOCAL_SRC_FILES += Input/sgGamepad.cpp
 
 # Audio
 LOCAL_SRC_FILES += Audio/sgAudioFiles.cpp

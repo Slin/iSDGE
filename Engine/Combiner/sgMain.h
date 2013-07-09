@@ -33,6 +33,7 @@
 #include "sgAccelerometer.h"
 #include "sgMouse.h"
 #include "sgCameraStream.h"
+#include "sgGamepad.h"
 #include "sgEvents.h"
 #include "sgAction.h"
 #include "sgEntity.h"

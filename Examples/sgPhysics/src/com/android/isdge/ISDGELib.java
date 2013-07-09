@@ -29,9 +29,15 @@ public class ISDGELib {
      * @param height the current view height
      */
      public static native void sgInit(int width, int height);
+     
      public static native void sgDraw();
      public static native void sgDestroy();
      public static native void sgSetAPK(String path);
+     public static native void sgSetGamepadKey(int key, boolean state);
+     public static native void sgGamepadLeftJoy(float posx, float posy);
+     public static native void sgGamepadRightJoy(float posx, float posy);
+     public static native void sgGamepadLeftTrigger(float val);
+     public static native void sgGamepadRightTrigger(float val);
      public static native void sgTouchBegan(int posx, int posy);
      public static native void sgTouchMoved(int posx, int posy);
      public static native void sgTouchEnded(int posx, int posy);

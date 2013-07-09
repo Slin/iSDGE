@@ -104,6 +104,12 @@ namespace sgResourceManager
 	 *	Frees all resources.
 	 */
 	void destroyAll();
+	
+	/**
+	 *	Recreate all.
+	 *	Recreates all OpenGL resources.
+	 */
+	void recreateAll();
 }
 
 #endif

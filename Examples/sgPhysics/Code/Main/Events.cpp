@@ -57,6 +57,8 @@ void Events::onPreInit(sgMain *m)
 void Events::onInit(sgMain *m)
 {
 	sgmain = m;
+	
+	sgLog("Event::onInit Start\n");
 
 #if defined __IOS__
 	//Activate multitouch support
@@ -65,7 +67,7 @@ void Events::onInit(sgMain *m)
 	//Set device orientation
 	sgmain->setOrientation(2);
 #elif defined __ANDROID__
-	sgmain->setOrientation(3);
+	sgmain->setOrientation(0);
 #endif
 
 	//Activate multisampling
@@ -79,7 +81,7 @@ void Events::onInit(sgMain *m)
 	te->createPhysBody(sgPhysBody::ES_BOX, 1.0);
 
 	//Create the camera
-#if !defined __ANDROID__
+#if !defined(__ANDROID__) || defined(__OUYA__)
 	cam = sgmain->first_ent->createCamEntity((sgAction*)new CameraFreePhys);
 #else
 	cam = sgmain->first_ent->createCamEntity((sgAction*)new CameraFree);
@@ -119,6 +121,8 @@ void Events::onInit(sgMain *m)
 #if defined __IOS__
 	[[sgView viewcontroller] startAccelerometer];
 #endif
+	
+	sgLog("Event::onInit End\n");
 }
 
 //Called every frame, just before drawing

@@ -41,6 +41,13 @@ void CameraFreePhys::onDraw(float timestep)
 
 	sgVector2 toll;
 #if defined __IOS__ || defined __ANDROID__
+#if defined(__OUYA__)
+	toll.y = -sgGamepad::leftjoy.y;
+	toll.x = sgGamepad::leftjoy.x;
+	
+	if(toll.length() < 0.2f)
+		toll = 0.0f;
+#else
 	if(sgAccelerometer::curracc.x > 0.1f || sgAccelerometer::curracc.x < -0.1f)
 	{
 		toll.x = sgAccelerometer::curracc.x;
@@ -55,7 +62,51 @@ void CameraFreePhys::onDraw(float timestep)
 	{
 		toll.y = 0.0;
 	}
+#endif
+#if defined(__OUYA__)
+	if(sgGamepad::lefttrigger > 0.5f)
+	{
+		if(!picked)
+		{
+			sgTraceResult res;
+			sgVector3 topos(0, 0, 1.0);
+			topos = ent->cam->camToWorld(topos);
+			ent->sgmain->physworld->traceRay(ent->cam->position, topos, res);
+			picked = (sgEntity*)res.entity;
+			if(!picked || (picked && picked->body->isStatic()))
+			{
+				picked = NULL;
+			}else
+			{
+				sgPhysConstraint *costrnt = ent->sgmain->physworld->getConstraint(sgPhysConstraint::ET_POINT);
+				costrnt->initPoint(picked->body, res.position);
+				costrnt->setPointTau(0.0001f);
+				costrnt->setPointClamp(10.0f);
+				picked->body->setAlwaysActive(true);
+				pickdist = (picked->obj->position-ent->cam->position).length();
+			}
+		}else
+		{
+			sgVector3 topos(0, 0, 1.0);
+			topos = ent->cam->camToWorld(topos);
+			topos -= ent->cam->position;
+			topos.normalize();
+			topos *= pickdist;
+			topos += ent->cam->position;
+			picked->body->constraint->setPointPivotB(topos);
+		}
+	}
+	else
+	{
+		if(picked)
+		{
+			picked->body->setAlwaysActive(false);
+			picked->body->constraint->destroy();
+			picked = NULL;
+		}
+	}
 
+#else
 	if(sgTouches::touches.size() == 0)
 	{
 		if(picked)
@@ -95,15 +146,27 @@ void CameraFreePhys::onDraw(float timestep)
 			topos += ent->cam->position;
 			picked->body->constraint->setPointPivotB(topos);
 		}
-	}else if(sgTouches::touches.size() == 2)
+	}
+#endif
+
+#if defined(__OUYA__)
+	sgVector3 rot(sgGamepad::rightjoy.x*10.0, 0.0f, sgGamepad::rightjoy.y*10.0);
+	
+	if(rot.length() < 1.0f)
+		rot = 0.0f;
+	
+	ent->cam->rotation -= rot*timestep;
+#else
+	else if(sgTouches::touches.size() == 2)
 	{
 		sgVector3 rot(sgTouches::touches[0]->direction.x, 0.0f, -sgTouches::touches[0]->direction.y);
 		ent->cam->rotation += rot;
 		sgTouches::touches[0]->direction.x = 0;
 		sgTouches::touches[0]->direction.y = 0;
 	}
+#endif
 
-	shake = shake*0.5+(fabs(toll.x)+fabs(toll.y))*0.5;
+	shake = 0.0f;//shake*0.5+(fabs(toll.x)+fabs(toll.y))*0.5;
 #else
 	toll.y = glfwGetKey('W')-glfwGetKey('S');
 	toll.x = glfwGetKey('D')-glfwGetKey('A');
@@ -163,8 +226,10 @@ void CameraFreePhys::onDraw(float timestep)
 	}
 #endif
 
-#if defined __IOS__ || defined __ANDROID__
+#if (defined(__IOS__) || defined(__ANDROID__)) && !defined(__OUYA__)
 	if(sgTouches::touches.size() == 3 && counter < 35)
+#elif defined(__OUYA__)
+	if(sgGamepad::keys[0] == true)
 #else
 	if(glfwGetMouseButton(GLFW_MOUSE_BUTTON_RIGHT) && counter < 500)
 #endif

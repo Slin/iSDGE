@@ -43,6 +43,12 @@ class sgBase
 		 *	Destroys the instance.
 		 */
 		virtual void destroy();
+	
+		/**
+		 *	Recreate.
+		 *	Recreates the associated OpenGL objects if there are any.
+		 */
+		virtual void recreate(const char *filename);
 };
 
 #endif

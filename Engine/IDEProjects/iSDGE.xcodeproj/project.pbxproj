@@ -271,6 +271,8 @@
 		C05186AE15A6E96F0065D4C9 /* PhysicsObject.h in Headers */ = {isa = PBXBuildFile; fileRef = C05186AC15A6E96F0065D4C9 /* PhysicsObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C079C11615A5C42A00EC37E6 /* sgMouse.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C079C11515A5C42A00EC37E6 /* sgMouse.cpp */; };
 		C079C11815A5C43A00EC37E6 /* sgMouse.h in Headers */ = {isa = PBXBuildFile; fileRef = C079C11715A5C43A00EC37E6 /* sgMouse.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C0AC43F61786F55F00F47A55 /* sgGamepad.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C0AC43F41786F55F00F47A55 /* sgGamepad.cpp */; };
+		C0AC43F71786F55F00F47A55 /* sgGamepad.h in Headers */ = {isa = PBXBuildFile; fileRef = C0AC43F51786F55F00F47A55 /* sgGamepad.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -725,6 +727,8 @@
 		C05186AC15A6E96F0065D4C9 /* PhysicsObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhysicsObject.h; sourceTree = "<group>"; };
 		C079C11515A5C42A00EC37E6 /* sgMouse.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgMouse.cpp; sourceTree = "<group>"; };
 		C079C11715A5C43A00EC37E6 /* sgMouse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgMouse.h; sourceTree = "<group>"; };
+		C0AC43F41786F55F00F47A55 /* sgGamepad.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgGamepad.cpp; sourceTree = "<group>"; };
+		C0AC43F51786F55F00F47A55 /* sgGamepad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sgGamepad.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1336,6 +1340,8 @@
 		29338BCB13C9B533007FC59F /* Input */ = {
 			isa = PBXGroup;
 			children = (
+				C0AC43F41786F55F00F47A55 /* sgGamepad.cpp */,
+				C0AC43F51786F55F00F47A55 /* sgGamepad.h */,
 				C079C11715A5C43A00EC37E6 /* sgMouse.h */,
 				C079C11515A5C42A00EC37E6 /* sgMouse.cpp */,
 				29338BCC13C9B533007FC59F /* sgAccelerometer.cpp */,
@@ -1538,6 +1544,7 @@
 				29D0635D13C9DC4F00C001B2 /* btBulletCollisionCommon.h in Headers */,
 				29D0635E13C9DC5200C001B2 /* btBulletDynamicsCommon.h in Headers */,
 				29D0635F13C9DC5600C001B2 /* Bullet-C-Api.h in Headers */,
+				C0AC43F71786F55F00F47A55 /* sgGamepad.h in Headers */,
 				29F0100B142A3F340008FF12 /* sgSkeleton.h in Headers */,
 				29D0635913C9DC3B00C001B2 /* BulletCollision in Headers */,
 				29D0635A13C9DC3B00C001B2 /* BulletDynamics in Headers */,
@@ -1826,6 +1833,7 @@
 				29F0100A142A3F340008FF12 /* sgSkeleton.cpp in Sources */,
 				C079C11615A5C42A00EC37E6 /* sgMouse.cpp in Sources */,
 				C05186AD15A6E96F0065D4C9 /* PhysicsObject.cpp in Sources */,
+				C0AC43F61786F55F00F47A55 /* sgGamepad.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1929,9 +1937,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					__OPEN_AL__,
+					__BULLET__,
 					__IOS__,
 					"DEBUG=1",
-					__OPEN_AL__,
 				);
 				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -1964,8 +1973,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					__IOS__,
 					__OPEN_AL__,
+					__BULLET__,
+					__IOS__,
 				);
 				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -2017,8 +2027,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					__IOS__,
 					__OPEN_AL__,
+					__BULLET__,
+					__IOS__,
 				);
 				GCC_VERSION = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

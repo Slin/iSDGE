@@ -111,6 +111,8 @@ class sgMesh : public sgBase
 		 */
 		void calcCullSphere();
 	
+		void recreate(const char *filename);
+	
 		/**
 		 *	Bone number.
 		 *	The number of this meshs bones.

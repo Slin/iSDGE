@@ -81,7 +81,19 @@ sgMesh::~sgMesh()
 	if(vertices != NULL)
 		free(vertices);
 	if(indices != NULL)
-		delete[] indices;
+	{
+		if(indexsize == 2)
+		{
+			unsigned short *ind = static_cast<unsigned short*>(indices);
+			delete ind;
+		}
+		else
+		{
+			unsigned long *ind = static_cast<unsigned long*>(indices);
+			delete ind;
+		}
+	}
+	
 	if(bonematrices != NULL)
 		delete[] bonematrices;
 	if(boneindices != NULL)
@@ -400,4 +412,9 @@ void sgMesh::calcCullSphere()
 	//Find the radius
 	float radius = center.dist(vmax);
 	cullsphere = sgVector4(center.x, center.y, center.z, radius);
+}
+
+void sgMesh::recreate(const char *filename)
+{
+	generateVBO();
 }

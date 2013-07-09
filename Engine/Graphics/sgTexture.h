@@ -59,6 +59,15 @@ class sgTexture : public sgBase
 		 *	Frees all memory allocated by this class.
 		 */
 		~sgTexture();
+	
+		/**
+		 *	Create Texture.
+		 *	If there isn´t already a texture, this function loads it from the given file, chosing the correct file type depending on the filename. Other parameters are ignored for compressed textures.
+		 * @param filename the name of the file to load
+		 * @param mipmaps has to be set to FALSE if you don´t want mipmaps to be created for this texture
+		 * @param lock keeps the texture locked after creation if true.
+		 */
+		void createTexture(const char *filename, bool mipmaps = true, bool lock = false);
 
 		/**
 		 *	Create Texture.
@@ -67,7 +76,7 @@ class sgTexture : public sgBase
 		 * @param mipmaps has to be set to FALSE if you don´t want mipmaps to be created for this texture
 		 * @param lock keeps the texture locked after creation if true.
 		 */
-		void createTexture(const char *filename, bool mipmaps = true, bool lock = false);
+		void createPNGTexture(const char *filename, bool mipmaps = true, bool lock = false);
 
 		/**
 		 *	Create Texture.
@@ -194,6 +203,8 @@ class sgTexture : public sgBase
 		 *	Destroys the instance.
 		 */
 		void destroy();
+	
+		void recreate(const char *filename);
 
 		/**
 		 *	Texture type.
@@ -240,6 +251,7 @@ class sgTexture : public sgBase
 	private:
 		unsigned int fbo_depth;
 		unsigned char *texdata;
+		bool mipmaps;
 };
 
 #endif
