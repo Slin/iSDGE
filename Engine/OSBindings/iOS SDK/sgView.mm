@@ -229,21 +229,4 @@ sgViewController *sgviewcontroller;
 	[super dealloc];
 }
 
-
-//App delegate implementation
-- (void)applicationWillResignActive:(UIApplication *)application
-{
-		[self stopAnimation];
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-		[self startAnimation];
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-		[self stopAnimation];
-}
-
 @end

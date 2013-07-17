@@ -325,12 +325,18 @@ class ISDGEView extends GLSurfaceView {
     }
 
     private static class Renderer implements GLSurfaceView.Renderer {
+
+        public static int width;
+        public static int height;
+
         public void onDrawFrame(GL10 gl) {
             ISDGELib.sgDraw();
         }
 
         public void onSurfaceChanged(GL10 gl, int width, int height) {
             Log.i("restart", "sgInit");
+            this.width = width;
+            this.height = height;
             ISDGELib.sgInit(width, height);
         }
 
@@ -341,10 +347,10 @@ class ISDGEView extends GLSurfaceView {
 
     public boolean onTouchEvent(MotionEvent event)
     {
-        float rx = event.getDevice().getMotionRange(MotionEvent.AXIS_X).getRange();
-        float ry = event.getDevice().getMotionRange(MotionEvent.AXIS_Y).getRange();
-        int x = (int)(rx-(float)event.getX());
-        int y = (int)(ry-(float)event.getY());
+        int x = Renderer.width-(int)event.getX();
+        int y = Renderer.height-(int)event.getY();
+
+        Log.i("touch", "x: "+x+", y:"+y);
 
         switch(event.getAction())
         {
