@@ -170,7 +170,7 @@ namespace sgResourceManager
 		char *buff = (char*)malloc(1000000);
 		int bytes = zip_fread(file, buff, 1000000);
 		zip_fclose(file);
-		char *ptr = new char[bytes];
+		char *ptr = new char[bytes+1];
 		strcpy(ptr, buff);
 		free(buff);
 		return (const char*)ptr;
